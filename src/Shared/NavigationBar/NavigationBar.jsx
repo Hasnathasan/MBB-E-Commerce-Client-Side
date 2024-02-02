@@ -25,15 +25,15 @@ const NavigationBar = () => {
       </div>
 
 
-
-      <div className="flex justify-around items-center">
+        {/* Secondary Navbar - Logo + SearchBar + Cart */}
+      <div className="flex px-8 py-2 justify-around border-b border-gray-200 items-center">
         <div>
             <img src={logo} alt="" />
         </div>
         <div className="">
-            <form className="h-9 w-full relative flex justify-center items-center">
-                <CiSearch className="absolute w-5 h-5 top-2 left-2.5"></CiSearch>
-                <input className="h-full ps-10 border border-gray-200 text-sm rounded-l outline-none" type="text" placeholder="Search"/>
+            <form className="h-10 w-full relative flex justify-center items-center">
+                <CiSearch className="absolute w-5 h-5 top-2.5 left-2.5"></CiSearch>
+                <input className="h-full w-[350px] ps-10 border border-gray-200 text-sm rounded-l outline-none" type="text" placeholder="Search"/>
                 <button className="bg-green-500 border text-white border-green-500 z-10 rounded-r text-sm px-3 h-full">Search</button>
             </form>
         </div>

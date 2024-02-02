@@ -30,7 +30,7 @@ const SignIn = () => {
     }
     return (
         <div className="flex justify-center min-h-[600px] items-center">
-            <div className="w-[450px] shadow-sm p-8 bg-white rounded-2xl">
+            <div style={{boxShadow: "0px 0px 50px -15px #cccccc"}} className="w-[450px] p-8 bg-white rounded-2xl">
                 <h2 className="text-2xl mb-6 font-bold text-gray-800 text-center">Sign In</h2>
                 <form
               onSubmit={handleSubmit(onSubmit)}
