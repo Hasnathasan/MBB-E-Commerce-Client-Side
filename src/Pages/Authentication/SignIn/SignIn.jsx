@@ -43,7 +43,7 @@ const SignIn = () => {
                   type="email"
                   name="email"
                   id="email"
-                  className=" border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-green-500 block w-full p-2.5 "
+                  className=" border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
                   placeholder="Email"
                   required
                 />
@@ -54,7 +54,7 @@ const SignIn = () => {
                   name="password"
                   id="password"
                   placeholder="Password"
-                  className=" border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-green-500 block w-full p-2.5 "
+                  className=" border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
                   required
                 />
                 <span className="absolute right-4 top-3">
@@ -92,7 +92,7 @@ const SignIn = () => {
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
+                className="w-full text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-md text-sm px-5 py-2.5 text-center "
               >
                 Sign in
               </button>

@@ -6,19 +6,26 @@ import { AuthContext } from "../../../Providers/AuthProvider";
 import Swal from "sweetalert2";
 
 const SignUp = () => {
-    const {loginWithEmail} = useContext(AuthContext)
+    const {signUpWithEmail} = useContext(AuthContext)
     const { register, handleSubmit, reset } = useForm();
       const [passhide, setPasshide] = useState(true);
       const [passhide2, setPasshide2] = useState(true);
       const navigate = useNavigate();
       const onSubmit = (data) => {
-          const { email, password } = data;
-          loginWithEmail(email, password)
+          const { email, password, confirmPass } = data;
+          if(password !== confirmPass) {
+            return Swal.fire(
+                "Password didn't match",
+                "Try again",
+                "error"
+              );
+          }
+          signUpWithEmail(email, password)
           .then((result) => {
               console.log(result.user);
               reset();
               Swal.fire(
-                "Login Successfull",
+                "Sign Up Successfull Successfull",
                 "User has logged in successfully",
                 "success"
               );
@@ -33,7 +40,7 @@ const SignUp = () => {
     return (
         <div className="flex justify-center min-h-[600px] items-center">
         <div className="w-[450px] shadow-sm p-8 bg-white rounded-2xl">
-            <h2 className="text-2xl mb-6 font-bold text-gray-800 text-center">Sign In</h2>
+            <h2 className="text-2xl mb-6 font-bold text-gray-800 text-center">Create Account</h2>
             <form
           onSubmit={handleSubmit(onSubmit)}
           className="space-y-3 md:space-y-4"
@@ -45,7 +52,7 @@ const SignUp = () => {
               type="email"
               name="email"
               id="email"
-              className=" border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-green-500 block w-full p-2.5 "
+              className=" border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
               placeholder="Email"
               required
             />
@@ -56,7 +63,7 @@ const SignUp = () => {
               name="password"
               id="password"
               placeholder="Password"
-              className=" border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-green-500 block w-full p-2.5 "
+              className=" border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
               required
             />
             <span className="absolute right-4 top-3">
@@ -69,12 +76,12 @@ const SignUp = () => {
             </div>
             <div className="relative">
                 <input
-                {...register("password", { required: true })}
-              type={passhide ? "password" : "text"}
-              name="password"
-              id="password"
-              placeholder="Password"
-              className=" border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-green-500 block w-full p-2.5 "
+                {...register("confirmPass", { required: true })}
+              type={passhide2 ? "password" : "text"}
+              name="confirmPass"
+              id="confirmPass"
+              placeholder="Confirm Password"
+              className=" border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
               required
             />
             <span className="absolute right-4 top-3">
@@ -86,7 +93,6 @@ const SignUp = () => {
               </span>
             </div>
             
-          <div className="flex items-center justify-between">
             <div className="flex items-start">
               <div className="flex items-center h-5">
                 <input
@@ -97,32 +103,26 @@ const SignUp = () => {
                   required
                 />
               </div>
-              <div className="ml-3 text-sm">
+              <div className="ml-3 text-xs">
                 <label htmlFor="remember" className="text-gray-600 ">
-                  Remember me
+                Accept all terms & Conditions
                 </label>
               </div>
             </div>
-            <a
-              href="#"
-              className="text-sm text-gray-600 hover:underline "
-            >
-              Forget password?
-            </a>
-          </div>
+            
           <button
             type="submit"
-            className="w-full text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
+            className="w-full text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-md text-sm px-5 py-2.5 text-center "
           >
-            Sign in
+            Create Account
           </button>
           <p className="text-sm font-light flex justify-center items-center gap-1 text-gray-600 ">
-            Don&apos;t have account?{" "}
+          Already have account?{" "}
             <Link
-              to="/signup"
+              to="/signin"
               className="font-medium text-gray-700 hover:underline "
             >
-              Register
+              Sign In
             </Link>
           </p>
         </form>
