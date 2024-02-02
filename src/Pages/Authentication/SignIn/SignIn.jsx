@@ -1,19 +1,45 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { IoEyeOffSharp, IoEyeOutline } from "react-icons/io5";
+import { useForm } from "react-hook-form";
+import { AuthContext } from "../../../Providers/AuthProvider";
+import Swal from "sweetalert2";
 const SignIn = () => {
+    const {loginWithEmail} = useContext(AuthContext)
+  const { register, handleSubmit, reset } = useForm();
     const [passhide, setPasshide] = useState(true);
+    const navigate = useNavigate();
+    const onSubmit = (data) => {
+        const { email, password } = data;
+        loginWithEmail(email, password)
+        .then((result) => {
+            console.log(result.user);
+            reset();
+            Swal.fire(
+              "Login Successfull",
+              "User has logged in successfully",
+              "success"
+            );
+            navigate("/");
+            // navigate(from, { replace: true });
+          })
+          .catch((error) => {
+            console.log(error.message);
+            // setErrorMessage(error.message);
+          });
+    }
     return (
         <div className="flex justify-center min-h-[600px] items-center">
             <div className="w-[450px] shadow-sm p-8 bg-white rounded-2xl">
                 <h2 className="text-2xl mb-6 font-bold text-gray-800 text-center">Sign In</h2>
                 <form
-            //   onSubmit={handleLogin}
+              onSubmit={handleSubmit(onSubmit)}
               className="space-y-3 md:space-y-4"
               action="#"
             >
               {/* <h3 className="text-base text-red-600">{error}</h3> */}
                 <input
+                {...register("email", { required: true })}
                   type="email"
                   name="email"
                   id="email"
@@ -23,6 +49,7 @@ const SignIn = () => {
                 />
                 <div className="relative">
                     <input
+                    {...register("password", { required: true })}
                   type={passhide ? "password" : "text"}
                   name="password"
                   id="password"
