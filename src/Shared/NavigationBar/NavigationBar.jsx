@@ -6,9 +6,24 @@ import { HiOutlineShoppingBag } from "react-icons/hi2";
 import "./NavigationBar.css";
 import { FiPhoneCall } from "react-icons/fi";
 import { Navbar } from "@nextui-org/react";
+import { useEffect, useState } from "react";
 const NavigationBar = () => {
+    const [isFixed, setIsFixed] = useState(false);
+  
+    useEffect(() => {
+      const handleScroll = () => {
+        const scrollPosition = window.scrollY;
+        setIsFixed(scrollPosition >= 150);
+      };
+  
+      window.addEventListener('scroll', handleScroll);
+  
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }, []);
   return (
-    <div className="max-w-[1400px] mx-auto">
+    <div className="max-w-[1400px]  relative z-[1000] mx-auto">
       {/* Top Info - Company name + sign In / sign up button */}
       <div className="flex justify-between items-center bg-gray-900 px-8 text-gray-400 text-xs py-2">
         <div className="flex justify-center items-center gap-1">
@@ -33,8 +48,7 @@ const NavigationBar = () => {
         </div>
       </div>
 
-      <Navbar className="w-full !mt-7" shouldHideOnScroll>
-        <div className="w-full">
+        <div className={`w-full mx-auto transition-all duration-500 bg-[#fcfcfc] ${isFixed ? 'fixed1' : ''}`}>
           {/* Secondary Navbar - Logo + SearchBar + Cart */}
           <div className="flex px-8 py-2 justify-between border-b border-gray-200 items-center">
             <Link to={"/"}>
@@ -82,7 +96,6 @@ const NavigationBar = () => {
             </div>
           </div>
         </div>
-      </Navbar>
     </div>
   );
 };
