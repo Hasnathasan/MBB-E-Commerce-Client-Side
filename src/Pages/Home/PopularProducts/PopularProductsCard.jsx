@@ -1,15 +1,17 @@
+import { useState } from "react";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { IoStarOutline, IoStarSharp } from "react-icons/io5";
 import Rating from "react-rating";
 
 const PopularProductsCard = ({ product }) => {
+    const [hovered, setHovered] = useState(false)
   const { name, price, rating, img } = product;
   return (
-    <div className="px-3 flex flex-col justify-between py-4 gap-3 border border-gray-200">
+    <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} className="px-3 transition-all duration-500 hover:shadow-small hover:shadow-green-400 hover:border-green-600 flex flex-col justify-between py-4 gap-3 border border-gray-200">
       <img className="w-[80%] mx-auto" src={img} alt="" />
       <div className="flex justify-between items-center mt-3">
         <div>
-          <h3 className="text-sm">{name}</h3>
+          <h3 className={`text-sm ${hovered ? "text-[#35a538]" : ""}`}>{name}</h3>
           <h3 className="font-medium">${price}</h3>
           <Rating
             className="text-orange-400"
