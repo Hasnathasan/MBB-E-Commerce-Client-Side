@@ -98,6 +98,445 @@ const NavigationBar = () => {
             </div>
           </div>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        {/* Side Navigation bar for Small Devices */}
+
+
+        <Drawer open={open} onClose={closeDrawer} className="p-0 overflow-y-auto">
+        <Card className="h-screen w-full max-w-[20rem] rounded-none p-0 shadow-xl shadow-blue-gray-900/5">
+          <div className="mb-2 bg-[#0397d3] text-white py-[10px] px-3 flex items-center justify-between gap-1">
+            <div className="flex items-center gap-1">
+              <FaHome className="w-5 h-4"></FaHome>
+              <p className="text-xl">Home</p>
+            </div>
+            <RxCross2 onClick={closeDrawer} className="w-6 h-6"></RxCross2>
+          </div>
+          <List className="overflow-y-auto">
+            <Accordion
+              open={openAccordian === 3}
+              icon={
+                <FaAngleDown
+                  className={`mx-auto h-4 w-4 transition-transform ${
+                    openAccordian === 3 ? "rotate-180" : ""
+                  }`}
+                />
+              }
+            >
+              <ListItem
+                ripple={false}
+                className="p-0"
+                selected={openAccordian === 3}
+              >
+                <AccordionHeader
+                  onClick={() => handleOpen(3)}
+                  className="border-b-0 p-3"
+                >
+                  <ListItemPrefix>
+                    <FaCalculator></FaCalculator>
+                  </ListItemPrefix>
+                  <Typography color="blue-gray" className="mr-auto font-normal">
+                    Electronics
+                  </Typography>
+                </AccordionHeader>
+              </ListItem>
+              <AccordionBody className="py-1">
+                <List className="p-0">
+                  <ListItem ripple={false}>
+                    <Link
+                      to={"/products/electronics"}
+                      className=" flex items-center gap-1 w-full h-full"
+                    >
+                      <ListItemPrefix>
+                        <img className="w-5 h-5" src={category10} alt="" />
+                      </ListItemPrefix>
+                      All Electronics Products
+                    </Link>
+                  </ListItem>
+                  <ListItem ripple={false}>
+                    <Link
+                      to={"/products/refrigerators"}
+                      className=" flex items-center gap-1 w-full h-full"
+                    >
+                      <ListItemPrefix>
+                        <img className="w-5 h-5" src={refrigerator} alt="" />
+                      </ListItemPrefix>
+                      Refrigerators
+                    </Link>
+                  </ListItem>
+                  <ListItem ripple={false}>
+                    <Link
+                      to={"/products/televisions"}
+                      className=" flex items-center gap-1 w-full h-full"
+                    >
+                      <ListItemPrefix>
+                        <img className="w-5 h-5" src={category9} alt="" />
+                      </ListItemPrefix>
+                      Televisions
+                    </Link>
+                  </ListItem>
+                  <ListItem ripple={false}>
+                    <Link
+                      to={"/products/irons"}
+                      className=" flex items-center gap-1 w-full h-full"
+                    >
+                      <ListItemPrefix>
+                        <img className="w-5 h-5" src={iron} alt="" />
+                      </ListItemPrefix>
+                      Iron Machines
+                    </Link>
+                  </ListItem>
+                  <ListItem ripple={false}>
+                    <Link
+                      to={"/products/kettles"}
+                      className=" flex items-center gap-1 w-full h-full"
+                    >
+                      <ListItemPrefix>
+                        <img className="w-5 h-5" src={kettle} alt="" />
+                      </ListItemPrefix>
+                      Kettles
+                    </Link>
+                  </ListItem>
+                  <ListItem ripple={false}>
+                    <Link
+                      to={"/products/airCollers"}
+                      className=" flex items-center gap-1 w-full h-full"
+                    >
+                      <ListItemPrefix>
+                        <img className="w-5 h-5" src={AC} alt="" />
+                      </ListItemPrefix>
+                      Air Collers
+                    </Link>
+                  </ListItem>
+                </List>
+              </AccordionBody>
+            </Accordion>
+            <Accordion
+              open={openAccordian === 4}
+              icon={
+                <FaCalculator
+                  className={`mx-auto h-4 w-4 transition-transform ${
+                    openAccordian === 4 ? "rotate-180" : ""
+                  }`}
+                />
+              }
+            >
+              <ListItem
+                ripple={false}
+                className="p-0"
+                selected={openAccordian === 4}
+              >
+                <AccordionHeader
+                  onClick={() => handleOpen(4)}
+                  className="border-b-0 p-3"
+                >
+                  <ListItemPrefix>
+                    <FaCalculator></FaCalculator>
+                  </ListItemPrefix>
+                  <Typography color="blue-gray" className="mr-auto font-normal">
+                    Kids zone
+                  </Typography>
+                </AccordionHeader>
+              </ListItem>
+              <AccordionBody className="py-1">
+                <List className="p-0">
+                  <ListItem ripple={false}>
+                    <ListItemPrefix>
+                      <FaCalculator></FaCalculator>
+                    </ListItemPrefix>
+                    Orders
+                  </ListItem>
+                  <ListItem ripple={false}>
+                    <ListItemPrefix>
+                      <FaCalculator></FaCalculator>
+                    </ListItemPrefix>
+                    Products
+                  </ListItem>
+                </List>
+              </AccordionBody>
+            </Accordion>
+            <Accordion
+              open={openAccordian === 5}
+              icon={
+                <FaCalculator
+                  className={`mx-auto h-4 w-4 transition-transform ${
+                    openAccordian === 5 ? "rotate-180" : ""
+                  }`}
+                />
+              }
+            >
+              <ListItem
+                ripple={false}
+                className="p-0"
+                selected={openAccordian === 5}
+              >
+                <AccordionHeader
+                  onClick={() => handleOpen(5)}
+                  className="border-b-0 p-3"
+                >
+                  <ListItemPrefix>
+                    <FaCalculator></FaCalculator>
+                  </ListItemPrefix>
+                  <Typography color="blue-gray" className="mr-auto font-normal">
+                    কিডস জোন
+                  </Typography>
+                </AccordionHeader>
+              </ListItem>
+              <AccordionBody className="py-1">
+                <List className="p-0">
+                  <ListItem ripple={false}>
+                    <ListItemPrefix>
+                      <FaCalculator></FaCalculator>
+                    </ListItemPrefix>
+                    Orders
+                  </ListItem>
+                  <ListItem ripple={false}>
+                    <ListItemPrefix>
+                      <FaCalculator></FaCalculator>
+                    </ListItemPrefix>
+                    Products
+                  </ListItem>
+                </List>
+              </AccordionBody>
+            </Accordion>
+            <Accordion
+              open={openAccordian === 6}
+              icon={
+                <FaCalculator
+                  className={`mx-auto h-4 w-4 transition-transform ${
+                    openAccordian === 6 ? "rotate-180" : ""
+                  }`}
+                />
+              }
+            >
+              <ListItem
+                ripple={false}
+                className="p-0"
+                selected={openAccordian === 6}
+              >
+                <AccordionHeader
+                  onClick={() => handleOpen(6)}
+                  className="border-b-0 p-3"
+                >
+                  <ListItemPrefix>
+                    <FaCalculator></FaCalculator>
+                  </ListItemPrefix>
+                  <Typography color="blue-gray" className="mr-auto font-normal">
+                    প্রাতিষ্ঠানিক অর্ডার
+                  </Typography>
+                </AccordionHeader>
+              </ListItem>
+              <AccordionBody className="py-1">
+                <List className="p-0">
+                  <ListItem ripple={false}>
+                    <ListItemPrefix>
+                      <FaCalculator></FaCalculator>
+                    </ListItemPrefix>
+                    Orders
+                  </ListItem>
+                  <ListItem ripple={false}>
+                    <ListItemPrefix>
+                      <FaCalculator></FaCalculator>
+                    </ListItemPrefix>
+                    Products
+                  </ListItem>
+                </List>
+              </AccordionBody>
+            </Accordion>
+            <Accordion
+              open={openAccordian === 6}
+              icon={
+                <FaCalculator
+                  className={`mx-auto h-4 w-4 transition-transform ${
+                    openAccordian === 6 ? "rotate-180" : ""
+                  }`}
+                />
+              }
+            >
+              <ListItem
+                ripple={false}
+                className="p-0"
+                selected={openAccordian === 6}
+              >
+                <AccordionHeader
+                  onClick={() => handleOpen(6)}
+                  className="border-b-0 p-3"
+                >
+                  <ListItemPrefix>
+                    <FaCalculator></FaCalculator>
+                  </ListItemPrefix>
+                  <Typography color="blue-gray" className="mr-auto font-normal">
+                    অফার সমূহ
+                  </Typography>
+                </AccordionHeader>
+              </ListItem>
+              <AccordionBody className="py-1">
+                <List className="p-0">
+                  <ListItem ripple={false}>
+                    <ListItemPrefix>
+                      <FaCalculator></FaCalculator>
+                    </ListItemPrefix>
+                    Orders
+                  </ListItem>
+                  <ListItem ripple={false}>
+                    <ListItemPrefix>
+                      <FaCalculator></FaCalculator>
+                    </ListItemPrefix>
+                    Products
+                  </ListItem>
+                </List>
+              </AccordionBody>
+            </Accordion>
+            <Accordion
+              open={openAccordian === 6}
+              icon={
+                <FaCalculator
+                  className={`mx-auto h-4 w-4 transition-transform ${
+                    openAccordian === 6 ? "rotate-180" : ""
+                  }`}
+                />
+              }
+            >
+              <ListItem
+                ripple={false}
+                className="p-0"
+                selected={openAccordian === 6}
+              >
+                <AccordionHeader
+                  onClick={() => handleOpen(6)}
+                  className="border-b-0 p-3"
+                >
+                  <ListItemPrefix>
+                    <FaCalculator></FaCalculator>
+                  </ListItemPrefix>
+                  <Typography color="blue-gray" className="mr-auto font-normal">
+                    কুইজ
+                  </Typography>
+                </AccordionHeader>
+              </ListItem>
+              <AccordionBody className="py-1">
+                <List className="p-0">
+                  <ListItem ripple={false}>
+                    <ListItemPrefix>
+                      <FaCalculator></FaCalculator>
+                    </ListItemPrefix>
+                    Orders
+                  </ListItem>
+                  <ListItem ripple={false}>
+                    <ListItemPrefix>
+                      <FaCalculator></FaCalculator>
+                    </ListItemPrefix>
+                    Products
+                  </ListItem>
+                </List>
+              </AccordionBody>
+            </Accordion>
+            <Accordion
+              open={openAccordian === 6}
+              icon={
+                <FaCalculator
+                  className={`mx-auto h-4 w-4 transition-transform ${
+                    openAccordian === 6 ? "rotate-180" : ""
+                  }`}
+                />
+              }
+            >
+              <ListItem
+                ripple={false}
+                className="p-0"
+                selected={openAccordian === 6}
+              >
+                <AccordionHeader
+                  onClick={() => handleOpen(6)}
+                  className="border-b-0 p-3"
+                >
+                  <ListItemPrefix>
+                    <FaCalculator></FaCalculator>
+                  </ListItemPrefix>
+                  <Typography color="blue-gray" className="mr-auto font-normal">
+                    ব্লগ
+                  </Typography>
+                </AccordionHeader>
+              </ListItem>
+              <AccordionBody className="py-1">
+                <List className="p-0">
+                  <ListItem ripple={false}>
+                    <ListItemPrefix>
+                      <FaCalculator></FaCalculator>
+                    </ListItemPrefix>
+                    Orders
+                  </ListItem>
+                  <ListItem ripple={false}>
+                    <ListItemPrefix>
+                      <FaCalculator></FaCalculator>
+                    </ListItemPrefix>
+                    Products
+                  </ListItem>
+                </List>
+              </AccordionBody>
+            </Accordion>
+            <Accordion
+              open={openAccordian === 6}
+              icon={
+                <FaCalculator
+                  className={`mx-auto h-4 w-4 transition-transform ${
+                    openAccordian === 6 ? "rotate-180" : ""
+                  }`}
+                />
+              }
+            >
+              <ListItem
+                ripple={false}
+                className="p-0"
+                selected={openAccordian === 6}
+              >
+                <AccordionHeader
+                  onClick={() => handleOpen(6)}
+                  className="border-b-0 p-3"
+                >
+                  <ListItemPrefix>
+                    <FaCalculator></FaCalculator>
+                  </ListItemPrefix>
+                  <Typography color="blue-gray" className="mr-auto font-normal">
+                    গিফট ফাইন্ডার
+                  </Typography>
+                </AccordionHeader>
+              </ListItem>
+              <AccordionBody className="py-1">
+                <List className="p-0">
+                  <ListItem ripple={false}>
+                    <ListItemPrefix>
+                      <FaCalculator></FaCalculator>
+                    </ListItemPrefix>
+                    Orders
+                  </ListItem>
+                  <ListItem ripple={false}>
+                    <ListItemPrefix>
+                      <FaCalculator></FaCalculator>
+                    </ListItemPrefix>
+                    Products
+                  </ListItem>
+                </List>
+              </AccordionBody>
+            </Accordion>
+          </List>
+        </Card>
+      </Drawer>
     </div>
   );
 };

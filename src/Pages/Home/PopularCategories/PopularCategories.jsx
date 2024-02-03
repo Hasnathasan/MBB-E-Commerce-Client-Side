@@ -42,7 +42,7 @@ const PopularCategories = () => {
           ></BsArrowRight>
         </Link>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-5 justify-center items-center">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 md:gap-5 justify-center items-center">
         {imgages?.map((img) => (
           <CategoryCard key={img} img={img} name={"Vegetables"}></CategoryCard>
         ))}
