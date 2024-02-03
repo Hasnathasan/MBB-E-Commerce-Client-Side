@@ -6,6 +6,11 @@ import product2 from '../../../assets/products2.png';
 import product3 from '../../../assets/products3.png';
 import product4 from '../../../assets/products4.png';
 import product5 from '../../../assets/products5.png';
+import product6 from '../../../assets/products6.png';
+import product7 from '../../../assets/products7.png';
+import product8 from '../../../assets/products8.png';
+import product9 from '../../../assets/products9.png';
+import product10 from '../../../assets/products10.png';
 import PopularProductsCard from "./PopularProductsCard";
 
 
@@ -58,7 +63,7 @@ const PopularProducts = () => {
             name: "Green Apple",
             price: 120.00,
             rating: 2.5,
-            img: product3
+            img: product10
         },
         {
             name: "Green Apple",
@@ -75,31 +80,31 @@ const PopularProducts = () => {
             name: "Green Apple",
             price: 50.00,
             rating: 4.2,
-            img: product1
+            img: product6
         },
         {
             name: "Green Apple",
             price: 42.00,
             rating: 4.9,
-            img: product2
+            img: product7
         },
         {
             name: "Green Apple",
             price: 120.00,
             rating: 2.5,
-            img: product3
+            img: product8
         },
         {
             name: "Green Apple",
             price: 70.00,
             rating: 3.5,
-            img: product4
+            img: product9
         },
         {
             name: "Green Apple",
             price: 20.00,
             rating: 4.2,
-            img: product5
+            img: product10
         }
     ]
     return (

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
-import { IoStarOutline, IoStarSharp } from "react-icons/io5";
+import { IoEyeOutline, IoStarOutline, IoStarSharp } from "react-icons/io5";
 import Rating from "react-rating";
 
 const PopularProductsCard = ({ product }) => {
@@ -37,7 +37,7 @@ const PopularProductsCard = ({ product }) => {
       <GoHeart className="w-5 h-5" />
         </div>
         <div className="bg-[#ffffff] border border-gray-100 shadow rounded-full cursor-pointer flex justify-center items-center w-10 h-10">
-        <HiOutlineShoppingBag className="w-5 h-5"></HiOutlineShoppingBag>
+        <IoEyeOutline className="w-5 h-5"></IoEyeOutline>
         </div>
       </div>
     </div>
