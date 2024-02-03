@@ -52,7 +52,7 @@ const NavigationBar = () => {
 
 
           {/* Secondary Navbar - Logo + SearchBar + Cart */}
-          <div className="flex px-8 py-2 justify-between border-b border-gray-200 items-center">
+          <div className="flex px-8 py-5 justify-between border-b border-gray-200 items-center">
             <Link to={"/"}>
               <img src={logo} alt="" />
             </Link>
