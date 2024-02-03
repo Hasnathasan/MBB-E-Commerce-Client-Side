@@ -5,7 +5,6 @@ import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import "./NavigationBar.css";
 import { FiPhoneCall } from "react-icons/fi";
-import { Navbar } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 const NavigationBar = () => {
     const [isFixed, setIsFixed] = useState(false);
@@ -25,7 +24,7 @@ const NavigationBar = () => {
   return (
     <div className="max-w-[1400px]  relative z-[1000] mx-auto">
       {/* Top Info - Company name + sign In / sign up button */}
-      <div className="flex justify-between items-center bg-gray-900 px-8 text-gray-400 text-xs py-2">
+      <div className="flex justify-between items-center bg-gray-900 px-8 mb-8 text-gray-400 text-xs py-2">
         <div className="flex justify-center items-center gap-1">
           <CiLocationOn />
           <h3>Store Location: Lincoln- 344, Illinois, Chicago, USA</h3>
@@ -48,7 +47,10 @@ const NavigationBar = () => {
         </div>
       </div>
 
-        <div className={`w-full mx-auto transition-all duration-500 bg-[#fcfcfc] ${isFixed ? 'fixed1' : ''}`}>
+    {/* Main Navigation System - searchBar + Navigation links */}
+        <div className={`w-full mx-auto navbar bg-[#fcfcfc] ${isFixed ? 'fixed1 transition-all duration-500' : ''}`}>
+
+
           {/* Secondary Navbar - Logo + SearchBar + Cart */}
           <div className="flex px-8 py-2 justify-between border-b border-gray-200 items-center">
             <Link to={"/"}>

@@ -2,7 +2,7 @@ a.active{
     color: #11f167;
 }
 .navbar {
-    margin-top: 0px; /* Set the initial margin to create space for the div above the navbar */
+    margin-top: -32px; /* Set the initial margin to create space for the div above the navbar */
     transition: margin-top 0.5s ease; /* Add a smooth transition effect */
   }
   

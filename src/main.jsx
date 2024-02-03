@@ -10,7 +10,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <NextUIProvider>
       <AuthProvider>
-        <div className="bg-[#fcfcfc]">
+        <div className="bg-[#fcfcfc] max-w-[1400px] mx-auto">
           <RouterProvider router={router} />
         </div>
       </AuthProvider>

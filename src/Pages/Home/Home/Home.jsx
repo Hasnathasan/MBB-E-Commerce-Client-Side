@@ -1,9 +1,13 @@
-
+import banner from '../../../assets/Bannar.png'
+import PopularCategories from '../PopularCategories/PopularCategories';
 
 const Home = () => {
     return (
-        <div className="w-full min-h-[1600px] flex justify-center items-center">
-            <h2 className="text-3xl font-semibold">This is Home</h2>
+        <div className=" mx-8 min-h-[1600px]">
+            <div className='w-full mx-auto mt-4 h-[500px] mb-10'>
+                <img className='w-full h-full' src={banner} alt="" />
+            </div>
+            <PopularCategories></PopularCategories>
         </div>
     );
 };
