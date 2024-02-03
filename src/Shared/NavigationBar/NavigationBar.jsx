@@ -24,7 +24,7 @@ const NavigationBar = () => {
   return (
     <div className="max-w-[1400px]  relative z-[1000] mx-auto">
       {/* Top Info - Company name + sign In / sign up button */}
-      <div className="flex justify-between items-center bg-gray-900 px-8 mb-8 text-gray-400 text-xs py-2">
+      <div className="flex justify-between items-center bg-[#2e2e2e] px-8 mb-8 text-gray-400 text-xs py-2">
         <div className="flex justify-center items-center gap-1">
           <CiLocationOn />
           <h3>Store Location: Lincoln- 344, Illinois, Chicago, USA</h3>
