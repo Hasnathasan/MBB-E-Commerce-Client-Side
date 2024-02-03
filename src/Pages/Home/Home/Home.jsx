@@ -1,5 +1,6 @@
 import banner from '../../../assets/Bannar.png'
 import PopularCategories from '../PopularCategories/PopularCategories';
+import PopularProducts from '../PopularProducts/PopularProducts';
 
 const Home = () => {
     return (
@@ -8,6 +9,7 @@ const Home = () => {
                 <img className='w-full h-full' src={banner} alt="" />
             </div>
             <PopularCategories></PopularCategories>
+            <PopularProducts></PopularProducts>
         </div>
     );
 };
