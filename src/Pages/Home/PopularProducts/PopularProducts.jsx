@@ -113,7 +113,7 @@ const PopularProducts = () => {
                 <h2 className="text-3xl font-semibold">Popular Categories</h2>
                 <Link onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} className="w-32 text-left text-green-500 flex justify-center items-center gap-2 relative font-medium" to={"/products"}>View All <BsArrowRight className={`absolute transition-all duration-75 ${hovered ? "left-[105px]" : "left-[100px]"}`}></BsArrowRight></Link>
             </div>
-            <div className="grid grid-cols-5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {
                 products?.map(product => <PopularProductsCard key={product?.name} product={product}></PopularProductsCard>)
             }
