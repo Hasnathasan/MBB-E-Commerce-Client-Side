@@ -1,6 +1,7 @@
 import { CiLocationOn, CiSearch } from "react-icons/ci";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import hamburger from '../../assets/hamburger.png';
 import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import "./NavigationBar.css";
@@ -26,14 +27,9 @@ const NavigationBar = () => {
     }, []);
   return (
     <div className="max-w-[1400px]  relative z-[1000] mx-auto">
-      {/* <img
-            className="w-5 h-5 md:w-6"
-            onClick={openDrawer}
-            src={logo}
-            alt=""
-          /> */}
+      
       {/* Top Info - Company name + sign In / sign up button */}
-      <div className="flex justify-between items-center bg-[#2e2e2e] px-8 mb-8 text-gray-400 text-xs py-2">
+      <div className="flex justify-between items-center bg-[#2e2e2e] px-1 md:px-8 md:mb-8 text-gray-400 text-[8px] py-2">
         <div className="flex justify-center items-center gap-1">
           <CiLocationOn />
           <h3>Store Location: Lincoln- 344, Illinois, Chicago, USA</h3>
@@ -62,9 +58,9 @@ const NavigationBar = () => {
 
           {/* Secondary Navbar - Logo + SearchBar + Cart */}
           <div className="flex px-8 py-5 justify-between border-b border-gray-200 items-center">
-            {/* <Link to={"/"}>
+            <Link to={"/"}>
               <img src={logo} alt="" />
-            </Link> */}
+            </Link>
             
             <div className="">
               <form className="h-10 w-full relative flex justify-center items-center">
@@ -117,12 +113,18 @@ const NavigationBar = () => {
 
 
 
-            <div className="bg-white px-3 py-3">
+            <div className="bg-white flex justify-between items-center px-3 py-3">
+            <img
+            className="w-5 h-5 md:w-6"
+            onClick={openDrawer}
+            src={hamburger}
+            alt=""
+          />
             <div className="">
-              <form className="h-8 w-full relative flex justify-center items-center">
-                <CiSearch className="absolute w-4 h-4 top-2.5 left-1"></CiSearch>
+              <form className="h-8 w-full relative flex justify-start items-center">
+                <CiSearch className="absolute w-4 h-4 top-2 left-1"></CiSearch>
                 <input
-                  className="h-full w-[40%] ps-2 border border-gray-200 text-sm rounded-l outline-none"
+                  className="h-full w-[50%] ps-7 border border-gray-200 text-sm rounded-l outline-none"
                   type="text"
                   placeholder="Search"
                 />
@@ -130,6 +132,9 @@ const NavigationBar = () => {
                   Search
                 </button>
               </form>
+            </div>
+            <div>
+
             </div>
             </div>
 

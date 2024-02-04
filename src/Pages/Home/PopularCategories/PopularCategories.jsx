@@ -27,7 +27,7 @@ const PopularCategories = () => {
   return (
     <div className="my-16">
       <div className="flex justify-between mb-4 items-center">
-        <h2 className="text-3xl font-semibold">Popular Categories</h2>
+        <h2 className="text-xl md:text-3xl font-semibold">Popular Categories</h2>
         <Link
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
