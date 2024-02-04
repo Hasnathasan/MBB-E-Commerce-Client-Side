@@ -6,9 +6,12 @@ import { HiOutlineShoppingBag } from "react-icons/hi2";
 import "./NavigationBar.css";
 import { FiPhoneCall } from "react-icons/fi";
 import { useEffect, useState } from "react";
+import { Drawer } from "@material-tailwind/react";
 const NavigationBar = () => {
     const [isFixed, setIsFixed] = useState(false);
-  
+    const [open, setOpen] = useState(false);
+    const openDrawer = () => setOpen(true);
+    const closeDrawer = () => setOpen(false);
     useEffect(() => {
       const handleScroll = () => {
         const scrollPosition = window.scrollY;
@@ -23,6 +26,12 @@ const NavigationBar = () => {
     }, []);
   return (
     <div className="max-w-[1400px]  relative z-[1000] mx-auto">
+      {/* <img
+            className="w-5 h-5 md:w-6"
+            onClick={openDrawer}
+            src={logo}
+            alt=""
+          /> */}
       {/* Top Info - Company name + sign In / sign up button */}
       <div className="flex justify-between items-center bg-[#2e2e2e] px-8 mb-8 text-gray-400 text-xs py-2">
         <div className="flex justify-center items-center gap-1">
@@ -48,14 +57,15 @@ const NavigationBar = () => {
       </div>
 
     {/* Main Navigation System - searchBar + Navigation links */}
-        <div className={`w-full mx-auto navbar bg-[#fcfcfc] ${isFixed ? 'fixed1 transition-all duration-500' : ''}`}>
+        <div className={`w-full hidden md:block mx-auto navbar bg-[#fcfcfc] ${isFixed ? 'fixed1 transition-all duration-500' : ''}`}>
 
 
           {/* Secondary Navbar - Logo + SearchBar + Cart */}
           <div className="flex px-8 py-5 justify-between border-b border-gray-200 items-center">
-            <Link to={"/"}>
+            {/* <Link to={"/"}>
               <img src={logo} alt="" />
-            </Link>
+            </Link> */}
+            
             <div className="">
               <form className="h-10 w-full relative flex justify-center items-center">
                 <CiSearch className="absolute w-5 h-5 top-2.5 left-2.5"></CiSearch>
@@ -107,7 +117,21 @@ const NavigationBar = () => {
 
 
 
-
+            <div className="bg-white px-3 py-3">
+            <div className="">
+              <form className="h-8 w-full relative flex justify-center items-center">
+                <CiSearch className="absolute w-4 h-4 top-2.5 left-1"></CiSearch>
+                <input
+                  className="h-full w-[40%] ps-2 border border-gray-200 text-sm rounded-l outline-none"
+                  type="text"
+                  placeholder="Search"
+                />
+                <button className="bg-green-500 border text-white border-green-500 rounded-r text-xs px-3 h-full">
+                  Search
+                </button>
+              </form>
+            </div>
+            </div>
 
 
 
@@ -119,7 +143,7 @@ const NavigationBar = () => {
 
 
         <Drawer open={open} onClose={closeDrawer} className="p-0 overflow-y-auto">
-        <Card className="h-screen w-full max-w-[20rem] rounded-none p-0 shadow-xl shadow-blue-gray-900/5">
+        {/* <Card className="h-screen w-full max-w-[20rem] rounded-none p-0 shadow-xl shadow-blue-gray-900/5">
           <div className="mb-2 bg-[#0397d3] text-white py-[10px] px-3 flex items-center justify-between gap-1">
             <div className="flex items-center gap-1">
               <FaHome className="w-5 h-4"></FaHome>
@@ -535,7 +559,7 @@ const NavigationBar = () => {
               </AccordionBody>
             </Accordion>
           </List>
-        </Card>
+        </Card> */}
       </Drawer>
     </div>
   );
