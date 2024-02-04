@@ -67,7 +67,7 @@ const NavigationBar = () => {
             <form className="h-10 w-full relative flex justify-center items-center">
               <CiSearch className="absolute w-5 h-5 top-2.5 left-2.5"></CiSearch>
               <input
-                className="h-full md:w-[280px] lg:w-[350px] ps-10 border border-gray-200 text-sm rounded-l outline-none"
+                className="h-full md:w-[240px] lg:w-[350px] ps-10 border border-gray-200 text-sm rounded-l outline-none"
                 type="text"
                 placeholder="Search"
               />
@@ -107,18 +107,17 @@ const NavigationBar = () => {
       </div>
 
       {/* Search Bar and other links for Small Devices */}
-      <div className="bg-white md:hidden flex justify-between items-center px-3 py-3">
+      <div className="bg-white md:hidden w-full justify-between flex items-center px-3 py-3">
         <img
           className="w-5 h-5 md:w-6"
           onClick={openDrawer}
           src={hamburger}
           alt=""
         />
-        <div className="">
-          <form className="h-8 w-full relative flex justify-start items-center">
+          <form className="h-8 relative flex justify-center  items-center">
             <CiSearch className="absolute w-4 h-4 top-2 left-1"></CiSearch>
             <input
-              className="h-full w-[50%] ps-7 border border-gray-200 text-sm rounded-l outline-none"
+              className="h-full w-[150px] sm:w-[250px] ps-7 border border-gray-200 text-sm rounded-l outline-none"
               type="text"
               placeholder="Search"
             />
@@ -126,8 +125,11 @@ const NavigationBar = () => {
               Search
             </button>
           </form>
+        <div className="flex justify-center items-center gap-3">
+          <GoHeart className="w-5 h-5"></GoHeart>
+          <span>|</span>
+          <HiOutlineShoppingBag  className="w-5 h-5"></HiOutlineShoppingBag>
         </div>
-        <div></div>
       </div>
 
       {/* Side Navigation bar for Small Devices */}
