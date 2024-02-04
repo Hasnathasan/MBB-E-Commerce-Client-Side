@@ -9,6 +9,7 @@ const SignIn = () => {
   const { register, handleSubmit, reset } = useForm();
     const [passhide, setPasshide] = useState(true);
     const navigate = useNavigate();
+    let from = location.state?.from?.pathname || "/";
     const onSubmit = (data) => {
         const { email, password } = data;
         loginWithEmail(email, password)
@@ -20,7 +21,7 @@ const SignIn = () => {
               "User has logged in successfully",
               "success"
             );
-            navigate("/");
+            navigate(from, { replace: true });
             // navigate(from, { replace: true });
           })
           .catch((error) => {
@@ -30,7 +31,7 @@ const SignIn = () => {
     }
     return (
         <div className="flex justify-center min-h-[500px] items-center">
-            <div style={{boxShadow: "0px 0px 50px -15px #cccccc"}} className="w-[450px] p-8 bg-white rounded-2xl">
+            <div style={{boxShadow: "0px 0px 50px -15px #cccccc"}} className="w-[95%] md:w-[450px] p-6 md:p-8 bg-white rounded-2xl">
                 <h2 className="text-2xl mb-6 font-bold text-gray-800 text-center">Sign In</h2>
                 <form
               onSubmit={handleSubmit(onSubmit)}

@@ -1,7 +1,7 @@
 import { CiLocationOn, CiSearch } from "react-icons/ci";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import hamburger from '../../assets/hamburger.png';
+import hamburger from "../../assets/hamburger.png";
 import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import "./NavigationBar.css";
@@ -9,27 +9,26 @@ import { FiPhoneCall } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import { Drawer } from "@material-tailwind/react";
 const NavigationBar = () => {
-    const [isFixed, setIsFixed] = useState(false);
-    const [open, setOpen] = useState(false);
-    const openDrawer = () => setOpen(true);
-    const closeDrawer = () => setOpen(false);
-    useEffect(() => {
-      const handleScroll = () => {
-        const scrollPosition = window.scrollY;
-        setIsFixed(scrollPosition >= 150);
-      };
-  
-      window.addEventListener('scroll', handleScroll);
-  
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
-    }, []);
+  const [isFixed, setIsFixed] = useState(false);
+  const [open, setOpen] = useState(false);
+  const openDrawer = () => setOpen(true);
+  const closeDrawer = () => setOpen(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsFixed(scrollPosition >= 150);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <div className="max-w-[1400px]  relative z-[1000] mx-auto">
-      
       {/* Top Info - Company name + sign In / sign up button */}
-      <div className="flex justify-between items-center bg-[#2e2e2e] px-1 md:px-8 md:mb-8 text-gray-400 text-[8px] py-2">
+      <div className="flex justify-between items-center bg-[#2e2e2e] px-1 md:px-4 lg:px-8 md:mb-8 text-gray-400 text-[8px] md:text-[12px] py-2">
         <div className="flex justify-center items-center gap-1">
           <CiLocationOn />
           <h3>Store Location: Lincoln- 344, Illinois, Chicago, USA</h3>
@@ -52,102 +51,88 @@ const NavigationBar = () => {
         </div>
       </div>
 
-    {/* Main Navigation System - searchBar + Navigation links */}
-        <div className={`w-full hidden md:block mx-auto navbar bg-[#fcfcfc] ${isFixed ? 'fixed1 transition-all duration-500' : ''}`}>
+      {/* Main Navigation System - searchBar + Navigation links */}
+      <div
+        className={`w-full hidden md:block mx-auto navbar bg-[#fcfcfc] ${
+          isFixed ? "fixed1 transition-all duration-500" : ""
+        }`}
+      >
+        {/* Secondary Navbar - Logo + SearchBar + Cart */}
+        <div className="flex md:px-4 lg:px-8 py-5 justify-between border-b border-gray-200 items-center">
+          <Link to={"/"}>
+            <img src={logo} alt="" />
+          </Link>
 
-
-          {/* Secondary Navbar - Logo + SearchBar + Cart */}
-          <div className="flex px-8 py-5 justify-between border-b border-gray-200 items-center">
-            <Link to={"/"}>
-              <img src={logo} alt="" />
-            </Link>
-            
-            <div className="">
-              <form className="h-10 w-full relative flex justify-center items-center">
-                <CiSearch className="absolute w-5 h-5 top-2.5 left-2.5"></CiSearch>
-                <input
-                  className="h-full md:w-[280px] lg:w-[350px] ps-10 border border-gray-200 text-sm rounded-l outline-none"
-                  type="text"
-                  placeholder="Search"
-                />
-                <button className="bg-green-500 border text-white border-green-500 rounded-r text-sm px-4 h-full">
-                  Search
-                </button>
-              </form>
-            </div>
-            <div className="flex justify-center items-center gap-4">
-              <GoHeart className="w-8 h-8" />
-              <span>|</span>
-              <div className="flex justify-center gap-2 items-center">
-                <HiOutlineShoppingBag className="w-7 h-7"></HiOutlineShoppingBag>
-                <div>
-                  <h3 className="text-xs">Shopping Cart:</h3>
-                  <h4 className="text-xs font-semibold">$ 57.00</h4>
-                </div>
-              </div>
-            </div>
+          <div className="">
+            <form className="h-10 w-full relative flex justify-center items-center">
+              <CiSearch className="absolute w-5 h-5 top-2.5 left-2.5"></CiSearch>
+              <input
+                className="h-full md:w-[280px] lg:w-[350px] ps-10 border border-gray-200 text-sm rounded-l outline-none"
+                type="text"
+                placeholder="Search"
+              />
+              <button className="bg-green-500 border text-white border-green-500 rounded-r text-sm px-4 h-full">
+                Search
+              </button>
+            </form>
           </div>
-
-          {/* Main Navigation bar - Navigation links */}
-          <div className="flex justify-between items-center px-8 py-2.5">
-            <div className="flex justify-center items-center gap-8 text-sm font-medium">
-              <NavLink to={"/"}>Home</NavLink>
-              <NavLink to={"/shop"}>Shop</NavLink>
-              <NavLink to={"/pages"}>Pages</NavLink>
-              <NavLink to={"/blog"}>Blog</NavLink>
-              <NavLink to={"/aboutus"}>About Us</NavLink>
-              <NavLink to={"/contact"}>Contact</NavLink>
-            </div>
-            <div className="flex justify-center items-center gap-2">
-              <FiPhoneCall className="w-6 h-6"></FiPhoneCall>
-              <h3 className="text-sm">(219) 555-0114</h3>
+          <div className="flex justify-center items-center gap-4">
+            <GoHeart className="w-8 h-8" />
+            <span>|</span>
+            <div className="flex justify-center gap-2 items-center">
+              <HiOutlineShoppingBag className="w-7 h-7"></HiOutlineShoppingBag>
+              <div>
+                <h3 className="text-xs">Shopping Cart:</h3>
+                <h4 className="text-xs font-semibold">$ 57.00</h4>
+              </div>
             </div>
           </div>
         </div>
 
+        {/* Main Navigation bar - Navigation links */}
+        <div className="flex justify-between items-center px-8 py-2.5">
+          <div className="flex justify-center items-center gap-8 text-sm font-medium">
+            <NavLink to={"/"}>Home</NavLink>
+            <NavLink to={"/shop"}>Shop</NavLink>
+            <NavLink to={"/pages"}>Pages</NavLink>
+            <NavLink to={"/blog"}>Blog</NavLink>
+            <NavLink to={"/aboutus"}>About Us</NavLink>
+            <NavLink to={"/contact"}>Contact</NavLink>
+          </div>
+          <div className="flex justify-center items-center gap-2">
+            <FiPhoneCall className="w-6 h-6"></FiPhoneCall>
+            <h3 className="text-sm">(219) 555-0114</h3>
+          </div>
+        </div>
+      </div>
 
+      {/* Search Bar and other links for Small Devices */}
+      <div className="bg-white md:hidden flex justify-between items-center px-3 py-3">
+        <img
+          className="w-5 h-5 md:w-6"
+          onClick={openDrawer}
+          src={hamburger}
+          alt=""
+        />
+        <div className="">
+          <form className="h-8 w-full relative flex justify-start items-center">
+            <CiSearch className="absolute w-4 h-4 top-2 left-1"></CiSearch>
+            <input
+              className="h-full w-[50%] ps-7 border border-gray-200 text-sm rounded-l outline-none"
+              type="text"
+              placeholder="Search"
+            />
+            <button className="bg-green-500 border text-white border-green-500 rounded-r text-xs px-3 h-full">
+              Search
+            </button>
+          </form>
+        </div>
+        <div></div>
+      </div>
 
+      {/* Side Navigation bar for Small Devices */}
 
-
-
-
-
-
-            <div className="bg-white flex justify-between items-center px-3 py-3">
-            <img
-            className="w-5 h-5 md:w-6"
-            onClick={openDrawer}
-            src={hamburger}
-            alt=""
-          />
-            <div className="">
-              <form className="h-8 w-full relative flex justify-start items-center">
-                <CiSearch className="absolute w-4 h-4 top-2 left-1"></CiSearch>
-                <input
-                  className="h-full w-[50%] ps-7 border border-gray-200 text-sm rounded-l outline-none"
-                  type="text"
-                  placeholder="Search"
-                />
-                <button className="bg-green-500 border text-white border-green-500 rounded-r text-xs px-3 h-full">
-                  Search
-                </button>
-              </form>
-            </div>
-            <div>
-
-            </div>
-            </div>
-
-
-
-
-
-
-
-        {/* Side Navigation bar for Small Devices */}
-
-
-        <Drawer open={open} onClose={closeDrawer} className="p-0 overflow-y-auto">
+      <Drawer open={open} onClose={closeDrawer} className="p-0 overflow-y-auto">
         {/* <Card className="h-screen w-full max-w-[20rem] rounded-none p-0 shadow-xl shadow-blue-gray-900/5">
           <div className="mb-2 bg-[#0397d3] text-white py-[10px] px-3 flex items-center justify-between gap-1">
             <div className="flex items-center gap-1">
