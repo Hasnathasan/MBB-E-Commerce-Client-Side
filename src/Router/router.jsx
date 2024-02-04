@@ -29,9 +29,25 @@ const router = createBrowserRouter([
         element: <UserDashboard></UserDashboard>,
         children: [
           {
-            path: "",
+            path: "profile",
             element: <Profile></Profile>
-          }
+          },
+          {
+            path: "orderhistory",
+            element: <Profile></Profile>
+          },
+          {
+            path: "wishlist",
+            element: <Profile></Profile>
+          },
+          {
+            path: "shoppingcart",
+            element: <Profile></Profile>
+          },
+          {
+            path: "settings",
+            element: <Profile></Profile>
+          },
         ]
       }
     ],
