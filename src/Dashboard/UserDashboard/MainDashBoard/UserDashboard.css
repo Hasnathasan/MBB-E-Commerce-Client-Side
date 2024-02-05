@@ -1,12 +1,11 @@
 .navlinks a.active {
-    color: rgb(10, 10, 10) !important;
-    background: #edf2ee;
-    border-left: 3px solid #09be4e;
-  }
-  
-  .navlinks a {
-    color: #727272;
-    font-weight: 500;
-    border-left: 3px solid #ffffff;
-  }
-  
+  color: rgb(10, 10, 10) !important;
+  background: #edf2ee;
+  border-left: 3px solid #09be4e;
+}
+
+.navlinks a {
+  color: #727272;
+  font-weight: 500;
+  border-left: 3px solid #ffffff;
+}

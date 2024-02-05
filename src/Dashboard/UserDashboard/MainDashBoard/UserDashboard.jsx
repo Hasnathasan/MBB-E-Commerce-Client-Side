@@ -47,7 +47,11 @@ const UserDashboard = () => {
           >
             <IoSettingsOutline className="w-5 h-5"></IoSettingsOutline> Settings
           </NavLink>
-          <div onClick={logOut} className="p-4 flex cursor-pointer items-center gap-3" to="/">
+          <div
+            onClick={logOut}
+            className="p-4 flex cursor-pointer items-center gap-3"
+            to="/"
+          >
             <TbLogout className="w-5 h-5"></TbLogout> Log Out
           </div>
         </div>
