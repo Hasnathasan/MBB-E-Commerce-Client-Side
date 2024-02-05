@@ -12,8 +12,8 @@ const UserDashboard = () => {
   const { user } = useContext(AuthContext);
   console.log(user);
   return (
-    <div className="grid grid-cols-12 mx-auto">
-      <div className="col-span-3 mx-8 hidden py-4 bg-white border rounded-lg border-gray-200 md:inline">
+    <div className="grid grid-cols-12 mx-5 mt-8">
+      <div className="col-span-3 mr-9 hidden py-4 bg-white border rounded-lg border-gray-200 md:inline">
         <h2 className="text-xl font-semibold ps-5">Navigation</h2>
         <div className="my-4 navlinks flex flex-col w-full">
           <NavLink
