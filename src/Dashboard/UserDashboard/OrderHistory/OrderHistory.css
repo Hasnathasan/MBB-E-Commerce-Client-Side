@@ -1,0 +1,10 @@
+td, th{
+    width: 200px;
+    text-align: left;
+    font-size: 14px;
+    padding: 10px 20px;
+    /* width: max-content; */
+}
+th{
+    background-color: rgb(230, 230, 230);
+}
