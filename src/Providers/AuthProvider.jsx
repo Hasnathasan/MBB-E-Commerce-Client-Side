@@ -28,9 +28,9 @@ const AuthProvider = ({ children }) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
   const googleSignIn = () => {
-    setLoading(true)
-    return signInWithPopup(auth, googleProvider)
-  }
+    setLoading(true);
+    return signInWithPopup(auth, googleProvider);
+  };
   const logOut = () => {
     signOut(auth)
       .then(() => {})
@@ -39,17 +39,17 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (loggedUser) => {
       setUser(loggedUser);
-    //   if(loggedUser){
-    //     axios.post("https://summer-camp-server-black.vercel.app/jwt",{email: loggedUser?.email})
-    //     .then(data => {
-    //       const token = data.data.token;
-    //       localStorage.setItem("access-token", token)
-    //     })
-    //   }
-    //     else{
-    //       localStorage.removeItem("access-token")
-    //     }
-        setLoading(false);
+      //   if(loggedUser){
+      //     axios.post("https://summer-camp-server-black.vercel.app/jwt",{email: loggedUser?.email})
+      //     .then(data => {
+      //       const token = data.data.token;
+      //       localStorage.setItem("access-token", token)
+      //     })
+      //   }
+      //     else{
+      //       localStorage.removeItem("access-token")
+      //     }
+      setLoading(false);
     });
     return () => {
       return unsubscribe;

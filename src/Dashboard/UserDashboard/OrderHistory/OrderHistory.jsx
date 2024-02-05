@@ -4,7 +4,7 @@ const OrderHistory = () => {
   return (
     <div className="border rounded-lg overflow-auto border-gray-300">
       <h4 className="p-4 text-lg font-semibold">Order History</h4>
-      <table className="overflow-auto">
+      <table className="overflow-auto w-full">
         <tr>
           <th>Order Id</th>
           <th>Date</th>
