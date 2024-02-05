@@ -9,7 +9,7 @@ import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { TbLogout } from "react-icons/tb";
 import { IoSettingsOutline } from "react-icons/io5";
 const UserDashboard = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
   console.log(user);
   return (
     <div className="grid grid-cols-12 mx-5 mt-8">
@@ -47,9 +47,9 @@ const UserDashboard = () => {
           >
             <IoSettingsOutline className="w-5 h-5"></IoSettingsOutline> Settings
           </NavLink>
-          <NavLink className="p-4 flex items-center gap-3" to="/">
+          <div onClick={logOut} className="p-4 flex cursor-pointer items-center gap-3" to="/">
             <TbLogout className="w-5 h-5"></TbLogout> Log Out
-          </NavLink>
+          </div>
         </div>
       </div>
       <div className="col-span-12 md:col-span-9">

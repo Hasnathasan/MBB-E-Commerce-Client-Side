@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IoEyeOffSharp, IoEyeOutline } from "react-icons/io5";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../Providers/AuthProvider";
@@ -9,6 +9,7 @@ const SignIn = () => {
   const { register, handleSubmit, reset } = useForm();
     const [passhide, setPasshide] = useState(true);
     const navigate = useNavigate();
+    const location = useLocation();
     let from = location.state?.from?.pathname || "/";
     const onSubmit = (data) => {
         const { email, password } = data;

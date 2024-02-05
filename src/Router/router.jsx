@@ -5,6 +5,8 @@ import SignIn from "../Pages/Authentication/SignIn/SignIn";
 import Home from "../Pages/Home/Home/Home";
 import UserDashboard from "../Dashboard/UserDashboard/MainDashBoard/UserDashboard";
 import Profile from "../Dashboard/UserDashboard/Profile/Profile";
+import OrderHistory from "../Dashboard/UserDashboard/OrderHistory/OrderHistory";
+import PrivateRoute from "../Components/PrivateRoute/PrivateRoute";
 
 
 const router = createBrowserRouter([
@@ -26,7 +28,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/userdashboard",
-        element: <UserDashboard></UserDashboard>,
+        element: <PrivateRoute><UserDashboard></UserDashboard></PrivateRoute>,
         children: [
           {
             path: "profile",
@@ -34,7 +36,7 @@ const router = createBrowserRouter([
           },
           {
             path: "orderhistory",
-            element: <Profile></Profile>
+            element: <OrderHistory></OrderHistory>
           },
           {
             path: "wishlist",
