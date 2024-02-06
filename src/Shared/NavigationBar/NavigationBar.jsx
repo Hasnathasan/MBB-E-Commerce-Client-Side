@@ -98,6 +98,7 @@ const NavigationBar = () => {
             <NavLink to={"/blog"}>Blog</NavLink>
             <NavLink to={"/aboutus"}>About Us</NavLink>
             <NavLink to={"/contact"}>Contact</NavLink>
+            <NavLink to={"/userdashboard/profile"}>User Dashboard</NavLink>
           </div>
           <div className="flex justify-center items-center gap-2">
             <FiPhoneCall className="w-6 h-6"></FiPhoneCall>
@@ -114,21 +115,21 @@ const NavigationBar = () => {
           src={hamburger}
           alt=""
         />
-          <form className="h-8 relative flex justify-center  items-center">
-            <CiSearch className="absolute w-4 h-4 top-2 left-1"></CiSearch>
-            <input
-              className="h-full w-[150px] sm:w-[250px] ps-7 border border-gray-200 text-sm rounded-l outline-none"
-              type="text"
-              placeholder="Search"
-            />
-            <button className="bg-green-500 border text-white border-green-500 rounded-r text-xs px-3 h-full">
-              Search
-            </button>
-          </form>
+        <form className="h-8 relative flex justify-center  items-center">
+          <CiSearch className="absolute w-4 h-4 top-2 left-1"></CiSearch>
+          <input
+            className="h-full w-[150px] sm:w-[250px] ps-7 border border-gray-200 text-sm rounded-l outline-none"
+            type="text"
+            placeholder="Search"
+          />
+          <button className="bg-green-500 border text-white border-green-500 rounded-r text-xs px-3 h-full">
+            Search
+          </button>
+        </form>
         <div className="flex justify-center items-center gap-3">
           <GoHeart className="w-5 h-5"></GoHeart>
           <span>|</span>
-          <HiOutlineShoppingBag  className="w-5 h-5"></HiOutlineShoppingBag>
+          <HiOutlineShoppingBag className="w-5 h-5"></HiOutlineShoppingBag>
         </div>
       </div>
 

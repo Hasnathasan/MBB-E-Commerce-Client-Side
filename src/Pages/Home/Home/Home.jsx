@@ -1,4 +1,5 @@
 import banner from "../../../assets/Bannar.png";
+import PopularArtists from "../PopularArtists/PopularArtists";
 import PopularCategories from "../PopularCategories/PopularCategories";
 import PopularProducts from "../PopularProducts/PopularProducts";
 
@@ -8,6 +9,7 @@ const Home = () => {
       <div className="w-full mx-auto mt-4 lg:h-[580px] mb-10">
         <img className="w-full h-full" src={banner} alt="" />
       </div>
+      <PopularArtists></PopularArtists>
       <PopularCategories></PopularCategories>
       <PopularProducts></PopularProducts>
     </div>

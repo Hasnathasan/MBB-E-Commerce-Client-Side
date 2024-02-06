@@ -18,66 +18,66 @@ const PopularProducts = () => {
     const [hovered, setHovered] = useState(false);
     const products = [
         {
-            name: "Green Apple",
+            name: "The Starry Night",
             price: 50.00,
             rating: 4.2,
             img: product1
         },
         {
-            name: "Green Apple",
+            name: "Girl with a Pearl Earring",
             price: 42.00,
             rating: 4.9,
             img: product2
         },
         {
-            name: "Green Apple",
+            name: "Las Meninas",
             price: 120.00,
             rating: 2.5,
             img: product3
         },
         {
-            name: "Green Apple",
+            name: "The Garden of Earthly Delights",
             price: 70.00,
             rating: 3.5,
             img: product4
         },
         {
-            name: "Green Apple",
+            name: "The Kiss",
             price: 20.00,
             rating: 4.2,
             img: product5
         },
         {
-            name: "Green Apple",
+            name: "Water lilies",
             price: 20.00,
             rating: 4.2,
             img: product5
         },
         {
-            name: "Green Apple",
+            name: "The Persistence of Memory",
             price: 70.00,
             rating: 3.5,
             img: product4
         },
         {
-            name: "Green Apple",
+            name: "The Arnolfini Portrait",
             price: 120.00,
             rating: 2.5,
             img: product10
         },
         {
-            name: "Green Apple",
+            name: "The Scream",
             price: 42.00,
             rating: 4.9,
             img: product2
         },
         {
-            name: "Green Apple",
+            name: "Guernica",
             price: 50.00,
             rating: 4.2,
             img: product1
         },{
-            name: "Green Apple",
+            name: "The Night Watch",
             price: 50.00,
             rating: 4.2,
             img: product6
@@ -110,7 +110,7 @@ const PopularProducts = () => {
     return (
         <div className="my-20">
             <div className="flex justify-between mb-4 items-center">
-                <h2 className="text-xl md:text-3xl font-semibold">Popular Categories</h2>
+                <h2 className="text-xl md:text-3xl font-semibold">Popular Products</h2>
                 <Link onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} className="w-32 text-left text-green-500 flex justify-center items-center gap-2 relative font-medium" to={"/products"}>View All <BsArrowRight className={`absolute transition-all duration-75 ${hovered ? "left-[105px]" : "left-[100px]"}`}></BsArrowRight></Link>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
