@@ -17,20 +17,51 @@ const OrderDetails = () => {
                 <div className="grid grid-cols-6 gap-7">
                     <div className="col-span-4 h-[300px] grid grid-cols-2 border border-gray-300 rounded-lg">
                         <div className="border-r border-gray-300">
-          <h2 className=" text-gray-600 mb-5 font-medium">Billing Address</h2>
+          <h2 className=" text-gray-500 border-b border-gray-300 px-4 py-3 font-medium">Billing Address</h2>
+          <div className="p-4">
+          <div className="mb-4">
           <h2 className="text-xl font-medium">
             {user?.displayName || "Unknown"}
           </h2>
           <h3 className="text-gray-600 text-sm">
             4140 Parker Rd. Allentown, New Mexico 31134
           </h3>
-          <h3 className="text-gray-900 font-medium">{user?.email}</h3>
+          </div>
+          <div>
+          <h3 className="text-gray-600 text-sm">
+          Email
+          </h3>
+          <h3 className="text-gray-900 mb-2 font-medium">{user?.email}</h3>
+          <h3 className="text-gray-600 text-sm">
+            Phone
+          </h3>
           <h3 className="text-gray-900 font-medium">(671) 555-0110</h3>
-          <h2 className="text-lg cursor-pointer text-[#00B207] font-medium">
-            Edit Address
-          </h2>
+          </div>
+          </div>
                         </div>
-                        <div></div>
+                        <div className="">
+          <h2 className=" text-gray-500 border-b border-gray-300 px-4 py-3 font-medium">Shipping Address</h2>
+          <div className="p-4">
+          <div className="mb-4">
+          <h2 className="text-xl font-medium">
+            {user?.displayName || "Unknown"}
+          </h2>
+          <h3 className="text-gray-600 text-sm">
+            4140 Parker Rd. Allentown, New Mexico 31134
+          </h3>
+          </div>
+          <div>
+          <h3 className="text-gray-600 text-sm">
+          Email
+          </h3>
+          <h3 className="text-gray-900 mb-2 font-medium">{user?.email}</h3>
+          <h3 className="text-gray-600 text-sm">
+            Phone
+          </h3>
+          <h3 className="text-gray-900 font-medium">(671) 555-0110</h3>
+          </div>
+          </div>
+                        </div>
                     </div>
                     <div className="col-span-2 border border-gray-300 rounded-lg"></div>
                 </div>
