@@ -6,6 +6,7 @@ import Home from "../Pages/Home/Home/Home";
 import UserDashboard from "../Dashboard/UserDashboard/MainDashBoard/UserDashboard";
 import Profile from "../Dashboard/UserDashboard/Profile/Profile";
 import OrderHistory from "../Dashboard/UserDashboard/OrderHistory/OrderHistory";
+import OrderDetails from "../Dashboard/UserDashboard/OrderDetails/OrderDetails";
 
 
 const router = createBrowserRouter([
@@ -35,7 +36,13 @@ const router = createBrowserRouter([
           },
           {
             path: "orderhistory",
-            element: <OrderHistory></OrderHistory>
+            element: <OrderHistory></OrderHistory>,
+            children: [
+          {
+            path: "orderdetails",
+            element: <OrderDetails></OrderDetails>
+          },
+            ]
           },
           {
             path: "wishlist",
