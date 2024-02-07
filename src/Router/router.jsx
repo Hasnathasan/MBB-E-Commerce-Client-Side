@@ -6,7 +6,6 @@ import Home from "../Pages/Home/Home/Home";
 import UserDashboard from "../Dashboard/UserDashboard/MainDashBoard/UserDashboard";
 import Profile from "../Dashboard/UserDashboard/Profile/Profile";
 import OrderHistory from "../Dashboard/UserDashboard/OrderHistory/OrderHistory";
-import PrivateRoute from "../Components/PrivateRoute/PrivateRoute";
 
 
 const router = createBrowserRouter([
@@ -28,7 +27,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/userdashboard",
-        element: <PrivateRoute><UserDashboard></UserDashboard></PrivateRoute>,
+        element: <UserDashboard></UserDashboard>,
         children: [
           {
             path: "profile",
