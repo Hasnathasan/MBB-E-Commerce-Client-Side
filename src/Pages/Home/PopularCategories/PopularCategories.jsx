@@ -13,18 +13,18 @@ import { useState } from "react";
 const PopularCategories = () => {
   const [hovered, setHovered] = useState(false);
   const categories = [
-    {img:image1, name: "Drawing"},
-    {img:image2, name: "Sculpture"},
-    {img:image3, name: "Cubism"},
-    {img:image4, name: "Abstract art"},
-    {img:image5, name: "Graphic design"},
-    {img:image6, name: "Advertising"},
-    {img:image7, name: "Art Design"},
-    {img:image3, name: "Cubism"},
-    {img:image1, name: "Drawing"},
-    {img:image6, name: "Advertising"},
-    {img:image2, name: "Sculpture"},
-    {img:image5, name: "Graphic design"}
+    { img: image1, name: "Drawing" },
+    { img: image2, name: "Sculpture" },
+    { img: image3, name: "Cubism" },
+    { img: image4, name: "Abstract art" },
+    { img: image5, name: "Graphic design" },
+    { img: image6, name: "Advertising" },
+    { img: image7, name: "Art Design" },
+    { img: image3, name: "Cubism" },
+    { img: image1, name: "Drawing" },
+    { img: image6, name: "Advertising" },
+    { img: image2, name: "Sculpture" },
+    { img: image5, name: "Graphic design" },
   ];
   return (
     <div className="my-16">
