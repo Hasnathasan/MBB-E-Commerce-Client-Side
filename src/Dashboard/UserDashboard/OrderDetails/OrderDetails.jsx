@@ -1,5 +1,8 @@
 import { useContext } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
+import { Link } from "react-router-dom";
+import './OrderDetails.css';
+import product1 from '../../../assets/products1.png'
 
 const OrderDetails = () => {
   const { user } = useContext(AuthContext);
@@ -128,6 +131,25 @@ const OrderDetails = () => {
           </div>
         </div>
       </div>
+
+
+      <table className="overflow-auto w-full">
+        <tr>
+          <th>PRODUCT</th>
+          <th>PRICE</th>
+          <th>QUANTITY</th>
+          <th>SUBTOTAL</th>
+        </tr>
+        <tr>
+          <td className="flex items-center gap-2">
+            <img className="w-16" src={product1} alt="" />
+            <h3 className="font-semibold">The Starry Night</h3>
+          </td>
+          <td>$549</td>
+          <td>x5</td>
+          <td>$2638</td></tr>
+        
+      </table>
     </div>
   );
 };
