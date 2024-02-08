@@ -45,7 +45,7 @@ const AccountSettings = () => {
           />
           <button
             type="submit"
-            className=" text-white bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl text-sm px-5 py-2.5 text-center "
+            className=" text-white bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl text-sm px-7 py-2.5 text-center "
           >
             Save Changes
           </button>
@@ -56,7 +56,7 @@ const AccountSettings = () => {
                 <Avatar src={user?.photoURL} className="w-48 h-48 text-large" />
                 <button
             type="submit"
-            className=" text-white bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl text-sm px-5 py-2.5 text-center "
+            className=" text-white bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl text-sm px-7 py-2.5 text-center "
           >
             Chose Image
           </button>
@@ -67,7 +67,7 @@ const AccountSettings = () => {
         {/* Billing Information */}
         <div className={`border rounded-lg overflow-auto border-gray-300`}>
             <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">Billing Address</h4>
-            <div className="p-5">
+            <form className="p-5">
               <div className="grid grid-cols-2 gap-5">
               <div>
               <label htmlFor="name">Your Name</label>
@@ -104,21 +104,41 @@ const AccountSettings = () => {
             required
           />
               </div>
+              <div className="grid grid-cols-3 gap-5">
               <div>
-                <div className="mt-10 mb-4">
-                <Select
-            variant={"bordered"}
-            labelPlacement="outside"
-            label="Country / Region" 
-            placeholder="Select your country"
-            className="max-w-xs"
-            radius="sm" 
-          >
-              <SelectItem key={"cat"} value={"cat"}>
-                Cat
-              </SelectItem>
-          </Select>
-                </div>
+              <label htmlFor="country">Country / Region</label>
+          <input
+            type="text"
+            name="country"
+            id="country"
+            className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+            placeholder="Country"
+            required
+          />
+              </div>
+              <div>
+              <label htmlFor="states">States</label>
+          <input
+            type="text"
+            name="states"
+            id="states"
+            className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+            placeholder="States Name"
+            required
+          />
+              </div>
+              <div>
+              <label htmlFor="zipCode">Zip Code</label>
+          <input
+            type="number"
+            name="zipCode"
+            id="zipCode"
+            className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+            placeholder="Zip Code"
+            required
+          />
+              </div>
+              
               </div>
               <div className="grid grid-cols-2 gap-5">
               <div>
@@ -134,7 +154,7 @@ const AccountSettings = () => {
               </div>
               
               <div>
-              <label htmlFor="phoneNumber">Company Name <span className=" text-gray-700">(optional)</span></label>
+              <label htmlFor="phoneNumber">Phone Number</label>
           <input
             type="tel"
             name="phoneNumber"
@@ -146,7 +166,13 @@ const AccountSettings = () => {
               </div>
               
               </div>
-            </div>
+              <button
+            type="submit"
+            className=" text-white bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl text-sm px-7 py-2.5 text-center "
+          >
+            Save Changes
+          </button>
+            </form>
         </div>
         </div>
     );

@@ -36,7 +36,7 @@ const UserDashboard = () => {
           </NavLink>
           <NavLink
             className="p-4 flex items-center gap-3"
-            to="/userdashboard/shoppingcart"
+            to="/mycart"
           >
             <HiOutlineShoppingBag className="w-5 h-5"></HiOutlineShoppingBag>{" "}
             Shopping Cart

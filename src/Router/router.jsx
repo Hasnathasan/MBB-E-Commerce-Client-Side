@@ -8,6 +8,7 @@ import Profile from "../Dashboard/UserDashboard/Profile/Profile";
 import OrderHistory from "../Dashboard/UserDashboard/OrderHistory/OrderHistory";
 import OrderDetails from "../Dashboard/UserDashboard/OrderDetails/OrderDetails";
 import AccountSettings from "../Dashboard/UserDashboard/AccountSettings/AccountSettings";
+import Cart from "../Pages/Cart/Cart";
 
 
 const router = createBrowserRouter([
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <SignUp></SignUp>
+      },
+      {
+        path: "/mycart",
+        element: <Cart></Cart>
       },
       {
         path: "/userdashboard",
