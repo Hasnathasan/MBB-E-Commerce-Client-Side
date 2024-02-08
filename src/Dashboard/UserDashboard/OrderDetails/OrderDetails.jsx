@@ -15,6 +15,7 @@ const OrderDetails = () => {
       <div className="p-6">
         <div className="grid grid-cols-6 gap-7">
           <div className="col-span-4 h-[300px] grid grid-cols-2 border border-gray-300 rounded-lg">
+            {/* 1st column */}
             <div className="border-r border-gray-300">
               <h2 className=" text-gray-500 border-b border-gray-300 px-4 py-3 font-medium">
                 Billing Address
@@ -38,6 +39,8 @@ const OrderDetails = () => {
                 </div>
               </div>
             </div>
+
+            {/* 2nd column */}
             <div className="">
               <h2 className=" text-gray-500 border-b border-gray-300 px-4 py-3 font-medium">
                 Shipping Address
@@ -62,7 +65,67 @@ const OrderDetails = () => {
               </div>
             </div>
           </div>
-          <div className="col-span-2 border border-gray-300 rounded-lg"></div>
+
+
+
+{/* 3rd column */}
+          <div className="col-span-2 border border-gray-300 rounded-lg">
+            <div className="flex justify-between border-b border-gray-300 items-center gap-7 p-5">
+              <div>
+              <h3 className=" text-gray-500 text-sm font-medium">
+                Order ID:
+              </h3>
+              <h5 className="text-sm font-medium">
+              #4152
+              </h5>
+              </div>
+              <span>|</span>
+              <div>
+              <h3 className=" text-gray-500 text-sm font-medium">
+              Payment Method:
+              </h3>
+              <h5 className="text-sm font-medium">
+              STRIPE
+              </h5>
+              </div>
+            </div>
+
+
+            <div className="p-5">
+            <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
+              <h3 className=" text-gray-500 text-sm font-medium">
+              Subtotal:
+              </h3>
+              <h5 className="text-sm font-medium">
+              $5782
+              </h5>
+              </div>
+            <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
+              <h3 className=" text-gray-500 text-sm font-medium">
+              Discount:
+              </h3>
+              <h5 className="text-sm font-medium">
+              $57
+              </h5>
+              </div>
+            <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
+              <h3 className=" text-gray-500 text-sm font-medium">
+              Shipping:
+              </h3>
+              <h5 className="text-sm font-medium">
+              Free
+              </h5>
+              </div>
+            <div className="flex justify-between pt-2 pb-3 items-center">
+              <h3 className=" font-medium">
+              Total
+              </h3>
+              <h5 className="text-green-800 font-bold">
+             $5839
+              </h5>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
