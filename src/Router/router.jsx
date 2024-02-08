@@ -55,10 +55,6 @@ const router = createBrowserRouter([
             element: <Profile></Profile>
           },
           {
-            path: "shoppingcart",
-            element: <Profile></Profile>
-          },
-          {
             path: "settings",
             element: <AccountSettings></AccountSettings>
           },
