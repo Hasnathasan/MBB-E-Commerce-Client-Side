@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import { Link } from "react-router-dom";
-import './OrderDetails.css';
-import product1 from '../../../assets/products1.png'
+import "./OrderDetails.css";
+import product1 from "../../../assets/products1.png";
 
 const OrderDetails = () => {
   const { user } = useContext(AuthContext);
@@ -69,69 +69,51 @@ const OrderDetails = () => {
             </div>
           </div>
 
-
-
-{/* 3rd column */}
+          {/* 3rd column */}
           <div className="col-span-2 border border-gray-300 rounded-lg">
             <div className="flex justify-between border-b border-gray-300 items-center gap-7 p-5">
               <div>
-              <h3 className=" text-gray-500 text-sm font-medium">
-                Order ID:
-              </h3>
-              <h5 className="text-sm font-medium">
-              #4152
-              </h5>
+                <h3 className=" text-gray-500 text-sm font-medium">
+                  Order ID:
+                </h3>
+                <h5 className="text-sm font-medium">#4152</h5>
               </div>
               <span>|</span>
               <div>
-              <h3 className=" text-gray-500 text-sm font-medium">
-              Payment Method:
-              </h3>
-              <h5 className="text-sm font-medium">
-              STRIPE
-              </h5>
+                <h3 className=" text-gray-500 text-sm font-medium">
+                  Payment Method:
+                </h3>
+                <h5 className="text-sm font-medium">STRIPE</h5>
               </div>
             </div>
 
-
             <div className="p-5">
-            <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
-              <h3 className=" text-gray-500 text-sm font-medium">
-              Subtotal:
-              </h3>
-              <h5 className="text-sm font-medium">
-              $5782
-              </h5>
+              <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
+                <h3 className=" text-gray-500 text-sm font-medium">
+                  Subtotal:
+                </h3>
+                <h5 className="text-sm font-medium">$5782</h5>
               </div>
-            <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
-              <h3 className=" text-gray-500 text-sm font-medium">
-              Discount:
-              </h3>
-              <h5 className="text-sm font-medium">
-              $57
-              </h5>
+              <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
+                <h3 className=" text-gray-500 text-sm font-medium">
+                  Discount:
+                </h3>
+                <h5 className="text-sm font-medium">$57</h5>
               </div>
-            <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
-              <h3 className=" text-gray-500 text-sm font-medium">
-              Shipping:
-              </h3>
-              <h5 className="text-sm font-medium">
-              Free
-              </h5>
+              <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
+                <h3 className=" text-gray-500 text-sm font-medium">
+                  Shipping:
+                </h3>
+                <h5 className="text-sm font-medium">Free</h5>
               </div>
-            <div className="flex justify-between pt-2 pb-3 items-center">
-              <h3 className=" font-medium">
-              Total
-              </h3>
-              <h5 className="text-green-800 font-bold">
-             $5839
-              </h5>
+              <div className="flex justify-between pt-2 pb-3 items-center">
+                <h3 className=" font-medium">Total</h3>
+                <h5 className="text-green-800 font-bold">$5839</h5>
               </div>
             </div>
           </div>
         </div>
       </div>
-
 
       <table className="overflow-auto w-full">
         <tr>
@@ -147,8 +129,26 @@ const OrderDetails = () => {
           </td>
           <td>$549</td>
           <td>x5</td>
-          <td>$2638</td></tr>
-        
+          <td>$2638</td>
+        </tr>
+        <tr>
+          <td className="flex items-center gap-2">
+            <img className="w-16" src={product1} alt="" />
+            <h3 className="font-semibold">The Starry Night</h3>
+          </td>
+          <td>$549</td>
+          <td>x5</td>
+          <td>$2638</td>
+        </tr>
+        <tr>
+          <td className="flex items-center gap-2">
+            <img className="w-16" src={product1} alt="" />
+            <h3 className="font-semibold">The Starry Night</h3>
+          </td>
+          <td>$549</td>
+          <td>x5</td>
+          <td>$2638</td>
+        </tr>
       </table>
     </div>
   );
