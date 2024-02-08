@@ -7,6 +7,7 @@ import UserDashboard from "../Dashboard/UserDashboard/MainDashBoard/UserDashboar
 import Profile from "../Dashboard/UserDashboard/Profile/Profile";
 import OrderHistory from "../Dashboard/UserDashboard/OrderHistory/OrderHistory";
 import OrderDetails from "../Dashboard/UserDashboard/OrderDetails/OrderDetails";
+import AccountSettings from "../Dashboard/UserDashboard/AccountSettings/AccountSettings";
 
 
 const router = createBrowserRouter([
@@ -54,7 +55,7 @@ const router = createBrowserRouter([
           },
           {
             path: "settings",
-            element: <Profile></Profile>
+            element: <AccountSettings></AccountSettings>
           },
         ]
       }
