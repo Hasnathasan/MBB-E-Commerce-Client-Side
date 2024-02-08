@@ -1,13 +1,14 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
 import { AuthContext } from "../../../Providers/AuthProvider";
-import { Avatar } from "@nextui-org/react";
+import { Avatar, Select, SelectItem } from "@nextui-org/react";
 
 
 const AccountSettings = () => {
     const {user} = useContext(AuthContext);
     return (
-        <div className={`border rounded-lg overflow-auto border-gray-300`}>
+        <div>
+            {/* Account Information */}
+            <div className={`border rounded-lg overflow-auto border-gray-300 mb-6`}>
             <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">Account Settings</h4>
             <div className="p-5 grid grid-cols-5 gap-5 items-center justify-center">
                 <div className="col-span-3">
@@ -24,22 +25,22 @@ const AccountSettings = () => {
             placeholder="Name"
             required
           />
-          <label htmlFor="name">Email Address</label>
+          <label htmlFor="email">Email Address</label>
           <input
-            type="text"
-            name="name"
-            id="name"
+            type="email"
+            name="email"
+            id="email"
             className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
-            placeholder="Name"
+            placeholder="Email Address"
             required
           />
-          <label htmlFor="name">Phone Number</label>
+          <label htmlFor="tel">Phone Number</label>
           <input
-            type="text"
-            name="name"
-            id="name"
+            type="tel"
+            name="tel"
+            id="tel"
             className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
-            placeholder="Name"
+            placeholder="Your Phone Number"
             required
           />
           <button
@@ -61,6 +62,92 @@ const AccountSettings = () => {
           </button>
                 </div>
             </div>
+        </div>
+
+        {/* Billing Information */}
+        <div className={`border rounded-lg overflow-auto border-gray-300`}>
+            <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">Billing Address</h4>
+            <div className="p-5">
+              <div className="grid grid-cols-2 gap-5">
+              <div>
+              <label htmlFor="name">Your Name</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+            placeholder="Name"
+            required
+          />
+              </div>
+              <div>
+              <label htmlFor="companyName">Company Name <span className=" text-gray-700">(optional)</span></label>
+          <input
+            type="text"
+            name="companyName"
+            id="companyName"
+            className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+            placeholder="companyName"
+            required
+          />
+              </div>
+              
+              </div>
+              <div>
+              <label htmlFor="address">Street Address</label>
+          <input
+            type="text"
+            name="address"
+            id="address"
+            className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+            placeholder="Street Address"
+            required
+          />
+              </div>
+              <div>
+                <div className="mt-10 mb-4">
+                <Select
+            variant={"bordered"}
+            labelPlacement="outside"
+            label="Country / Region" 
+            placeholder="Select your country"
+            className="max-w-xs"
+            radius="sm" 
+          >
+              <SelectItem key={"cat"} value={"cat"}>
+                Cat
+              </SelectItem>
+          </Select>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-5">
+              <div>
+              <label htmlFor="email">Email Address</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+            placeholder="Email Address"
+            required
+          />
+              </div>
+              
+              <div>
+              <label htmlFor="phoneNumber">Company Name <span className=" text-gray-700">(optional)</span></label>
+          <input
+            type="tel"
+            name="phoneNumber"
+            id="phoneNumber"
+            className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+            placeholder="Phone Number"
+            required
+          />
+              </div>
+              
+              </div>
+            </div>
+        </div>
         </div>
     );
 };
