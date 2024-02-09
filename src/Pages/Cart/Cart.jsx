@@ -5,7 +5,7 @@ import { FiMinus, FiPlus } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
 const Cart = () => {
   return (
-    <div className="grid mx-5 mt-7 grid-cols-12 mb-40">
+    <div className="grid mx-8 mt-7 grid-cols-12 gap-10 mb-40">
       <div className=" border col-span-8 border-gray-300 rounded-lg overflow-hidden">
         <table className="overflow-auto w-full">
           <tr className="border-b border-gray-300">
@@ -37,14 +37,48 @@ const Cart = () => {
             </td>
             <td>
               <div className="font-semibold flex justify-between items-center">
-              <h4>$2639</h4>
-              <Button size="sm" radius="full" variant="bordered" isIconOnly>
-                <RxCross2></RxCross2>
-              </Button>{" "}
+                <h4>$2639</h4>
+                <Button size="sm" radius="full" variant="bordered" isIconOnly>
+                  <RxCross2></RxCross2>
+                </Button>{" "}
               </div>
             </td>
           </tr>
         </table>
+      </div>
+      <div className="col-span-4 border border-gray-300 rounded-lg">
+        <div className="flex justify-between border-b border-gray-300 items-center gap-7 p-5">
+          <div>
+            <h3 className=" text-gray-500 text-sm font-medium">Order ID:</h3>
+            <h5 className="text-sm font-medium">#4152</h5>
+          </div>
+          <span>|</span>
+          <div>
+            <h3 className=" text-gray-500 text-sm font-medium">
+              Payment Method:
+            </h3>
+            <h5 className="text-sm font-medium">STRIPE</h5>
+          </div>
+        </div>
+
+        <div className="p-5">
+          <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
+            <h3 className=" text-gray-500 text-sm font-medium">Subtotal:</h3>
+            <h5 className="text-sm font-medium">$5782</h5>
+          </div>
+          <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
+            <h3 className=" text-gray-500 text-sm font-medium">Discount:</h3>
+            <h5 className="text-sm font-medium">$57</h5>
+          </div>
+          <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
+            <h3 className=" text-gray-500 text-sm font-medium">Shipping:</h3>
+            <h5 className="text-sm font-medium">Free</h5>
+          </div>
+          <div className="flex justify-between pt-2 pb-3 items-center">
+            <h3 className=" font-medium">Total</h3>
+            <h5 className="text-green-800 font-bold">$5839</h5>
+          </div>
+        </div>
       </div>
     </div>
   );
