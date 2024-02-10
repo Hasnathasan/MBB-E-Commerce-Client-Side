@@ -4,9 +4,10 @@ import { IoEyeOffSharp, IoEyeOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const SignUp = () => {
-  const { signUpWithEmail } = useContext(AuthContext);
+  const { signUpWithEmail, logOut } = useContext(AuthContext);
   const { register, handleSubmit, reset } = useForm();
   const [passhide, setPasshide] = useState(true);
   const [passhide2, setPasshide2] = useState(true);
@@ -16,16 +17,26 @@ const SignUp = () => {
     if (password !== confirmPass) {
       return Swal.fire("Password didn't match", "Try again", "error");
     }
+    const newUser = {email, userRole: "user", userAddress: "", userName: "", userPhoneNumber: "", userPhoto: "", billingInfo: {}};
     signUpWithEmail(email, password)
       .then((result) => {
         console.log(result.user);
         reset();
-        Swal.fire(
-          "Sign Up Successfull Successfull",
-          "User has logged in successfully",
-          "success"
-        );
-        navigate("/");
+        axios.post("http://localhost:8000/users", newUser).then((data) => {
+          if (data.data.insertedId) {
+            logOut();
+            reset();
+            Swal.fire(
+              "Sign Up Successfull",
+              "Now Login to Continue",
+              "success"
+            );
+            // setLoading(false);
+            // setError("");
+            navigate("/signin");
+          }
+        });
+        
         // navigate(from, { replace: true });
       })
       .catch((error) => {
