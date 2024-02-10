@@ -9,6 +9,7 @@ import {
   signOut,
 } from "firebase/auth";
 import app from "../Firebase/Firebase.config";
+import axios from "axios";
 // import axios from "axios";
 
 export const AuthContext = createContext(null);
@@ -39,16 +40,17 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (loggedUser) => {
       setUser(loggedUser);
-      //   if(loggedUser){
-      //     axios.post("https://summer-camp-server-black.vercel.app/jwt",{email: loggedUser?.email})
-      //     .then(data => {
-      //       const token = data.data.token;
-      //       localStorage.setItem("access-token", token)
-      //     })
-      //   }
-      //     else{
-      //       localStorage.removeItem("access-token")
-      //     }
+        if(loggedUser){
+          axios.post("http://localhost:8000/jwt",{email: loggedUser?.email})
+          .then(data => {
+            const token = data.data.token;
+            console.log(token);
+            localStorage.setItem("access-token", token)
+          })
+        }
+          else{
+            localStorage.removeItem("access-token")
+          }
       setLoading(false);
     });
     return () => {

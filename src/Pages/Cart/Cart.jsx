@@ -5,7 +5,7 @@ import { FiMinus, FiPlus } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
 const Cart = () => {
   return (
-    <div className="grid mx-8 mt-7 grid-cols-12 gap-10 mb-40">
+    <div className="grid mx-8 mt-7 justify-start grid-cols-12 gap-10 mb-40">
       <div className=" border col-span-8 border-gray-300 rounded-lg overflow-hidden">
         <table className="overflow-auto w-full">
           <tr className="border-b border-gray-300">
@@ -47,21 +47,9 @@ const Cart = () => {
         </table>
       </div>
       <div className="col-span-4 border border-gray-300 rounded-lg">
-        <div className="flex justify-between border-b border-gray-300 items-center gap-7 p-5">
-          <div>
-            <h3 className=" text-gray-500 text-sm font-medium">Order ID:</h3>
-            <h5 className="text-sm font-medium">#4152</h5>
-          </div>
-          <span>|</span>
-          <div>
-            <h3 className=" text-gray-500 text-sm font-medium">
-              Payment Method:
-            </h3>
-            <h5 className="text-sm font-medium">STRIPE</h5>
-          </div>
-        </div>
+        <h2 className="text-lg font-medium p-5">Cart Total</h2>
 
-        <div className="p-5">
+        <div className="px-5 pb-5">
           <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
             <h3 className=" text-gray-500 text-sm font-medium">Subtotal:</h3>
             <h5 className="text-sm font-medium">$5782</h5>
@@ -78,6 +66,12 @@ const Cart = () => {
             <h3 className=" font-medium">Total</h3>
             <h5 className="text-green-800 font-bold">$5839</h5>
           </div>
+          <button
+            type="submit"
+            className=" text-white w-full mt-2 bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl text-sm px-7 py-2.5 text-center "
+          >
+            Procced to CheckOut
+          </button>
         </div>
       </div>
     </div>

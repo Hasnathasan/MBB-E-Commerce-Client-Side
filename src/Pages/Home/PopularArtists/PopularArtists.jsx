@@ -1,6 +1,4 @@
-import { useState } from "react";
-import { BsArrowRight } from "react-icons/bs";
-import { Link } from "react-router-dom";
+
 import PopularArtistsCard from "./PopularArtistsCard";
 
 import person1 from "../../../assets/person1.webp";
