@@ -17,7 +17,15 @@ const SignUp = () => {
     if (password !== confirmPass) {
       return Swal.fire("Password didn't match", "Try again", "error");
     }
-    const newUser = {email, userRole: "user", userAddress: "", userName: "", userPhoneNumber: "", userPhoto: "", billingInfo: {}};
+    const newUser = {
+      email,
+      userRole: "user",
+      userAddress: "",
+      userName: "",
+      userPhoneNumber: "",
+      userPhoto: "",
+      billingInfo: {},
+    };
     signUpWithEmail(email, password)
       .then((result) => {
         console.log(result.user);
@@ -36,7 +44,7 @@ const SignUp = () => {
             navigate("/signin");
           }
         });
-        
+
         // navigate(from, { replace: true });
       })
       .catch((error) => {
