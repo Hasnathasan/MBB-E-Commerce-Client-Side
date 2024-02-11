@@ -10,7 +10,7 @@ import { TbLogout } from "react-icons/tb";
 import { IoSettingsOutline } from "react-icons/io5";
 const UserDashboard = () => {
   const { user, logOut } = useContext(AuthContext);
-  console.log(user);
+  // console.log(user);
   return (
     <div className="grid grid-cols-12 mx-5 mt-8 mb-24">
       <div className="col-span-3 mr-9 hidden py-4 bg-white border rounded-lg border-gray-200 md:inline">

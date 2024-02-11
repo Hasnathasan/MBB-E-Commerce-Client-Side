@@ -8,9 +8,8 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import app from "../Firebase/Firebase.config";
 import axios from "axios";
-// import axios from "axios";
+import app from "../Firebase/Firebase.config";
 
 export const AuthContext = createContext(null);
 // eslint-disable-next-line react/prop-types
@@ -37,9 +36,18 @@ const AuthProvider = ({ children }) => {
       .then(() => {})
       .catch((error) => console.log(error.message));
   };
+  const info = {
+    user,
+    loading,
+    loginWithEmail,
+    signUpWithEmail,
+    googleSignIn,
+    logOut,
+  };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (loggedUser) => {
       setUser(loggedUser);
+      console.log(loggedUser);
         if(loggedUser){
           axios.post("http://localhost:8000/jwt",{email: loggedUser?.email})
           .then(data => {
@@ -57,14 +65,7 @@ const AuthProvider = ({ children }) => {
       return unsubscribe;
     };
   }, [auth]);
-  const info = {
-    user,
-    loading,
-    loginWithEmail,
-    signUpWithEmail,
-    googleSignIn,
-    logOut,
-  };
+ 
   return <AuthContext.Provider value={info}>{children}</AuthContext.Provider>;
 };
 

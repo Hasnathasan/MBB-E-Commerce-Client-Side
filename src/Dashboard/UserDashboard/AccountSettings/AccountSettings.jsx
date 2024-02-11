@@ -1,9 +1,13 @@
-import { useContext } from "react";
-import { AuthContext } from "../../../Providers/AuthProvider";
+
 import { Avatar } from "@nextui-org/react";
+import useUser from "../../../Hooks/useUser";
 
 const AccountSettings = () => {
-  const { user } = useContext(AuthContext);
+  const [userData, isUserDataLoading] = useUser();
+  if(isUserDataLoading){
+    return <h1>Loading......</h1>;
+  }
+  console.log(userData);
   return (
     <div>
       {/* Account Information */}
@@ -22,6 +26,7 @@ const AccountSettings = () => {
                 id="name"
                 className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
                 placeholder="Name"
+                defaultValue={userData?.userName}
                 required
               />
               <label htmlFor="email">Email Address</label>
@@ -31,6 +36,7 @@ const AccountSettings = () => {
                 id="email"
                 className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
                 placeholder="Email Address"
+                defaultValue={userData?.email}
                 required
               />
               <label htmlFor="tel">Phone Number</label>
@@ -40,6 +46,7 @@ const AccountSettings = () => {
                 id="tel"
                 className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
                 placeholder="Your Phone Number"
+                defaultValue={userData?.userPhoneNumber}
                 required
               />
               <button
@@ -51,7 +58,7 @@ const AccountSettings = () => {
             </form>
           </div>
           <div className="flex justify-center col-span-2 items-center gap-5 flex-col">
-            <Avatar src={user?.photoURL} className="w-48 h-48 text-large" />
+            <Avatar src={userData?.userPhoto} className="w-48 h-48 text-large" />
             <button
               type="submit"
               className=" text-white bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl text-sm px-7 py-2.5 text-center "
