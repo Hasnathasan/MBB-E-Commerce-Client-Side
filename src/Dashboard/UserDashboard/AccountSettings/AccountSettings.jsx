@@ -1,13 +1,40 @@
 
 import { Avatar } from "@nextui-org/react";
 import useUser from "../../../Hooks/useUser";
+import axios from "axios";
+import { useContext } from "react";
+import { AuthContext } from "../../../Providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const AccountSettings = () => {
+  const {user} = useContext(AuthContext);
   const [userData, isUserDataLoading] = useUser();
   if(isUserDataLoading){
     return <h1>Loading......</h1>;
   }
   console.log(userData);
+  const handleUserUpdate = e => {
+    e.preventDefault();
+    const form = e.target;
+    const updatedName = form.name.value;
+    const updatedNum = form.phoneNumber.value;
+    console.log(updatedName, updatedNum);
+    axios
+      .patch(`http://localhost:8000/userUpdate/${user?.email}`, {updatedName, updatedNum})
+      .then((res) => {
+        console.log(res.data);
+        if(res.data.modifiedCount > 0){
+          Swal.fire(
+            "Congratulation",
+            "Successfully updated user data",
+            "success"
+          );
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
   return (
     <div>
       {/* Account Information */}
@@ -17,7 +44,7 @@ const AccountSettings = () => {
         </h4>
         <div className="p-5 grid grid-cols-5 gap-5 items-center justify-center">
           <div className="col-span-3">
-            <form className="">
+            <form onSubmit={handleUserUpdate} className="">
               {/* <h3 className="text-base text-red-600">{error}</h3> */}
               <label htmlFor="name">Your Name</label>
               <input
@@ -37,13 +64,14 @@ const AccountSettings = () => {
                 className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
                 placeholder="Email Address"
                 defaultValue={userData?.email}
+                disabled
                 required
               />
               <label htmlFor="tel">Phone Number</label>
               <input
                 type="tel"
-                name="tel"
-                id="tel"
+                name="phoneNumber"
+                id="phoneNumber"
                 className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
                 placeholder="Your Phone Number"
                 defaultValue={userData?.userPhoneNumber}
