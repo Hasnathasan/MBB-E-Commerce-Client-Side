@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
-import { Avatar, Select, SelectItem } from "@nextui-org/react";
+import { Avatar } from "@nextui-org/react";
 
 const AccountSettings = () => {
   const { user } = useContext(AuthContext);
