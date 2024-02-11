@@ -26,7 +26,37 @@ const AccountSettings = () => {
         if(res.data.modifiedCount > 0){
           Swal.fire(
             "Congratulation",
-            "Successfully updated user data",
+            "Successfully Updated Your Data",
+            "success"
+          );
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+
+
+  const handleBillingUpdate = e => {
+    e.preventDefault();
+    const form = e.target;
+    const updatedName = form.name.value;
+    const companyName = form.companyName.value;
+    const country = form.country.value;
+    const states = form.states.value;
+    const updatedAddress = form.address.value;
+    const zipCode = form.zipCode.value;
+    const updatedNum = form.phoneNumber.value;
+    const billingInfo = {updatedName, companyName, country, states, updatedAddress, zipCode, updatedNum};
+    axios
+      .patch(`http://localhost:8000/userBillingInfoUpdate/${user?.email}`, billingInfo)
+      .then((res) => {
+        console.log(res.data);
+        if(res.data.modifiedCount > 0){
+          Swal.fire(
+            "Congratulation",
+            "Successfully Updated Your Billing Info",
             "success"
           );
         }
@@ -102,7 +132,7 @@ const AccountSettings = () => {
         <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">
           Billing Address
         </h4>
-        <form className="p-5">
+        <form onSubmit={handleBillingUpdate} className="p-5">
           <div className="grid grid-cols-2 gap-5">
             <div>
               <label htmlFor="name">Your Name</label>
@@ -112,6 +142,7 @@ const AccountSettings = () => {
                 id="name"
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                 placeholder="Name"
+                defaultValue={userData?.userName}
                 required
               />
             </div>
