@@ -156,6 +156,7 @@ const AccountSettings = () => {
                 id="companyName"
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                 placeholder="companyName"
+                defaultValue={userData?.billingInfo?.companyName}
                 required
               />
             </div>
@@ -168,6 +169,7 @@ const AccountSettings = () => {
               id="address"
               className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
               placeholder="Street Address"
+              defaultValue={userData?.billingInfo?.address}
               required
             />
           </div>
@@ -180,6 +182,7 @@ const AccountSettings = () => {
                 id="country"
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                 placeholder="Country"
+                defaultValue={userData?.billingInfo?.country}
                 required
               />
             </div>
@@ -191,6 +194,7 @@ const AccountSettings = () => {
                 id="states"
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                 placeholder="States Name"
+                defaultValue={userData?.billingInfo?.states}
                 required
               />
             </div>
@@ -202,6 +206,7 @@ const AccountSettings = () => {
                 id="zipCode"
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                 placeholder="Zip Code"
+                defaultValue={userData?.billingInfo?.zipCode}
                 required
               />
             </div>
@@ -215,6 +220,7 @@ const AccountSettings = () => {
                 id="email"
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                 placeholder="Email Address"
+                defaultValue={userData?.email}
                 required
               />
             </div>
@@ -227,6 +233,7 @@ const AccountSettings = () => {
                 id="phoneNumber"
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                 placeholder="Phone Number"
+                defaultValue={userData?.userPhoneNumber}
                 required
               />
             </div>
