@@ -1,16 +1,18 @@
 import { useContext } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import { Avatar } from "@nextui-org/react";
+import useUser from "../../../Hooks/useUser";
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
+  const [userData, isUserDataLoadin] = useUser();
   return (
     <div>
       <div className="grid grid-cols-7 gap-6 justify-center">
         <div className="border col-span-4 flex flex-col justify-center items-center gap-2 h-[278px] border-gray-300 rounded-lg">
-          <Avatar src={user?.photoURL} className="w-28 h-28 text-large" />
+          <Avatar src={userData?.userPhoto} className="w-28 h-28 text-large" />
           <h2 className="text-xl font-medium">
-            {user?.displayName || "Unknown"}
+            {userData?.userName || "Unknown"}
           </h2>
           <h3 className="text-gray-600">Customer</h3>
           <h2 className="text-lg cursor-pointer text-[#00B207] font-medium">
@@ -20,13 +22,15 @@ const Profile = () => {
         <div className="border col-span-3 p-7 space-y-3 border-gray-300 rounded-lg">
           <h2 className=" text-gray-600 mb-5 font-medium">Billing Address</h2>
           <h2 className="text-xl font-medium">
-            {user?.displayName || "Unknown"}
+            {userData?.userName || "Unknown"}
           </h2>
           <h3 className="text-gray-600 text-sm">
-            4140 Parker Rd. Allentown, New Mexico 31134
+            {userData?.billingInfo?.address}
           </h3>
-          <h3 className="text-gray-900 font-medium">{user?.email}</h3>
-          <h3 className="text-gray-900 font-medium">(671) 555-0110</h3>
+          <h3 className="text-gray-900 font-medium">{userData?.email}</h3>
+          <h3 className="text-gray-900 font-medium">
+            {userData?.userPhoneNumber}
+          </h3>
           <h2 className="text-lg cursor-pointer text-[#00B207] font-medium">
             Edit Address
           </h2>

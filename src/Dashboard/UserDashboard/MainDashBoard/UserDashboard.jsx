@@ -8,8 +8,10 @@ import orderHistory from "../../../assets/orderhistory.png";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { TbLogout } from "react-icons/tb";
 import { IoSettingsOutline } from "react-icons/io5";
+import useUser from "../../../Hooks/useUser";
 const UserDashboard = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [userData, isUserDataLoading] = useUser();
   // console.log(user);
   return (
     <div className="grid grid-cols-12 mx-5 mt-8 mb-24">
