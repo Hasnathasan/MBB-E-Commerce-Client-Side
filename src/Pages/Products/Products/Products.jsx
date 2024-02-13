@@ -12,6 +12,8 @@ import product9 from "../../../assets/products9.png";
 import product10 from "../../../assets/products10.png";
 import PopularProductsCard from "../../Home/PopularProducts/PopularProductsCard";
 import { useState } from "react";
+import Rating from "react-rating";
+import { IoStarOutline, IoStarSharp } from "react-icons/io5";
 const Products = () => {
 
     const products = [
@@ -111,7 +113,7 @@ const Products = () => {
     <>
       <div className="grid grid-cols-12 mx-5 mt-8 mb-24">
       <div className="col-span-3 mr-5 hidden py-4 md:inline">
-        <Accordion itemClasses={{ title: "font-bold text-xl",}} showDivider={false} selectionMode="multiple"  defaultExpandedKeys={["1","2", "3"]}>
+        <Accordion itemClasses={{ title: "font-bold text-xl",}} selectionMode="multiple"  defaultExpandedKeys={["1","2", "3"]}>
       <AccordionItem key="1" aria-label="Accordion 1" title="All Categories">
       <RadioGroup
             // value={filter}
@@ -133,9 +135,8 @@ const Products = () => {
             </Radio>
           </RadioGroup>
       </AccordionItem>
-      <AccordionItem key="2" aria-label="Accordion 2" title="Accordion 2">
-      <div className="overflow-hidden">
-        <Typography className="mb-1" variant="h6">Price</Typography>
+      <AccordionItem key="2" aria-label="Accordion 2" title="Price">
+      <div className="overflow-hidden pb-2">
       <Slider 
       size="sm"
       color="success"
@@ -146,36 +147,82 @@ const Products = () => {
         onChange={setValue}
         className="max-w-[100%]"
       />
-      <p className="text-default-500 font-medium text-small">
+      <p className="text-default-500 font-medium mt-2 text-small">
         Price: <span className="font-medium text-gray-900">{Array.isArray(value) && value.map((b) => `$${b}`).join(" – ")}</span>
       </p>
           </div>
       </AccordionItem>
-      <AccordionItem key="3" aria-label="Accordion 3" title="Accordion 3">
-      {/* <RadioGroup
-            // value={filter}
-            // onValueChange={setFilter}
+      <AccordionItem key="3" aria-label="Accordion 3" title="Rating">
+      <RadioGroup
             color="success"
             className="!mb-5"
-            
           >
-            <Radio className="mb-[1px]" value="priceHighToLow">
-              <Typography variant="small">Price High to Low</Typography>
+            <Radio className="mb-[1px]" value="rating5">
+            <div className=" flex items-start gap-2">
+            <Rating
+                  className="text-orange-600"
+                  emptySymbol={<IoStarSharp className="text-gray-400"></IoStarSharp>}
+                  fullSymbol={<IoStarSharp></IoStarSharp>}
+                  fractions={2}
+                  initialRating={5}
+                  readonly
+                />
+                <span className="text-sm font-medium">5.0</span>
+            </div>
             </Radio>
-            <Radio className="mb-[1px]" value="priceLowToHigh">
-              <Typography variant="small">Price Low to High</Typography>
+            <Radio className="mb-[1px]" value="rating4">
+            <div className=" flex items-start gap-2">
+            <Rating
+                  className="text-orange-600"
+                  emptySymbol={<IoStarSharp className="text-gray-400"></IoStarSharp>}
+                  fullSymbol={<IoStarSharp></IoStarSharp>}
+                  fractions={2}
+                  initialRating={4}
+                  readonly
+                />
+                <span className="text-sm font-medium">4.0 & up</span>
+            </div>
             </Radio>
-            <Radio className="mb-[1px]" value="ratingHighToLow">
-              <Typography variant="small">Rating High to Low</Typography>
+            <Radio className="mb-[1px]" value="rating3">
+            <div className=" flex items-start gap-2">
+            <Rating
+                  className="text-orange-600"
+                  emptySymbol={<IoStarSharp className="text-gray-400"></IoStarSharp>}
+                  fullSymbol={<IoStarSharp></IoStarSharp>}
+                  fractions={2}
+                  initialRating={3}
+                  readonly
+                />
+                <span className="text-sm font-medium">3.0 & up</span>
+            </div>
             </Radio>
-            <Radio value="ratingLowToHigh">
-              <Typography variant="small">Rating Low to High</Typography>
+            <Radio className="mb-[1px]" value="rating2">
+            <div className=" flex items-start gap-2">
+            <Rating
+                  className="text-orange-600"
+                  emptySymbol={<IoStarSharp className="text-gray-400"></IoStarSharp>}
+                  fullSymbol={<IoStarSharp></IoStarSharp>}
+                  fractions={2}
+                  initialRating={2}
+                  readonly
+                />
+                <span className="text-sm font-medium">2.0 & up</span>
+            </div>
             </Radio>
-          </RadioGroup> */}
-          <input type="radio" name="Hasnat" />
-          <input type="radio" name="Hasnat" />
-          <input type="radio" name="Hasnat" />
-          <input type="radio" name="Hasnat" />
+            <Radio value="rating1">
+            <div className=" flex items-start gap-2">
+            <Rating
+                  className="text-orange-600"
+                  emptySymbol={<IoStarSharp className="text-gray-400"></IoStarSharp>}
+                  fullSymbol={<IoStarSharp></IoStarSharp>}
+                  fractions={2}
+                  initialRating={1}
+                  readonly
+                />
+                <span className="text-sm font-medium">1.0 & up</span>
+            </div>
+            </Radio>
+      </RadioGroup>
       </AccordionItem>
     </Accordion>
       </div>
