@@ -9,6 +9,7 @@ import OrderHistory from "../Dashboard/UserDashboard/OrderHistory/OrderHistory";
 import OrderDetails from "../Dashboard/UserDashboard/OrderDetails/OrderDetails";
 import AccountSettings from "../Dashboard/UserDashboard/AccountSettings/AccountSettings";
 import Cart from "../Pages/Cart/Cart";
+import Products from "../Pages/Products/Products/Products";
 
 
 const router = createBrowserRouter([
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>
+      },
+      {
+        path: "/products",
+        element: <Products></Products>
       },
       {
         path: "/signin",

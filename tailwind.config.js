@@ -10,6 +10,6 @@ module.exports = withMT({
   theme: {
     extend: {},
   },
-  plugins: [nextui()],
+  plugins: [nextui(), require("daisyui")],
 });
 
