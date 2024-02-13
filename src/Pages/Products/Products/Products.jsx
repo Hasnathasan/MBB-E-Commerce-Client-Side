@@ -233,7 +233,7 @@ const Products = () => {
         <Button className="text-white bg-[#00B207]" radius="full">
         Healthy
       </Button> 
-        <Button radius="full">
+        <Button className="hover:bg-[#02a108] hover:text-white" radius="full">
         Low fat
       </Button> 
         <Button radius="full">
@@ -277,7 +277,7 @@ const Products = () => {
         {/* <Outlet></Outlet> */}
         <div className="flex justify-between mb-5 items-center">
           <div className="flex justify-center gap-2 items-center">
-            <h3 className="text-nowrap">Sort By:</h3>
+            <h3 className="text-nowrap text-sm text-gray-700">Sort By:</h3>
             <Select size="md" label="Select">
         <Option>Newest</Option>
         <Option>Oldest</Option>

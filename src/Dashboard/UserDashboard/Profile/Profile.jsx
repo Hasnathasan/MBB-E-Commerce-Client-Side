@@ -1,10 +1,8 @@
-import { useContext } from "react";
-import { AuthContext } from "../../../Providers/AuthProvider";
+
 import { Avatar } from "@nextui-org/react";
 import useUser from "../../../Hooks/useUser";
 
 const Profile = () => {
-  const { user } = useContext(AuthContext);
   const [userData, isUserDataLoadin] = useUser();
   return (
     <div>

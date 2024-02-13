@@ -99,7 +99,7 @@ const NavigationBar = () => {
         <div className="flex justify-between items-center px-8 py-2">
           <div className="flex justify-center items-center gap-8 text-sm font-medium">
             <NavLink to={"/"}>Home</NavLink>
-            <NavLink to={"/shop"}>Shop</NavLink>
+            <NavLink to={"/products"}>Products</NavLink>
             <NavLink to={"/pages"}>Pages</NavLink>
             <NavLink to={"/blog"}>Blog</NavLink>
             <NavLink to={"/aboutus"}>About Us</NavLink>
