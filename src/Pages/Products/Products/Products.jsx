@@ -1,5 +1,5 @@
-import { Accordion, AccordionItem, Radio, RadioGroup, Slider } from "@nextui-org/react";
-import { Typography } from "@material-tailwind/react";
+import { Accordion, AccordionItem, Button, Radio, RadioGroup, Slider } from "@nextui-org/react";
+import { Option, Select, Typography } from "@material-tailwind/react";
 import product1 from "../../../assets/products1.png";
 import product2 from "../../../assets/products2.png";
 import product3 from "../../../assets/products3.png";
@@ -13,7 +13,8 @@ import product10 from "../../../assets/products10.png";
 import PopularProductsCard from "../../Home/PopularProducts/PopularProductsCard";
 import { useState } from "react";
 import Rating from "react-rating";
-import { IoStarOutline, IoStarSharp } from "react-icons/io5";
+import { IoStarSharp } from "react-icons/io5";
+import { LuSettings2 } from "react-icons/lu";
 const Products = () => {
 
     const products = [
@@ -111,8 +112,11 @@ const Products = () => {
     const [value, setValue] = useState([100, 300]);
   return (
     <>
-      <div className="grid grid-cols-12 mx-5 mt-8 mb-24">
+      <div className="grid grid-cols-12 mx-8 mt-8 mb-24">
       <div className="col-span-3 mr-5 hidden py-4 md:inline">
+      <Button className="text-white bg-[#00B207]" radius="full" color="success">
+        Filter <LuSettings2 className="w-5 h-5" />
+      </Button> 
         <Accordion itemClasses={{ title: "font-bold text-xl",}} selectionMode="multiple"  defaultExpandedKeys={["1","2", "3"]}>
       <AccordionItem key="1" aria-label="Accordion 1" title="All Categories">
       <RadioGroup
@@ -226,8 +230,19 @@ const Products = () => {
       </AccordionItem>
     </Accordion>
       </div>
-      <div className="col-span-12 md:col-span-9">
+      <div className="col-span-12 py-4 md:col-span-9">
         {/* <Outlet></Outlet> */}
+        <div className="flex justify-between mb-5 items-center">
+          <div className="flex justify-center gap-2 items-center">
+            <h3 className="text-nowrap">Sort By:</h3>
+            <Select size="md" label="Select">
+        <Option>Newest</Option>
+        <Option>Oldest</Option>
+        <Option>A to Z</Option>
+      </Select>
+          </div>
+      <h3 className="text-gray-800 text-sm"><span className="font-medium !text-gray-900">{products?.length}</span> Results Found</h3>
+        </div>
         <div className="grid grid-cols-2 px-14 sm:grid-cols-2 gap-8 justify-center items-center lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4">
         {products?.map((product) => (
           <PopularProductsCard
