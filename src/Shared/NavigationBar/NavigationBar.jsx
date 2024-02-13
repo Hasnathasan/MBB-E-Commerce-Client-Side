@@ -60,12 +60,12 @@ const NavigationBar = () => {
 
       {/* Main Navigation System - searchBar + Navigation links */}
       <div
-        className={`w-full hidden md:block mx-auto navbar bg-[#fcfcfc] ${
+        className={`w-full hidden md:block mx-auto py-0 navbar bg-[#fcfcfc] ${
           isFixed ? "fixed1 transition-all duration-500" : ""
         }`}
       >
         {/* Secondary Navbar - Logo + SearchBar + Cart */}
-        <div className="flex md:px-4 lg:px-8 py-5 justify-between border-b border-gray-200 items-center">
+        <div className="flex md:px-4 lg:px-8 py-[18px] justify-between border-b border-gray-200 items-center">
           <Link to={"/"}>
             <img src={logo} alt="" />
           </Link>
@@ -97,7 +97,7 @@ const NavigationBar = () => {
         </div>
 
         {/* Main Navigation bar - Navigation links */}
-        <div className="flex justify-between items-center px-8 py-2.5">
+        <div className="flex justify-between items-center px-8 py-2">
           <div className="flex justify-center items-center gap-8 text-sm font-medium">
             <NavLink to={"/"}>Home</NavLink>
             <NavLink to={"/shop"}>Shop</NavLink>
@@ -107,8 +107,8 @@ const NavigationBar = () => {
             <NavLink to={"/contact"}>Contact</NavLink>
             <NavLink to={"/userdashboard/profile"}>User Dashboard</NavLink>
           </div>
-          <div className="flex justify-center items-center gap-8">
-          <Button
+          {/* <div className="flex justify-center items-center gap-8"> */}
+          {/* <Button
           onClick={handleSiteAdminRequest}
               className="h-full py-2 text-white hover:!text-white"
               size="sm"
@@ -117,12 +117,12 @@ const NavigationBar = () => {
               variant="solid"
             >
               Request to be a Site Admin
-            </Button>
+            </Button> */}
           <div className="flex justify-center items-center gap-2">
             <FiPhoneCall className="w-6 h-6"></FiPhoneCall>
             <h3 className="text-sm">(219) 555-0114</h3>
           </div>
-          </div>
+          {/* </div> */}
         </div>
       </div>
 
