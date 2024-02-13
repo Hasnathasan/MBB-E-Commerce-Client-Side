@@ -8,14 +8,13 @@ import "./NavigationBar.css";
 import { FiPhoneCall } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import { Drawer } from "@material-tailwind/react";
-import { Button } from "@nextui-org/react";
-import useUser from "../../Hooks/useUser";
+// import useUser from "../../Hooks/useUser";
 const NavigationBar = () => {
   const [isFixed, setIsFixed] = useState(false);
   const [open, setOpen] = useState(false);
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
-  const [userData, isUserDataLoading] = useUser();
+  // const [userData, isUserDataLoading] = useUser();
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
@@ -29,9 +28,9 @@ const NavigationBar = () => {
     };
   }, []);
 // const {email, userName, userPhoneNumber, userPhoto, billingInfo} = userData;
-  const handleSiteAdminRequest = () => {
-    // const siteAdminData = {email, userName, userPhoneNumber, userPhoto, }
-  }
+  // const handleSiteAdminRequest = () => {
+  //   // const siteAdminData = {email, userName, userPhoneNumber, userPhoto, }
+  // }
   return (
     <div className="w-full relative z-[1000] mx-auto">
       {/* Top Info - Company name + sign In / sign up button */}
