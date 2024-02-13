@@ -27,7 +27,7 @@ const NavigationBar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-// const {email, userName, userPhoneNumber, userPhoto, billingInfo} = userData;
+  // const {email, userName, userPhoneNumber, userPhoto, billingInfo} = userData;
   // const handleSiteAdminRequest = () => {
   //   // const siteAdminData = {email, userName, userPhoneNumber, userPhoto, }
   // }
