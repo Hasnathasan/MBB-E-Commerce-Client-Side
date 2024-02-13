@@ -114,10 +114,10 @@ const Products = () => {
     <>
       <div className="grid grid-cols-12 mx-8 mt-8 mb-24">
       <div className="col-span-3 mr-5 hidden py-4 md:inline">
-      <Button className="text-white bg-[#00B207]" radius="full" color="success">
+      <Button className="text-white bg-[#00B207]" radius="full">
         Filter <LuSettings2 className="w-5 h-5" />
       </Button> 
-        <Accordion itemClasses={{ title: "font-bold text-xl",}} selectionMode="multiple"  defaultExpandedKeys={["1","2", "3"]}>
+        <Accordion itemClasses={{ title: "font-bold text-xl",}} selectionMode="multiple"  defaultExpandedKeys={["1","2", "3", "4"]}>
       <AccordionItem key="1" aria-label="Accordion 1" title="All Categories">
       <RadioGroup
             // value={filter}
@@ -227,6 +227,49 @@ const Products = () => {
             </div>
             </Radio>
       </RadioGroup>
+      </AccordionItem>
+      <AccordionItem key="4" aria-label="Accordion 4" title="Popular Tags">
+        <div className="flex overflow-hidden h-max flex-wrap items-center gap-2">
+        <Button className="text-white bg-[#00B207]" radius="full">
+        Healthy
+      </Button> 
+        <Button radius="full">
+        Low fat
+      </Button> 
+        <Button radius="full">
+        Vegetarian
+      </Button> 
+        <Button radius="full">
+        Kids food
+      </Button> 
+        <Button radius="full">
+        Vitamin
+      </Button> 
+        <Button radius="full">
+        Bread
+      </Button> 
+        <Button  radius="full">
+        Meat
+      </Button> 
+        <Button  radius="full">
+        Snacks
+      </Button> 
+        <Button  radius="full">
+        Tiffin
+      </Button> 
+        <Button  radius="full">
+        Lunch
+      </Button> 
+        <Button radius="full">
+        Dinner
+      </Button> 
+        <Button  radius="full">
+        Breakfast
+      </Button> 
+        <Button  radius="full">
+        Fruits
+      </Button> 
+        </div>
       </AccordionItem>
     </Accordion>
       </div>
