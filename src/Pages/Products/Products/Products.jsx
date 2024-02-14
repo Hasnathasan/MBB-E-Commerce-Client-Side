@@ -268,17 +268,28 @@ const Products = () => {
                 >
                   Low fat
                 </Button>
-                <Button radius="full">Vegetarian</Button>
-                <Button radius="full">Kids food</Button>
-                <Button radius="full">Vitamin</Button>
-                <Button radius="full">Bread</Button>
-                <Button radius="full">Meat</Button>
-                <Button radius="full">Snacks</Button>
-                <Button radius="full">Tiffin</Button>
-                <Button radius="full">Lunch</Button>
-                <Button radius="full">Dinner</Button>
-                <Button radius="full">Breakfast</Button>
-                <Button radius="full">Fruits</Button>
+                <Button
+                  className="hover:bg-[#02a108] hover:text-white" radius="full">Vegetarian</Button>
+                <Button
+                  className="hover:bg-[#02a108] hover:text-white" radius="full">Kids food</Button>
+                <Button
+                  className="hover:bg-[#02a108] hover:text-white" radius="full">Vitamin</Button>
+                <Button
+                  className="hover:bg-[#02a108] hover:text-white" radius="full">Bread</Button>
+                <Button
+                  className="hover:bg-[#02a108] hover:text-white" radius="full">Meat</Button>
+                <Button
+                  className="hover:bg-[#02a108] hover:text-white" radius="full">Snacks</Button>
+                <Button
+                  className="hover:bg-[#02a108] hover:text-white" radius="full">Tiffin</Button>
+                <Button
+                  className="hover:bg-[#02a108] hover:text-white" radius="full">Lunch</Button>
+                <Button
+                  className="hover:bg-[#02a108] hover:text-white" radius="full">Dinner</Button>
+                <Button
+                  className="hover:bg-[#02a108] hover:text-white" radius="full">Breakfast</Button>
+                <Button
+                  className="hover:bg-[#02a108] hover:text-white" radius="full">Fruits</Button>
               </div>
             </AccordionItem>
           </Accordion>
