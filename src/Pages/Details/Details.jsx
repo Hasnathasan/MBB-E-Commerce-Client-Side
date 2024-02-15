@@ -1,6 +1,5 @@
 import "keen-slider/keen-slider.min.css";
 import "./Details.css";
-import 'react-tabs/style/react-tabs.css';
 import { useKeenSlider } from "keen-slider/react";
 import product1 from "../../assets/products1.png";
 import product2 from "../../assets/products2.png";
@@ -12,13 +11,12 @@ import product7 from "../../assets/products7.jpg";
 import product8 from "../../assets/products8.png";
 import product9 from "../../assets/products9.png";
 import product10 from "../../assets/products10.png";
-import { Button, Chip } from "@nextui-org/react";
+import { Button, Chip, Tab, Tabs } from "@nextui-org/react";
 import Rating from "react-rating";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
-import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 
 function ThumbnailPlugin(mainRef) {
   return (slider) => {
@@ -281,20 +279,88 @@ const Details = () => {
           </div>
         </div>
       </div>
-      <div>
-      <Tabs>
-    <TabList>
-      <Tab>Title 1</Tab>
-      <Tab>Title 2</Tab>
-    </TabList>
+      <div className="mt-8">
+      <Tabs
+      className="w-full flex items-center justify-center"
+        aria-label="Options" 
+        color="primary" 
+        variant="underlined"
+        classNames={{
+          tabList: "gap-6 w-full relative flex justify-center item-center rounded-none p-0 border-b border-divider",
+          cursor: "w-full bg-[#20B526]",
+          tab: "w-max px-0 h-12",
+          tabContent: "group-data-[selected=true]:text-[#000000]"
+        }}
+      >
+        <Tab
+          key="photos"
+          title={
+            <div className="flex px-6 items-center">
+              {/* <GalleryIcon/> */}
+              <span>Description</span>
+            </div>
+          }
+        >
+         <p>
+         Sed commodo aliquam dui ac porta. Fusce ipsum felis, imperdiet at posuere ac, viverra at mauris. Maecenas tincidunt ligula a sem vestibulum pharetra. Maecenas auctor tortor lacus, nec laoreet nisi porttitor vel. Etiam tincidunt metus vel dui interdum sollicitudin. Mauris sem ante, vestibulum nec orci vitae, aliquam mollis lacus. Sed et condimentum arcu, id molestie tellus. Nulla facilisi. Nam scelerisque vitae justo a convallis. Morbi urna ipsum, placerat quis commodo quis, egestas elementum leo. Donec convallis mollis enim. Aliquam id mi quam. Phasellus nec fringilla elit.
 
-    <TabPanel>
-      <h2>Any content 1</h2>
-    </TabPanel>
-    <TabPanel>
-      <h2>Any content 2</h2>
-    </TabPanel>
-  </Tabs>
+Nulla mauris tellus, feugiat quis pharetra sed, gravida ac dui. Sed iaculis, metus faucibus elementum tincidunt, turpis mi viverra velit, pellentesque tristique neque mi eget nulla. Proin luctus elementum neque et pharetra. 
+         </p>
+        </Tab>
+        <Tab
+          key="music"
+          title={
+            <div className="flex px-6 items-center">
+              {/* <MusicIcon/> */}
+              <span>Additional Information</span>
+            </div>
+          }
+        />
+        <Tab
+          key="videos"
+          title={
+            <div className="flex px-6 items-center">
+              <span>Customer Feedback</span>
+            </div>
+          }
+        >
+          <div className="py-5 gap-3 border-b flex items-center border-gray-300">
+            <div className="flex border p-2 w-min border-gray-300 rounded-full justify-center items-center gap-3">
+              <div>
+                <Button size="sm" radius="full" variant="flat" isIconOnly>
+                  <FiMinus></FiMinus>
+                </Button>
+              </div>
+              <div className="text-base">5</div>
+              <div>
+                <Button size="sm" radius="full" variant="flat" isIconOnly>
+                  <FiPlus></FiPlus>
+                </Button>
+              </div>
+            </div>
+            <button
+              type="submit"
+              className=" text-white flex-1 bg-[#00B207] flex items-center justify-center gap-2 hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl px-7 py-3 text-center "
+            >
+              Add To Cart{" "}
+              <HiOutlineShoppingBag className="w-6 h-6"></HiOutlineShoppingBag>
+            </button>
+            <Button
+              isIconOnly
+              color="success"
+              radius="full"
+              size="lg"
+              variant="flat"
+              aria-label="Like"
+            >
+              <GoHeart className="w-6 h-6"></GoHeart>
+            </Button>
+          </div>
+        </Tab>
+      </Tabs>
+      </div>
+      <div>
+        
       </div>
     </div>
   );
