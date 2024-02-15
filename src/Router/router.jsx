@@ -10,6 +10,7 @@ import OrderDetails from "../Dashboard/UserDashboard/OrderDetails/OrderDetails";
 import AccountSettings from "../Dashboard/UserDashboard/AccountSettings/AccountSettings";
 import Cart from "../Pages/Cart/Cart";
 import Products from "../Pages/Products/Products/Products";
+import Details from "../Pages/Details/Details";
 
 
 const router = createBrowserRouter([
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "/products",
         element: <Products></Products>
+      },
+      {
+        path: "/details",
+        element: <Details></Details>
       },
       {
         path: "/signin",
