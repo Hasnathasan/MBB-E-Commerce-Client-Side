@@ -1,8 +1,8 @@
-.thumbnail .keen-slider__slide {
+/* .thumbnail .keen-slider__slide {
     font-size: 30px;
     margin-top: 10px;
-    height: 100px;
-  }
+    height: 80px;
+  } */
   .thumbnail .keen-slider__slide {
     cursor: pointer;
   }

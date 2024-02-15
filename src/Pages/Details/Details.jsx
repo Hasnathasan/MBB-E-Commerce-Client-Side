@@ -9,14 +9,13 @@ import product5 from "../../assets/products5.png";
 import product6 from "../../assets/products6.png";
 import product7 from "../../assets/products7.jpg";
 import product8 from "../../assets/products8.png";
-import product9 from "../../assets/products9.png";
-import product10 from "../../assets/products10.png";
 import { Button, Chip, Tab, Tabs } from "@nextui-org/react";
 import Rating from "react-rating";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
+import PopularProductsCard from "../Home/PopularProducts/PopularProductsCard";
 
 function ThumbnailPlugin(mainRef) {
   return (slider) => {
@@ -59,7 +58,7 @@ const Details = () => {
     {
       initial: 0,
       slides: {
-        perView: 4,
+        perView: 5,
         spacing: 10,
       },
     },
@@ -114,66 +113,24 @@ const Details = () => {
       price: 120.0,
       rating: 2.5,
       img: product8,
-    },
-    {
-      name: "The Scream",
-      price: 42.0,
-      rating: 4.9,
-      img: product9,
-    },
-    {
-      name: "Guernica",
-      price: 50.0,
-      rating: 4.2,
-      img: product10,
-    },
-    {
-      name: "Las Meninas",
-      price: 120.0,
-      rating: 2.5,
-      img: product3,
-    },
-    {
-      name: "Green Apple",
-      price: 42.0,
-      rating: 4.9,
-      img: product7,
-    },
-    {
-      name: "Water lilies",
-      price: 20.0,
-      rating: 4.2,
-      img: product6,
-    },
-    {
-      name: "The Garden of Earthly Delights",
-      price: 70.0,
-      rating: 3.5,
-      img: product4,
-    },
-    {
-      name: "Girl with a Pearl Earring",
-      price: 42.0,
-      rating: 4.9,
-      img: product2,
-    },
+    }
   ];
   return (
     <div className="mx-8 py-14">
       <div className="grid grid-cols-2 gap-10">
-        <div className="col-span-1 flex justify-center flex-col items-center">
-          <div ref={sliderRef} className="keen-slider w-full mb-2">
+        <div className="col-span-1 flex w-full flex-col items-center">
+          <div ref={sliderRef} className="keen-slider w-[380px] mb-2">
             {products?.map((product, index) => (
               <div
                 key={index}
-                className={`keen-slider__slide w-full h-[380px]`}
+                className={`keen-slider__slide w-full h-[360px]`}
               >
-                <img className="w-full h-full" src={product?.img} alt="" />
+                <img className=" w-[90%] mx-auto h-full" src={product?.img} alt="" />
               </div>
             ))}
           </div>
 
-          <div ref={thumbnailRef} className="keen-slider thumbnail">
+          <div ref={thumbnailRef} className="keen-slider !w-[90%] thumbnail">
             {products?.map((product, index) => (
               <div key={index} className={`keen-slider__slide w-20 h-20`}>
                 <img
@@ -359,8 +316,17 @@ Nulla mauris tellus, feugiat quis pharetra sed, gravida ac dui. Sed iaculis, met
         </Tab>
       </Tabs>
       </div>
-      <div>
-        
+      <div className="mt-14">
+        <h2 className="text-3xl font-semibold mb-5 text-center">Related Products</h2>
+      <div className="grid grid-cols-2 px-14 sm:grid-cols-2 gap-6 justify-center items-center md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+            {products?.map((product) => (
+              <PopularProductsCard
+                key={product?.name}
+                product={product}
+                isRounded={true}
+              ></PopularProductsCard>
+            ))}
+          </div>
       </div>
     </div>
   );

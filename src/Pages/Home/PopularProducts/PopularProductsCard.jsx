@@ -3,6 +3,7 @@ import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { IoEyeOutline, IoStarOutline, IoStarSharp } from "react-icons/io5";
 import Rating from "react-rating";
+import { Link } from "react-router-dom";
 
 const PopularProductsCard = ({ product, isRounded }) => {
   const [hovered, setHovered] = useState(false);
@@ -45,9 +46,9 @@ const PopularProductsCard = ({ product, isRounded }) => {
         <div className="bg-[#ffffff] border border-gray-100 shadow rounded-full cursor-pointer flex justify-center items-center w-10 h-10">
           <GoHeart className="w-5 h-5" />
         </div>
-        <div className="bg-[#ffffff] border border-gray-100 shadow rounded-full cursor-pointer flex justify-center items-center w-10 h-10">
+        <Link to={'/details'} className="bg-[#ffffff] border border-gray-100 shadow rounded-full cursor-pointer flex justify-center items-center w-10 h-10">
           <IoEyeOutline className="w-5 h-5"></IoEyeOutline>
-        </div>
+        </Link>
       </div>
     </div>
   );

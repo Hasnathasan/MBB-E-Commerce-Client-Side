@@ -2,7 +2,7 @@ import { Avatar } from "@nextui-org/react";
 import useUser from "../../../Hooks/useUser";
 
 const Profile = () => {
-  const [userData, isUserDataLoadin] = useUser();
+  const [userData] = useUser();
   return (
     <div>
       <div className="grid grid-cols-7 gap-6 justify-center">
