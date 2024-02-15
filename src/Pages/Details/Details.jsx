@@ -1,5 +1,6 @@
 import "keen-slider/keen-slider.min.css";
 import "./Details.css";
+import 'react-tabs/style/react-tabs.css';
 import { useKeenSlider } from "keen-slider/react";
 import product1 from "../../assets/products1.png";
 import product2 from "../../assets/products2.png";
@@ -17,6 +18,7 @@ import { FaRegStar, FaStar } from "react-icons/fa";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
+import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 
 function ThumbnailPlugin(mainRef) {
   return (slider) => {
@@ -278,6 +280,21 @@ const Details = () => {
             </h5>
           </div>
         </div>
+      </div>
+      <div>
+      <Tabs>
+    <TabList>
+      <Tab>Title 1</Tab>
+      <Tab>Title 2</Tab>
+    </TabList>
+
+    <TabPanel>
+      <h2>Any content 1</h2>
+    </TabPanel>
+    <TabPanel>
+      <h2>Any content 2</h2>
+    </TabPanel>
+  </Tabs>
       </div>
     </div>
   );
