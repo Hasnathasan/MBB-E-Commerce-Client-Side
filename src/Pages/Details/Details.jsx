@@ -11,9 +11,10 @@ import product7 from "../../assets/products7.jpg";
 import product8 from "../../assets/products8.png";
 import product9 from "../../assets/products9.png";
 import product10 from "../../assets/products10.png";
-import { Chip } from "@nextui-org/react";
+import { Button, Chip } from "@nextui-org/react";
 import Rating from "react-rating";
 import { FaRegStar, FaStar } from "react-icons/fa";
+import { FiMinus, FiPlus } from "react-icons/fi";
 
 
 
@@ -215,7 +216,25 @@ const Details = () => {
                 <p className="text-sm text-gray-700">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla nibh diam, blandit vel consequat nec, ultrices et ipsum. Nulla varius magna a consequat pulvinar. </p>
               </div>
               <div className="py-3 border-t border-b border-gray-300">
-
+              <div className="flex border p-2 w-min border-gray-300 rounded-full justify-center items-center gap-3">
+                <div>
+                  <Button size="sm" radius="full" variant="flat" isIconOnly>
+                    <FiMinus></FiMinus>
+                  </Button>
+                </div>
+                <div className="text-base">5</div>
+                <div>
+                  <Button size="sm" radius="full" variant="flat" isIconOnly>
+                    <FiPlus></FiPlus>
+                  </Button>
+                </div>
+              </div>
+              <button
+              type="submit"
+              className=" text-white bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl text-sm px-7 py-2.5 text-center "
+            >
+              Add To Cart
+            </button>
               </div>
             </div>
             </div>
