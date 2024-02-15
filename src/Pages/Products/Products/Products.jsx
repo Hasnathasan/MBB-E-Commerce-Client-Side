@@ -269,27 +269,71 @@ const Products = () => {
                   Low fat
                 </Button>
                 <Button
-                  className="hover:bg-[#02a108] hover:text-white" radius="full">Vegetarian</Button>
+                  className="hover:bg-[#02a108] hover:text-white"
+                  radius="full"
+                >
+                  Vegetarian
+                </Button>
                 <Button
-                  className="hover:bg-[#02a108] hover:text-white" radius="full">Kids food</Button>
+                  className="hover:bg-[#02a108] hover:text-white"
+                  radius="full"
+                >
+                  Kids food
+                </Button>
                 <Button
-                  className="hover:bg-[#02a108] hover:text-white" radius="full">Vitamin</Button>
+                  className="hover:bg-[#02a108] hover:text-white"
+                  radius="full"
+                >
+                  Vitamin
+                </Button>
                 <Button
-                  className="hover:bg-[#02a108] hover:text-white" radius="full">Bread</Button>
+                  className="hover:bg-[#02a108] hover:text-white"
+                  radius="full"
+                >
+                  Bread
+                </Button>
                 <Button
-                  className="hover:bg-[#02a108] hover:text-white" radius="full">Meat</Button>
+                  className="hover:bg-[#02a108] hover:text-white"
+                  radius="full"
+                >
+                  Meat
+                </Button>
                 <Button
-                  className="hover:bg-[#02a108] hover:text-white" radius="full">Snacks</Button>
+                  className="hover:bg-[#02a108] hover:text-white"
+                  radius="full"
+                >
+                  Snacks
+                </Button>
                 <Button
-                  className="hover:bg-[#02a108] hover:text-white" radius="full">Tiffin</Button>
+                  className="hover:bg-[#02a108] hover:text-white"
+                  radius="full"
+                >
+                  Tiffin
+                </Button>
                 <Button
-                  className="hover:bg-[#02a108] hover:text-white" radius="full">Lunch</Button>
+                  className="hover:bg-[#02a108] hover:text-white"
+                  radius="full"
+                >
+                  Lunch
+                </Button>
                 <Button
-                  className="hover:bg-[#02a108] hover:text-white" radius="full">Dinner</Button>
+                  className="hover:bg-[#02a108] hover:text-white"
+                  radius="full"
+                >
+                  Dinner
+                </Button>
                 <Button
-                  className="hover:bg-[#02a108] hover:text-white" radius="full">Breakfast</Button>
+                  className="hover:bg-[#02a108] hover:text-white"
+                  radius="full"
+                >
+                  Breakfast
+                </Button>
                 <Button
-                  className="hover:bg-[#02a108] hover:text-white" radius="full">Fruits</Button>
+                  className="hover:bg-[#02a108] hover:text-white"
+                  radius="full"
+                >
+                  Fruits
+                </Button>
               </div>
             </AccordionItem>
           </Accordion>

@@ -113,7 +113,7 @@ const Details = () => {
       price: 120.0,
       rating: 2.5,
       img: product8,
-    }
+    },
   ];
   return (
     <div className="mx-8 py-14">
@@ -125,7 +125,11 @@ const Details = () => {
                 key={index}
                 className={`keen-slider__slide w-full h-[360px]`}
               >
-                <img className=" w-[90%] mx-auto h-full" src={product?.img} alt="" />
+                <img
+                  className=" w-[90%] mx-auto h-full"
+                  src={product?.img}
+                  alt=""
+                />
               </div>
             ))}
           </div>
@@ -237,96 +241,109 @@ const Details = () => {
         </div>
       </div>
       <div className="mt-8">
-      <Tabs
-      className="w-full flex items-center justify-center"
-        aria-label="Options" 
-        color="primary" 
-        variant="underlined"
-        classNames={{
-          tabList: "gap-6 w-full relative flex justify-center item-center rounded-none p-0 border-b border-divider",
-          cursor: "w-full bg-[#20B526]",
-          tab: "w-max px-0 h-12",
-          tabContent: "group-data-[selected=true]:text-[#000000]"
-        }}
-      >
-        <Tab
-          key="photos"
-          title={
-            <div className="flex px-6 items-center">
-              {/* <GalleryIcon/> */}
-              <span>Description</span>
-            </div>
-          }
+        <Tabs
+          className="w-full flex items-center justify-center"
+          aria-label="Options"
+          color="primary"
+          variant="underlined"
+          classNames={{
+            tabList:
+              "gap-6 w-full relative flex justify-center item-center rounded-none p-0 border-b border-divider",
+            cursor: "w-full bg-[#20B526]",
+            tab: "w-max px-0 h-12",
+            tabContent: "group-data-[selected=true]:text-[#000000]",
+          }}
         >
-         <p>
-         Sed commodo aliquam dui ac porta. Fusce ipsum felis, imperdiet at posuere ac, viverra at mauris. Maecenas tincidunt ligula a sem vestibulum pharetra. Maecenas auctor tortor lacus, nec laoreet nisi porttitor vel. Etiam tincidunt metus vel dui interdum sollicitudin. Mauris sem ante, vestibulum nec orci vitae, aliquam mollis lacus. Sed et condimentum arcu, id molestie tellus. Nulla facilisi. Nam scelerisque vitae justo a convallis. Morbi urna ipsum, placerat quis commodo quis, egestas elementum leo. Donec convallis mollis enim. Aliquam id mi quam. Phasellus nec fringilla elit.
-
-Nulla mauris tellus, feugiat quis pharetra sed, gravida ac dui. Sed iaculis, metus faucibus elementum tincidunt, turpis mi viverra velit, pellentesque tristique neque mi eget nulla. Proin luctus elementum neque et pharetra. 
-         </p>
-        </Tab>
-        <Tab
-          key="music"
-          title={
-            <div className="flex px-6 items-center">
-              {/* <MusicIcon/> */}
-              <span>Additional Information</span>
-            </div>
-          }
-        />
-        <Tab
-          key="videos"
-          title={
-            <div className="flex px-6 items-center">
-              <span>Customer Feedback</span>
-            </div>
-          }
-        >
-          <div className="py-5 gap-3 border-b flex items-center border-gray-300">
-            <div className="flex border p-2 w-min border-gray-300 rounded-full justify-center items-center gap-3">
-              <div>
-                <Button size="sm" radius="full" variant="flat" isIconOnly>
-                  <FiMinus></FiMinus>
-                </Button>
+          <Tab
+            key="photos"
+            title={
+              <div className="flex px-6 items-center">
+                {/* <GalleryIcon/> */}
+                <span>Description</span>
               </div>
-              <div className="text-base">5</div>
-              <div>
-                <Button size="sm" radius="full" variant="flat" isIconOnly>
-                  <FiPlus></FiPlus>
-                </Button>
+            }
+          >
+            <p>
+              Sed commodo aliquam dui ac porta. Fusce ipsum felis, imperdiet at
+              posuere ac, viverra at mauris. Maecenas tincidunt ligula a sem
+              vestibulum pharetra. Maecenas auctor tortor lacus, nec laoreet
+              nisi porttitor vel. Etiam tincidunt metus vel dui interdum
+              sollicitudin. Mauris sem ante, vestibulum nec orci vitae, aliquam
+              mollis lacus. Sed et condimentum arcu, id molestie tellus. Nulla
+              facilisi. Nam scelerisque vitae justo a convallis. Morbi urna
+              ipsum, placerat quis commodo quis, egestas elementum leo. Donec
+              convallis mollis enim. Aliquam id mi quam. Phasellus nec fringilla
+              elit. Nulla mauris tellus, feugiat quis pharetra sed, gravida ac
+              dui. Sed iaculis, metus faucibus elementum tincidunt, turpis mi
+              viverra velit, pellentesque tristique neque mi eget nulla. Proin
+              luctus elementum neque et pharetra.
+            </p>
+          </Tab>
+          <Tab
+            key="music"
+            title={
+              <div className="flex px-6 items-center">
+                {/* <MusicIcon/> */}
+                <span>Additional Information</span>
               </div>
+            }
+          />
+          <Tab
+            key="videos"
+            title={
+              <div className="flex px-6 items-center">
+                <span>Customer Feedback</span>
+              </div>
+            }
+          >
+            <div className="py-5 gap-3 border-b flex items-center border-gray-300">
+              <div className="flex border p-2 w-min border-gray-300 rounded-full justify-center items-center gap-3">
+                <div>
+                  <Button size="sm" radius="full" variant="flat" isIconOnly>
+                    <FiMinus></FiMinus>
+                  </Button>
+                </div>
+                <div className="text-base">5</div>
+                <div>
+                  <Button size="sm" radius="full" variant="flat" isIconOnly>
+                    <FiPlus></FiPlus>
+                  </Button>
+                </div>
+              </div>
+              <button
+                type="submit"
+                className=" text-white flex-1 bg-[#00B207] flex items-center justify-center gap-2 hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl px-7 py-3 text-center "
+              >
+                Add To Cart{" "}
+                <HiOutlineShoppingBag className="w-6 h-6"></HiOutlineShoppingBag>
+              </button>
+              <Button
+                isIconOnly
+                color="success"
+                radius="full"
+                size="lg"
+                variant="flat"
+                aria-label="Like"
+              >
+                <GoHeart className="w-6 h-6"></GoHeart>
+              </Button>
             </div>
-            <button
-              type="submit"
-              className=" text-white flex-1 bg-[#00B207] flex items-center justify-center gap-2 hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl px-7 py-3 text-center "
-            >
-              Add To Cart{" "}
-              <HiOutlineShoppingBag className="w-6 h-6"></HiOutlineShoppingBag>
-            </button>
-            <Button
-              isIconOnly
-              color="success"
-              radius="full"
-              size="lg"
-              variant="flat"
-              aria-label="Like"
-            >
-              <GoHeart className="w-6 h-6"></GoHeart>
-            </Button>
-          </div>
-        </Tab>
-      </Tabs>
+          </Tab>
+        </Tabs>
       </div>
       <div className="mt-14">
-        <h2 className="text-3xl font-semibold mb-5 text-center">Related Products</h2>
-      <div className="grid grid-cols-2 px-14 sm:grid-cols-2 gap-6 justify-center items-center md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-            {products?.map((product) => (
-              <PopularProductsCard
-                key={product?.name}
-                product={product}
-                isRounded={true}
-              ></PopularProductsCard>
-            ))}
-          </div>
+        <h2 className="text-3xl font-semibold mb-5 text-center">
+          Related Products
+        </h2>
+        <div className="grid grid-cols-2 px-14 sm:grid-cols-2 gap-6 justify-center items-center md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          {products?.map((product) => (
+            <PopularProductsCard
+              key={product?.name}
+              product={product}
+              isRounded={true}
+            ></PopularProductsCard>
+          ))}
+        </div>
       </div>
     </div>
   );
