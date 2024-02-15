@@ -15,6 +15,8 @@ import { Button, Chip } from "@nextui-org/react";
 import Rating from "react-rating";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import { FiMinus, FiPlus } from "react-icons/fi";
+import { GoHeart } from "react-icons/go";
+import { HiOutlineShoppingBag } from "react-icons/hi2";
 
 
 
@@ -189,7 +191,7 @@ const Details = () => {
                 ))}
               </div>
             </div>
-            <div className="">
+            <div className="space-y-4">
               <div className="flex items-start gap-2">
                 <h2 className="text-3xl font-semibold">The Arnolfini Portrait</h2>
                 <Chip color="success" variant="flat" radius="sm">In Stock</Chip>
@@ -215,7 +217,7 @@ const Details = () => {
               <div className="py-3 border-t border-b border-gray-300">
                 <p className="text-sm text-gray-700">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla nibh diam, blandit vel consequat nec, ultrices et ipsum. Nulla varius magna a consequat pulvinar. </p>
               </div>
-              <div className="py-3 border-t border-b border-gray-300">
+              <div className="py-5 gap-3 border-b flex items-center border-gray-300">
               <div className="flex border p-2 w-min border-gray-300 rounded-full justify-center items-center gap-3">
                 <div>
                   <Button size="sm" radius="full" variant="flat" isIconOnly>
@@ -231,10 +233,18 @@ const Details = () => {
               </div>
               <button
               type="submit"
-              className=" text-white bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl text-sm px-7 py-2.5 text-center "
+              className=" text-white flex-1 bg-[#00B207] flex items-center justify-center gap-2 hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl px-7 py-3 text-center "
             >
-              Add To Cart
+              Add To Cart <HiOutlineShoppingBag className="w-6 h-6"></HiOutlineShoppingBag>
             </button>
+            <Button isIconOnly color="success" radius="full" size="lg" variant="flat" aria-label="Like">
+        <GoHeart className="w-6 h-6"></GoHeart>
+      </Button>  
+
+              </div>
+              <div>
+                <h5 className="text-sm mb-2 text-gray-700"><span className="font-medium text-gray-900">Category:</span> Picture</h5>
+                <h5 className="text-sm text-gray-700"><span className="font-medium text-gray-900">Tags:</span> <span className="hover:underline cursor-pointer hover:text-gray-900">Picture</span> <span className="hover:underline cursor-pointer hover:text-gray-900">Nothing</span> <span className="hover:underline cursor-pointer hover:text-gray-900">Arts</span> <span className="hover:underline cursor-pointer hover:text-gray-900">New Designs</span> </h5>
               </div>
             </div>
             </div>
