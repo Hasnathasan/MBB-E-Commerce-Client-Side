@@ -6,17 +6,20 @@ import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import "./NavigationBar.css";
 import { FiPhoneCall } from "react-icons/fi";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Drawer } from "@material-tailwind/react";
-import { AuthContext } from "../../Providers/AuthProvider";
+import image1 from '../../assets/products1.png';
+import { Button } from "@nextui-org/react";
+import { RxCross2 } from "react-icons/rx";
 // import useUser from "../../Hooks/useUser";
 const NavigationBar = () => {
   const [isFixed, setIsFixed] = useState(false);
-  const {setOpenCart} = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
+  const [openCart, setOpenCart] = useState(false);
   const openCartDrawer = () => setOpenCart(true);
+  const closeCartDrawer = () => setOpenCart(false);
   // const [userData, isUserDataLoading] = useUser();
   useEffect(() => {
     const handleScroll = () => {
@@ -576,7 +579,52 @@ const NavigationBar = () => {
         </Card> */}
       </Drawer>
 
-      
+      {/* Side bar for Cart */}
+      <Drawer open={openCart} overlay={false} size={380} placement="right" onClose={closeCartDrawer} className="px-8 py-10 h-full flex flex-col shadow-large overflow-y-auto">
+        <h2 className="text-xl mb-5 font-semibold">Shoping Cart (2)</h2>
+        <div className="flex flex-1 flex-col gap-4">
+          <div className="flex items-center gap-2">
+            <img className="w-20" src={image1} alt="" />
+            <div className="flex flex-1 items-center justify-between">
+              <div>
+                <h5 className="text-sm font-medium">Fresh Indian Orange</h5>
+                <h6 className="text-sm text-gray-600">1kg * 5</h6>
+              </div>
+              <Button size="sm" className="p-0" radius="full" variant="bordered" isIconOnly>
+                  <RxCross2></RxCross2>
+                </Button>{" "}
+            </div>
+          </div> 
+          <span className=" border-t border-gray-200"></span>
+          <div className="flex items-center gap-2">
+            <img className="w-20" src={image1} alt="" />
+            <div className="flex flex-1 items-center justify-between">
+              <div>
+                <h5 className="text-sm font-medium">Fresh Indian Orange</h5>
+                <h6 className="text-sm text-gray-600">1kg * 5</h6>
+              </div>
+              <Button size="sm" className="p-0" radius="full" variant="bordered" isIconOnly>
+                  <RxCross2></RxCross2>
+                </Button>{" "}
+            </div>
+        </div>
+         
+        </div>
+        <div className="mt-auto">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm font-medium">2 Product</span>
+            <span className="text-sm font-semibold">$26.00</span>
+          </div>
+          <div className="space-y-2">
+          <Button color="success" radius="full" className="text-white w-full">
+        Checkout
+      </Button>  
+          <Button color="success" variant="flat" radius="full" className=" w-full">
+        Go To Cart
+      </Button>  
+          </div>
+        </div>
+      </Drawer>
     </div>
   );
 };

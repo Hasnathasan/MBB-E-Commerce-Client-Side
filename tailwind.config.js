@@ -24,8 +24,21 @@ module.exports = withMT({
 
       '2xl': '1536px',
       // => @media (min-width: 1536px) { ... }
-    }
+    },
+    colors: {
+      'green': {
+        100: '#66d16a',
+        200: '#4dc951',
+        300: '#33c139',
+        400: '#1aba20',
+        500: '#00b207',
+        600: '#00a006',
+        700: '#008e06',
+        800: '#007d05',
+        900: '#006b04',
+      }
   },
+},
   plugins: [nextui(), require("daisyui")],
 });
 
