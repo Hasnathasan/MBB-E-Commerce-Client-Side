@@ -18,6 +18,8 @@ const AuthProvider = ({ children }) => {
   const googleProvider = new GoogleAuthProvider();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  
+  const [openCart, setOpenCart] = useState(false);
 
   const loginWithEmail = (email, password) => {
     setLoading(true);
@@ -39,6 +41,8 @@ const AuthProvider = ({ children }) => {
   const info = {
     user,
     loading,
+    openCart,
+    setOpenCart,
     loginWithEmail,
     signUpWithEmail,
     googleSignIn,

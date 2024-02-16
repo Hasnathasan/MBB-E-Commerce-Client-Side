@@ -6,14 +6,17 @@ import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import "./NavigationBar.css";
 import { FiPhoneCall } from "react-icons/fi";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Drawer } from "@material-tailwind/react";
+import { AuthContext } from "../../Providers/AuthProvider";
 // import useUser from "../../Hooks/useUser";
 const NavigationBar = () => {
   const [isFixed, setIsFixed] = useState(false);
+  const {setOpenCart} = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
+  const openCartDrawer = () => setOpenCart(true);
   // const [userData, isUserDataLoading] = useUser();
   useEffect(() => {
     const handleScroll = () => {
@@ -85,7 +88,7 @@ const NavigationBar = () => {
           <div className="flex justify-center items-center gap-4">
             <GoHeart className="w-8 h-8" />
             <span>|</span>
-            <div className="flex justify-center gap-2 items-center">
+            <div onClick={openCartDrawer} className="flex justify-center gap-2 items-center">
               <HiOutlineShoppingBag className="w-7 h-7"></HiOutlineShoppingBag>
               <div>
                 <h3 className="text-xs">Shopping Cart:</h3>
@@ -572,6 +575,8 @@ const NavigationBar = () => {
           </List>
         </Card> */}
       </Drawer>
+
+      
     </div>
   );
 };
