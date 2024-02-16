@@ -11,6 +11,7 @@ import AccountSettings from "../Dashboard/UserDashboard/AccountSettings/AccountS
 import Cart from "../Pages/Cart/Cart";
 import Products from "../Pages/Products/Products/Products";
 import Details from "../Pages/Details/Details";
+import Error from "../Pages/Error/Error";
 
 
 const router = createBrowserRouter([
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>
+      },
+      {
+        path: "*",
+        element: <Error></Error>
       },
       {
         path: "/products",
