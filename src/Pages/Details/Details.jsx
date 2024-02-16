@@ -298,7 +298,14 @@ const Details = () => {
             }
           >
             <p className="mb-2">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro doloremque quos laborum dolorem odit corporis maiores at nostrum, consectetur facere vero ipsum quo quas cumque inventore, qui totam numquam eius? Cum amet voluptatem quaerat quam quis ducimus sequi, blanditiis ad officiis, enim eius voluptas fugiat eveniet doloremque, quia deleniti ullam rerum sapiente! Blanditiis repellat porro, optio cum deleniti quo mollitia consequatur rem ad? Quisquam nisi consectetur voluptate corporis, porro ipsum.
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro
+              doloremque quos laborum dolorem odit corporis maiores at nostrum,
+              consectetur facere vero ipsum quo quas cumque inventore, qui totam
+              numquam eius? Cum amet voluptatem quaerat quam quis ducimus sequi,
+              blanditiis ad officiis, enim eius voluptas fugiat eveniet
+              doloremque, quia deleniti ullam rerum sapiente! Blanditiis
+              repellat porro, optio cum deleniti quo mollitia consequatur rem
+              ad? Quisquam nisi consectetur voluptate corporis, porro ipsum.
             </p>
             <p>
               Sed commodo aliquam dui ac porta. Fusce ipsum felis, imperdiet at

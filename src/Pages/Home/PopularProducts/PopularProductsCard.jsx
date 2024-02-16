@@ -12,7 +12,9 @@ const PopularProductsCard = ({ product, isRounded }) => {
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className={`px-3 relative transition-all w-full ${isRounded ? "rounded-lg" : ""} !duration-500 hover:shadow-small hover:shadow-green-600 hover:border-green-600 flex flex-col justify-between py-4 gap-3 border border-gray-200`}
+      className={`px-3 relative transition-all w-full ${
+        isRounded ? "rounded-lg" : ""
+      } !duration-500 hover:shadow-small hover:shadow-green-600 hover:border-green-600 flex flex-col justify-between py-4 gap-3 border border-gray-200`}
     >
       <img className="w-[90%] h-[200px] mx-auto" src={img} alt="" />
       <div className="flex justify-between items-center mt-3">
@@ -46,7 +48,10 @@ const PopularProductsCard = ({ product, isRounded }) => {
         <div className="bg-[#ffffff] border border-gray-100 shadow rounded-full cursor-pointer flex justify-center items-center w-10 h-10">
           <GoHeart className="w-5 h-5" />
         </div>
-        <Link to={'/details'} className="bg-[#ffffff] border border-gray-100 shadow rounded-full cursor-pointer flex justify-center items-center w-10 h-10">
+        <Link
+          to={"/details"}
+          className="bg-[#ffffff] border border-gray-100 shadow rounded-full cursor-pointer flex justify-center items-center w-10 h-10"
+        >
           <IoEyeOutline className="w-5 h-5"></IoEyeOutline>
         </Link>
       </div>
