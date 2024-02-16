@@ -263,7 +263,7 @@ const Details = () => {
               </div>
             }
           >
-            <p>
+            <p className="mb-3">
               Sed commodo aliquam dui ac porta. Fusce ipsum felis, imperdiet at
               posuere ac, viverra at mauris. Maecenas tincidunt ligula a sem
               vestibulum pharetra. Maecenas auctor tortor lacus, nec laoreet
@@ -278,6 +278,15 @@ const Details = () => {
               viverra velit, pellentesque tristique neque mi eget nulla. Proin
               luctus elementum neque et pharetra.
             </p>
+            <p>
+              Sed commodo aliquam dui ac porta. Fusce ipsum felis, imperdiet at
+              posuere ac, viverra at mauris. Maecenas tincidunt ligula a sem
+              vestibulum pharetra. Maecenas auctor tortor lacus, nec laoreet
+              nisi porttitor vel. Etiam tincidunt metus vel dui interdum
+              sollicitudin. Mauris sem ante, vestibulum nec orci vitae, aliquam
+              mollis lacus. Sed et condimentum arcu, id molestie tellus. Nulla
+              facilisi. Nam scelerisque vitae justo a convallis.
+            </p>
           </Tab>
           <Tab
             key="music"
@@ -287,7 +296,20 @@ const Details = () => {
                 <span>Additional Information</span>
               </div>
             }
-          />
+          >
+            <p className="mb-2">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro doloremque quos laborum dolorem odit corporis maiores at nostrum, consectetur facere vero ipsum quo quas cumque inventore, qui totam numquam eius? Cum amet voluptatem quaerat quam quis ducimus sequi, blanditiis ad officiis, enim eius voluptas fugiat eveniet doloremque, quia deleniti ullam rerum sapiente! Blanditiis repellat porro, optio cum deleniti quo mollitia consequatur rem ad? Quisquam nisi consectetur voluptate corporis, porro ipsum.
+            </p>
+            <p>
+              Sed commodo aliquam dui ac porta. Fusce ipsum felis, imperdiet at
+              posuere ac, viverra at mauris. Maecenas tincidunt ligula a sem
+              vestibulum pharetra. Maecenas auctor tortor lacus, nec laoreet
+              nisi porttitor vel. Etiam tincidunt metus vel dui interdum
+              sollicitudin. Mauris sem ante, vestibulum nec orci vitae, aliquam
+              mollis lacus. Sed et condimentum arcu, id molestie tellus. Nulla
+              facilisi. Nam scelerisque vitae justo a convallis.
+            </p>
+          </Tab>
           <Tab
             key="videos"
             title={
@@ -296,38 +318,21 @@ const Details = () => {
               </div>
             }
           >
-            <div className="py-5 gap-3 border-b flex items-center border-gray-300">
-              <div className="flex border p-2 w-min border-gray-300 rounded-full justify-center items-center gap-3">
-                <div>
-                  <Button size="sm" radius="full" variant="flat" isIconOnly>
-                    <FiMinus></FiMinus>
-                  </Button>
-                </div>
-                <div className="text-base">5</div>
-                <div>
-                  <Button size="sm" radius="full" variant="flat" isIconOnly>
-                    <FiPlus></FiPlus>
-                  </Button>
-                </div>
-              </div>
-              <button
-                type="submit"
-                className=" text-white flex-1 bg-[#00B207] flex items-center justify-center gap-2 hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl px-7 py-3 text-center "
-              >
-                Add To Cart{" "}
-                <HiOutlineShoppingBag className="w-6 h-6"></HiOutlineShoppingBag>
-              </button>
-              <Button
-                isIconOnly
-                color="success"
-                radius="full"
-                size="lg"
-                variant="flat"
-                aria-label="Like"
-              >
-                <GoHeart className="w-6 h-6"></GoHeart>
-              </Button>
-            </div>
+            <p className="mb-2">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet fuga
+              ratione tempore, perspiciatis aliquid, exercitationem expedita
+              sunt nisi at minus dignissimos incidunt atque, omnis totam quos.
+              Corporis labore sunt laboriosam repellat, quo molestias enim odio
+              hic nihil doloremque voluptatem amet distinctio cum totam quos
+              maiores expedita aperiam temporibus harum et.
+            </p>
+            <p>
+              Sed commodo aliquam dui ac porta. Fusce ipsum felis, imperdiet at
+              posuere ac, viverra at mauris. Maecenas tincidunt ligula a sem
+              vestibulum pharetra. Maecenas auctor tortor lacus, nec laoreet
+              nisi porttitor vel. Etiam tincidunt metus vel dui interdum
+              sollicitudin.
+            </p>
           </Tab>
         </Tabs>
       </div>
