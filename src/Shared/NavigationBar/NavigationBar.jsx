@@ -156,7 +156,7 @@ const NavigationBar = () => {
         <div className="flex justify-center items-center gap-3">
           <GoHeart className="w-5 h-5"></GoHeart>
           <span>|</span>
-          <HiOutlineShoppingBag className="w-5 h-5"></HiOutlineShoppingBag>
+          <HiOutlineShoppingBag onClick={openCartDrawer} className="w-5 h-5"></HiOutlineShoppingBag>
         </div>
       </div>
 
