@@ -1,10 +1,13 @@
+import { Radio, RadioGroup } from "@nextui-org/react";
 import useUser from "../../Hooks/useUser";
+import product1 from '../../assets/products1.png';
+import product2 from '../../assets/products2.png';
 
 
 const CheckoutPage = () => {
     const [userData] = useUser();
     return (
-        <div className="grid grid-cols-12 py-10 mx-8 gap-5">
+        <div className="grid grid-cols-12 items-start py-10 mx-8 gap-5">
             <div className="col-span-8">
             <div className={`border-b border-gray-300 pb-5`}>
         <h4 className="mb-5 text-2xl font-semibold">
@@ -118,9 +121,72 @@ const CheckoutPage = () => {
           </div>
         </div>
       </div>
+      <div className="mt-6">
+      <h4 className="mb-4 text-2xl font-semibold">
+          Additional Info
+        </h4>
+        <div>
+              <label htmlFor="name">Order notes (optional)</label>
+              <textarea
+                type="text"
+                name="name"
+                id="name"
+                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                placeholder="Notes about your order, e.g. special notes for delivery"
+                rows={4}
+                required
+              />
             </div>
-            <div className="col-span-4 border border-gray-300 rounded-lg h-[400px]">
-
+      </div>
+            </div>
+            <div className="col-span-4 border border-gray-300 rounded-lg">
+                <h3 className=" text-2xl font-semibold p-5">Order Summery</h3>
+                <div className="px-5">
+                <div className="flex items-center mb-3 justify-between gap-2">
+            <div className="flex items-center gap-2">
+            <img className="w-16 h-14" src={product1} alt="" />
+            <h3 className="font-semibold text-sm flex justify-between items-center gap-3">The Starry Night  <span>x5</span></h3>
+            </div>
+            <h4 className="text-sm font-semibold">$70.00</h4>
+          </div>
+                <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+            <img className="w-16 h-14" src={product2} alt="" />
+            <h3 className="font-semibold text-sm flex justify-between items-center gap-3">Girl with a Pearl Earring  <span>x2</span></h3>
+            </div>
+            <h4 className="text-sm font-semibold">$270.00</h4>
+          </div>
+          <div className="py-5">
+          <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
+            <h3 className=" text-gray-700 text-sm font-medium">Subtotal:</h3>
+            <h5 className="text-sm font-semibold">$5782</h5>
+          </div>
+          <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
+            <h3 className=" text-gray-700 text-sm font-medium">Discount:</h3>
+            <h5 className="text-sm font-semibold">$57</h5>
+          </div>
+          <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
+            <h3 className=" text-gray-700 text-sm font-medium">Shipping:</h3>
+            <h5 className="text-sm font-semibold">Free</h5>
+          </div>
+          <div className="flex justify-between pt-2 pb-5 items-center">
+            <h3 className=" font-semibold">Total</h3>
+            <h5 className="text-gray-900 font-bold">$5839</h5>
+          </div>
+          <h3 className=" text-2xl font-semibold">Payment Method</h3>
+          <RadioGroup size="sm" className="my-3"
+    >
+      <Radio value="cashOnDelevery">Cash on delevery</Radio>
+      <Radio value="stripe">Stripe</Radio>
+    </RadioGroup>
+          <button
+            type="submit"
+            className=" text-white w-full mt-2 bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl px-7 py-3 text-center "
+          >
+            Place Order
+          </button>
+        </div>
+                </div>
             </div>
         </div>
     );

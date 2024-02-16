@@ -3,6 +3,7 @@ import product1 from "../../assets/products1.png";
 import "./Cart.css";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
+import { Link } from "react-router-dom";
 const Cart = () => {
   return (
     <div className="grid mx-8 mt-7 justify-start grid-cols-12 gap-10 mb-40">
@@ -66,12 +67,13 @@ const Cart = () => {
             <h3 className=" font-medium">Total</h3>
             <h5 className="text-green-800 font-bold">$5839</h5>
           </div>
+          <Link to={"/checkout"}>
           <button
             type="submit"
             className=" text-white w-full mt-2 bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl text-sm px-7 py-2.5 text-center "
           >
             Procced to CheckOut
-          </button>
+          </button></Link>
         </div>
       </div>
     </div>
