@@ -12,12 +12,12 @@ const PopularProductsCard = ({ product, isRounded }) => {
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className={`px-3 relative transition-all w-full ${isRounded ? "rounded-lg" : ""} !duration-500 hover:shadow-small hover:shadow-[#20B52652] hover:border-[#2C742F] flex flex-col justify-between py-4 gap-3 border border-gray-200`}
+      className={`px-3 relative transition-all w-full ${isRounded ? "rounded-lg" : ""} !duration-500 hover:shadow-small hover:shadow-green-600 hover:border-green-600 flex flex-col justify-between py-4 gap-3 border border-gray-200`}
     >
       <img className="w-[90%] h-[200px] mx-auto" src={img} alt="" />
       <div className="flex justify-between items-center mt-3">
         <div>
-          <h3 className={`text-sm ${hovered ? "text-[#2C742F]" : ""}`}>
+          <h3 className={`text-sm ${hovered ? "text-green-600" : ""}`}>
             {name}
           </h3>
           <h3 className="font-medium">${price}</h3>

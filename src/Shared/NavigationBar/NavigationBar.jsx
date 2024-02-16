@@ -8,7 +8,7 @@ import "./NavigationBar.css";
 import { FiPhoneCall } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import { Drawer } from "@material-tailwind/react";
-import image1 from '../../assets/products1.png';
+import image1 from "../../assets/products1.png";
 import { Button } from "@nextui-org/react";
 import { RxCross2 } from "react-icons/rx";
 // import useUser from "../../Hooks/useUser";
@@ -91,7 +91,10 @@ const NavigationBar = () => {
           <div className="flex justify-center items-center gap-4">
             <GoHeart className="w-8 h-8" />
             <span>|</span>
-            <div onClick={openCartDrawer} className="flex justify-center gap-2 items-center">
+            <div
+              onClick={openCartDrawer}
+              className="flex cursor-pointer justify-center gap-2 items-center"
+            >
               <HiOutlineShoppingBag className="w-7 h-7"></HiOutlineShoppingBag>
               <div>
                 <h3 className="text-xs">Shopping Cart:</h3>
@@ -580,8 +583,26 @@ const NavigationBar = () => {
       </Drawer>
 
       {/* Side bar for Cart */}
-      <Drawer open={openCart} overlay={false} size={380} placement="right" onClose={closeCartDrawer} className="px-8 py-10 h-full flex flex-col shadow-large overflow-y-auto">
-        <h2 className="text-xl mb-5 font-semibold">Shoping Cart (2)</h2>
+      <Drawer
+        open={openCart}
+        overlay={false}
+        size={380}
+        placement="right"
+        onClose={closeCartDrawer}
+        className="px-8 py-10 h-full flex flex-col shadow-large overflow-y-auto"
+      >
+        <div className="flex justify-between items-center mb-5">
+          <h2 className="text-xl font-semibold">Shoping Cart (2)</h2>
+          <Button
+            onClick={closeCartDrawer}
+            size="sm"
+            className="p-0 bg-white"
+            variant="flat"
+            isIconOnly
+          >
+            <RxCross2 className="w-8 h-8"></RxCross2>
+          </Button>
+        </div>
         <div className="flex flex-1 flex-col gap-4">
           <div className="flex items-center gap-2">
             <img className="w-20" src={image1} alt="" />
@@ -590,11 +611,17 @@ const NavigationBar = () => {
                 <h5 className="text-sm font-medium">Fresh Indian Orange</h5>
                 <h6 className="text-sm text-gray-600">1kg * 5</h6>
               </div>
-              <Button size="sm" className="p-0" radius="full" variant="bordered" isIconOnly>
-                  <RxCross2></RxCross2>
-                </Button>{" "}
+              <Button
+                size="sm"
+                className="p-0"
+                radius="full"
+                variant="bordered"
+                isIconOnly
+              >
+                <RxCross2></RxCross2>
+              </Button>{" "}
             </div>
-          </div> 
+          </div>
           <span className=" border-t border-gray-200"></span>
           <div className="flex items-center gap-2">
             <img className="w-20" src={image1} alt="" />
@@ -603,12 +630,17 @@ const NavigationBar = () => {
                 <h5 className="text-sm font-medium">Fresh Indian Orange</h5>
                 <h6 className="text-sm text-gray-600">1kg * 5</h6>
               </div>
-              <Button size="sm" className="p-0" radius="full" variant="bordered" isIconOnly>
-                  <RxCross2></RxCross2>
-                </Button>{" "}
+              <Button
+                size="sm"
+                className="p-0"
+                radius="full"
+                variant="bordered"
+                isIconOnly
+              >
+                <RxCross2></RxCross2>
+              </Button>{" "}
             </div>
-        </div>
-         
+          </div>
         </div>
         <div className="mt-auto">
           <div className="flex justify-between items-center mb-2">
@@ -616,12 +648,23 @@ const NavigationBar = () => {
             <span className="text-sm font-semibold">$26.00</span>
           </div>
           <div className="space-y-2">
-          <Button color="success" radius="full" className="text-white w-full">
-        Checkout
-      </Button>  
-          <Button color="success" variant="flat" radius="full" className=" w-full">
-        Go To Cart
-      </Button>  
+            <Button
+              color="success"
+              radius="full"
+              className="text-white mb-2 bg-green-600 w-full"
+            >
+              Checkout
+            </Button>
+            <Link to={"/mycart"}>
+              <Button
+                color="success"
+                variant="flat"
+                radius="full"
+                className="text-green-500 font-semibold w-full"
+              >
+                Go To Cart
+              </Button>{" "}
+            </Link>
           </div>
         </div>
       </Drawer>
