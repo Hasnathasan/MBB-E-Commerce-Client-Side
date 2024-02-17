@@ -1,24 +1,31 @@
 import { Avatar, Tab, Tabs } from "@nextui-org/react";
 import useUser from "../../Hooks/useUser";
 
-
 const ArtistDetailsPage = () => {
-    const [userData] = useUser();
-    return (
-        <div className=" mx-8 my-8">
-            <div className="grid grid-cols-12 justify-center gap-6 border border-gray-300 p-5 rounded-lg ">
-            <div className=" col-span-5 flex flex-col justify-center items-center gap-2">
+  const [userData] = useUser();
+  return (
+    <div className=" mx-8 my-8">
+      <div className="grid grid-cols-12 justify-center gap-6 border border-gray-300 p-5 rounded-lg ">
+        <div className=" col-span-5 flex flex-col justify-center items-center gap-2">
           <Avatar src={userData?.userPhoto} className="w-44 h-44 text-large" />
           <h2 className="text-2xl font-semibold">
             {userData?.userName || "Unknown"}
           </h2>
         </div>
-        <div className="col-span-7 p-6">
-        <iframe width="100%" height="320" src="https://www.youtube.com/embed/-g76j7K5bGQ?si=2QpDqo0uOQTO5EKL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        <div className="col-span-7 flex justify-center items-center">
+          <iframe
+            width="100%"
+            height="320"
+            src="https://www.youtube.com/embed/-g76j7K5bGQ?si=2QpDqo0uOQTO5EKL"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
         </div>
-            </div>
-            <div className="mt-7">
-            <Tabs
+      </div>
+      <div className="mt-7">
+        <Tabs
           className="w-full flex items-center justify-center"
           aria-label="Options"
           color="primary"
@@ -95,9 +102,9 @@ const ArtistDetailsPage = () => {
             </p>
           </Tab>
         </Tabs>
-            </div>
-        </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default ArtistDetailsPage;
