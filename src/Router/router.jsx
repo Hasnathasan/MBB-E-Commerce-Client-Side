@@ -13,6 +13,7 @@ import Products from "../Pages/Products/Products/Products";
 import Details from "../Pages/Details/Details";
 import Error from "../Pages/Error/Error";
 import CheckoutPage from "../Pages/CheckoutPage/CheckoutPage";
+import ArtistDetailsPage from "../Pages/ArtistDetailsPage/ArtistDetailsPage";
 
 
 const router = createBrowserRouter([
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "/checkout",
         element: <CheckoutPage></CheckoutPage>
+      },
+      {
+        path: "/artistDetails",
+        element: <ArtistDetailsPage></ArtistDetailsPage>
       },
       {
         path: "/userdashboard",
