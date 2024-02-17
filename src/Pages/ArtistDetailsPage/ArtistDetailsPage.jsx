@@ -12,10 +12,19 @@ const ArtistDetailsPage = () => {
             {userData?.userName || "Unknown"}
           </h2>
           <h2>
-            Email: <a className=" font-semibold" href={`mailto:${userData?.email}`}>{userData?.email}</a>
+            Email:{" "}
+            <a className=" font-semibold" href={`mailto:${userData?.email}`}>
+              {userData?.email}
+            </a>
           </h2>
-          <h2 >
-            Phone Number: <a className=" font-semibold" href={`tel:${userData?.userPhoneNumber}`}>{userData?.userPhoneNumber}</a>
+          <h2>
+            Phone Number:{" "}
+            <a
+              className=" font-semibold"
+              href={`tel:${userData?.userPhoneNumber}`}
+            >
+              {userData?.userPhoneNumber}
+            </a>
           </h2>
         </div>
         <div className="col-span-7 flex justify-center items-center">
@@ -69,10 +78,24 @@ const ArtistDetailsPage = () => {
               viverra velit, pellentesque tristique neque mi eget nulla. Proin
               luctus elementum neque et pharetra.
             </p>
-            <h2 className="text-lg mb-2 font-semibold text-gray-900">Address: <span className="text-gray-800 font-medium">{userData?.billingInfo?.address}</span></h2>
-            <h2 className="text-lg mb-2 font-semibold text-gray-900">Country: <span className="text-gray-800 font-medium">{userData?.billingInfo?.country}</span></h2>
-            <h2 className="text-lg mb-2 font-semibold text-gray-900">States: <span className="text-gray-800 font-medium">{userData?.billingInfo?.states}</span></h2>
-            
+            <h2 className="text-lg mb-2 font-semibold text-gray-900">
+              Address:{" "}
+              <span className="text-gray-800 font-medium">
+                {userData?.billingInfo?.address}
+              </span>
+            </h2>
+            <h2 className="text-lg mb-2 font-semibold text-gray-900">
+              Country:{" "}
+              <span className="text-gray-800 font-medium">
+                {userData?.billingInfo?.country}
+              </span>
+            </h2>
+            <h2 className="text-lg mb-2 font-semibold text-gray-900">
+              States:{" "}
+              <span className="text-gray-800 font-medium">
+                {userData?.billingInfo?.states}
+              </span>
+            </h2>
           </Tab>
           <Tab
             key="music"
