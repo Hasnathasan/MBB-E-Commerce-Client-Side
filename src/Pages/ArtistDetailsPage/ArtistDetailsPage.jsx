@@ -11,6 +11,12 @@ const ArtistDetailsPage = () => {
           <h2 className="text-2xl font-semibold">
             {userData?.userName || "Unknown"}
           </h2>
+          <h2>
+            Email: <a className=" font-semibold" href={`mailto:${userData?.email}`}>{userData?.email}</a>
+          </h2>
+          <h2 >
+            Phone Number: <a className=" font-semibold" href={`tel:${userData?.userPhoneNumber}`}>{userData?.userPhoneNumber}</a>
+          </h2>
         </div>
         <div className="col-span-7 flex justify-center items-center">
           <iframe
@@ -43,11 +49,12 @@ const ArtistDetailsPage = () => {
             title={
               <div className="flex px-6 items-center">
                 {/* <GalleryIcon/> */}
-                <span>Bio</span>
+                <span>Artist Info</span>
               </div>
             }
           >
-            <p className="mb-3">
+            <h2 className="text-lg font-semibold text-gray-900">Bio:</h2>
+            <p className="mb-5">
               Sed commodo aliquam dui ac porta. Fusce ipsum felis, imperdiet at
               posuere ac, viverra at mauris. Maecenas tincidunt ligula a sem
               vestibulum pharetra. Maecenas auctor tortor lacus, nec laoreet
@@ -62,15 +69,10 @@ const ArtistDetailsPage = () => {
               viverra velit, pellentesque tristique neque mi eget nulla. Proin
               luctus elementum neque et pharetra.
             </p>
-            <p>
-              Sed commodo aliquam dui ac porta. Fusce ipsum felis, imperdiet at
-              posuere ac, viverra at mauris. Maecenas tincidunt ligula a sem
-              vestibulum pharetra. Maecenas auctor tortor lacus, nec laoreet
-              nisi porttitor vel. Etiam tincidunt metus vel dui interdum
-              sollicitudin. Mauris sem ante, vestibulum nec orci vitae, aliquam
-              mollis lacus. Sed et condimentum arcu, id molestie tellus. Nulla
-              facilisi. Nam scelerisque vitae justo a convallis.
-            </p>
+            <h2 className="text-lg mb-2 font-semibold text-gray-900">Address: <span className="text-gray-800 font-medium">{userData?.billingInfo?.address}</span></h2>
+            <h2 className="text-lg mb-2 font-semibold text-gray-900">Country: <span className="text-gray-800 font-medium">{userData?.billingInfo?.country}</span></h2>
+            <h2 className="text-lg mb-2 font-semibold text-gray-900">States: <span className="text-gray-800 font-medium">{userData?.billingInfo?.states}</span></h2>
+            
           </Tab>
           <Tab
             key="music"

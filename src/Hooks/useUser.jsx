@@ -7,7 +7,6 @@ import { useQuery } from "@tanstack/react-query";
 const useUser = () => {
     const [axiosSecure] = useAxiosSecure()
     const {user} = useContext(AuthContext);
-    console.log(user?.email);
     const { data: userData, isLoading: isUserDataLoading, refetch } = useQuery({
         queryKey: [user?.email],
         queryFn: async() => {
@@ -15,7 +14,7 @@ const useUser = () => {
             return res.data;
         },
       })
-      return [userData, isUserDataLoading, refetch]
+      return [userData, isUserDataLoading, refetch];
 };
 
 export default useUser;

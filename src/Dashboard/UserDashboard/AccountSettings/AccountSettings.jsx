@@ -1,4 +1,3 @@
-
 import { Avatar } from "@nextui-org/react";
 import useUser from "../../../Hooks/useUser";
 import axios from "axios";
@@ -7,23 +6,26 @@ import { AuthContext } from "../../../Providers/AuthProvider";
 import Swal from "sweetalert2";
 
 const AccountSettings = () => {
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [userData, isUserDataLoading] = useUser();
-  if(isUserDataLoading){
+  if (isUserDataLoading) {
     return <h1>Loading......</h1>;
   }
   console.log(userData);
-  const handleUserUpdate = e => {
+  const handleUserUpdate = (e) => {
     e.preventDefault();
     const form = e.target;
     const updatedName = form.name.value;
     const updatedNum = form.phoneNumber.value;
     console.log(updatedName, updatedNum);
     axios
-      .patch(`http://localhost:8000/userUpdate/${user?.email}`, {updatedName, updatedNum})
+      .patch(`http://localhost:8000/userUpdate/${user?.email}`, {
+        updatedName,
+        updatedNum,
+      })
       .then((res) => {
         console.log(res.data);
-        if(res.data.modifiedCount > 0){
+        if (res.data.modifiedCount > 0) {
           Swal.fire(
             "Congratulation",
             "Successfully Updated Your Data",
@@ -31,14 +33,12 @@ const AccountSettings = () => {
           );
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
-  }
+  };
 
-
-
-  const handleBillingUpdate = e => {
+  const handleBillingUpdate = (e) => {
     e.preventDefault();
     const form = e.target;
     const updatedName = form.name.value;
@@ -48,12 +48,23 @@ const AccountSettings = () => {
     const updatedAddress = form.address.value;
     const zipCode = form.zipCode.value;
     const updatedNum = form.phoneNumber.value;
-    const billingInfo = {updatedName, companyName, country, states, updatedAddress, zipCode, updatedNum};
+    const billingInfo = {
+      updatedName,
+      companyName,
+      country,
+      states,
+      updatedAddress,
+      zipCode,
+      updatedNum,
+    };
     axios
-      .patch(`http://localhost:8000/userBillingInfoUpdate/${user?.email}`, billingInfo)
+      .patch(
+        `http://localhost:8000/userBillingInfoUpdate/${user?.email}`,
+        billingInfo
+      )
       .then((res) => {
         console.log(res.data);
-        if(res.data.modifiedCount > 0){
+        if (res.data.modifiedCount > 0) {
           Swal.fire(
             "Congratulation",
             "Successfully Updated Your Billing Info",
@@ -61,10 +72,10 @@ const AccountSettings = () => {
           );
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
-  }
+  };
   return (
     <div>
       {/* Account Information */}
@@ -116,7 +127,10 @@ const AccountSettings = () => {
             </form>
           </div>
           <div className="flex justify-center col-span-2 items-center gap-5 flex-col">
-            <Avatar src={userData?.userPhoto} className="w-48 h-48 text-large" />
+            <Avatar
+              src={userData?.userPhoto}
+              className="w-48 h-48 text-large"
+            />
             <button
               type="submit"
               className=" text-white bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl text-sm px-7 py-2.5 text-center "

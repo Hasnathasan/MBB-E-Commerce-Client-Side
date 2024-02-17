@@ -3,7 +3,7 @@ import Main from "../Main/Main";
 import SignUp from "../Pages/Authentication/SignUp/SignUp";
 import SignIn from "../Pages/Authentication/SignIn/SignIn";
 import Home from "../Pages/Home/Home/Home";
-import UserDashboard from "../Dashboard/UserDashboard/MainDashBoard/UserDashboard";
+import UserDashboard from "../Dashboard/MainDashBoard/UserDashboard";
 import Profile from "../Dashboard/UserDashboard/Profile/Profile";
 import OrderHistory from "../Dashboard/UserDashboard/OrderHistory/OrderHistory";
 import OrderDetails from "../Dashboard/UserDashboard/OrderDetails/OrderDetails";
