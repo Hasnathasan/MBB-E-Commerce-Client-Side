@@ -68,12 +68,14 @@ const Cart = () => {
             <h5 className="text-green-800 font-bold">$5839</h5>
           </div>
           <Link to={"/checkout"}>
-            <button
-              type="submit"
-              className=" text-white w-full mt-2 bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl text-sm px-7 py-2.5 text-center "
-            >
-              Procced to CheckOut
-            </button>
+          <Button
+          type="submit"
+                color="success"
+                radius="full"
+                className="text-white mb-2 bg-green-500 w-full"
+              >
+                Procced to Checkout
+              </Button>
           </Link>
         </div>
       </div>

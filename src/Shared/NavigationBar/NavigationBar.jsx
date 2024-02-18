@@ -651,14 +651,15 @@ const NavigationBar = () => {
             <span className="text-sm font-semibold">$26.00</span>
           </div>
           <div className="space-y-2">
-            <Link to={"/checkout"}> 
-            <Button
-              color="success"
-              radius="full"
-              className="text-white mb-2 bg-green-600 w-full"
-            >
-              Checkout
-            </Button></Link>
+            <Link to={"/checkout"}>
+              <Button
+                color="success"
+                radius="full"
+                className="text-white mb-2 bg-green-600 w-full"
+              >
+                Checkout
+              </Button>
+            </Link>
             <Link to={"/mycart"}>
               <Button
                 color="success"

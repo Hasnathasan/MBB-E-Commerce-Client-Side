@@ -1,4 +1,4 @@
-import { Radio, RadioGroup } from "@nextui-org/react";
+import { Button, Radio, RadioGroup } from "@nextui-org/react";
 import useUser from "../../Hooks/useUser";
 import product1 from "../../assets/products1.png";
 import product2 from "../../assets/products2.png";
@@ -178,12 +178,14 @@ const CheckoutPage = () => {
               <Radio value="cashOnDelevery">Cash on delevery</Radio>
               <Radio value="stripe">Stripe</Radio>
             </RadioGroup>
-            <button
-              type="submit"
-              className=" text-white w-full mt-2 bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl px-7 py-3 text-center "
-            >
-              Place Order
-            </button>
+            <Button
+                color="success"
+                radius="full"
+                size="lg"
+                className="text-white mb-2 bg-green-500 w-full"
+              >
+                Place Order
+              </Button>
           </div>
         </div>
       </div>
