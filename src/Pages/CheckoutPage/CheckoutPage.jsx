@@ -179,13 +179,13 @@ const CheckoutPage = () => {
               <Radio value="stripe">Stripe</Radio>
             </RadioGroup>
             <Button
-                color="success"
-                radius="full"
-                size="lg"
-                className="text-white mb-2 bg-green-500 w-full"
-              >
-                Place Order
-              </Button>
+              color="success"
+              radius="full"
+              size="lg"
+              className="text-white mb-2 bg-green-500 w-full"
+            >
+              Place Order
+            </Button>
           </div>
         </div>
       </div>
