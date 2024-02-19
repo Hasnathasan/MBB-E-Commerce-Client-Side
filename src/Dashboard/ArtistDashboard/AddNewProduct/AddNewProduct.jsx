@@ -1,14 +1,13 @@
-
 import { Button, Select, SelectItem } from "@nextui-org/react";
 
 const AddNewProduct = () => {
-  const handleAddNewProduct = e => {
-    e.preeventDefault()
+  const handleAddNewProduct = (e) => {
+    e.preeventDefault();
     const form = e.target;
     const product_name = form.productName.value;
     const product_price = form.productPrice.value;
     const product_quantity = form.productQuantity.value;
-  }
+  };
   return (
     <div className="w-full  border border-gray-300 rounded-lg">
       <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
@@ -28,31 +27,30 @@ const AddNewProduct = () => {
             />
           </div>
           <div>
-          <Select
-      label="Product Category"
-      placeholder="Select an category"
-      labelPlacement="outside"
-      className="w-full"
-      variant="bordered"
-      radius="sm"
-      // disableSelectorIconRotation
-      // selectorIcon={<SelectorIcon />}
-    >
-        <SelectItem key={"Art"} value={"art"}>
-          Art
-        </SelectItem>
-        <SelectItem key={"music"} value={"music"}>
-          Music
-        </SelectItem>
-        <SelectItem key={"Scatch"} value={"Scatch"}>
-          Scatch
-        </SelectItem>
-    </Select></div>
-          
-          
+            <Select
+              label="Product Category"
+              placeholder="Select an category"
+              labelPlacement="outside"
+              className="w-full"
+              variant="bordered"
+              radius="sm"
+              // disableSelectorIconRotation
+              // selectorIcon={<SelectorIcon />}
+            >
+              <SelectItem key={"Art"} value={"art"}>
+                Art
+              </SelectItem>
+              <SelectItem key={"music"} value={"music"}>
+                Music
+              </SelectItem>
+              <SelectItem key={"Scatch"} value={"Scatch"}>
+                Scatch
+              </SelectItem>
+            </Select>
+          </div>
         </div>
         <div className="grid grid-cols-2 gap-5">
-        <div>
+          <div>
             <label htmlFor="productsPhoto">Product Feature photo</label>
             <input
               type="file"
@@ -63,7 +61,7 @@ const AddNewProduct = () => {
               required
             />
           </div>
-        <div>
+          <div>
             <label htmlFor="productsPhoto">Product&apos;s other photos</label>
             <input
               type="file"
