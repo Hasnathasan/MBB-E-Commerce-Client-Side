@@ -1,5 +1,7 @@
 const AddNewProduct = () => {
-  return <div></div>;
+  return <div>
+    
+  </div>;
 };
 
 export default AddNewProduct;
