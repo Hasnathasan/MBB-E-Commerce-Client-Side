@@ -33,18 +33,49 @@ const AddNewProduct = () => {
                 />
               </div>
             </div>
-            <div>
-              <label htmlFor="address">Street Address</label>
-              <input
-                type="text"
-                name="address"
-                id="address"
-                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                placeholder="Street Address"
-                defaultValue={userData?.billingInfo?.address}
-                required
-              />
+            <div className="grid grid-cols-3 gap-5">
+              <div>
+                <label htmlFor="productPrice">Product Price</label>
+                <input
+                  type="number"
+                  name="productPrice"
+                  min={0}
+                  id="productPrice"
+                  className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                  placeholder="Product Price"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="availableQuantity">
+                  Available quantity
+                </label>
+                <input
+                  type="number"
+                  name="availableQuantity"
+                  min={0}
+                  id="availableQuantity"
+                  className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
+                  placeholder="Available quantity"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="costOfProduct">
+                  Cost of Product
+                </label>
+                <input
+                  type="number"
+                  min={0}
+                  name="costOfProduct"
+                  id="costOfProduct"
+                  className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
+                  placeholder="Cost of your Product"
+                  required
+                />
+              </div>
             </div>
+            
             <div className="grid grid-cols-3 gap-5">
               <div>
                 <label htmlFor="country">Country / Region</label>
