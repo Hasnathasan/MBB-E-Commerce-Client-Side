@@ -14,6 +14,7 @@ import Details from "../Pages/Details/Details";
 import Error from "../Pages/Error/Error";
 import CheckoutPage from "../Pages/CheckoutPage/CheckoutPage";
 import ArtistDetailsPage from "../Pages/ArtistDetailsPage/ArtistDetailsPage";
+import AddNewProduct from "../Dashboard/ArtistDashboard/AddNewProduct/AddNewProduct";
 
 
 const router = createBrowserRouter([
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
           {
             path: "settings",
             element: <AccountSettings></AccountSettings>
+          },
+          {
+            path: "addnewproduct",
+            element: <AddNewProduct></AddNewProduct>
           },
         ]
       }

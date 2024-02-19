@@ -57,9 +57,9 @@ const UserDashboard = () => {
           ) : userData?.userRole === "artist" ? (
             <>
               {" "}
-              <NavLink className="p-4 flex items-center gap-3" to="/mycart">
+              <NavLink className="p-4 flex items-center gap-3" to="addnewproduct">
                 <HiOutlineShoppingBag className="w-5 h-5"></HiOutlineShoppingBag>{" "}
-                Shopping Cart
+                Add New Product
               </NavLink>
             </>
           ) : (
