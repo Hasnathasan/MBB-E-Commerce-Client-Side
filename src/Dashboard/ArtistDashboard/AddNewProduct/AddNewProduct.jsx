@@ -1,8 +1,14 @@
-import { Button } from "@nextui-org/react";
-import useUser from "../../../Hooks/useUser";
+
+import { Button, Select, SelectItem } from "@nextui-org/react";
 
 const AddNewProduct = () => {
-  const [userData] = useUser();
+  const handleAddNewProduct = e => {
+    e.preeventDefault()
+    const form = e.target;
+    const product_name = form.productName.value;
+    const product_price = form.productPrice.value;
+    const product_quantity = form.productQuantity.value;
+  }
   return (
     <div className="w-full  border border-gray-300 rounded-lg">
       <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
@@ -22,14 +28,50 @@ const AddNewProduct = () => {
             />
           </div>
           <div>
-            <label htmlFor="productsPhoto">Products photos</label>
+          <Select
+      label="Product Category"
+      placeholder="Select an category"
+      labelPlacement="outside"
+      className="w-full"
+      variant="bordered"
+      radius="sm"
+      // disableSelectorIconRotation
+      // selectorIcon={<SelectorIcon />}
+    >
+        <SelectItem key={"Art"} value={"art"}>
+          Art
+        </SelectItem>
+        <SelectItem key={"music"} value={"music"}>
+          Music
+        </SelectItem>
+        <SelectItem key={"Scatch"} value={"Scatch"}>
+          Scatch
+        </SelectItem>
+    </Select></div>
+          
+          
+        </div>
+        <div className="grid grid-cols-2 gap-5">
+        <div>
+            <label htmlFor="productsPhoto">Product Feature photo</label>
+            <input
+              type="file"
+              name="productsPhoto"
+              id="productsPhoto"
+              className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
+              placeholder="Feature photo of your product"
+              required
+            />
+          </div>
+        <div>
+            <label htmlFor="productsPhoto">Product&apos;s other photos</label>
             <input
               type="file"
               multiple
               name="productsPhoto"
               id="productsPhoto"
               className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
-              placeholder="Products Photo"
+              placeholder="Product Photos"
               required
             />
           </div>
