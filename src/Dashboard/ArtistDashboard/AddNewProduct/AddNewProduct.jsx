@@ -1,6 +1,9 @@
-import { Button, Select, SelectItem } from "@nextui-org/react";
-
+import { Button } from "@nextui-org/react";
+import { useState } from "react";
+import { MultiSelect } from "react-selectize";
+import '../../../../node_modules/react-selectize/themes/index.css'
 const AddNewProduct = () => {
+  const [tags, setTags] = useState([].map(str => ({ label: str, value: str })));
   const handleAddNewProduct = (e) => {
     e.preeventDefault();
     const form = e.target;
@@ -8,6 +11,7 @@ const AddNewProduct = () => {
     const product_price = form.productPrice.value;
     const product_quantity = form.productQuantity.value;
   };
+  console.log(tags);
   return (
     <div className="w-full  border border-gray-300 rounded-lg">
       <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
@@ -27,26 +31,31 @@ const AddNewProduct = () => {
             />
           </div>
           <div>
-            <Select
-              label="Product Category"
-              placeholder="Select an category"
-              labelPlacement="outside"
-              className="w-full"
-              variant="bordered"
-              radius="sm"
-              // disableSelectorIconRotation
-              // selectorIcon={<SelectorIcon />}
-            >
-              <SelectItem key={"Art"} value={"art"}>
-                Art
-              </SelectItem>
-              <SelectItem key={"music"} value={"music"}>
-                Music
-              </SelectItem>
-              <SelectItem key={"Scatch"} value={"Scatch"}>
-                Scatch
-              </SelectItem>
-            </Select>
+          <MultiSelect
+            values={tags}
+            delimiters={[188]}
+            valuesFromPaste={(options, values, pastedText) => {
+                return pastedText
+                    .split(",")
+                    .filter(text => !values.some(item => item.label === text.trim()))
+                    .map(text => ({ label: text.trim(), value: text.trim() }));
+            }}
+            restoreOnBackspace={item => item.label}
+            onValuesChange={tags => setTags(tags)}
+            createFromSearch={(options, values, search) => {
+                const labels = values.map(value => value.label);
+                if (search.trim().length === 0 || labels.includes(search.trim())) return null;
+                return { label: search.trim(), value: search.trim() };
+            }}
+            renderNoResultsFound={(values, search) => (
+                <div className="no-results-found">
+                    {(() => {
+                        if (search.trim().length === 0) return "Type a few characters to create a tag";
+                        else if (values.some(item => item.label === search.trim())) return "Tag already exists";
+                    })()}
+                </div>
+            )}
+        />
           </div>
         </div>
         <div className="grid grid-cols-2 gap-5">
