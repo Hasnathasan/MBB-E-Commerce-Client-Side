@@ -30,7 +30,35 @@ const AddNewProduct = () => {
               required
             />
           </div>
+          
+        </div>
+        <div className="grid grid-cols-3 gap-5">
           <div>
+            <label htmlFor="productsPhoto">Product Feature photo</label>
+            <input
+              type="file"
+              name="productsPhoto"
+              id="productsPhoto"
+              className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
+              placeholder="Feature photo of your product"
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="productsPhoto">Product&apos;s other photos</label>
+            <input
+              type="file"
+              multiple
+              name="productsPhoto"
+              id="productsPhoto"
+              className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
+              placeholder="Product Photos"
+              required
+            />
+          </div>
+          <div>
+            
+          <label htmlFor="productPrice">Tags</label>
           <MultiSelect
             values={tags}
             delimiters={[188]}
@@ -56,31 +84,6 @@ const AddNewProduct = () => {
                 </div>
             )}
         />
-          </div>
-        </div>
-        <div className="grid grid-cols-2 gap-5">
-          <div>
-            <label htmlFor="productsPhoto">Product Feature photo</label>
-            <input
-              type="file"
-              name="productsPhoto"
-              id="productsPhoto"
-              className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
-              placeholder="Feature photo of your product"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="productsPhoto">Product&apos;s other photos</label>
-            <input
-              type="file"
-              multiple
-              name="productsPhoto"
-              id="productsPhoto"
-              className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
-              placeholder="Product Photos"
-              required
-            />
           </div>
         </div>
         <div className="grid grid-cols-3 gap-5">
@@ -135,6 +138,7 @@ const AddNewProduct = () => {
         </div>
 
         <Button
+        onSubmit={handleAddNewProduct}
           type="submit"
           size="lg"
           color="success"
