@@ -1,10 +1,14 @@
 import { Button } from "@nextui-org/react";
 import { useRef, useState } from "react";
 import { MultiSelect } from "react-selectize";
-import '../../../../node_modules/react-selectize/themes/index.css'
+import "../../../../node_modules/react-selectize/themes/index.css";
 const AddNewProduct = () => {
-  const [tags, setTags] = useState([].map(str => ({ label: str, value: str })));
-  const [categories, setCategories] = useState([].map(str => ({ label: str, value: str })));
+  const [tags, setTags] = useState(
+    [].map((str) => ({ label: str, value: str }))
+  );
+  const [categories, setCategories] = useState(
+    [].map((str) => ({ label: str, value: str }))
+  );
   const regularPriceRef = useRef(null);
   const salePriceRef = useRef(null);
   const costPriceRef = useRef(null);
@@ -40,32 +44,41 @@ const AddNewProduct = () => {
           <div>
             <label htmlFor="category">Product Category</label>
             <MultiSelect
-            values={categories}
-            delimiters={[188]}
-            valuesFromPaste={(options, values, pastedText) => {
+              values={categories}
+              delimiters={[188]}
+              valuesFromPaste={(options, values, pastedText) => {
                 return pastedText
-                    .split(",")
-                    .filter(text => !values.some(item => item.label === text.trim()))
-                    .map(text => ({ label: text.trim(), value: text.trim() }));
-            }}
-            restoreOnBackspace={item => item.label}
-            onValuesChange={categories => setCategories(categories)}
-            createFromSearch={(options, values, search) => {
-                const labels = values.map(value => value.label);
-                if (search.trim().length === 0 || labels.includes(search.trim())) return null;
+                  .split(",")
+                  .filter(
+                    (text) => !values.some((item) => item.label === text.trim())
+                  )
+                  .map((text) => ({ label: text.trim(), value: text.trim() }));
+              }}
+              restoreOnBackspace={(item) => item.label}
+              onValuesChange={(categories) => setCategories(categories)}
+              createFromSearch={(options, values, search) => {
+                const labels = values.map((value) => value.label);
+                if (
+                  search.trim().length === 0 ||
+                  labels.includes(search.trim())
+                )
+                  return null;
                 return { label: search.trim(), value: search.trim() };
-            }}
-            renderNoResultsFound={(values, search) => (
+              }}
+              renderNoResultsFound={(values, search) => (
                 <div className="no-results-found">
-                    {(() => {
-                        if (search.trim().length === 0) return "Type a few characters to create a Category";
-                        else if (values.some(item => item.label === search.trim())) return "Tag already exists";
-                    })()}
+                  {(() => {
+                    if (search.trim().length === 0)
+                      return "Type a few characters to create a Category";
+                    else if (
+                      values.some((item) => item.label === search.trim())
+                    )
+                      return "Tag already exists";
+                  })()}
                 </div>
-            )}
-        />
+              )}
+            />
           </div>
-          
         </div>
         <div className="grid grid-cols-3 gap-5">
           <div>
@@ -92,33 +105,42 @@ const AddNewProduct = () => {
             />
           </div>
           <div>
-            
-          <label htmlFor="productPrice">Tags</label>
-          <MultiSelect
-            values={tags}
-            delimiters={[188]}
-            valuesFromPaste={(options, values, pastedText) => {
+            <label htmlFor="productPrice">Tags</label>
+            <MultiSelect
+              values={tags}
+              delimiters={[188]}
+              valuesFromPaste={(options, values, pastedText) => {
                 return pastedText
-                    .split(",")
-                    .filter(text => !values.some(item => item.label === text.trim()))
-                    .map(text => ({ label: text.trim(), value: text.trim() }));
-            }}
-            restoreOnBackspace={item => item.label}
-            onValuesChange={tags => setTags(tags)}
-            createFromSearch={(options, values, search) => {
-                const labels = values.map(value => value.label);
-                if (search.trim().length === 0 || labels.includes(search.trim())) return null;
+                  .split(",")
+                  .filter(
+                    (text) => !values.some((item) => item.label === text.trim())
+                  )
+                  .map((text) => ({ label: text.trim(), value: text.trim() }));
+              }}
+              restoreOnBackspace={(item) => item.label}
+              onValuesChange={(tags) => setTags(tags)}
+              createFromSearch={(options, values, search) => {
+                const labels = values.map((value) => value.label);
+                if (
+                  search.trim().length === 0 ||
+                  labels.includes(search.trim())
+                )
+                  return null;
                 return { label: search.trim(), value: search.trim() };
-            }}
-            renderNoResultsFound={(values, search) => (
+              }}
+              renderNoResultsFound={(values, search) => (
                 <div className="no-results-found">
-                    {(() => {
-                        if (search.trim().length === 0) return "Type a few characters to create a tag";
-                        else if (values.some(item => item.label === search.trim())) return "Tag already exists";
-                    })()}
+                  {(() => {
+                    if (search.trim().length === 0)
+                      return "Type a few characters to create a tag";
+                    else if (
+                      values.some((item) => item.label === search.trim())
+                    )
+                      return "Tag already exists";
+                  })()}
                 </div>
-            )}
-        />
+              )}
+            />
           </div>
         </div>
         <div>
@@ -133,13 +155,15 @@ const AddNewProduct = () => {
             required
           />
         </div>
-        <h3 className="text-xl font-semibold underline my-4">Pricing Section</h3>
+        <h3 className="text-xl font-semibold underline my-4">
+          Pricing Section
+        </h3>
         <div className="grid grid-cols-3 gap-5">
           <div>
             <label htmlFor="regularPrice">Regular Price</label>
             <input
-            ref={regularPriceRef}
-            onChange={() => setRegularPrice(regularPriceRef?.current?.value)}
+              ref={regularPriceRef}
+              onChange={() => setRegularPrice(regularPriceRef?.current?.value)}
               type="number"
               name="productPrice"
               min={0}
@@ -152,8 +176,8 @@ const AddNewProduct = () => {
           <div>
             <label htmlFor="salePrice">Sale Price</label>
             <input
-            ref={salePriceRef}
-            onChange={() => setSalePrice(salePriceRef?.current?.value)}
+              ref={salePriceRef}
+              onChange={() => setSalePrice(salePriceRef?.current?.value)}
               type="number"
               name="productPrice"
               min={0}
@@ -178,8 +202,8 @@ const AddNewProduct = () => {
           <div>
             <label htmlFor="costOfProduct">Cost of Product</label>
             <input
-            ref={costPriceRef}
-            onChange={() => setCostPrice(costPriceRef?.current?.value)}
+              ref={costPriceRef}
+              onChange={() => setCostPrice(costPriceRef?.current?.value)}
               type="number"
               min={0}
               name="costOfProduct"
@@ -193,14 +217,55 @@ const AddNewProduct = () => {
 
         <h3 className="text-xl font-semibold my-4">Profit Breakdown</h3>
         <div>
-          <h4 className="mb-3">Artist(you) <span className="relative"><input defaultValue={70} className="max-w-16 text-right pr-5 bg-gray-300 outline-none rounded-sm p-1 text-sm" disabled type="number" /><span className="absolute top-1/2 right-0 transform -translate-x-1/2 -translate-y-1/2">%</span></span>: ${(((salePrice || regularPrice) - costPrice) * 0.7).toFixed(2)}</h4>
-          <h4 className="mb-3">MBB Website <span className="relative"><input defaultValue={15} className="max-w-16 text-right pr-5 bg-gray-300 outline-none rounded-sm p-1 text-sm" disabled type="number" /><span className="absolute top-1/2 right-0 transform -translate-x-1/2 -translate-y-1/2">%</span></span>: ${(((salePrice || regularPrice) - costPrice) * 0.15).toFixed(2)}</h4>
-          <h4 className="mb-3">Prison <span className="relative"><input defaultValue={15} className="max-w-16 text-right pr-5 bg-gray-300 outline-none rounded-sm p-1 text-sm" disabled type="number" /><span className="absolute top-1/2 right-0 transform -translate-x-1/2 -translate-y-1/2">%</span></span>: ${(((salePrice || regularPrice) - costPrice) * 0.15).toFixed(2)}</h4>
+          <h4 className="mb-3">
+            Artist(you){" "}
+            <span className="relative">
+              <input
+                defaultValue={70}
+                className="max-w-16 text-right pr-5 bg-gray-300 outline-none rounded-sm p-1 text-sm"
+                disabled
+                type="number"
+              />
+              <span className="absolute top-1/2 right-0 transform -translate-x-1/2 -translate-y-1/2">
+                %
+              </span>
+            </span>
+            : ${(((salePrice || regularPrice) - costPrice) * 0.7).toFixed(2)}
+          </h4>
+          <h4 className="mb-3">
+            MBB Website{" "}
+            <span className="relative">
+              <input
+                defaultValue={15}
+                className="max-w-16 text-right pr-5 bg-gray-300 outline-none rounded-sm p-1 text-sm"
+                disabled
+                type="number"
+              />
+              <span className="absolute top-1/2 right-0 transform -translate-x-1/2 -translate-y-1/2">
+                %
+              </span>
+            </span>
+            : ${(((salePrice || regularPrice) - costPrice) * 0.15).toFixed(2)}
+          </h4>
+          <h4 className="mb-3">
+            Prison{" "}
+            <span className="relative">
+              <input
+                defaultValue={15}
+                className="max-w-16 text-right pr-5 bg-gray-300 outline-none rounded-sm p-1 text-sm"
+                disabled
+                type="number"
+              />
+              <span className="absolute top-1/2 right-0 transform -translate-x-1/2 -translate-y-1/2">
+                %
+              </span>
+            </span>
+            : ${(((salePrice || regularPrice) - costPrice) * 0.15).toFixed(2)}
+          </h4>
         </div>
-        
 
         <Button
-        onSubmit={handleAddNewProduct}
+          onSubmit={handleAddNewProduct}
           type="submit"
           size="lg"
           color="success"
