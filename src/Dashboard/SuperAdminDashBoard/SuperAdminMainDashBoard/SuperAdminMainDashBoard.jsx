@@ -45,7 +45,7 @@ const SuperAdminMainDashBoard = () => {
         {/* Sidebar content here */}
         <div className="w-80"></div>
         <ul className="menu flex-nowrap top-0 fixed px-8 h-screen bg-gray-200 py-10 w-80 space-y-2">
-        <h2 className="text-2xl md:text-3xl mb-5">Admin Dashboard</h2>
+        <h2 className="text-2xl font-black italic mb-5">MBB Dashboard</h2>
         <li>
             <NavLink className="p-3 text-base" to="overview">
               <BsPersonCircle></BsPersonCircle> Overview
@@ -72,8 +72,8 @@ const SuperAdminMainDashBoard = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink className="p-3 text-base" to="deleveredOrders">
-              <FaBookmark></FaBookmark> Delevered Orders
+            <NavLink className="p-3 text-base" to="managePrison">
+              <FaBookmark></FaBookmark> Manage Prisons
             </NavLink>
           </li>
           <div className="divider"></div>

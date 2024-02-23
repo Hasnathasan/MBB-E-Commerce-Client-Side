@@ -20,6 +20,7 @@ import SuperAdminMainDashBoard from "../Dashboard/SuperAdminDashBoard/SuperAdmin
 import OverView from "../Dashboard/SuperAdminDashBoard/OverView/OverView";
 import AddNewProductForAdmin from "../Dashboard/SuperAdminDashBoard/AddNewProductForAdmin/AddNewProductForAdmin";
 import ManageUsers from "../Dashboard/SuperAdminDashBoard/ManageUsers/ManageUsers";
+import ManagePrison from "../Dashboard/SuperAdminDashBoard/ManagePrison/ManagePrison";
 
 
 const router = createBrowserRouter([
@@ -116,6 +117,10 @@ const router = createBrowserRouter([
     {
       path: "manageUsers",
       element: <ManageUsers></ManageUsers>
+    },
+    {
+      path: "managePrison",
+      element: <ManagePrison></ManagePrison>
     },
     ]
   }
