@@ -1,14 +1,17 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import useUser from "../../../Hooks/useUser";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { Avatar } from "@nextui-org/react";
-
+import { Avatar, Button } from "@nextui-org/react";
+import { MultiSelect } from "react-selectize";
 
 const ArtistProfile = () => {
   const { user } = useContext(AuthContext);
   const [userData, isUserDataLoading] = useUser();
+  const [tags, setTags] = useState(
+    [].map((str) => ({ label: str, value: str }))
+  );
   if (isUserDataLoading) {
     return <h1>Loading......</h1>;
   }
@@ -98,33 +101,84 @@ const ArtistProfile = () => {
                 defaultValue={userData?.userName}
                 required
               />
-              <label htmlFor="email">Email Address</label>
-              <input
-                type="email"
-                name="email"
-                id="email"
+              <label htmlFor="bio">Artist  Bio</label>
+              <textarea
+                name="bio"
+                id="bio"
                 className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
-                placeholder="Email Address"
-                defaultValue={userData?.email}
-                disabled
+                placeholder="Artist Bio"
+                defaultValue={userData?.bio}
                 required
               />
-              <label htmlFor="tel">Phone Number</label>
-              <input
-                type="tel"
-                name="phoneNumber"
-                id="phoneNumber"
+              <label htmlFor="art">Art Description</label>
+              <textarea
+                name="bio"
+                id="bio"
                 className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
-                placeholder="Your Phone Number"
-                defaultValue={userData?.userPhoneNumber}
+                placeholder="ArtDescription"
+                defaultValue={userData?.bio}
                 required
               />
-              <button
-                type="submit"
-                className=" text-white bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl text-sm px-7 py-2.5 text-center "
+             <div className="grid grid-cols-2">
+              <div>
+              <label htmlFor="art">Key Words</label>
+             <MultiSelect
+              values={tags}
+              delimiters={[188]}
+              valuesFromPaste={(options, values, pastedText) => {
+                return pastedText
+                  .split(",")
+                  .filter(
+                    (text) => !values.some((item) => item.label === text.trim())
+                  )
+                  .map((text) => ({ label: text.trim(), value: text.trim() }));
+              }}
+              restoreOnBackspace={(item) => item.label}
+              onValuesChange={(tags) => setTags(tags)}
+              createFromSearch={(options, values, search) => {
+                const labels = values.map((value) => value.label);
+                if (
+                  search.trim().length === 0 ||
+                  labels.includes(search.trim())
+                )
+                  return null;
+                return { label: search.trim(), value: search.trim() };
+              }}
+              renderNoResultsFound={(values, search) => (
+                <div className="no-results-found">
+                  {(() => {
+                    if (search.trim().length === 0)
+                      return "Type a few characters to create a tag";
+                    else if (
+                      values.some((item) => item.label === search.trim())
+                    )
+                      return "Tag already exists";
+                  })()}
+                </div>
+              )}
+            />
+              </div>
+            <div>
+            <label htmlFor="bio_video">Your Bio Video Link </label>
+              <input
+                type="url"
+                name="bio_video"
+                id="bio_video"
+                className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
+                placeholder="Your Bio Video"
+                defaultValue={userData?.userName}
+                required
+              />
+            </div>
+             </div>
+              <Button
+          type="submit"
+                color="success"
+                radius="full"
+                className="text-white mb-2 bg-green-500"
               >
                 Save Changes
-              </button>
+              </Button>
             </form>
           </div>
           <div className="flex justify-center col-span-2 items-center gap-5 flex-col">
@@ -132,12 +186,14 @@ const ArtistProfile = () => {
               src={userData?.userPhoto}
               className="w-48 h-48 text-large"
             />
-            <button
+            <Button
               type="submit"
-              className=" text-white bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl text-sm px-7 py-2.5 text-center "
+              color="success"
+              radius="full"
+              className="text-white mb-2 bg-green-500 w-full"
             >
               Chose Image
-            </button>
+            </Button>
           </div>
         </div>
       </div>
