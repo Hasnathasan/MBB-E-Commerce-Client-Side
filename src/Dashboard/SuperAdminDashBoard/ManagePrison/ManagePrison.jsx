@@ -21,12 +21,12 @@ import {
     useDisclosure,
   } from "@nextui-org/react";
 import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
-import useUsers from "../../../Hooks/useUsers";
 import axios from "axios";
 import Swal from "sweetalert2";
+import usePrisons from "../../../Hooks/usePrisons";
 
 const ManagePrison = () => {
-    const [usersData] = useUsers();
+    const [prisons] = usePrisons();
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const handlePrisonAdding = (e) => {
         e.preventDefault();
@@ -50,7 +50,7 @@ const ManagePrison = () => {
         console.log(prison);
         axios
           .post(
-            `http://localhost:8000/prison`,
+            `http://localhost:8000/prisons`,
             prison
           )
           .then((res) => {
@@ -120,41 +120,36 @@ const ManagePrison = () => {
           </div>
         </div>
         <span className="text-gray-600 mb-2">
-          Total {usersData?.length} users
+          Total {prisons?.length} users
         </span>
       </div>
       <Table aria-label="Example table with custom cells">
         <TableHeader>
-          <TableColumn>Name</TableColumn>
-          <TableColumn>Email / Number</TableColumn>
-          <TableColumn>User Role</TableColumn>
-          <TableColumn>
-            <h5 className="text-center">Change User Role</h5>
-          </TableColumn>
+          <TableColumn>Prison Name</TableColumn>
+          <TableColumn>Number</TableColumn>
+          <TableColumn>Country</TableColumn>
+          <TableColumn>State</TableColumn>
+          <TableColumn>Zip code</TableColumn>
         </TableHeader>
         <TableBody>
-          {usersData?.map((user) => (
-            <TableRow key={user._id}>
+          {prisons?.map((prison) => (
+            <TableRow key={prison?._id}>
               <TableCell>
                 <User
-                  avatarProps={{ radius: "md", src: user.photoUrl }}
-                  description={user.email || user.phoneNumber}
-                  name={user.name || "Unknown"}
+                  avatarProps={{ radius: "md", src: prison?.photoUrl }}
+                  description={prison?.email}
+                  name={prison?.prison_name || "Unknown"}
                 ></User>
               </TableCell>
-              <TableCell>{user.email || user.phoneNumber}</TableCell>
+              <TableCell>{prison?.number}</TableCell>
               <TableCell>
-                <Chip
-                  className="capitalize"
-                  color={user.userRole == "admin" ? "danger" : "primary"}
-                  size="sm"
-                  variant="flat"
-                >
-                  {user.userRole}
-                </Chip>
+                  {prison?.country}
               </TableCell>
               <TableCell>
-                hi
+                {prison?.states}
+              </TableCell>
+              <TableCell>
+                {prison?.zipCode}
               </TableCell>
             </TableRow>
           ))}
@@ -265,9 +260,6 @@ const ManagePrison = () => {
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
-                </Button>
-                <Button color="primary" onPress={onClose}>
-                  Action
                 </Button>
               </ModalFooter>
             </>

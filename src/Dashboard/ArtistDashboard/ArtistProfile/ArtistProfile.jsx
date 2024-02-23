@@ -3,12 +3,14 @@ import { AuthContext } from "../../../Providers/AuthProvider";
 import useUser from "../../../Hooks/useUser";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { Avatar, Button } from "@nextui-org/react";
+import { Avatar, Button, Select, SelectItem } from "@nextui-org/react";
 import { MultiSelect } from "react-selectize";
+import usePrisons from "../../../Hooks/usePrisons";
 
 const ArtistProfile = () => {
   const { user } = useContext(AuthContext);
   const [userData, isUserDataLoading] = useUser();
+  const [prisons, isPrisonsLoading] = usePrisons();
   const [tags, setTags] = useState(
     ["hi", "by"]?.map((str) => ({ label: str, value: str }))
   );
@@ -88,6 +90,9 @@ const ArtistProfile = () => {
         console.log(error);
       });
   };
+  if(isPrisonsLoading || isUserDataLoading){
+    return <h1>Loading......</h1>
+  }
   return (
     <div>
       {/* Account Information */}
@@ -230,16 +235,25 @@ const ArtistProfile = () => {
               />
             </div>
             <div>
-              <label htmlFor="companyName">Prison Name</label>
-              <input
-                type="text"
-                name="companyName"
-                id="companyName"
-                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                placeholder="companyName"
-                defaultValue={userData?.billingInfo?.country}
-                required
-              />
+            <Select
+      items={prisons}
+      label="Assigned to"
+      placeholder="Select a user"
+      labelPlacement="outside"
+      className="max-w-xs"
+    >
+      {(prison) => (
+        <SelectItem key={prison?._id} variant="bordered" textValue={prison?.prison_name}>
+          <div className="flex gap-2 items-center">
+            <Avatar alt={prison?.prison_name} className="flex-shrink-0" size="sm" src={prison?.avatar} />
+            <div className="flex flex-col">
+              <span className="text-small">{prison?.prison_name}</span>
+              <span className="text-tiny text-default-400">{prison?.email}</span>
+            </div>
+          </div>
+        </SelectItem>
+      )}
+    </Select>
             </div>
           </div>
           <div>

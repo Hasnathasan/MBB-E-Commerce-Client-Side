@@ -70,9 +70,9 @@ const NavigationBar = () => {
         }`}
       >
         {/* Secondary Navbar - Logo + SearchBar + Cart */}
-        <div className="flex md:px-4 lg:px-8 py-[18px] justify-between border-b border-gray-200 items-center">
+        <div className="flex md:px-4 lg:px-8 py-[12px] justify-between border-b border-gray-200 items-center">
           <Link to={"/"}>
-            <img src={logo} alt="" />
+            <img className="w-64 h-20" src={logo} alt="" />
           </Link>
 
           <div className="">
@@ -108,12 +108,10 @@ const NavigationBar = () => {
         <div className="flex justify-between items-center px-8 py-2">
           <div className="flex justify-center items-center gap-8 text-sm font-medium">
             <NavLink to={"/"}>Home</NavLink>
+            <NavLink to={"/artists"}>Artists</NavLink>
             <NavLink to={"/products"}>Products</NavLink>
-            <NavLink to={"/pages"}>Pages</NavLink>
-            <NavLink to={"/blog"}>Blog</NavLink>
-            <NavLink to={"/aboutus"}>About Us</NavLink>
-            <NavLink to={"/contact"}>Contact</NavLink>
-            <NavLink to={"/userdashboard/profile"}>User Dashboard</NavLink>
+            <NavLink to={"/aboutus"}>About MBB</NavLink>
+            <NavLink to={"/contact"}>Contact Us</NavLink>
           </div>
           {/* <div className="flex justify-center items-center gap-8"> */}
           {/* <Button
