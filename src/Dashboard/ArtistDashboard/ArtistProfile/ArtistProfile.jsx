@@ -50,7 +50,7 @@ const ArtistProfile = () => {
       });
   };
 
-  const handleBillingUpdate = (e) => {
+  const handlePaymentInfoUpdate = (e) => {
     e.preventDefault();
     const form = e.target;
     const updatedName = form.name.value;
@@ -215,7 +215,7 @@ const ArtistProfile = () => {
         <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">
           Payment information
         </h4>
-        <form onSubmit={handleBillingUpdate} className="p-5">
+        <form onSubmit={handlePaymentInfoUpdate} className="p-5">
           <div className="grid grid-cols-2 gap-5">
             <div>
               <label htmlFor="name">Your Name</label>
@@ -237,7 +237,7 @@ const ArtistProfile = () => {
                 id="companyName"
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                 placeholder="companyName"
-                defaultValue={userData?.billingInfo?.prison_name}
+                defaultValue={userData?.billingInfo?.country}
                 required
               />
             </div>

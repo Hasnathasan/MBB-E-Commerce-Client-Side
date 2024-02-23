@@ -16,6 +16,8 @@ import CheckoutPage from "../Pages/CheckoutPage/CheckoutPage";
 import ArtistDetailsPage from "../Pages/ArtistDetailsPage/ArtistDetailsPage";
 import AddNewProduct from "../Dashboard/ArtistDashboard/AddNewProduct/AddNewProduct";
 import ArtistProfile from "../Dashboard/ArtistDashboard/ArtistProfile/ArtistProfile";
+import SuperAdminMainDashBoard from "../Dashboard/SuperAdminDashBoard/SuperAdminMainDashBoard/SuperAdminMainDashBoard";
+import OverView from "../Dashboard/SuperAdminDashBoard/OverView/OverView";
 
 
 const router = createBrowserRouter([
@@ -97,6 +99,16 @@ const router = createBrowserRouter([
       }
     ],
   },
+  {
+    path: "/adminDashboard",
+    element: <SuperAdminMainDashBoard></SuperAdminMainDashBoard>,
+    children: [
+    {
+      path: "",
+      element: <OverView></OverView>
+    }
+    ]
+  }
 ]);
 
 export default router;
