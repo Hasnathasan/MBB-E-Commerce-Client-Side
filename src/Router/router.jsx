@@ -15,6 +15,7 @@ import Error from "../Pages/Error/Error";
 import CheckoutPage from "../Pages/CheckoutPage/CheckoutPage";
 import ArtistDetailsPage from "../Pages/ArtistDetailsPage/ArtistDetailsPage";
 import AddNewProduct from "../Dashboard/ArtistDashboard/AddNewProduct/AddNewProduct";
+import ArtistProfile from "../Dashboard/ArtistDashboard/ArtistProfile/ArtistProfile";
 
 
 const router = createBrowserRouter([
@@ -87,6 +88,10 @@ const router = createBrowserRouter([
           {
             path: "addnewproduct",
             element: <AddNewProduct></AddNewProduct>
+          },
+          {
+            path: "artistProfile",
+            element: <ArtistProfile></ArtistProfile>
           },
         ]
       }
