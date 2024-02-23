@@ -68,7 +68,7 @@ const ManagePrison = () => {
           });
       };
     return (
-        <div className="overflow-x-auto w-full md:w-[80%]">
+        <div className="overflow-x-auto w-full md:w-[95%]">
       <div className="flex flex-col  gap-4">
         <div className="flex justify-between p-5 bg-white rounded-xl gap-3 items-end">
           <Input

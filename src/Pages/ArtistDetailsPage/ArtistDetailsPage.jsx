@@ -9,9 +9,10 @@ const ArtistDetailsPage = () => {
         <div className=" col-span-5 flex flex-col justify-center items-center gap-2">
           <Avatar src={userData?.userPhoto} className="w-44 h-44 text-large" />
           <h2 className="text-2xl font-semibold">
-            {userData?.userName || "Unknown"}
+            {/* {userData?.userName || "Unknown"} */}
+            Harry Potter
           </h2>
-          <h2>
+          {/* <h2>
             Email:{" "}
             <a className=" font-semibold" href={`mailto:${userData?.email}`}>
               {userData?.email}
@@ -25,18 +26,10 @@ const ArtistDetailsPage = () => {
             >
               {userData?.userPhoneNumber}
             </a>
-          </h2>
+          </h2> */}
         </div>
         <div className="col-span-7 flex justify-center items-center">
-          <iframe
-            width="100%"
-            height="320"
-            src="https://www.youtube.com/embed/-g76j7K5bGQ?si=2QpDqo0uOQTO5EKL"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-          ></iframe>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/Y8Q9nX8I1dk?si=Dlt8fwTkPMW516fp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
       </div>
       <div className="mt-7">
@@ -63,7 +56,7 @@ const ArtistDetailsPage = () => {
             }
           >
             <h2 className="text-lg font-semibold text-gray-900">Bio:</h2>
-            <p className="mb-5">
+            <p className="mb-6">
               Sed commodo aliquam dui ac porta. Fusce ipsum felis, imperdiet at
               posuere ac, viverra at mauris. Maecenas tincidunt ligula a sem
               vestibulum pharetra. Maecenas auctor tortor lacus, nec laoreet
@@ -78,24 +71,18 @@ const ArtistDetailsPage = () => {
               viverra velit, pellentesque tristique neque mi eget nulla. Proin
               luctus elementum neque et pharetra.
             </p>
-            <h2 className="text-lg mb-2 font-semibold text-gray-900">
-              Address:{" "}
-              <span className="text-gray-800 font-medium">
-                {userData?.billingInfo?.address}
-              </span>
-            </h2>
-            <h2 className="text-lg mb-2 font-semibold text-gray-900">
-              Country:{" "}
-              <span className="text-gray-800 font-medium">
-                {userData?.billingInfo?.country}
-              </span>
-            </h2>
-            <h2 className="text-lg mb-2 font-semibold text-gray-900">
-              States:{" "}
-              <span className="text-gray-800 font-medium">
-                {userData?.billingInfo?.states}
-              </span>
-            </h2>
+            <h2 className="text-lg font-semibold text-gray-900">Art Description:</h2>
+            <p className="mb-6">
+              Sed commodo aliquam dui ac porta. Fusce ipsum felis, imperdiet at
+              posuere ac, viverra at mauris. Maecenas tincidunt ligula a sem
+              vestibulum pharetra. Maecenas auctor tortor lacus, nec laoreet
+              nisi porttitor vel. Etiam tincidunt metus vel dui interdum
+              sollicitudin. Mauris sem ante.
+            </p>
+
+            <h2 className="text-lg font-semibold mb-5 text-gray-900">Keywords: <span className="text-gray-800">Artist, Rhythm, Shape</span></h2>
+            <h2 className="text-lg font-semibold text-gray-900">State: <span className="text-gray-800">New York</span></h2>
+            
           </Tab>
           <Tab
             key="music"
@@ -106,25 +93,15 @@ const ArtistDetailsPage = () => {
               </div>
             }
           >
-            <p className="mb-2">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro
-              doloremque quos laborum dolorem odit corporis maiores at nostrum,
-              consectetur facere vero ipsum quo quas cumque inventore, qui totam
-              numquam eius? Cum amet voluptatem quaerat quam quis ducimus sequi,
-              blanditiis ad officiis, enim eius voluptas fugiat eveniet
-              doloremque, quia deleniti ullam rerum sapiente! Blanditiis
-              repellat porro, optio cum deleniti quo mollitia consequatur rem
-              ad? Quisquam nisi consectetur voluptate corporis, porro ipsum.
-            </p>
-            <p>
-              Sed commodo aliquam dui ac porta. Fusce ipsum felis, imperdiet at
-              posuere ac, viverra at mauris. Maecenas tincidunt ligula a sem
-              vestibulum pharetra. Maecenas auctor tortor lacus, nec laoreet
-              nisi porttitor vel. Etiam tincidunt metus vel dui interdum
-              sollicitudin. Mauris sem ante, vestibulum nec orci vitae, aliquam
-              mollis lacus. Sed et condimentum arcu, id molestie tellus. Nulla
-              facilisi. Nam scelerisque vitae justo a convallis.
-            </p>
+             <div className="grid grid-cols-2 px-14 sm:grid-cols-2 gap-6 justify-center items-center md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          {products?.map((product) => (
+            <PopularProductsCard
+              key={product?.name}
+              product={product}
+              isRounded={true}
+            ></PopularProductsCard>
+          ))}
+        </div>
           </Tab>
         </Tabs>
       </div>

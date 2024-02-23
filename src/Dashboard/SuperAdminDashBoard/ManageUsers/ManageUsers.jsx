@@ -81,7 +81,7 @@ const ManageUsers = () => {
           <TableColumn>Email / Number</TableColumn>
           <TableColumn>User Role</TableColumn>
           <TableColumn>
-            <h5 className="text-center">Change User Role</h5>
+            <h5 className="text-center">Details</h5>
           </TableColumn>
         </TableHeader>
         <TableBody>
@@ -98,7 +98,7 @@ const ManageUsers = () => {
               <TableCell>
                 <Chip
                   className="capitalize"
-                  color={user.userRole == "admin" ? "danger" : "primary"}
+                  color={user.userRole == "mbbAdmin" ? "danger" : "success"}
                   size="sm"
                   variant="flat"
                 >
@@ -106,7 +106,9 @@ const ManageUsers = () => {
                 </Chip>
               </TableCell>
               <TableCell>
-                hi
+                <Button color="success" radius="lg" className="text-white">
+                  View Details
+                </Button>
               </TableCell>
             </TableRow>
           ))}

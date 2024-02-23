@@ -27,8 +27,6 @@ const UserDashboard = () => {
           >
             <MdDashboard className="w-5 h-5"></MdDashboard> DashBoard
           </NavLink>
-          {userData?.userRole === "user" ? (
-            <>
               <NavLink
                 className="p-4 flex items-center gap-3"
                 to="/userdashboard/orderhistory"
@@ -53,29 +51,21 @@ const UserDashboard = () => {
                 <IoSettingsOutline className="w-5 h-5"></IoSettingsOutline>{" "}
                 Settings
               </NavLink>
-            </>
-          ) : userData?.userRole === "artist" ? (
-            <>
               {" "}
               <NavLink className="p-4 flex items-center gap-3" to="artistProfile">
               <IoSettingsOutline className="w-5 h-5"></IoSettingsOutline>{" "}
-                Profile Settings
+                Artist Profile Settings
               </NavLink>
               <NavLink className="p-4 flex items-center gap-3" to="addnewproduct">
                 <HiOutlineShoppingBag className="w-5 h-5"></HiOutlineShoppingBag>{" "}
                 Add New Product
               </NavLink>
-            </>
-          ) : (
-            <>
               <NavLink
                 className="p-4 flex items-center gap-3"
                 to="/userdashboard/wishlist"
               >
                 <GoHeart className="w-5 h-5"></GoHeart> Wish List
               </NavLink>
-            </>
-          )}
           <div
             onClick={logOut}
             className="p-4 flex cursor-pointer items-center gap-3"

@@ -62,15 +62,14 @@ const NavigationBar = () => {
           </div>
         </div>
       </div>
-
+      {/* isFixed ? "fixed1 transition-all duration-500" : "" */}
       {/* Main Navigation System - searchBar + Navigation links */}
       <div
-        className={`w-full hidden md:block mx-auto py-0 navbar bg-[#fcfcfc] ${
-          isFixed ? "fixed1 transition-all duration-500" : ""
-        }`}
+        className={`w-full hidden md:block mx-auto py-0 navbar bg-[#fcfcfc] 
+        `}
       >
         {/* Secondary Navbar - Logo + SearchBar + Cart */}
-        <div className="flex md:px-4 lg:px-8 py-[12px] justify-between border-b border-gray-200 items-center">
+        <div className="flex md:px-4 lg:px-8 py-2 justify-between border-b border-gray-200 items-center">
           <Link to={"/"}>
             <img className="w-64 h-20" src={logo} alt="" />
           </Link>

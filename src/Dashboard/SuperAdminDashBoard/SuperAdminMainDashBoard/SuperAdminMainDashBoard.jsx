@@ -2,6 +2,7 @@ import { Button } from "@nextui-org/react";
 import { BsFillPeopleFill, BsPersonCircle } from "react-icons/bs";
 import { FaBookmark, FaHome, FaProductHunt, FaShoppingCart } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
+import logo from '../../../assets/logo.png'
 import './SuperAdminMainDashBoard.css'
 const SuperAdminMainDashBoard = () => {
     const mainLinks = <>
@@ -45,7 +46,7 @@ const SuperAdminMainDashBoard = () => {
         {/* Sidebar content here */}
         <div className="w-80"></div>
         <ul className="menu flex-nowrap top-0 fixed px-8 h-screen bg-gray-200 py-10 w-80 space-y-2">
-        <h2 className="text-2xl font-black italic mb-5">MBB Dashboard</h2>
+        <img className="w-64 h-24" src={logo} alt="" />
         <li>
             <NavLink className="p-3 text-base" to="overview">
               <BsPersonCircle></BsPersonCircle> Overview
@@ -57,27 +58,15 @@ const SuperAdminMainDashBoard = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink className="p-3 text-base" to="manageProducts">
-              <FaProductHunt></FaProductHunt> Manage Products
-            </NavLink>
-          </li>
-          <li>
             <NavLink className="p-3 text-base" to="addNewProduct-admin">
               <FaProductHunt></FaProductHunt> Add New Product
             </NavLink>
           </li>
           <li>
-            <NavLink className="p-3 text-base" to="manageOrders">
-              <FaBookmark></FaBookmark> Manage Orders
-            </NavLink>
-          </li>
-          <li>
             <NavLink className="p-3 text-base" to="managePrison">
-              <FaBookmark></FaBookmark> Manage Prisons
+              <FaBookmark></FaBookmark> Prisons / Organizations
             </NavLink>
           </li>
-          <div className="divider"></div>
-            {mainLinks}
           
         </ul>
       </div>
