@@ -22,12 +22,51 @@ import {
   } from "@nextui-org/react";
 import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
 import useUsers from "../../../Hooks/useUsers";
-import useUser from "../../../Hooks/useUser";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const ManagePrison = () => {
     const [usersData] = useUsers();
-    const [userData] = useUser();
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    const handlePrisonAdding = (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const prison_name = form.prison_name.value;
+        const country = form.country.value;
+        const states = form.states.value;
+        const address = form.address.value;
+        const zipCode = form.zipCode.value;
+        const email = form.email.value;
+        const number = form.phoneNumber.value;
+        const prison = {
+          prison_name,
+          country,
+          states,
+          address,
+          zipCode,
+          email,
+          number,
+        };
+        console.log(prison);
+        axios
+          .post(
+            `http://localhost:8000/prison`,
+            prison
+          )
+          .then((res) => {
+            console.log(res.data);
+            if (res.data.insertedId) {
+              Swal.fire(
+                "Congratulation",
+                "Successfully added new prison",
+                "success"
+              );
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
     return (
         <div className="overflow-x-auto w-full md:w-[80%]">
       <div className="flex flex-col  gap-4">
@@ -121,40 +160,26 @@ const ManagePrison = () => {
           ))}
         </TableBody>
       </Table>
-      <Modal size="2xl" className="!z-50" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal size="2xl" backdrop="opaque" className="!z-50" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">Add Prison</ModalHeader>
               <ModalBody>
-              <form className="p-5">
+              <form onSubmit={handlePrisonAdding} className="p-5">
           <div className="grid grid-cols-2 gap-5">
             <div>
-              <label htmlFor="name">Your Name</label>
+              <label htmlFor="prison_name">Prison Name</label>
               <input
                 type="text"
-                name="name"
-                id="name"
+                name="prison_name"
+                id="prison_name"
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                placeholder="Name"
-                defaultValue={userData?.userName}
+                placeholder="Prison Name"
                 required
               />
             </div>
-            <div>
-              <label htmlFor="companyName">Prison Name</label>
-              <input
-                type="text"
-                name="companyName"
-                id="companyName"
-                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                placeholder="companyName"
-                defaultValue={userData?.billingInfo?.country}
-                required
-              />
-            </div>
-          </div>
-          <div>
+           <div>
             <label htmlFor="address">Street Address</label>
             <input
               type="text"
@@ -162,10 +187,11 @@ const ManagePrison = () => {
               id="address"
               className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
               placeholder="Street Address"
-              defaultValue={userData?.billingInfo?.address}
               required
             />
           </div>
+          </div>
+          
           <div className="grid grid-cols-3 gap-5">
             <div>
               <label htmlFor="country">Country / Region</label>
@@ -175,7 +201,6 @@ const ManagePrison = () => {
                 id="country"
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                 placeholder="Country"
-                defaultValue={userData?.billingInfo?.country}
                 required
               />
             </div>
@@ -187,7 +212,6 @@ const ManagePrison = () => {
                 id="states"
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                 placeholder="States Name"
-                defaultValue={userData?.billingInfo?.states}
                 required
               />
             </div>
@@ -199,7 +223,6 @@ const ManagePrison = () => {
                 id="zipCode"
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                 placeholder="Zip Code"
-                defaultValue={userData?.billingInfo?.zipCode}
                 required
               />
             </div>
@@ -213,7 +236,6 @@ const ManagePrison = () => {
                 id="email"
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                 placeholder="Email Address"
-                defaultValue={userData?.email}
                 required
               />
             </div>
@@ -226,17 +248,18 @@ const ManagePrison = () => {
                 id="phoneNumber"
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                 placeholder="Phone Number"
-                defaultValue={userData?.userPhoneNumber}
                 required
               />
             </div>
           </div>
-          <button
-            type="submit"
-            className=" text-white bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl text-sm px-7 py-2.5 text-center "
-          >
-            Save Changes
-          </button>
+          <Button
+          type="submit"
+          color="success"
+          radius="full"
+          className="text-white mb-2 px-12 bg-green-500"
+        >
+          Add Prison
+        </Button>
         </form>
               </ModalBody>
               <ModalFooter>

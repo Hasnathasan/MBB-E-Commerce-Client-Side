@@ -40,7 +40,7 @@ const SuperAdminMainDashBoard = () => {
                 </Button>
         </div>
       </div>
-      <div className="drawer-side w-full z-[1000]">
+      <div className="drawer-side w-full">
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
         {/* Sidebar content here */}
         <div className="w-80"></div>
