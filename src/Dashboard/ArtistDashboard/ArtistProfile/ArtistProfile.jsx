@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import useUser from "../../../Hooks/useUser";
 import axios from "axios";
@@ -10,22 +10,30 @@ const ArtistProfile = () => {
   const { user } = useContext(AuthContext);
   const [userData, isUserDataLoading] = useUser();
   const [tags, setTags] = useState(
-    [].map((str) => ({ label: str, value: str }))
+    ["hi", "by"]?.map((str) => ({ label: str, value: str }))
   );
-  if (isUserDataLoading) {
-    return <h1>Loading......</h1>;
-  }
-  console.log(userData);
+  useEffect(() => {
+    setTags(userData?.keyWords?.map((str) => ({ label: str, value: str })) || [])
+  },[userData?.keyWords])
+  // if (isUserDataLoading) {
+  //   return <h1>Loading......</h1>;
+  // }
+  console.log(tags);
+  const updatedKeyWords = tags?.map(tag => tag.label);
   const handleUserUpdate = (e) => {
     e.preventDefault();
     const form = e.target;
     const updatedName = form.name.value;
-    const updatedNum = form.phoneNumber.value;
-    console.log(updatedName, updatedNum);
+    const updatedBio = form.bio.value;
+    const updatedArtDescription = form.art_description.value;
+    const updatedBioVideo = form.bio_video.value;
     axios
-      .patch(`http://localhost:8000/userUpdate/${user?.email}`, {
+      .patch(`http://localhost:8000/artistUpdate/${user?.email}`, {
         updatedName,
-        updatedNum,
+        updatedBio,
+        updatedArtDescription,
+        updatedBioVideo,
+        updatedKeyWords
       })
       .then((res) => {
         console.log(res.data);
@@ -101,7 +109,7 @@ const ArtistProfile = () => {
                 defaultValue={userData?.userName}
                 required
               />
-              <label htmlFor="bio">Artist  Bio</label>
+              <label htmlFor="bio">Artist Bio</label>
               <textarea
                 name="bio"
                 id="bio"
@@ -110,69 +118,73 @@ const ArtistProfile = () => {
                 defaultValue={userData?.bio}
                 required
               />
-              <label htmlFor="art">Art Description</label>
+              <label htmlFor="art_description">Art Description</label>
               <textarea
-                name="bio"
-                id="bio"
+                name="art_description"
+                id="art_description"
                 className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
-                placeholder="ArtDescription"
-                defaultValue={userData?.bio}
+                placeholder="Art Description"
+                defaultValue={userData?.art_description}
                 required
               />
-             <div className="grid grid-cols-2">
-              <div>
-              <label htmlFor="art">Key Words</label>
-             <MultiSelect
-              values={tags}
-              delimiters={[188]}
-              valuesFromPaste={(options, values, pastedText) => {
-                return pastedText
-                  .split(",")
-                  .filter(
-                    (text) => !values.some((item) => item.label === text.trim())
-                  )
-                  .map((text) => ({ label: text.trim(), value: text.trim() }));
-              }}
-              restoreOnBackspace={(item) => item.label}
-              onValuesChange={(tags) => setTags(tags)}
-              createFromSearch={(options, values, search) => {
-                const labels = values.map((value) => value.label);
-                if (
-                  search.trim().length === 0 ||
-                  labels.includes(search.trim())
-                )
-                  return null;
-                return { label: search.trim(), value: search.trim() };
-              }}
-              renderNoResultsFound={(values, search) => (
-                <div className="no-results-found">
-                  {(() => {
-                    if (search.trim().length === 0)
-                      return "Type a few characters to create a tag";
-                    else if (
-                      values.some((item) => item.label === search.trim())
-                    )
-                      return "Tag already exists";
-                  })()}
+              <div className="grid grid-cols-2">
+                <div>
+                  <label htmlFor="keywords">Key Words</label>
+                  <MultiSelect
+                    values={tags}
+                    delimiters={[188]}
+                    valuesFromPaste={(options, values, pastedText) => {
+                      return pastedText
+                        .split(",")
+                        .filter(
+                          (text) =>
+                            !values.some((item) => item.label === text.trim())
+                        )
+                        .map((text) => ({
+                          label: text.trim(),
+                          value: text.trim(),
+                        }));
+                    }}
+                    restoreOnBackspace={(item) => item.label}
+                    onValuesChange={(tags) => setTags(tags)}
+                    createFromSearch={(options, values, search) => {
+                      const labels = values.map((value) => value.label);
+                      if (
+                        search.trim().length === 0 ||
+                        labels.includes(search.trim())
+                      )
+                        return null;
+                      return { label: search.trim(), value: search.trim() };
+                    }}
+                    renderNoResultsFound={(values, search) => (
+                      <div className="no-results-found">
+                        {(() => {
+                          if (search.trim().length === 0)
+                            return "Type a few characters to create a tag";
+                          else if (
+                            values.some((item) => item.label === search.trim())
+                          )
+                            return "Tag already exists";
+                        })()}
+                      </div>
+                    )}
+                  />
                 </div>
-              )}
-            />
+                <div>
+                  <label htmlFor="bio_video">Your Bio Video Link </label>
+                  <input
+                    type="url"
+                    name="bio_video"
+                    id="bio_video"
+                    className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
+                    placeholder="Your Bio Video"
+                    defaultValue={userData?.bio_video_link}
+                    required
+                  />
+                </div>
               </div>
-            <div>
-            <label htmlFor="bio_video">Your Bio Video Link </label>
-              <input
-                type="url"
-                name="bio_video"
-                id="bio_video"
-                className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
-                placeholder="Your Bio Video"
-                defaultValue={userData?.userName}
-                required
-              />
-            </div>
-             </div>
               <Button
-          type="submit"
+                type="submit"
                 color="success"
                 radius="full"
                 className="text-white mb-2 bg-green-500"
@@ -198,10 +210,10 @@ const ArtistProfile = () => {
         </div>
       </div>
 
-      {/* Billing Information */}
+      {/* Payment Information */}
       <div className={`border rounded-lg overflow-auto border-gray-300`}>
         <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">
-          Billing Address
+          Payment information
         </h4>
         <form onSubmit={handleBillingUpdate} className="p-5">
           <div className="grid grid-cols-2 gap-5">
@@ -218,16 +230,14 @@ const ArtistProfile = () => {
               />
             </div>
             <div>
-              <label htmlFor="companyName">
-                Company Name <span className=" text-gray-700">(optional)</span>
-              </label>
+              <label htmlFor="companyName">Prison Name</label>
               <input
                 type="text"
                 name="companyName"
                 id="companyName"
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                 placeholder="companyName"
-                defaultValue={userData?.billingInfo?.companyName}
+                defaultValue={userData?.billingInfo?.prison_name}
                 required
               />
             </div>
