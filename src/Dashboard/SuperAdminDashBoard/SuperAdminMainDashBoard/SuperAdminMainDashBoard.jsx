@@ -19,7 +19,7 @@ const SuperAdminMainDashBoard = () => {
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content w-[100%] mt-12 lg:mt-0 overflow-auto px-2 md:px-0 flex flex-col min-h-screen items-center justify-start py-8">
+      <div className="drawer-content w-[100%] bg-[#f8f8f8] mt-12 lg:mt-0 overflow-auto px-2 md:px-0 flex flex-col min-h-screen items-center justify-start py-8">
         {/* Page content here */}
         <Outlet></Outlet>
         {/* <label
@@ -47,7 +47,7 @@ const SuperAdminMainDashBoard = () => {
         <ul className="menu flex-nowrap top-0 fixed px-8 h-screen bg-gray-200 py-10 w-80 space-y-2">
         <h2 className="text-2xl md:text-3xl mb-5">Admin Dashboard</h2>
         <li>
-            <NavLink className="p-3 text-base" to=" ">
+            <NavLink className="p-3 text-base" to="overview">
               <BsPersonCircle></BsPersonCircle> Overview
             </NavLink>
           </li>
@@ -62,7 +62,7 @@ const SuperAdminMainDashBoard = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink className="p-3 text-base" to="add-new-product">
+            <NavLink className="p-3 text-base" to="addNewProduct-admin">
               <FaProductHunt></FaProductHunt> Add New Product
             </NavLink>
           </li>

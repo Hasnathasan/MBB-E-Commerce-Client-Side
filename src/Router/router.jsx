@@ -18,6 +18,8 @@ import AddNewProduct from "../Dashboard/ArtistDashboard/AddNewProduct/AddNewProd
 import ArtistProfile from "../Dashboard/ArtistDashboard/ArtistProfile/ArtistProfile";
 import SuperAdminMainDashBoard from "../Dashboard/SuperAdminDashBoard/SuperAdminMainDashBoard/SuperAdminMainDashBoard";
 import OverView from "../Dashboard/SuperAdminDashBoard/OverView/OverView";
+import AddNewProductForAdmin from "../Dashboard/SuperAdminDashBoard/AddNewProductForAdmin/AddNewProductForAdmin";
+import ManageUsers from "../Dashboard/SuperAdminDashBoard/ManageUsers/ManageUsers";
 
 
 const router = createBrowserRouter([
@@ -104,9 +106,17 @@ const router = createBrowserRouter([
     element: <SuperAdminMainDashBoard></SuperAdminMainDashBoard>,
     children: [
     {
-      path: "",
+      path: "overview",
       element: <OverView></OverView>
-    }
+    },
+    {
+      path: "addNewProduct-admin",
+      element: <AddNewProductForAdmin></AddNewProductForAdmin>
+    },
+    {
+      path: "manageUsers",
+      element: <ManageUsers></ManageUsers>
+    },
     ]
   }
 ]);
