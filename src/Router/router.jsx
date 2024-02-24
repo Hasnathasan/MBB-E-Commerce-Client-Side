@@ -24,6 +24,7 @@ import ManagePrison from "../Dashboard/SuperAdminDashBoard/ManagePrison/ManagePr
 import IAmWorkingOnIt from "../Components/IAmWorkingOnIt/IAmWorkingOnIt";
 import ManageCustomers from "../Dashboard/SuperAdminDashBoard/ManageCustomers/ManageCustomers";
 import ManageArtists from "../Dashboard/SuperAdminDashBoard/ManageArtists/ManageArtists";
+import ManageProducts from "../Dashboard/SuperAdminDashBoard/ManageProducts/ManageProducts";
 
 
 const router = createBrowserRouter([
@@ -115,7 +116,7 @@ const router = createBrowserRouter([
     },
     {
       path: "products",
-      element: <IAmWorkingOnIt></IAmWorkingOnIt>
+      element: <ManageProducts></ManageProducts>
     },
     {
       path: "artists",
