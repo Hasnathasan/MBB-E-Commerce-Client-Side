@@ -23,6 +23,16 @@ const AddNewProductForAdmin = () => {
     const product_quantity = form.productQuantity.value;
   };
   console.log(tags, categories, regularPrice);
+  const artists = [
+    { email: "georgearthur82@artist.com", name: "George Arthur" },
+    { email: "henrynickls422@artist.com", name: "Henry nickls" },
+    { email: "noahjames33@artist.com", name: "Noah-James" },
+    { email: "alfiejay53@artist.com", name: "Alfie-Jay" },
+    { email: "isaaclee345@artist.com", name: "Isaac-Lee" },
+    { email: "jonathoatrhod@artist.com", name: "Jonathan trod" },
+    { email: "tomjames33@artist.com", name: "Tom James" },
+    { email: "harrypotter2345@artist.com", name: "Harry potter" }
+  ];
   const defaultPrisons = [
     {
       _id: "65d8bde73a844ba9417a45be",
@@ -320,19 +330,19 @@ const AddNewProductForAdmin = () => {
       </h4>
           <div className="grid grid-cols-2 w-full gap-10 justify-center items-center p-5">
           <Select
-      items={defaultPrisons}
-      label="Assigned to"
+      items={artists}
+      label="Assigned to a Artist"
       placeholder="Select a user"
       labelPlacement="outside"
       className="w-full"
     >
-      {(prison) => (
-        <SelectItem key={prison?._id} variant="bordered" textValue={prison?.prison_name}>
+      {(artist) => (
+        <SelectItem key={artist?.name} variant="bordered" textValue={artist?.name}>
           <div className="flex gap-2 items-center">
-            <Avatar alt={prison?.prison_name} className="flex-shrink-0" size="sm" src={prison?.avatar} />
+            <Avatar alt={artist?.prison_name} className="flex-shrink-0" size="sm" src={artist?.avatar} />
             <div className="flex flex-col">
-              <span className="text-small">{prison?.prison_name}</span>
-              <span className="text-tiny text-default-400">{prison?.email}</span>
+              <span className="text-small">{artist?.name}</span>
+              <span className="text-tiny text-default-400">{artist?.email}</span>
             </div>
           </div>
         </SelectItem>
@@ -340,8 +350,8 @@ const AddNewProductForAdmin = () => {
     </Select>
     <Select
       items={defaultPrisons}
-      label="Assigned to"
-      placeholder="Select a user"
+      label="Select Prison for The Artist"
+      placeholder="Select a prison"
       labelPlacement="outside"
       className="w-full"
     >
