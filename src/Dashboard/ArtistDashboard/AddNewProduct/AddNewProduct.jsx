@@ -1,4 +1,4 @@
-import { Button } from "@nextui-org/react";
+import { Accordion, AccordionItem, Button } from "@nextui-org/react";
 import { useRef, useState } from "react";
 import { MultiSelect } from "react-selectize";
 import "../../../../node_modules/react-selectize/themes/index.css";
@@ -24,11 +24,14 @@ const AddNewProduct = () => {
   };
   console.log(tags, categories, regularPrice);
   return (
-    <div className="w-full  border border-gray-300 rounded-lg">
+    <div className="w-full">
+      
+      <form className={``}>
+        <div className="border border-gray-300 rounded-lg mb-8">
       <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
         Add a New Product
       </h4>
-      <form className={`p-5`}>
+        <div className="p-5">
         <div className="grid grid-cols-2 gap-5">
           <div>
             <label htmlFor="productName">Product Name</label>
@@ -155,10 +158,15 @@ const AddNewProduct = () => {
             required
           />
         </div>
-        <h3 className="text-xl font-semibold underline my-4">
-          Pricing Section
-        </h3>
-        <div className="grid grid-cols-3 gap-5">
+        </div>
+        
+
+        </div>
+       <div className="border border-gray-300 rounded-lg">
+       <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
+        Pricing Section
+      </h4>
+        <div className="grid grid-cols-3 gap-5 p-5">
           <div>
             <label htmlFor="regularPrice">Regular Price</label>
             <input
@@ -214,8 +222,10 @@ const AddNewProduct = () => {
             />
           </div>
         </div>
+       </div>
 
-        <h3 className="text-xl font-semibold my-4">Profit Breakdown</h3>
+       <Accordion className="my-5">
+      <AccordionItem key="1" aria-label="Accordion 1" subtitle="Press to expand" title="Profit Breakdown">
         <div>
           <h4 className="mb-3">
             Artist(you){" "}
@@ -230,10 +240,10 @@ const AddNewProduct = () => {
                 %
               </span>
             </span>
-            : ${(((salePrice || regularPrice) - costPrice) * 0.7).toFixed(2)}
+            : ${ regularPrice && costPrice ? ((((salePrice || regularPrice) - costPrice) * 0.7).toFixed(2)) : 0.00} + ${costPrice || 0.00} = ${ (regularPrice && costPrice) ? Number((((Number(salePrice) || Number(regularPrice)) - Number(costPrice)) * 0.7) + Number(costPrice)).toFixed(2) : '0.00'}
           </h4>
           <h4 className="mb-3">
-            MBB Website{" "}
+            MBB{" "}
             <span className="relative">
               <input
                 defaultValue={15}
@@ -245,7 +255,7 @@ const AddNewProduct = () => {
                 %
               </span>
             </span>
-            : ${(((salePrice || regularPrice) - costPrice) * 0.15).toFixed(2)}
+            : ${regularPrice && costPrice ?((((salePrice || regularPrice) - costPrice) * 0.15).toFixed(2)) : 0.00}
           </h4>
           <h4 className="mb-3">
             Prison{" "}
@@ -260,9 +270,13 @@ const AddNewProduct = () => {
                 %
               </span>
             </span>
-            : ${(((salePrice || regularPrice) - costPrice) * 0.15).toFixed(2)}
+            : ${regularPrice && costPrice ?((((salePrice || regularPrice) - costPrice) * 0.15).toFixed(2)): 0.00}
           </h4>
         </div>
+      </AccordionItem>
+    </Accordion>
+
+        
 
         <Button
           onSubmit={handleAddNewProduct}

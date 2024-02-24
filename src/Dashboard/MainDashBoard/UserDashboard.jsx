@@ -60,12 +60,6 @@ const UserDashboard = () => {
                 <HiOutlineShoppingBag className="w-5 h-5"></HiOutlineShoppingBag>{" "}
                 Add New Product
               </NavLink>
-              <NavLink
-                className="p-4 flex items-center gap-3"
-                to="/userdashboard/wishlist"
-              >
-                <GoHeart className="w-5 h-5"></GoHeart> Wish List
-              </NavLink>
           <div
             onClick={logOut}
             className="p-4 flex cursor-pointer items-center gap-3"

@@ -1,8 +1,66 @@
 import { Avatar, Tab, Tabs } from "@nextui-org/react";
 import useUser from "../../Hooks/useUser";
-
+import product1 from "../../assets/products1.png";
+import product2 from "../../assets/products2.png";
+import product3 from "../../assets/products3.png";
+import product4 from "../../assets/products4.png";
+import product5 from "../../assets/products5.png";
+import product6 from "../../assets/products6.png";
+import product7 from "../../assets/products7.jpg";
+import product8 from "../../assets/products8.png";
+import PopularProductsCard from "../Home/PopularProducts/PopularProductsCard";
 const ArtistDetailsPage = () => {
   const [userData] = useUser();
+  const products = [
+    {
+      name: "The Starry Night",
+      price: 50.0,
+      rating: 4.2,
+      img: product1,
+    },
+    {
+      name: "Girl with a Pearl Earring",
+      price: 42.0,
+      rating: 4.9,
+      img: product2,
+    },
+    {
+      name: "Las Meninas",
+      price: 120.0,
+      rating: 2.5,
+      img: product3,
+    },
+    {
+      name: "The Garden of Earthly Delights",
+      price: 70.0,
+      rating: 3.5,
+      img: product4,
+    },
+    {
+      name: "The Kiss",
+      price: 20.0,
+      rating: 4.2,
+      img: product5,
+    },
+    {
+      name: "Water lilies",
+      price: 20.0,
+      rating: 4.2,
+      img: product6,
+    },
+    {
+      name: "Las Meninas",
+      price: 70.0,
+      rating: 3.5,
+      img: product7,
+    },
+    {
+      name: "The Arnolfini Portrait",
+      price: 120.0,
+      rating: 2.5,
+      img: product8,
+    },
+  ];
   return (
     <div className=" mx-8 my-8">
       <div className="grid grid-cols-12 justify-center gap-6 border border-gray-300 p-5 rounded-lg ">
@@ -80,6 +138,7 @@ const ArtistDetailsPage = () => {
               sollicitudin. Mauris sem ante.
             </p>
 
+            <h2 className="text-lg font-semibold mb-5 text-gray-900">Correctional System: <span className="text-gray-800">Unknown</span></h2>
             <h2 className="text-lg font-semibold mb-5 text-gray-900">Keywords: <span className="text-gray-800">Artist, Rhythm, Shape</span></h2>
             <h2 className="text-lg font-semibold text-gray-900">State: <span className="text-gray-800">New York</span></h2>
             
@@ -93,7 +152,7 @@ const ArtistDetailsPage = () => {
               </div>
             }
           >
-             <div className="grid grid-cols-2 px-14 sm:grid-cols-2 gap-6 justify-center items-center md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+             <div className="grid grid-cols-2 mt-5 px-14 sm:grid-cols-2 gap-6 justify-center items-center md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {products?.map((product) => (
             <PopularProductsCard
               key={product?.name}

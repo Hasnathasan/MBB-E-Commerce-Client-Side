@@ -240,7 +240,7 @@ const ArtistProfile = () => {
       label="Assigned to"
       placeholder="Select a user"
       labelPlacement="outside"
-      className="max-w-xs"
+      className="w-full"
     >
       {(prison) => (
         <SelectItem key={prison?._id} variant="bordered" textValue={prison?.prison_name}>

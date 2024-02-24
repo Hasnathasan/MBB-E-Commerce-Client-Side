@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
-import { IoEyeOutline, IoStarOutline, IoStarSharp } from "react-icons/io5";
+import { IoStarOutline, IoStarSharp } from "react-icons/io5";
 import Rating from "react-rating";
 import { Link } from "react-router-dom";
 
@@ -9,7 +9,8 @@ const PopularProductsCard = ({ product, isRounded }) => {
   const [hovered, setHovered] = useState(false);
   const { name, price, rating, img } = product;
   return (
-    <div
+    <Link
+    to={"/details"}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={`px-3 relative transition-all w-full ${
@@ -48,14 +49,8 @@ const PopularProductsCard = ({ product, isRounded }) => {
         <div className="bg-[#ffffff] border border-gray-100 shadow rounded-full cursor-pointer flex justify-center items-center w-10 h-10">
           <GoHeart className="w-5 h-5" />
         </div>
-        <Link
-          to={"/details"}
-          className="bg-[#ffffff] border border-gray-100 shadow rounded-full cursor-pointer flex justify-center items-center w-10 h-10"
-        >
-          <IoEyeOutline className="w-5 h-5"></IoEyeOutline>
-        </Link>
       </div>
-    </div>
+    </Link>
   );
 };
 
