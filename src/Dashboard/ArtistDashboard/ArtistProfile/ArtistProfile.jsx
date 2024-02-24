@@ -17,9 +17,7 @@ const ArtistProfile = () => {
   useEffect(() => {
     setTags(userData?.keyWords?.map((str) => ({ label: str, value: str })) || [])
   },[userData?.keyWords])
-  // if (isUserDataLoading) {
-  //   return <h1>Loading......</h1>;
-  // }
+  
   console.log(tags);
   const updatedKeyWords = tags?.map(tag => tag.label);
   const handleUserUpdate = (e) => {
@@ -93,6 +91,48 @@ const ArtistProfile = () => {
   if(isPrisonsLoading || isUserDataLoading){
     return <h1>Loading......</h1>
   }
+  const defaultPrisons = [
+    {
+      _id: "65d8bde73a844ba9417a45be",
+      prison_name: "Mary Hutchinson Prison",
+      country: "United States",
+      states: "New York State",
+      address: "9525 Manchester Lane Bay Shore, NY 11706",
+      zipCode: "17212",
+      email: "newyork389@gmail.com",
+      number: "5247379174"
+    },
+    {
+      _id: "65d8bdf23a844ba9417a45bf",
+      prison_name: "Melbourne Youth Justice Centre",
+      country: "United States",
+      states: "New York State",
+      address: "9525 Manchester Lane Bay Shore, NY 11706",
+      zipCode: "17212",
+      email: "newyork389@gmail.com",
+      number: "5247379174"
+    },
+    {
+      _id: "65d8bdf93a844ba9417a45c0",
+      prison_name: "Tzalmon Prison",
+      country: "United States",
+      states: "New York State",
+      address: "9525 Manchester Lane Bay Shore, NY 11706",
+      zipCode: "17212",
+      email: "newyork389@gmail.com",
+      number: "5247379174"
+    },
+    {
+      _id: "65d8be183a844ba9417a45c1",
+      prison_name: "Damelin Prison Hall",
+      country: "United States",
+      states: "New York State",
+      address: "9525 Manchester Lane Bay Shore, NY 11706",
+      zipCode: "17212",
+      email: "newyork389@gmail.com",
+      number: "5247379174"
+    }
+  ];
   return (
     <div>
       {/* Account Information */}
@@ -236,7 +276,7 @@ const ArtistProfile = () => {
             </div>
             <div>
             <Select
-      items={prisons}
+      items={prisons || defaultPrisons}
       label="Assigned to"
       placeholder="Select a user"
       labelPlacement="outside"
