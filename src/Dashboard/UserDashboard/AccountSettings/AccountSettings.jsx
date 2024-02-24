@@ -19,7 +19,7 @@ const AccountSettings = () => {
     const updatedNum = form.phoneNumber.value;
     console.log(updatedName, updatedNum);
     axios
-      .patch(`http://localhost:8000/userUpdate/${user?.email}`, {
+      .patch(`https://mbb-e-commerce-server.vercel.app/userUpdate/${user?.email}`, {
         updatedName,
         updatedNum,
       })
@@ -59,7 +59,7 @@ const AccountSettings = () => {
     };
     axios
       .patch(
-        `http://localhost:8000/userBillingInfoUpdate/${user?.email}`,
+        `https://mbb-e-commerce-server.vercel.app/userBillingInfoUpdate/${user?.email}`,
         billingInfo
       )
       .then((res) => {

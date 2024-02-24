@@ -30,7 +30,7 @@ const SignUp = () => {
       .then((result) => {
         console.log(result.user);
         reset();
-        axios.post("http://localhost:8000/users", newUser).then((data) => {
+        axios.post("https://mbb-e-commerce-server.vercel.app/users", newUser).then((data) => {
           if (data.data.insertedId) {
             logOut();
             reset();

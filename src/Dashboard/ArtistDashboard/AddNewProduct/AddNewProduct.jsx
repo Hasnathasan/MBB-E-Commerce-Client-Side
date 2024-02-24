@@ -225,7 +225,7 @@ const AddNewProduct = () => {
        </div>
 
        <Accordion className="my-5">
-      <AccordionItem key="1" aria-label="Accordion 1" subtitle="Press to expand" title="Profit Breakdown">
+      <AccordionItem key="1" aria-label="Accordion 1" subtitle="Press to expand" title="Price/Profit Distribution">
         <div>
           <h4 className="mb-3">
             Artist(you){" "}
@@ -240,7 +240,7 @@ const AddNewProduct = () => {
                 %
               </span>
             </span>
-            : ${ regularPrice && costPrice ? ((((salePrice || regularPrice) - costPrice) * 0.7).toFixed(2)) : 0.00} + ${costPrice || 0.00} = ${ (regularPrice && costPrice) ? Number((((Number(salePrice) || Number(regularPrice)) - Number(costPrice)) * 0.7) + Number(costPrice)).toFixed(2) : '0.00'}
+            : ${ regularPrice && costPrice ? ((((salePrice || regularPrice) - costPrice) * 0.7).toFixed(2)) : 0.00} + ${costPrice || 0.00} (cost) = ${ (regularPrice && costPrice) ? Number((((Number(salePrice) || Number(regularPrice)) - Number(costPrice)) * 0.7) + Number(costPrice)).toFixed(2) : '0.00'}
           </h4>
           <h4 className="mb-3">
             MBB{" "}

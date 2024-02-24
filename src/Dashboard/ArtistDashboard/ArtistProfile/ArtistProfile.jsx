@@ -30,7 +30,7 @@ const ArtistProfile = () => {
     const updatedArtDescription = form.art_description.value;
     const updatedBioVideo = form.bio_video.value;
     axios
-      .patch(`http://localhost:8000/artistUpdate/${user?.email}`, {
+      .patch(`https://mbb-e-commerce-server.vercel.app/artistUpdate/${user?.email}`, {
         updatedName,
         updatedBio,
         updatedArtDescription,
@@ -73,7 +73,7 @@ const ArtistProfile = () => {
     };
     axios
       .patch(
-        `http://localhost:8000/userBillingInfoUpdate/${user?.email}`,
+        `https://mbb-e-commerce-server.vercel.app/userBillingInfoUpdate/${user?.email}`,
         billingInfo
       )
       .then((res) => {

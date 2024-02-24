@@ -49,7 +49,7 @@ const AuthProvider = ({ children }) => {
       setUser(loggedUser);
       console.log(loggedUser);
         if(loggedUser){
-          axios.post("http://localhost:8000/jwt",{email: loggedUser?.email})
+          axios.post("https://mbb-e-commerce-server.vercel.app/jwt",{email: loggedUser?.email})
           .then(data => {
             const token = data.data.token;
             console.log(token);

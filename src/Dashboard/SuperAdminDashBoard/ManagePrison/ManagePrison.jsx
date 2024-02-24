@@ -50,7 +50,7 @@ const ManagePrison = () => {
         console.log(prison);
         axios
           .post(
-            `http://localhost:8000/prisons`,
+            `https://mbb-e-commerce-server.vercel.app/prisons`,
             prison
           )
           .then((res) => {
