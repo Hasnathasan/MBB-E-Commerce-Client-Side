@@ -223,7 +223,7 @@ const AddNewProduct = () => {
           </div>
         </div>
         <div className={`${regularPrice && costPrice ? "block" : "hidden"} px-5`}>
-          <h2>Profit Destribution</h2>
+          <h2 className="text-lg font-semibold mb-4">Profit Distribution</h2>
           <h4 className="mb-3">
             Artist(you){" "}
             <span className="relative">

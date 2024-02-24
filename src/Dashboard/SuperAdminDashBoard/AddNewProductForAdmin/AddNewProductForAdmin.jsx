@@ -24,8 +24,14 @@ const AddNewProductForAdmin = () => {
   };
   console.log(tags, categories, regularPrice);
   return (
-    <div className="w-[95%] mx-auto rounded-lg">
-      <form className={`p-5`}>
+    <div className="w-full">
+      
+      <form className={``}>
+        <div className="border border-gray-300 rounded-lg mb-8">
+      <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
+        Add a New Product
+      </h4>
+        <div className="p-5">
         <div className="grid grid-cols-2 gap-5">
           <div>
             <label htmlFor="productName">Product Name</label>
@@ -152,10 +158,15 @@ const AddNewProductForAdmin = () => {
             required
           />
         </div>
-        <h3 className="text-xl font-semibold underline my-4">
-          Pricing Section
-        </h3>
-        <div className="grid grid-cols-3 gap-5">
+        </div>
+        
+
+        </div>
+       <div className="border border-gray-300 mb-8 rounded-lg">
+       <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
+        Pricing Section
+      </h4>
+        <div className="grid grid-cols-3 gap-5 p-5">
           <div>
             <label htmlFor="regularPrice">Regular Price</label>
             <input
@@ -211,9 +222,8 @@ const AddNewProductForAdmin = () => {
             />
           </div>
         </div>
-
-        <h3 className="text-xl font-semibold my-4">profit distribution</h3>
-        <div>
+        <div className={`${regularPrice && costPrice ? "block" : "hidden"} px-5`}>
+          <h2 className="text-lg font-semibold mb-4">Profit Distribution</h2>
           <h4 className="mb-3">
             Artist(you){" "}
             <span className="relative">
@@ -227,10 +237,10 @@ const AddNewProductForAdmin = () => {
                 %
               </span>
             </span>
-            : ${(((salePrice || regularPrice) - costPrice) * 0.7).toFixed(2)}
+            : ${ regularPrice && costPrice ? ((((salePrice || regularPrice) - costPrice) * 0.7).toFixed(2)) : 0.00} + ${costPrice || 0.00} (cost) = ${ (regularPrice && costPrice) ? Number((((Number(salePrice) || Number(regularPrice)) - Number(costPrice)) * 0.7) + Number(costPrice)).toFixed(2) : '0.00'}
           </h4>
           <h4 className="mb-3">
-            MBB Website{" "}
+            MBB{" "}
             <span className="relative">
               <input
                 defaultValue={15}
@@ -242,7 +252,7 @@ const AddNewProductForAdmin = () => {
                 %
               </span>
             </span>
-            : ${(((salePrice || regularPrice) - costPrice) * 0.15).toFixed(2)}
+            : ${regularPrice && costPrice ?((((salePrice || regularPrice) - costPrice) * 0.15).toFixed(2)) : 0.00}
           </h4>
           <h4 className="mb-3">
             Prison{" "}
@@ -257,9 +267,14 @@ const AddNewProductForAdmin = () => {
                 %
               </span>
             </span>
-            : ${(((salePrice || regularPrice) - costPrice) * 0.15).toFixed(2)}
+            : ${regularPrice && costPrice ?((((salePrice || regularPrice) - costPrice) * 0.15).toFixed(2)): 0.00}
           </h4>
         </div>
+       </div>
+
+        
+
+        
 
         <Button
           onSubmit={handleAddNewProduct}
