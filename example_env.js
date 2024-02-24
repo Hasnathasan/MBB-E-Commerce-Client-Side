@@ -1,0 +1,6 @@
+// VITE_APIKEY=AIzaSyDNBbCQ2OddXMFRm29LdRHJ72PtTMHseDo 
+// VITE_AUTHDOMAIN=mbb-e-commerce.firebaseapp.com 
+// VITE_PROJECTID=mbb-e-commerce 
+// VITE_STORAGEBUCKET=mbb-e-commerce.appspot.com 
+// VITE_MESSAGINGSENDERID="974387749464" 
+// VITE_APPID=1:974387749464:web:1228068f2bf9547ea1602d 
