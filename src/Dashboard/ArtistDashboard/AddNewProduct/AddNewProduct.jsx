@@ -162,7 +162,7 @@ const AddNewProduct = () => {
         
 
         </div>
-       <div className="border border-gray-300 rounded-lg">
+       <div className="border border-gray-300 mb-8 rounded-lg">
        <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
         Pricing Section
       </h4>
@@ -222,11 +222,8 @@ const AddNewProduct = () => {
             />
           </div>
         </div>
-       </div>
-
-       <Accordion className="my-5">
-      <AccordionItem key="1" aria-label="Accordion 1" subtitle="Press to expand" title="Price/Profit Distribution">
-        <div>
+        <div className={`${regularPrice && costPrice ? "block" : "hidden"} px-5`}>
+          <h2>Profit Destribution</h2>
           <h4 className="mb-3">
             Artist(you){" "}
             <span className="relative">
@@ -273,8 +270,9 @@ const AddNewProduct = () => {
             : ${regularPrice && costPrice ?((((salePrice || regularPrice) - costPrice) * 0.15).toFixed(2)): 0.00}
           </h4>
         </div>
-      </AccordionItem>
-    </Accordion>
+       </div>
+
+        
 
         
 

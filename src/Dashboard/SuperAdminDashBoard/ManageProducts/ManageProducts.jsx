@@ -31,6 +31,7 @@ import product7 from "../../../assets/products7.jpg";
 import product8 from "../../../assets/products8.png";
 import product9 from "../../../assets/products9.png";
 import product10 from "../../../assets/products10.png";
+import AddNewProductForAdmin from "../AddNewProductForAdmin/AddNewProductForAdmin";
 
 const ManageProducts = () => {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -214,13 +215,13 @@ const ManageProducts = () => {
       </Table>
 
 
-      <Modal size="2xl" backdrop="opaque" className="!z-50" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal scrollBehavior="outside" size="5xl" backdrop="opaque" className="!z-50" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Add Prison</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">Add a New Product</ModalHeader>
               <ModalBody>
-              
+              <AddNewProductForAdmin></AddNewProductForAdmin>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>

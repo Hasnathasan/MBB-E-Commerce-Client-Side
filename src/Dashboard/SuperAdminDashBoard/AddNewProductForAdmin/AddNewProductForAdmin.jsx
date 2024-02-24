@@ -24,10 +24,7 @@ const AddNewProductForAdmin = () => {
   };
   console.log(tags, categories, regularPrice);
   return (
-    <div className="w-[95%] mx-auto border border-gray-300 rounded-lg">
-      <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
-        Add a New Product
-      </h4>
+    <div className="w-[95%] mx-auto rounded-lg">
       <form className={`p-5`}>
         <div className="grid grid-cols-2 gap-5">
           <div>
@@ -215,7 +212,7 @@ const AddNewProductForAdmin = () => {
           </div>
         </div>
 
-        <h3 className="text-xl font-semibold my-4">Profit Breakdown</h3>
+        <h3 className="text-xl font-semibold my-4">profit distribution</h3>
         <div>
           <h4 className="mb-3">
             Artist(you){" "}
