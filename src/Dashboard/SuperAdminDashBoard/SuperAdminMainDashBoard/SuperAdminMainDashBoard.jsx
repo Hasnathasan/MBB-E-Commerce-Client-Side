@@ -49,22 +49,43 @@ const SuperAdminMainDashBoard = () => {
         <img className="w-64 h-24" src={logo} alt="" />
         <li>
             <NavLink className="p-3 text-base" to="overview">
-              <BsPersonCircle></BsPersonCircle> Overview
+              <BsPersonCircle></BsPersonCircle> Dashboard
+            </NavLink>
+          </li>
+        <li>
+            <NavLink className="p-3 text-base" to="orders">
+              <BsPersonCircle></BsPersonCircle> Orders
             </NavLink>
           </li>
           <li>
-            <NavLink className="p-3 text-base" to="manageUsers">
-              <BsFillPeopleFill></BsFillPeopleFill> Manage Users
+            <NavLink className="p-3 text-base" to="products">
+              <FaProductHunt></FaProductHunt> Products
             </NavLink>
           </li>
           <li>
-            <NavLink className="p-3 text-base" to="addNewProduct-admin">
-              <FaProductHunt></FaProductHunt> Add New Product
+            <NavLink className="p-3 text-base" to="customers">
+              <BsFillPeopleFill></BsFillPeopleFill> Customers
             </NavLink>
           </li>
+          <li>
+            <NavLink className="p-3 text-base" to="Artists">
+              <BsFillPeopleFill></BsFillPeopleFill> Artists
+            </NavLink>
+          </li>
+          
           <li>
             <NavLink className="p-3 text-base" to="managePrison">
               <FaBookmark></FaBookmark> Prisons / Organizations
+            </NavLink>
+          </li>
+          <li>
+            <NavLink className="p-3 text-base" to="sales-report">
+              <FaBookmark></FaBookmark> Sales Report
+            </NavLink>
+          </li>
+          <li>
+            <NavLink className="p-3 text-base" to="settings">
+              <FaBookmark></FaBookmark> Settings
             </NavLink>
           </li>
           

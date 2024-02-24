@@ -21,6 +21,9 @@ import OverView from "../Dashboard/SuperAdminDashBoard/OverView/OverView";
 import AddNewProductForAdmin from "../Dashboard/SuperAdminDashBoard/AddNewProductForAdmin/AddNewProductForAdmin";
 import ManageUsers from "../Dashboard/SuperAdminDashBoard/ManageUsers/ManageUsers";
 import ManagePrison from "../Dashboard/SuperAdminDashBoard/ManagePrison/ManagePrison";
+import IAmWorkingOnIt from "../Components/IAmWorkingOnIt/IAmWorkingOnIt";
+import ManageCustomers from "../Dashboard/SuperAdminDashBoard/ManageCustomers/ManageCustomers";
+import ManageArtists from "../Dashboard/SuperAdminDashBoard/ManageArtists/ManageArtists";
 
 
 const router = createBrowserRouter([
@@ -108,20 +111,36 @@ const router = createBrowserRouter([
     children: [
     {
       path: "overview",
-      element: <OverView></OverView>
+      element: <IAmWorkingOnIt></IAmWorkingOnIt>
     },
     {
-      path: "addNewProduct-admin",
-      element: <AddNewProductForAdmin></AddNewProductForAdmin>
+      path: "products",
+      element: <IAmWorkingOnIt></IAmWorkingOnIt>
     },
     {
-      path: "manageUsers",
-      element: <ManageUsers></ManageUsers>
+      path: "artists",
+      element: <ManageArtists></ManageArtists>
+    },
+    {
+      path: "customers",
+      element: <ManageCustomers></ManageCustomers>
+    },
+    {
+      path: "orders",
+      element: <IAmWorkingOnIt></IAmWorkingOnIt>
+    },
+    {
+      path: "sales-report",
+      element: <IAmWorkingOnIt></IAmWorkingOnIt>
+    },
+    {
+      path: "settings",
+      element: <IAmWorkingOnIt></IAmWorkingOnIt>
     },
     {
       path: "managePrison",
       element: <ManagePrison></ManagePrison>
-    },
+    }
     ]
   }
 ]);
