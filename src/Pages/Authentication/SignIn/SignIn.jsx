@@ -4,6 +4,7 @@ import { IoEyeOffSharp, IoEyeOutline } from "react-icons/io5";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import Swal from "sweetalert2";
+import toast, { Toaster } from "react-hot-toast";
 const SignIn = () => {
   const { loginWithEmail } = useContext(AuthContext);
   const { register, handleSubmit, reset } = useForm();
@@ -26,6 +27,7 @@ const SignIn = () => {
         // navigate(from, { replace: true });
       })
       .catch((error) => {
+        toast.error(`${error.message}`)
         console.log(error.message);
         // setErrorMessage(error.message);
       });
@@ -117,6 +119,7 @@ const SignIn = () => {
           </p>
         </form>
       </div>
+      <Toaster />
     </div>
   );
 };

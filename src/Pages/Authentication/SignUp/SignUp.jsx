@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import Swal from "sweetalert2";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 const SignUp = () => {
   const { signUpWithEmail, logOut } = useContext(AuthContext);
@@ -15,7 +16,7 @@ const SignUp = () => {
   const onSubmit = (data) => {
     const { email, password, confirmPass } = data;
     if (password !== confirmPass) {
-      return Swal.fire("Password didn't match", "Try again", "error");
+      return toast.error("Confirmation password didn't match")
     }
     const newUser = {
       email,
@@ -48,6 +49,7 @@ const SignUp = () => {
         // navigate(from, { replace: true });
       })
       .catch((error) => {
+        toast.error(`${error.message}`)
         console.log(error.message);
         // setErrorMessage(error.message);
       });
@@ -159,6 +161,7 @@ const SignUp = () => {
           </p>
         </form>
       </div>
+      <Toaster />
     </div>
   );
 };

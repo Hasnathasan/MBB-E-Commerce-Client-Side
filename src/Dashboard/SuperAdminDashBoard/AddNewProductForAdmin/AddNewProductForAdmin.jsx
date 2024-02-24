@@ -326,12 +326,12 @@ const AddNewProductForAdmin = () => {
 
         <div className="border border-gray-300 mb-8 rounded-lg">
         <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
-        This Product Belongs To-
+        Seller Information
       </h4>
           <div className="grid grid-cols-2 w-full gap-10 justify-center items-center p-5">
           <Select
       items={artists}
-      label="Assigned to a Artist"
+      label="Assign to an Artist"
       placeholder="Select a user"
       labelPlacement="outside"
       className="w-full"
@@ -350,7 +350,7 @@ const AddNewProductForAdmin = () => {
     </Select>
     <Select
       items={defaultPrisons}
-      label="Select Prison for The Artist"
+      label="Assign to a Prison/Organization"
       placeholder="Select a prison"
       labelPlacement="outside"
       className="w-full"
