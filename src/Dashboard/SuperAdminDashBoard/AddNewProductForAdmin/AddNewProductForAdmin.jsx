@@ -1,4 +1,4 @@
-import { Button } from "@nextui-org/react";
+import { Avatar, Button, Select, SelectItem } from "@nextui-org/react";
 import { useRef, useState } from "react";
 import { MultiSelect } from "react-selectize";
 import "../../../../node_modules/react-selectize/themes/index.css";
@@ -23,8 +23,50 @@ const AddNewProductForAdmin = () => {
     const product_quantity = form.productQuantity.value;
   };
   console.log(tags, categories, regularPrice);
+  const defaultPrisons = [
+    {
+      _id: "65d8bde73a844ba9417a45be",
+      prison_name: "Mary Hutchinson Prison",
+      country: "United States",
+      states: "New York State",
+      address: "9525 Manchester Lane Bay Shore, NY 11706",
+      zipCode: "17212",
+      email: "newyork389@gmail.com",
+      number: "5247379174"
+    },
+    {
+      _id: "65d8bdf23a844ba9417a45bf",
+      prison_name: "Melbourne Youth Justice Centre",
+      country: "United States",
+      states: "New York State",
+      address: "9525 Manchester Lane Bay Shore, NY 11706",
+      zipCode: "17212",
+      email: "newyork389@gmail.com",
+      number: "5247379174"
+    },
+    {
+      _id: "65d8bdf93a844ba9417a45c0",
+      prison_name: "Tzalmon Prison",
+      country: "United States",
+      states: "New York State",
+      address: "9525 Manchester Lane Bay Shore, NY 11706",
+      zipCode: "17212",
+      email: "newyork389@gmail.com",
+      number: "5247379174"
+    },
+    {
+      _id: "65d8be183a844ba9417a45c1",
+      prison_name: "Damelin Prison Hall",
+      country: "United States",
+      states: "New York State",
+      address: "9525 Manchester Lane Bay Shore, NY 11706",
+      zipCode: "17212",
+      email: "newyork389@gmail.com",
+      number: "5247379174"
+    }
+  ];
   return (
-    <div className="w-full">
+    <div className="w-[95%] mx-auto">
       
       <form className={``}>
         <div className="border border-gray-300 rounded-lg mb-8">
@@ -272,7 +314,51 @@ const AddNewProductForAdmin = () => {
         </div>
        </div>
 
-        
+        <div className="border border-gray-300 mb-8 rounded-lg">
+        <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
+        This Product Belongs To-
+      </h4>
+          <div className="grid grid-cols-2 w-full gap-10 justify-center items-center p-5">
+          <Select
+      items={defaultPrisons}
+      label="Assigned to"
+      placeholder="Select a user"
+      labelPlacement="outside"
+      className="w-full"
+    >
+      {(prison) => (
+        <SelectItem key={prison?._id} variant="bordered" textValue={prison?.prison_name}>
+          <div className="flex gap-2 items-center">
+            <Avatar alt={prison?.prison_name} className="flex-shrink-0" size="sm" src={prison?.avatar} />
+            <div className="flex flex-col">
+              <span className="text-small">{prison?.prison_name}</span>
+              <span className="text-tiny text-default-400">{prison?.email}</span>
+            </div>
+          </div>
+        </SelectItem>
+      )}
+    </Select>
+    <Select
+      items={defaultPrisons}
+      label="Assigned to"
+      placeholder="Select a user"
+      labelPlacement="outside"
+      className="w-full"
+    >
+      {(prison) => (
+        <SelectItem key={prison?._id} variant="bordered" textValue={prison?.prison_name}>
+          <div className="flex gap-2 items-center">
+            <Avatar alt={prison?.prison_name} className="flex-shrink-0" size="sm" src={prison?.avatar} />
+            <div className="flex flex-col">
+              <span className="text-small">{prison?.prison_name}</span>
+              <span className="text-tiny text-default-400">{prison?.email}</span>
+            </div>
+          </div>
+        </SelectItem>
+      )}
+    </Select>
+          </div>
+        </div>
 
         
 
