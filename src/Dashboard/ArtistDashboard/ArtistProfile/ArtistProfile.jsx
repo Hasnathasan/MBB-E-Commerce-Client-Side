@@ -51,12 +51,17 @@ console.log(selectedFile);
       const formData = new FormData();
     formData.append("image", selectedFile)
     console.log(formData, selectedFile);
-    try {
-      const response = await axios.post('http://localhost:8000/upload', formData);
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error uploading file: ', error);
-    }
+    axios.post('http://localhost:8000/upload', formData, {
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  }
+})
+.then(response => {
+  console.log(response.data);
+})
+.catch(error => {
+  console.error('Error uploading file: ', error);
+});
     axios
       .patch(`https://mbb-e-commerce-server.vercel.app/artistUpdate/${user?.email}`, {
         updatedName,
