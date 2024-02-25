@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import useUser from "../../../Hooks/useUser";
 import axios from "axios";
@@ -9,24 +9,54 @@ import usePrisons from "../../../Hooks/usePrisons";
 
 const ArtistProfile = () => {
   const { user } = useContext(AuthContext);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+    }
+  };
+console.log(selectedFile);
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
   const [userData, isUserDataLoading] = useUser();
   const [prisons, isPrisonsLoading] = usePrisons();
+  // const [binaryCode, setBinaryCode] = useState();
   const [tags, setTags] = useState(
     ["hi", "by"]?.map((str) => ({ label: str, value: str }))
   );
+  // axios.get("http://localhost:8000/images")
+  // .then(res => {
+  //   console.log(res.data)
+  //   setBinaryCode(res.data[0].image)
+  // })
+  // .catch(error=> console.log(error))
   useEffect(() => {
     setTags(userData?.keyWords?.map((str) => ({ label: str, value: str })) || [])
   },[userData?.keyWords])
   
   console.log(tags);
   const updatedKeyWords = tags?.map(tag => tag.label);
-  const handleUserUpdate = (e) => {
+  const handleUserUpdate = async(e) => {
     e.preventDefault();
     const form = e.target;
     const updatedName = form.name.value;
     const updatedBio = form.bio.value;
     const updatedArtDescription = form.art_description.value;
     const updatedBioVideo = form.bio_video.value;
+    if(selectedFile){
+      const formData = new FormData();
+    formData.append("image", selectedFile)
+    console.log(formData, selectedFile);
+    try {
+      const response = await axios.post('http://localhost:8000/upload', formData);
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error uploading file: ', error);
+    }
     axios
       .patch(`https://mbb-e-commerce-server.vercel.app/artistUpdate/${user?.email}`, {
         updatedName,
@@ -48,7 +78,7 @@ const ArtistProfile = () => {
       .catch((error) => {
         console.log(error);
       });
-  };
+  }};
 
   const handlePaymentInfoUpdate = (e) => {
     e.preventDefault();
@@ -69,6 +99,7 @@ const ArtistProfile = () => {
       zipCode,
       updatedNum,
     };
+
     axios
       .patch(
         `https://mbb-e-commerce-server.vercel.app/userBillingInfoUpdate/${user?.email}`,
@@ -133,6 +164,7 @@ const ArtistProfile = () => {
       number: "5247379174"
     }
   ];
+
   return (
     <div>
       {/* Account Information */}
@@ -140,9 +172,9 @@ const ArtistProfile = () => {
         <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">
           Account Settings
         </h4>
+            <form onSubmit={handleUserUpdate} className="">
         <div className="p-5 grid grid-cols-12 gap-5 items-center justify-center">
           <div className="col-span-9">
-            <form onSubmit={handleUserUpdate} className="">
               {/* <h3 className="text-base text-red-600">{error}</h3> */}
               <label htmlFor="name">Your Name</label>
               <input
@@ -236,23 +268,30 @@ const ArtistProfile = () => {
               >
                 Save Changes
               </Button>
-            </form>
+            
           </div>
           <div className="flex justify-center col-span-2 items-center gap-5 flex-col">
-            <Avatar
+            {/* <Avatar
               src={userData?.userPhoto}
               className="w-48 h-48 text-large"
-            />
+            /> */}
+            {/* <img src={`data:image/png;base64,${binaryCode}`} alt="Decoded Image" /> */}
+             <input
+        type="file"
+        ref={fileInputRef}
+        style={{ display: 'none' }}
+        onChange={handleFileChange}
+      />
             <Button
-              type="submit"
+            onClick={handleButtonClick}
               color="success"
               radius="full"
               className="text-white mb-2 bg-green-500 w-full"
             >
-              Chose Image
+              Choose Image
             </Button>
           </div>
-        </div>
+        </div></form>
       </div>
 
       {/* Payment Information */}
