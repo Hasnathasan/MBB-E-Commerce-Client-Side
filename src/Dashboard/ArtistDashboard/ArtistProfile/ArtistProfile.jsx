@@ -18,7 +18,7 @@ const ArtistProfile = () => {
       setSelectedFile(file);
     }
   };
-console.log(selectedFile);
+  console.log(selectedFile);
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
@@ -35,74 +35,80 @@ console.log(selectedFile);
   // })
   // .catch(error=> console.log(error))
   useEffect(() => {
-    setTags(userData?.keyWords?.map((str) => ({ label: str, value: str })) || [])
-  },[userData?.keyWords])
-  
+    setTags(
+      userData?.keyWords?.map((str) => ({ label: str, value: str })) || []
+    );
+  }, [userData?.keyWords]);
+
   console.log(tags);
-  const updatedKeyWords = tags?.map(tag => tag.label);
-  const handleUserUpdate = async(e) => {
+  const updatedKeyWords = tags?.map((tag) => tag.label);
+  const handleUserUpdate = async (e) => {
     e.preventDefault();
     const form = e.target;
     const updatedName = form.name.value;
     const updatedBio = form.bio.value;
     const updatedArtDescription = form.art_description.value;
     const updatedBioVideo = form.bio_video.value;
-    if(selectedFile){
+    if (selectedFile) {
       const formData = new FormData();
-    formData.append("image", selectedFile)
-    console.log(selectedFile);
-//     formData.append("upload_preset", "iwbft8xu")
-//     formData.append("cloud_name", "dyewzhari")
-//     console.log(formData, selectedFile);
-//     axios.post('https://api.cloudinary.com/v1_1/dyewzhari/image/upload', formData, {
-//   headers: {
-//     'Content-Type': 'multipart/form-data'
-//   }
-// })
-// .then(response => {
-//   console.log(response.data);
-// })
-// .catch(error => {
-//   console.error('Error uploading file: ', error);
-// });
-    axios.post('http://localhost:8000/upload', formData, {
-  headers: {
-    'Content-Type': 'multipart/form-data'
-  }
-})
-.then(response => {
-  console.log(response.data.url);
-  if(response.data?.url){
-    axios
-      .patch(`https://mbb-e-commerce-server.vercel.app/artistUpdate/${user?.email}`, {
-        updatedName,
-        updatedBio,
-        updatedArtDescription,
-        updatedBioVideo,
-        updatedKeyWords,
-        userPhoto: response?.data?.url
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.modifiedCount > 0) {
-          refetch()
-          Swal.fire(
-            "Congratulation",
-            "Successfully Updated Your Data",
-            "success"
-          );
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-})
-.catch(error => {
-  console.error('Error uploading file: ', error);
-});
-    
-  }};
+      formData.append("image", selectedFile);
+      console.log(selectedFile);
+      //     formData.append("upload_preset", "iwbft8xu")
+      //     formData.append("cloud_name", "dyewzhari")
+      //     console.log(formData, selectedFile);
+      //     axios.post('https://api.cloudinary.com/v1_1/dyewzhari/image/upload', formData, {
+      //   headers: {
+      //     'Content-Type': 'multipart/form-data'
+      //   }
+      // })
+      // .then(response => {
+      //   console.log(response.data);
+      // })
+      // .catch(error => {
+      //   console.error('Error uploading file: ', error);
+      // });
+      axios
+        .post("http://localhost:8000/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          console.log(response.data.url);
+          if (response.data?.url) {
+            axios
+              .patch(
+                `https://mbb-e-commerce-server.vercel.app/artistUpdate/${user?.email}`,
+                {
+                  updatedName,
+                  updatedBio,
+                  updatedArtDescription,
+                  updatedBioVideo,
+                  updatedKeyWords,
+                  userPhoto: response?.data?.url,
+                }
+              )
+              .then((res) => {
+                console.log(res.data);
+                if (res.data.modifiedCount > 0) {
+                  refetch();
+                  Swal.fire(
+                    "Congratulation",
+                    "Successfully Updated Your Data",
+                    "success"
+                  );
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+        })
+        .catch((error) => {
+          console.error("Error uploading file: ", error);
+        });
+    }
+  };
 
   const handlePaymentInfoUpdate = (e) => {
     e.preventDefault();
@@ -143,8 +149,8 @@ console.log(selectedFile);
         console.log(error);
       });
   };
-  if(isPrisonsLoading || isUserDataLoading){
-    return <h1>Loading......</h1>
+  if (isPrisonsLoading || isUserDataLoading) {
+    return <h1>Loading......</h1>;
   }
   const defaultPrisons = [
     {
@@ -155,7 +161,7 @@ console.log(selectedFile);
       address: "9525 Manchester Lane Bay Shore, NY 11706",
       zipCode: "17212",
       email: "newyork389@gmail.com",
-      number: "5247379174"
+      number: "5247379174",
     },
     {
       _id: "65d8bdf23a844ba9417a45bf",
@@ -165,7 +171,7 @@ console.log(selectedFile);
       address: "9525 Manchester Lane Bay Shore, NY 11706",
       zipCode: "17212",
       email: "newyork389@gmail.com",
-      number: "5247379174"
+      number: "5247379174",
     },
     {
       _id: "65d8bdf93a844ba9417a45c0",
@@ -175,7 +181,7 @@ console.log(selectedFile);
       address: "9525 Manchester Lane Bay Shore, NY 11706",
       zipCode: "17212",
       email: "newyork389@gmail.com",
-      number: "5247379174"
+      number: "5247379174",
     },
     {
       _id: "65d8be183a844ba9417a45c1",
@@ -185,8 +191,8 @@ console.log(selectedFile);
       address: "9525 Manchester Lane Bay Shore, NY 11706",
       zipCode: "17212",
       email: "newyork389@gmail.com",
-      number: "5247379174"
-    }
+      number: "5247379174",
+    },
   ];
 
   return (
@@ -196,9 +202,9 @@ console.log(selectedFile);
         <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">
           Account Settings
         </h4>
-            <form onSubmit={handleUserUpdate} className="">
-        <div className="p-5 grid grid-cols-12 gap-5 items-center justify-center">
-          <div className="col-span-9">
+        <form onSubmit={handleUserUpdate} className="">
+          <div className="p-5 grid grid-cols-12 gap-5 items-center justify-center">
+            <div className="col-span-9">
               {/* <h3 className="text-base text-red-600">{error}</h3> */}
               <label htmlFor="name">Your Name</label>
               <input
@@ -292,30 +298,30 @@ console.log(selectedFile);
               >
                 Save Changes
               </Button>
-            
+            </div>
+            <div className="flex justify-center col-span-2 items-center gap-5 flex-col">
+              <Avatar
+                src={userData?.userPhoto}
+                className="w-48 h-48 text-large"
+              />
+              {/* <img src={`data:image/png;base64,${binaryCode}`} alt="Decoded Image" /> */}
+              <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+              />
+              <Button
+                onClick={handleButtonClick}
+                color="success"
+                radius="full"
+                className="text-white mb-2 bg-green-500 w-full"
+              >
+                Choose Image
+              </Button>
+            </div>
           </div>
-          <div className="flex justify-center col-span-2 items-center gap-5 flex-col">
-            <Avatar
-              src={userData?.userPhoto}
-              className="w-48 h-48 text-large"
-            />
-            {/* <img src={`data:image/png;base64,${binaryCode}`} alt="Decoded Image" /> */}
-             <input
-        type="file"
-        ref={fileInputRef}
-        style={{ display: 'none' }}
-        onChange={handleFileChange}
-      />
-            <Button
-            onClick={handleButtonClick}
-              color="success"
-              radius="full"
-              className="text-white mb-2 bg-green-500 w-full"
-            >
-              Choose Image
-            </Button>
-          </div>
-        </div></form>
+        </form>
       </div>
 
       {/* Payment Information */}
@@ -338,25 +344,38 @@ console.log(selectedFile);
               />
             </div>
             <div>
-            <Select
-      items={prisons || defaultPrisons}
-      label="Assigned to"
-      placeholder="Select a user"
-      labelPlacement="outside"
-      className="w-full"
-    >
-      {(prison) => (
-        <SelectItem key={prison?._id} variant="bordered" textValue={prison?.prison_name}>
-          <div className="flex gap-2 items-center">
-            <Avatar alt={prison?.prison_name} className="flex-shrink-0" size="sm" src={prison?.avatar} />
-            <div className="flex flex-col">
-              <span className="text-small">{prison?.prison_name}</span>
-              <span className="text-tiny text-default-400">{prison?.email}</span>
-            </div>
-          </div>
-        </SelectItem>
-      )}
-    </Select>
+              <Select
+                items={prisons || defaultPrisons}
+                label="Assigned to"
+                placeholder="Select a user"
+                labelPlacement="outside"
+                className="w-full"
+              >
+                {(prison) => (
+                  <SelectItem
+                    key={prison?._id}
+                    variant="bordered"
+                    textValue={prison?.prison_name}
+                  >
+                    <div className="flex gap-2 items-center">
+                      <Avatar
+                        alt={prison?.prison_name}
+                        className="flex-shrink-0"
+                        size="sm"
+                        src={prison?.avatar}
+                      />
+                      <div className="flex flex-col">
+                        <span className="text-small">
+                          {prison?.prison_name}
+                        </span>
+                        <span className="text-tiny text-default-400">
+                          {prison?.email}
+                        </span>
+                      </div>
+                    </div>
+                  </SelectItem>
+                )}
+              </Select>
             </div>
           </div>
           <div>
