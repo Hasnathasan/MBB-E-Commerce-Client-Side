@@ -16,7 +16,7 @@ const AddNewProduct = () => {
   const [salePrice, setSalePrice] = useState();
   const [costPrice, setCostPrice] = useState();
   const handleAddNewProduct = (e) => {
-    e.preeventDefault();
+    e.preventDefault();
     const form = e.target;
     const product_name = form.productName.value;
     const product_price = form.productPrice.value;

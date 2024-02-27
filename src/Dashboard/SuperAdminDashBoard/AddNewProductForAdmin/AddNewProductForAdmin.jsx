@@ -23,30 +23,32 @@ const AddNewProductForAdmin = () => {
   const [prison, setPrison] = useState(null);
 
   
-  const handleAddNewProduct = (e) => {
-    e.preeventDefault();
-    const form = e.target;
-    const product_name = form.productName.value;
-    const product_price = form.productPrice.value;
-    const product_quantity = form.productQuantity.value;
-  };
-  console.log(tags, categories, regularPrice, prisonsData, artistData);
+  // const handleAddNewProduct = (e) => {
+  //   e.preventDefault();
+  //   const form = e.target;
+  //   const product_name = form.productName.value;
+  //   const product_price = form.productPrice.value;
+  //   const product_quantity = form.productQuantity.value;
+  // };
+  console.log(tags, categories, regularPrice, prison, artist);
 
 
 
   const handleProductAdding = e => {
-    e.preeventDefault();
+    e.preventDefault();
     const form = e.target;
     const product_name = form.product_name.value;
-    const featured_photo = form.featured_photo.value;
-    const gallery_photos = form.gallery_photos.value;
+    const featured_photo = form.featured_photo.files;
+    const gallery_photos = form.gallery_photos.files;
     const description = form.description.value;
     const regular_price = form.regular_price.value;
     const sale_price = form.sale_price.value;
     const cost_price = form.cost_price.value;
     const addedBy = artist;
     const prison_of_artist = prison;
-    // const product_name = form.product_name.value;
+    const product_tags = tags.map(tag => tag.label);
+    const product_categories = categories.map(category => category.label);
+    console.log(product_name, featured_photo, gallery_photos, product_tags, product_categories);
   }
 
   if(isArtistsDataLoading || isPrisonsDataLoading){
@@ -335,7 +337,7 @@ const AddNewProductForAdmin = () => {
       onChange={e => setPrison(e.target.value)}
     >
       {(prison) => (
-        <SelectItem key={prison?.email} variant="bordered" textValue={prison?.prison_name}>
+        <SelectItem key={prison?.email} variant="bordered" textValue={prison?.email}>
           <div className="flex gap-2 items-center">
             <Avatar alt={prison?.prison_name} className="flex-shrink-0" size="sm" src={prison?.avatar} />
             <div className="flex flex-col">
@@ -352,7 +354,6 @@ const AddNewProductForAdmin = () => {
         
 
         <Button
-          onSubmit={handleAddNewProduct}
           type="submit"
           size="lg"
           color="success"

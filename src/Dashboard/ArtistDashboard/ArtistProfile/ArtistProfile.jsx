@@ -26,7 +26,7 @@ const ArtistProfile = () => {
   const [prisons, isPrisonsLoading] = usePrisons();
   // const [binaryCode, setBinaryCode] = useState();
   const [tags, setTags] = useState(
-    ["hi", "by"]?.map((str) => ({ label: str, value: str }))
+    []?.map((str) => ({ label: str, value: str }))
   );
   // axios.get("http://localhost:8000/images")
   // .then(res => {
