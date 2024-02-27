@@ -2,7 +2,11 @@ import { Avatar, Button, Select, SelectItem } from "@nextui-org/react";
 import { useRef, useState } from "react";
 import { MultiSelect } from "react-selectize";
 import "../../../../node_modules/react-selectize/themes/index.css";
+import useArtists from "../../../Hooks/useArtists";
+import usePrisons from "../../../Hooks/usePrisons";
 const AddNewProductForAdmin = () => {
+  const [artistData, isArtistsDataLoading] = useArtists();
+  const [prisonsData, isPrisonsDataLoading] = usePrisons();
   const [tags, setTags] = useState(
     [].map((str) => ({ label: str, value: str }))
   );
@@ -26,59 +30,8 @@ const AddNewProductForAdmin = () => {
     const product_price = form.productPrice.value;
     const product_quantity = form.productQuantity.value;
   };
-  console.log(tags, categories, regularPrice, artist);
-  const artists = [
-    { email: "georgearthur82@artist.com", name: "George Arthur" },
-    { email: "henrynickls422@artist.com", name: "Henry nickls" },
-    { email: "noahjames33@artist.com", name: "Noah-James" },
-    { email: "alfiejay53@artist.com", name: "Alfie-Jay" },
-    { email: "isaaclee345@artist.com", name: "Isaac-Lee" },
-    { email: "jonathoatrhod@artist.com", name: "Jonathan trod" },
-    { email: "tomjames33@artist.com", name: "Tom James" },
-    { email: "harrypotter2345@artist.com", name: "Harry potter" }
-  ];
-  const defaultPrisons = [
-    {
-      _id: "65d8bde73a844ba9417a45be",
-      prison_name: "Mary Hutchinson Prison",
-      country: "United States",
-      states: "New York State",
-      address: "9525 Manchester Lane Bay Shore, NY 11706",
-      zipCode: "17212",
-      email: "newyork389@gmail.com",
-      number: "5247379174"
-    },
-    {
-      _id: "65d8bdf23a844ba9417a45bf",
-      prison_name: "Melbourne Youth Justice Centre",
-      country: "United States",
-      states: "New York State",
-      address: "9525 Manchester Lane Bay Shore, NY 11706",
-      zipCode: "17212",
-      email: "newyork389@gmail.com",
-      number: "5247379174"
-    },
-    {
-      _id: "65d8bdf93a844ba9417a45c0",
-      prison_name: "Tzalmon Prison",
-      country: "United States",
-      states: "New York State",
-      address: "9525 Manchester Lane Bay Shore, NY 11706",
-      zipCode: "17212",
-      email: "newyork389@gmail.com",
-      number: "5247379174"
-    },
-    {
-      _id: "65d8be183a844ba9417a45c1",
-      prison_name: "Damelin Prison Hall",
-      country: "United States",
-      states: "New York State",
-      address: "9525 Manchester Lane Bay Shore, NY 11706",
-      zipCode: "17212",
-      email: "newyork389@gmail.com",
-      number: "5247379174"
-    }
-  ];
+  console.log(tags, categories, regularPrice, prisonsData, artistData);
+
 
 
   const handleProductAdding = e => {
@@ -92,7 +45,12 @@ const AddNewProductForAdmin = () => {
     const sale_price = form.sale_price.value;
     const cost_price = form.cost_price.value;
     const addedBy = artist;
+    const prison_of_artist = prison;
     // const product_name = form.product_name.value;
+  }
+
+  if(isArtistsDataLoading || isPrisonsDataLoading){
+    return <h1>Loading</h1>
   }
   return (
     <div className="w-[95%] mx-auto">
@@ -349,7 +307,7 @@ const AddNewProductForAdmin = () => {
       </h4>
           <div className="grid grid-cols-2 w-full gap-10 justify-center items-center p-5">
           <Select
-      items={artists}
+      items={artistData}
       label="Assign to an Artist"
       placeholder="Select a user"
       labelPlacement="outside"
@@ -357,7 +315,7 @@ const AddNewProductForAdmin = () => {
       onChange={e => setArtist(e.target.value)}
     >
       {(artist) => (
-        <SelectItem key={artist?.email} variant="bordered" textValue={artist?.name}>
+        <SelectItem key={artist.email} variant="bordered" textValue={artist?.email}>
           <div className="flex gap-2 items-center">
             <Avatar alt={artist?.prison_name} className="flex-shrink-0" size="sm" src={artist?.avatar} />
             <div className="flex flex-col">
@@ -369,7 +327,7 @@ const AddNewProductForAdmin = () => {
       )}
     </Select>
     <Select
-      items={defaultPrisons}
+      items={prisonsData}
       label="Assign to a Prison/Organization"
       placeholder="Select a prison"
       labelPlacement="outside"
@@ -377,7 +335,7 @@ const AddNewProductForAdmin = () => {
       onChange={e => setPrison(e.target.value)}
     >
       {(prison) => (
-        <SelectItem key={prison?.prison_name} variant="bordered" textValue={prison?.prison_name}>
+        <SelectItem key={prison?.email} variant="bordered" textValue={prison?.prison_name}>
           <div className="flex gap-2 items-center">
             <Avatar alt={prison?.prison_name} className="flex-shrink-0" size="sm" src={prison?.avatar} />
             <div className="flex flex-col">
