@@ -4,6 +4,7 @@ import { MultiSelect } from "react-selectize";
 import "../../../../node_modules/react-selectize/themes/index.css";
 import useArtists from "../../../Hooks/useArtists";
 import usePrisons from "../../../Hooks/usePrisons";
+import axios from "axios";
 const AddNewProductForAdmin = () => {
   const [artistData, isArtistsDataLoading] = useArtists();
   const [prisonsData, isPrisonsDataLoading] = usePrisons();
@@ -38,7 +39,7 @@ const AddNewProductForAdmin = () => {
     e.preventDefault();
     const form = e.target;
     const product_name = form.product_name.value;
-    const featured_photo = form.featured_photo.files;
+    const featured_photo = form.featured_photo.files[0];
     const gallery_photos = form.gallery_photos.files;
     const description = form.description.value;
     const regular_price = form.regular_price.value;
@@ -49,6 +50,35 @@ const AddNewProductForAdmin = () => {
     const product_tags = tags.map(tag => tag.label);
     const product_categories = categories.map(category => category.label);
     console.log(product_name, featured_photo, gallery_photos, product_tags, product_categories);
+    const firstFormData = new FormData();
+    firstFormData.append("image", featured_photo);
+    axios
+        .post("http://localhost:8000/upload", firstFormData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          if(response.data.url){
+            const secondFormData = new FormData();
+            gallery_photos.forEach((file, index) => {
+              secondFormData.append(`image_${index}`, file);
+            });
+            axios
+        .post("http://localhost:8000/uploadMultiple", secondFormData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          
+        })
+        .catch(error => console.log(error.message))
+          }
+        })
+        .catch(error => console.log(error.message))
   }
 
   if(isArtistsDataLoading || isPrisonsDataLoading){
