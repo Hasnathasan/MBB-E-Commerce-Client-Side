@@ -36,9 +36,9 @@ const AddNewProductForAdmin = () => {
     e.preventDefault();
     const form = e.target;
     const product_name = form.product_name.value;
-    const featured_photo = form.featured_photo.files[0];
-    const gallery_photos = form.gallery_photos.files;
-    const multipleImages = [...gallery_photos];
+    const featured_photo_file = form.featured_photo.files[0];
+    const gallery_photos_files = form.gallery_photos.files;
+    const multipleImages = [...gallery_photos_files];
     const description = form.description.value;
     const regular_price = form.regular_price.value;
     const sale_price = form.sale_price.value;
@@ -47,15 +47,9 @@ const AddNewProductForAdmin = () => {
     const prison_of_artist = prison;
     const product_tags = tags.map((tag) => tag.label);
     const product_categories = categories.map((category) => category.label);
-    console.log(
-      product_name,
-      featured_photo,
-      multipleImages,
-      product_tags,
-      product_categories
-    );
+   
     const firstFormData = new FormData();
-    firstFormData.append("image", featured_photo);
+    firstFormData.append("image", featured_photo_file);
     axios
       .post("http://localhost:8000/upload", firstFormData, {
         headers: {
@@ -65,6 +59,7 @@ const AddNewProductForAdmin = () => {
       .then((response) => {
         console.log(response.data);
         if (response.data.url) {
+          const featured_photo = response.data.url;
           const secondFormData = new FormData();
           multipleImages.map((file, index) => {
             secondFormData.append(`images`, file);
@@ -76,7 +71,17 @@ const AddNewProductForAdmin = () => {
               },
             })
             .then((response) => {
-              console.log(response.data);
+              if(response?.data?.uploadResponses){
+                const gallery_photos = response.data?.uploadResponses;
+                const product = {product_name,
+                  featured_photo,
+                  gallery_photos,
+                  product_tags,
+                  product_categories, description, price:{regular_price, sale_price, cost_price}, addedBy, prison_of_artist}
+                axios.post("http://localhost:8000/products", product)
+                .then(res => console.log(res.data))
+                .catch(error => console.log(error.message))
+              }
             })
             .catch((error) => console.log(error.message));
         }
