@@ -47,7 +47,7 @@ const AddNewProductForAdmin = () => {
     const prison_of_artist = prison;
     const product_tags = tags.map((tag) => tag.label);
     const product_categories = categories.map((category) => category.label);
-   
+
     const firstFormData = new FormData();
     firstFormData.append("image", featured_photo_file);
     axios
@@ -71,16 +71,23 @@ const AddNewProductForAdmin = () => {
               },
             })
             .then((response) => {
-              if(response?.data?.uploadResponses){
+              if (response?.data?.uploadResponses) {
                 const gallery_photos = response.data?.uploadResponses;
-                const product = {product_name,
+                const product = {
+                  product_name,
                   featured_photo,
                   gallery_photos,
                   product_tags,
-                  product_categories, description, price:{regular_price, sale_price, cost_price}, addedBy, prison_of_artist}
-                axios.post("http://localhost:8000/products", product)
-                .then(res => console.log(res.data))
-                .catch(error => console.log(error.message))
+                  product_categories,
+                  description,
+                  price: { regular_price, sale_price, cost_price },
+                  addedBy,
+                  prison_of_artist,
+                };
+                axios
+                  .post("http://localhost:8000/products", product)
+                  .then((res) => console.log(res.data))
+                  .catch((error) => console.log(error.message));
               }
             })
             .catch((error) => console.log(error.message));
