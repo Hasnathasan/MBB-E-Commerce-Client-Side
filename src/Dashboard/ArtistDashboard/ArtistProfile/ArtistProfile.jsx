@@ -22,7 +22,7 @@ console.log(selectedFile);
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
-  const [userData, isUserDataLoading] = useUser();
+  const [userData, isUserDataLoading, refetch] = useUser();
   const [prisons, isPrisonsLoading] = usePrisons();
   // const [binaryCode, setBinaryCode] = useState();
   const [tags, setTags] = useState(
@@ -50,29 +50,42 @@ console.log(selectedFile);
     if(selectedFile){
       const formData = new FormData();
     formData.append("image", selectedFile)
-    console.log(formData, selectedFile);
+    console.log(selectedFile);
+//     formData.append("upload_preset", "iwbft8xu")
+//     formData.append("cloud_name", "dyewzhari")
+//     console.log(formData, selectedFile);
+//     axios.post('https://api.cloudinary.com/v1_1/dyewzhari/image/upload', formData, {
+//   headers: {
+//     'Content-Type': 'multipart/form-data'
+//   }
+// })
+// .then(response => {
+//   console.log(response.data);
+// })
+// .catch(error => {
+//   console.error('Error uploading file: ', error);
+// });
     axios.post('http://localhost:8000/upload', formData, {
   headers: {
     'Content-Type': 'multipart/form-data'
   }
 })
 .then(response => {
-  console.log(response.data);
-})
-.catch(error => {
-  console.error('Error uploading file: ', error);
-});
+  console.log(response.data.url);
+  if(response.data?.url){
     axios
       .patch(`https://mbb-e-commerce-server.vercel.app/artistUpdate/${user?.email}`, {
         updatedName,
         updatedBio,
         updatedArtDescription,
         updatedBioVideo,
-        updatedKeyWords
+        updatedKeyWords,
+        userPhoto: response?.data?.url
       })
       .then((res) => {
         console.log(res.data);
         if (res.data.modifiedCount > 0) {
+          refetch()
           Swal.fire(
             "Congratulation",
             "Successfully Updated Your Data",
@@ -83,6 +96,12 @@ console.log(selectedFile);
       .catch((error) => {
         console.log(error);
       });
+  }
+})
+.catch(error => {
+  console.error('Error uploading file: ', error);
+});
+    
   }};
 
   const handlePaymentInfoUpdate = (e) => {
@@ -276,10 +295,10 @@ console.log(selectedFile);
             
           </div>
           <div className="flex justify-center col-span-2 items-center gap-5 flex-col">
-            {/* <Avatar
+            <Avatar
               src={userData?.userPhoto}
               className="w-48 h-48 text-large"
-            /> */}
+            />
             {/* <img src={`data:image/png;base64,${binaryCode}`} alt="Decoded Image" /> */}
              <input
         type="file"

@@ -292,3 +292,15 @@ const AddNewProduct = () => {
 };
 
 export default AddNewProduct;
+
+
+
+// Online classes and offline classes are two types of learning, both of which have advantages and disadvantages. 
+// Online classes give students the flexibility to attend classes from their home or office, while offline classes require students to physically attend classes in
+//  a classroom. 
+// Online classes allow students to access course material at any time, from anywhere. This is a huge advantage for those who have busy
+//  schedules and need to work while studying. Online classes also allow students to learn at their own pace. 
+
+// Offline classes, on the other hand, provide students with the opportunity to build relationships with their professors and peers. 
+// This can often help students to develop a better understanding of the material being taught.
+// Thus there are some merits and demerits in both the online class and offline class
