@@ -15,6 +15,10 @@ const AddNewProductForAdmin = () => {
   const [regularPrice, setRegularPrice] = useState();
   const [salePrice, setSalePrice] = useState();
   const [costPrice, setCostPrice] = useState();
+  const [artist, setArtist] = useState(null);
+  const [prison, setPrison] = useState(null);
+
+  
   const handleAddNewProduct = (e) => {
     e.preeventDefault();
     const form = e.target;
@@ -22,7 +26,7 @@ const AddNewProductForAdmin = () => {
     const product_price = form.productPrice.value;
     const product_quantity = form.productQuantity.value;
   };
-  console.log(tags, categories, regularPrice);
+  console.log(tags, categories, regularPrice, artist);
   const artists = [
     { email: "georgearthur82@artist.com", name: "George Arthur" },
     { email: "henrynickls422@artist.com", name: "Henry nickls" },
@@ -75,10 +79,25 @@ const AddNewProductForAdmin = () => {
       number: "5247379174"
     }
   ];
+
+
+  const handleProductAdding = e => {
+    e.preeventDefault();
+    const form = e.target;
+    const product_name = form.product_name.value;
+    const featured_photo = form.featured_photo.value;
+    const gallery_photos = form.gallery_photos.value;
+    const description = form.description.value;
+    const regular_price = form.regular_price.value;
+    const sale_price = form.sale_price.value;
+    const cost_price = form.cost_price.value;
+    const addedBy = artist;
+    // const product_name = form.product_name.value;
+  }
   return (
     <div className="w-[95%] mx-auto">
       
-      <form className={``}>
+      <form onSubmit={handleProductAdding} className={``}>
         <div className="border border-gray-300 rounded-lg mb-8">
       <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
         Add a New Product
@@ -86,11 +105,11 @@ const AddNewProductForAdmin = () => {
         <div className="p-5">
         <div className="grid grid-cols-2 gap-5">
           <div>
-            <label htmlFor="productName">Product Name</label>
+            <label htmlFor="product_name">Product Name</label>
             <input
               type="text"
-              name="productName"
-              id="productName"
+              name="product_name"
+              id="product_name"
               className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
               placeholder="Product Name"
               required
@@ -137,30 +156,30 @@ const AddNewProductForAdmin = () => {
         </div>
         <div className="grid grid-cols-3 gap-5">
           <div>
-            <label htmlFor="productsPhoto">Product Feature photo</label>
+            <label htmlFor="featured_photo">Product Feature photo</label>
             <input
               type="file"
-              name="productsPhoto"
-              id="productsPhoto"
+              name="featured_photo"
+              id="featured_photo"
               className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
               placeholder="Feature photo of your product"
               required
             />
           </div>
           <div>
-            <label htmlFor="productsPhoto">Product&apos;s other photos</label>
+            <label htmlFor="gallery_photos">Gallery photos</label>
             <input
               type="file"
               multiple
-              name="productsPhoto"
-              id="productsPhoto"
+              name="gallery_photos"
+              id="gallery_photos"
               className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
               placeholder="Product Photos"
               required
             />
           </div>
           <div>
-            <label htmlFor="productPrice">Tags</label>
+            <label htmlFor="product_tags">Tags</label>
             <MultiSelect
               values={tags}
               delimiters={[188]}
@@ -199,7 +218,7 @@ const AddNewProductForAdmin = () => {
           </div>
         </div>
         <div>
-          <label htmlFor="name">Description</label>
+          <label htmlFor="description">Description</label>
           <textarea
             type="text"
             name="description"
@@ -220,30 +239,30 @@ const AddNewProductForAdmin = () => {
       </h4>
         <div className="grid grid-cols-3 gap-5 p-5">
           <div>
-            <label htmlFor="regularPrice">Regular Price</label>
+            <label htmlFor="regular_price">Regular Price</label>
             <input
               ref={regularPriceRef}
               onChange={() => setRegularPrice(regularPriceRef?.current?.value)}
               type="number"
-              name="productPrice"
+              name="regular_price"
               min={0}
-              id="productPrice"
+              id="regular_price"
               className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-              placeholder="Product Price"
+              placeholder="Product's regular Price"
               required
             />
           </div>
           <div>
-            <label htmlFor="salePrice">Sale Price</label>
+            <label htmlFor="sale_price">Sale Price</label>
             <input
               ref={salePriceRef}
               onChange={() => setSalePrice(salePriceRef?.current?.value)}
               type="number"
-              name="productPrice"
+              name="sale_price"
               min={0}
-              id="productPrice"
+              id="sale_price"
               className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-              placeholder="Product Price"
+              placeholder="Product's sale Price"
               required
             />
           </div>
@@ -260,14 +279,14 @@ const AddNewProductForAdmin = () => {
             />
           </div> */}
           <div>
-            <label htmlFor="costOfProduct">Cost of Product</label>
+            <label htmlFor="cost_price">Cost of Product</label>
             <input
               ref={costPriceRef}
               onChange={() => setCostPrice(costPriceRef?.current?.value)}
               type="number"
               min={0}
-              name="costOfProduct"
-              id="costOfProduct"
+              name="cost_price"
+              id="cost_price"
               className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
               placeholder="Cost of your Product"
               required
@@ -335,9 +354,10 @@ const AddNewProductForAdmin = () => {
       placeholder="Select a user"
       labelPlacement="outside"
       className="w-full"
+      onChange={e => setArtist(e.target.value)}
     >
       {(artist) => (
-        <SelectItem key={artist?.name} variant="bordered" textValue={artist?.name}>
+        <SelectItem key={artist?.email} variant="bordered" textValue={artist?.name}>
           <div className="flex gap-2 items-center">
             <Avatar alt={artist?.prison_name} className="flex-shrink-0" size="sm" src={artist?.avatar} />
             <div className="flex flex-col">
@@ -354,9 +374,10 @@ const AddNewProductForAdmin = () => {
       placeholder="Select a prison"
       labelPlacement="outside"
       className="w-full"
+      onChange={e => setPrison(e.target.value)}
     >
       {(prison) => (
-        <SelectItem key={prison?._id} variant="bordered" textValue={prison?.prison_name}>
+        <SelectItem key={prison?.prison_name} variant="bordered" textValue={prison?.prison_name}>
           <div className="flex gap-2 items-center">
             <Avatar alt={prison?.prison_name} className="flex-shrink-0" size="sm" src={prison?.avatar} />
             <div className="flex flex-col">
