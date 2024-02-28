@@ -28,11 +28,99 @@ import useArtists from "../../../Hooks/useArtists";
 import usePrisons from "../../../Hooks/usePrisons";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useRef, useState } from "react";
+import { MultiSelect } from "react-selectize";
 
 const ManageArtists = () => {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [prisons, isPrisonsDataLoading] = usePrisons();
     const [artistsData, isArtistsDataLoading] = useArtists();
+    const [selectedFile, setSelectedFile] = useState(null);
+    const fileInputRef = useRef(null);
+  
+    const handleFileChange = (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        setSelectedFile(file);
+      }
+    };
+    console.log(selectedFile);
+    const handleButtonClick = () => {
+      fileInputRef.current.click();
+    };
+    const [tags, setTags] = useState(
+      []?.map((str) => ({ label: str, value: str }))
+    );
+    const handleUserUpdate = async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const updatedName = form.name.value;
+      const updatedBio = form.bio.value;
+      const updatedArtDescription = form.art_description.value;
+      const updatedBioVideo = form.bio_video.value;
+      const updatedKeyWords = tags?.map((tag) => tag.label);
+      const companyName = form.companyName.value;
+      const country = form.country.value;
+      const states = form.states.value;
+      const updatedAddress = form.address.value;
+      const zipCode = form.zipCode.value;
+      const updatedNum = form.phoneNumber.value;
+      const billingInfo = {
+        updatedName,
+        companyName,
+        country,
+        states,
+        updatedAddress,
+        zipCode,
+        updatedNum,
+      };
+      
+      if (selectedFile) {
+        const formData = new FormData();
+        formData.append("image", selectedFile);
+        console.log(selectedFile);
+        axios
+          .post("http://localhost:8000/upload", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then((response) => {
+            console.log(response.data.url);
+            if (response.data?.url) {
+              axios
+                .patch(
+                  `https://mbb-e-commerce-server.vercel.app/artistUpdate/${user?.email}`,
+                  {
+                    updatedName,
+                    updatedBio,
+                    updatedArtDescription,
+                    updatedBioVideo,
+                    updatedKeyWords,
+                    userPhoto: response?.data?.url,
+                  }
+                )
+                .then((res) => {
+                  console.log(res.data);
+                  if (res.data.modifiedCount > 0) {
+                    refetch();
+                    Swal.fire(
+                      "Congratulation",
+                      "Successfully Updated Your Data",
+                      "success"
+                    );
+                  }
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            }
+          })
+          .catch((error) => {
+            console.error("Error uploading file: ", error);
+          });
+      }
+    };
     const handlePaymentInfoUpdate = (e) => {
       e.preventDefault();
       const form = e.target;
@@ -172,17 +260,17 @@ const ManageArtists = () => {
       </Table>
 
 
-      <Modal size="5xl" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal scrollBehavior="outside" size="5xl" backdrop="opaque" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">Add a New Artist</ModalHeader>
               <ModalBody>
+        <form onSubmit={handleUserUpdate} className="">
               <div className={`border rounded-lg overflow-auto border-gray-300 mb-6`}>
         <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">
-          Account Settings
+          Artist&apos;s personal Info
         </h4>
-        <form onSubmit={handleUserUpdate} className="">
           <div className="p-5 grid grid-cols-12 gap-5 items-center justify-center">
             <div className="col-span-9">
               {/* <h3 className="text-base text-red-600">{error}</h3> */}
@@ -297,13 +385,13 @@ const ManageArtists = () => {
               </Button>
             </div>
           </div>
-        </form>
+        
       </div>
               <div className={`border rounded-lg overflow-auto border-gray-300`}>
         <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">
           Payment information
         </h4>
-        <form onSubmit={handlePaymentInfoUpdate} className="p-5">
+        <div className="p-5">
           <div className="grid grid-cols-2 gap-5">
            
             <div>
@@ -419,8 +507,9 @@ const ManageArtists = () => {
           >
             Save Changes
           </button>
-        </form>
+        </div>
       </div>
+      </form>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
