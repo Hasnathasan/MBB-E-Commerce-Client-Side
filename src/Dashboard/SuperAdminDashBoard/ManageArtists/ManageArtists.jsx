@@ -1,4 +1,5 @@
 import {
+  Avatar,
     Button,
     Chip,
     Dropdown,
@@ -6,6 +7,13 @@ import {
     DropdownMenu,
     DropdownTrigger,
     Input,
+    Modal,
+    ModalBody,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    Select,
+    SelectItem,
     Table,
     TableBody,
     TableCell,
@@ -13,12 +21,60 @@ import {
     TableHeader,
     TableRow,
     User,
+    useDisclosure,
   } from "@nextui-org/react";
 import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
 import useArtists from "../../../Hooks/useArtists";
+import usePrisons from "../../../Hooks/usePrisons";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const ManageArtists = () => {
-    const [artistsData] = useArtists();
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
+  const [prisons, isPrisonsDataLoading] = usePrisons();
+    const [artistsData, isArtistsDataLoading] = useArtists();
+    const handlePaymentInfoUpdate = (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const updatedName = form.name.value;
+      const companyName = form.companyName.value;
+      const country = form.country.value;
+      const states = form.states.value;
+      const updatedAddress = form.address.value;
+      const zipCode = form.zipCode.value;
+      const updatedNum = form.phoneNumber.value;
+      const billingInfo = {
+        updatedName,
+        companyName,
+        country,
+        states,
+        updatedAddress,
+        zipCode,
+        updatedNum,
+      };
+  
+      axios
+        .patch(
+          `https://mbb-e-commerce-server.vercel.app/userBillingInfoUpdate/${user?.email}`,
+          billingInfo
+        )
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.modifiedCount > 0) {
+            Swal.fire(
+              "Congratulation",
+              "Successfully Updated Your Billing Info",
+              "success"
+            );
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    if(isPrisonsDataLoading || isArtistsDataLoading){
+      return <h1>Loading.......</h1>
+    }
     return (
         <div className="overflow-x-auto w-[95%] mx-auto">
       <div className="flex flex-col  gap-4">
@@ -66,7 +122,7 @@ const ManageArtists = () => {
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
-            <Button color="primary" endContent={<FaPlus></FaPlus>}>
+            <Button onPress={onOpen} color="primary" endContent={<FaPlus></FaPlus>}>
               Add New
             </Button>
           </div>
@@ -114,6 +170,149 @@ const ManageArtists = () => {
           ))}
         </TableBody>
       </Table>
+
+
+      <Modal size="5xl" isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+              <ModalBody>
+              <div className={`border rounded-lg overflow-auto border-gray-300`}>
+        <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">
+          Payment information
+        </h4>
+        <form onSubmit={handlePaymentInfoUpdate} className="p-5">
+          <div className="grid grid-cols-2 gap-5">
+           
+            <div>
+              <Select
+                items={prisons}
+                label="Assigned to"
+                placeholder="Select a user"
+                labelPlacement="outside"
+                className="w-full"
+              >
+                {(prison) => (
+                  <SelectItem
+                    key={prison?._id}
+                    variant="bordered"
+                    textValue={prison?.prison_name}
+                  >
+                    <div className="flex gap-2 items-center">
+                      <Avatar
+                        alt={prison?.prison_name}
+                        className="flex-shrink-0"
+                        size="sm"
+                        src={prison?.avatar}
+                      />
+                      <div className="flex flex-col">
+                        <span className="text-small">
+                          {prison?.prison_name}
+                        </span>
+                        <span className="text-tiny text-default-400">
+                          {prison?.email}
+                        </span>
+                      </div>
+                    </div>
+                  </SelectItem>
+                )}
+              </Select>
+            </div>
+            <div>
+            <label htmlFor="address">Street Address</label>
+            <input
+              type="text"
+              name="address"
+              id="address"
+              className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+              placeholder="Street Address"
+              required
+            />
+          </div>
+          </div>
+          
+          <div className="grid grid-cols-3 gap-5">
+            <div>
+              <label htmlFor="country">Country / Region</label>
+              <input
+                type="text"
+                name="country"
+                id="country"
+                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                placeholder="Country"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="states">States</label>
+              <input
+                type="text"
+                name="states"
+                id="states"
+                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                placeholder="States Name"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="zipCode">Zip Code</label>
+              <input
+                type="number"
+                name="zipCode"
+                id="zipCode"
+                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                placeholder="Zip Code"
+                required
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-5">
+            <div>
+              <label htmlFor="email">Email Address</label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                placeholder="Email Address"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="phoneNumber">Phone Number</label>
+              <input
+                type="tel"
+                name="phoneNumber"
+                id="phoneNumber"
+                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                placeholder="Phone Number"
+                required
+              />
+            </div>
+          </div>
+          <button
+            type="submit"
+            className=" text-white bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl text-sm px-7 py-2.5 text-center "
+          >
+            Save Changes
+          </button>
+        </form>
+      </div>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+                <Button color="primary" onPress={onClose}>
+                  Action
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </div>
     );
 };

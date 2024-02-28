@@ -36,6 +36,7 @@ const AddNewProductForAdmin = () => {
     e.preventDefault();
     const form = e.target;
     const product_name = form.product_name.value;
+    const available_quantity = form.available_quantity.value;
     const featured_photo_file = form.featured_photo.files[0];
     const gallery_photos_files = form.gallery_photos.files;
     const multipleImages = [...gallery_photos_files];
@@ -75,6 +76,7 @@ const AddNewProductForAdmin = () => {
                 const gallery_photos = response.data?.uploadResponses;
                 const product = {
                   product_name,
+                  available_quantity,
                   featured_photo,
                   gallery_photos,
                   product_tags,
@@ -100,14 +102,14 @@ const AddNewProductForAdmin = () => {
     return <h1>Loading</h1>;
   }
   return (
-    <div className="w-[95%] mx-auto">
+    <div className="w-[98%] mx-auto">
       <form onSubmit={handleProductAdding} className={``}>
         <div className="border border-gray-300 rounded-lg mb-8">
           <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
             Add a New Product
           </h4>
           <div className="p-5">
-            <div className="grid grid-cols-2 gap-5">
+            <div className="grid grid-cols-3 gap-3">
               <div>
                 <label htmlFor="product_name">Product Name</label>
                 <input
@@ -161,6 +163,18 @@ const AddNewProductForAdmin = () => {
                   )}
                 />
               </div>
+              <div>
+            <label htmlFor="available_quantity">Available quantity</label>
+            <input
+              type="number"
+              name="available_quantity"
+              min={0}
+              id="available_quantity"
+              className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
+              placeholder="Available quantity"
+              required
+            />
+          </div>
             </div>
             <div className="grid grid-cols-3 gap-5">
               <div>
@@ -278,18 +292,7 @@ const AddNewProductForAdmin = () => {
                 required
               />
             </div>
-            {/* <div>
-            <label htmlFor="availableQuantity">Available quantity</label>
-            <input
-              type="number"
-              name="availableQuantity"
-              min={0}
-              id="availableQuantity"
-              className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
-              placeholder="Available quantity"
-              required
-            />
-          </div> */}
+            
             <div>
               <label htmlFor="cost_price">Cost of Product</label>
               <input
