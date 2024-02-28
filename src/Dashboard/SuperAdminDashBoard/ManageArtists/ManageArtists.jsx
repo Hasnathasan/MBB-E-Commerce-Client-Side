@@ -178,6 +178,127 @@ const ManageArtists = () => {
             <>
               <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
               <ModalBody>
+              <div className={`border rounded-lg overflow-auto border-gray-300 mb-6`}>
+        <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">
+          Account Settings
+        </h4>
+        <form onSubmit={handleUserUpdate} className="">
+          <div className="p-5 grid grid-cols-12 gap-5 items-center justify-center">
+            <div className="col-span-9">
+              {/* <h3 className="text-base text-red-600">{error}</h3> */}
+              <label htmlFor="name">Your Name</label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
+                placeholder="Name"
+                required
+              />
+              <label htmlFor="bio">Artist Bio</label>
+              <textarea
+                name="bio"
+                id="bio"
+                className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
+                placeholder="Artist Bio"
+                required
+              />
+              <label htmlFor="art_description">Art Description</label>
+              <textarea
+                name="art_description"
+                id="art_description"
+                className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
+                placeholder="Art Description"
+                required
+              />
+              <div className="grid grid-cols-2">
+                <div>
+                  <label htmlFor="keywords">Key Words</label>
+                  <MultiSelect
+                    values={tags}
+                    delimiters={[188]}
+                    valuesFromPaste={(options, values, pastedText) => {
+                      return pastedText
+                        .split(",")
+                        .filter(
+                          (text) =>
+                            !values.some((item) => item.label === text.trim())
+                        )
+                        .map((text) => ({
+                          label: text.trim(),
+                          value: text.trim(),
+                        }));
+                    }}
+                    restoreOnBackspace={(item) => item.label}
+                    onValuesChange={(tags) => setTags(tags)}
+                    createFromSearch={(options, values, search) => {
+                      const labels = values.map((value) => value.label);
+                      if (
+                        search.trim().length === 0 ||
+                        labels.includes(search.trim())
+                      )
+                        return null;
+                      return { label: search.trim(), value: search.trim() };
+                    }}
+                    renderNoResultsFound={(values, search) => (
+                      <div className="no-results-found">
+                        {(() => {
+                          if (search.trim().length === 0)
+                            return "Type a few characters to create a tag";
+                          else if (
+                            values.some((item) => item.label === search.trim())
+                          )
+                            return "Tag already exists";
+                        })()}
+                      </div>
+                    )}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="bio_video">Your Bio Video Link </label>
+                  <input
+                    type="url"
+                    name="bio_video"
+                    id="bio_video"
+                    className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
+                    placeholder="Your Bio Video"
+                    required
+                  />
+                </div>
+              </div>
+              <Button
+                type="submit"
+                color="success"
+                radius="full"
+                className="text-white mb-2 bg-green-500"
+              >
+                Save Changes
+              </Button>
+            </div>
+            <div className="flex justify-center col-span-2 items-center gap-5 flex-col">
+              <Avatar
+                src={"userData?.userPhoto"}
+                className="w-48 h-48 text-large"
+              />
+              {/* <img src={`data:image/png;base64,${binaryCode}`} alt="Decoded Image" /> */}
+              <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+              />
+              <Button
+                onClick={handleButtonClick}
+                color="success"
+                radius="full"
+                className="text-white mb-2 bg-green-500 w-full"
+              >
+                Choose Image
+              </Button>
+            </div>
+          </div>
+        </form>
+      </div>
               <div className={`border rounded-lg overflow-auto border-gray-300`}>
         <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">
           Payment information
