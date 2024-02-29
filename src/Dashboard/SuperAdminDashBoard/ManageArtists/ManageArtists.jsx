@@ -30,14 +30,16 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useRef, useState } from "react";
 import { MultiSelect } from "react-selectize";
+import useUser from "../../../Hooks/useUser";
 
 const ManageArtists = () => {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [prisons, isPrisonsDataLoading] = usePrisons();
+  const [userData, isUserDataLoading] = useUser();
     const [artistsData, isArtistsDataLoading] = useArtists();
     const [selectedFile, setSelectedFile] = useState(null);
     const fileInputRef = useRef(null);
-  
+  console.log(userData);
     const handleFileChange = (event) => {
       const file = event.target.files[0];
       if (file) {
@@ -54,25 +56,25 @@ const ManageArtists = () => {
     const handleUserUpdate = async (e) => {
       e.preventDefault();
       const form = e.target;
-      const updatedName = form.name.value;
-      const updatedBio = form.bio.value;
-      const updatedArtDescription = form.art_description.value;
-      const updatedBioVideo = form.bio_video.value;
-      const updatedKeyWords = tags?.map((tag) => tag.label);
-      const companyName = form.companyName.value;
+      const user_name = form.name.value;
+      const bio = form.bio.value;
+      const art_description = form.art_description.value;
+      const bio_video_link = form.bio_video.value;
+      const keywords = tags?.map((tag) => tag.label);
+      const company_name = form.companyName.value;
       const country = form.country.value;
       const states = form.states.value;
-      const updatedAddress = form.address.value;
+      const address = form.address.value;
       const zipCode = form.zipCode.value;
-      const updatedNum = form.phoneNumber.value;
-      const billingInfo = {
-        updatedName,
-        companyName,
+      const phone_number = form.phoneNumber.value;
+      let billingInfo = {
+        user_name,
+        company_name,
         country,
         states,
-        updatedAddress,
+        address,
+        phone_number,
         zipCode,
-        updatedNum,
       };
       
       if (selectedFile) {
@@ -88,22 +90,16 @@ const ManageArtists = () => {
           .then((response) => {
             console.log(response.data.url);
             if (response.data?.url) {
+              billingInfo.user_photo = response.data?.url;
+              const newUser = {}
               axios
-                .patch(
-                  `https://mbb-e-commerce-server.vercel.app/artistUpdate/${user?.email}`,
-                  {
-                    updatedName,
-                    updatedBio,
-                    updatedArtDescription,
-                    updatedBioVideo,
-                    updatedKeyWords,
-                    userPhoto: response?.data?.url,
-                  }
+                .post(
+                  `https://mbb-e-commerce-server.vercel.app/user`,
+                  billingInfo
                 )
                 .then((res) => {
                   console.log(res.data);
                   if (res.data.modifiedCount > 0) {
-                    refetch();
                     Swal.fire(
                       "Congratulation",
                       "Successfully Updated Your Data",

@@ -32,6 +32,7 @@ import product8 from "../../../assets/products8.png";
 import product9 from "../../../assets/products9.png";
 import product10 from "../../../assets/products10.png";
 import AddNewProductForAdmin from "../AddNewProductForAdmin/AddNewProductForAdmin";
+import { Toaster } from "react-hot-toast";
 
 const ManageProducts = () => {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -232,6 +233,11 @@ const ManageProducts = () => {
           )}
         </ModalContent>
       </Modal>
+      <Toaster
+
+  position="top-center"
+  reverseOrder={false}
+/>
     </div>
     );
 };

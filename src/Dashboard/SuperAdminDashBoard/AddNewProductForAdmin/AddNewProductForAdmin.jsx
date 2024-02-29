@@ -5,6 +5,7 @@ import "../../../../node_modules/react-selectize/themes/index.css";
 import useArtists from "../../../Hooks/useArtists";
 import usePrisons from "../../../Hooks/usePrisons";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 const AddNewProductForAdmin = () => {
   const [artistData, isArtistsDataLoading] = useArtists();
   const [prisonsData, isPrisonsDataLoading] = usePrisons();
@@ -51,51 +52,111 @@ const AddNewProductForAdmin = () => {
 
     const firstFormData = new FormData();
     firstFormData.append("image", featured_photo_file);
-    axios
-      .post("http://localhost:8000/upload", firstFormData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-        if (response.data.url) {
-          const featured_photo = response.data.url;
-          const secondFormData = new FormData();
-          multipleImages.map((file, index) => {
-            secondFormData.append(`images`, file);
-          });
-          axios
-            .post("http://localhost:8000/uploadMultiple", secondFormData, {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            })
-            .then((response) => {
-              if (response?.data?.uploadResponses) {
-                const gallery_photos = response.data?.uploadResponses;
-                const product = {
-                  product_name,
-                  available_quantity,
-                  featured_photo,
-                  gallery_photos,
-                  product_tags,
-                  product_categories,
-                  description,
-                  price: { regular_price, sale_price, cost_price },
-                  addedBy,
-                  prison_of_artist,
-                };
-                axios
-                  .post("http://localhost:8000/products", product)
-                  .then((res) => console.log(res.data))
-                  .catch((error) => console.log(error.message));
-              }
-            })
-            .catch((error) => console.log(error.message));
-        }
-      })
-      .catch((error) => console.log(error.message));
+    const uploadAndInsertProduct = () => {
+      return axios.post("http://localhost:8000/upload", firstFormData, {
+          headers: {
+              "Content-Type": "multipart/form-data",
+          },
+      }).then((response) => {
+          console.log(response.data);
+          if (response.data.url) {
+              const featured_photo = response.data.url;
+              const secondFormData = new FormData();
+              multipleImages.map((file, index) => {
+                  secondFormData.append(`images`, file);
+              });
+              return axios.post("http://localhost:8000/uploadMultiple", secondFormData, {
+                  headers: {
+                      "Content-Type": "multipart/form-data",
+                  },
+              }).then((response) => {
+                  if (response?.data?.uploadResponses) {
+                      const gallery_photos = response.data?.uploadResponses;
+                      const product = {
+                          product_name,
+                          available_quantity,
+                          featured_photo,
+                          gallery_photos,
+                          product_tags,
+                          product_categories,
+                          description,
+                          price: { regular_price, sale_price, cost_price },
+                          addedBy,
+                          prison_of_artist,
+                      };
+                      return axios.post("http://localhost:8000/products", product).then((res) => {
+                          console.log(res.data);
+                          return res.data;
+                      }).catch((error) => {
+                          console.log(error.message);
+                          throw error;
+                      });
+                  } else {
+                      return Promise.reject(new Error("No upload responses found"));
+                  }
+              }).catch((error) => {
+                  console.log(error.message);
+                  throw error;
+              });
+          }
+      }).catch((error) => {
+          console.log(error.message);
+          throw error;
+      });
+  };
+  
+  const myPromise = uploadAndInsertProduct();
+  
+  toast.promise(myPromise, {
+      loading: 'Uploading and inserting product...',
+      success: 'Product uploaded and inserted successfully',
+      error: 'Error occurred while uploading and inserting product',
+  });
+    // axios
+    //   .post("http://localhost:8000/upload", firstFormData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   })
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     if (response.data.url) {
+    //       const featured_photo = response.data.url;
+    //       const secondFormData = new FormData();
+    //       multipleImages.map((file, index) => {
+    //         secondFormData.append(`images`, file);
+    //       });
+    //       axios
+    //         .post("http://localhost:8000/uploadMultiple", secondFormData, {
+    //           headers: {
+    //             "Content-Type": "multipart/form-data",
+    //           },
+    //         })
+    //         .then((response) => {
+    //           if (response?.data?.uploadResponses) {
+    //             const gallery_photos = response.data?.uploadResponses;
+    //             const product = {
+    //               product_name,
+    //               available_quantity,
+    //               featured_photo,
+    //               gallery_photos,
+    //               product_tags,
+    //               product_categories,
+    //               description,
+    //               price: { regular_price, sale_price, cost_price },
+    //               addedBy,
+    //               prison_of_artist,
+    //             };
+    //             axios
+    //               .post("http://localhost:8000/products", product)
+    //               .then((res) => console.log(res.data))
+    //               .catch((error) => console.log(error.message));
+    //           }
+    //         })
+    //         .catch((error) => console.log(error.message));
+    //     }
+    //   })
+    //   .catch((error) => console.log(error.message));
   };
 
   if (isArtistsDataLoading || isPrisonsDataLoading) {
@@ -458,6 +519,7 @@ const AddNewProductForAdmin = () => {
           Add Product
         </Button>
       </form>
+      
     </div>
   );
 };
