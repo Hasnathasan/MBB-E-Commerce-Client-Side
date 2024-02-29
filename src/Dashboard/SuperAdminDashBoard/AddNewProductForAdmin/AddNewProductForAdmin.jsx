@@ -89,6 +89,7 @@ const AddNewProductForAdmin = () => {
                           return res.data;
                       }).catch((error) => {
                           console.log(error.message);
+                          toast.error(`${error?.message}`)
                           throw error;
                       });
                   } else {
@@ -96,11 +97,13 @@ const AddNewProductForAdmin = () => {
                   }
               }).catch((error) => {
                   console.log(error.message);
+                  toast.error(`${error?.message}`)
                   throw error;
               });
           }
       }).catch((error) => {
           console.log(error.message);
+          () => toast.error(`${error?.message}`)
           throw error;
       });
   };
@@ -110,7 +113,7 @@ const AddNewProductForAdmin = () => {
   toast.promise(myPromise, {
       loading: 'Uploading and inserting product...',
       success: 'Product uploaded and inserted successfully',
-      error: 'Error occurred while uploading and inserting product',
+      error: 'Hii',
   });
     // axios
     //   .post("http://localhost:8000/upload", firstFormData, {
