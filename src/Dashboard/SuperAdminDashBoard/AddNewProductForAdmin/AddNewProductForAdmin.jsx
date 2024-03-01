@@ -5,7 +5,7 @@ import "../../../../node_modules/react-selectize/themes/index.css";
 import useArtists from "../../../Hooks/useArtists";
 import usePrisons from "../../../Hooks/usePrisons";
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 const AddNewProductForAdmin = () => {
   const [artistData, isArtistsDataLoading] = useArtists();
   const [prisonsData, isPrisonsDataLoading] = usePrisons();
@@ -24,13 +24,6 @@ const AddNewProductForAdmin = () => {
   const [artist, setArtist] = useState(null);
   const [prison, setPrison] = useState(null);
 
-  // const handleAddNewProduct = (e) => {
-  //   e.preventDefault();
-  //   const form = e.target;
-  //   const product_name = form.productName.value;
-  //   const product_price = form.productPrice.value;
-  //   const product_quantity = form.productQuantity.value;
-  // };
   console.log(tags, categories, regularPrice, prison, artist);
 
   const handleProductAdding = (e) => {
@@ -111,60 +104,14 @@ const AddNewProductForAdmin = () => {
   const myPromise = uploadAndInsertProduct();
   
   toast.promise(myPromise, {
-      loading: 'Uploading and inserting product...',
-      success: 'Product uploaded and inserted successfully',
-      error: 'Hii',
+      loading: 'Please wait! while uploading product...',
+      success: 'Product inserted successfully',
+      error: 'An Error Occoured while uploading product',
   });
-    // axios
-    //   .post("http://localhost:8000/upload", firstFormData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     if (response.data.url) {
-    //       const featured_photo = response.data.url;
-    //       const secondFormData = new FormData();
-    //       multipleImages.map((file, index) => {
-    //         secondFormData.append(`images`, file);
-    //       });
-    //       axios
-    //         .post("http://localhost:8000/uploadMultiple", secondFormData, {
-    //           headers: {
-    //             "Content-Type": "multipart/form-data",
-    //           },
-    //         })
-    //         .then((response) => {
-    //           if (response?.data?.uploadResponses) {
-    //             const gallery_photos = response.data?.uploadResponses;
-    //             const product = {
-    //               product_name,
-    //               available_quantity,
-    //               featured_photo,
-    //               gallery_photos,
-    //               product_tags,
-    //               product_categories,
-    //               description,
-    //               price: { regular_price, sale_price, cost_price },
-    //               addedBy,
-    //               prison_of_artist,
-    //             };
-    //             axios
-    //               .post("http://localhost:8000/products", product)
-    //               .then((res) => console.log(res.data))
-    //               .catch((error) => console.log(error.message));
-    //           }
-    //         })
-    //         .catch((error) => console.log(error.message));
-    //     }
-    //   })
-    //   .catch((error) => console.log(error.message));
+   
   };
 
-  if (isArtistsDataLoading || isPrisonsDataLoading) {
-    return <h1>Loading</h1>;
-  }
+  
   return (
     <div className="w-[98%] mx-auto">
       <form onSubmit={handleProductAdding} className={``}>
@@ -442,7 +389,7 @@ const AddNewProductForAdmin = () => {
           </div>
         </div>
 
-        <div className="border border-gray-300 mb-8 rounded-lg">
+{ !(isArtistsDataLoading || isPrisonsDataLoading) && <div className="border border-gray-300 mb-8 rounded-lg">
           <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
             Seller Information
           </h4>
@@ -510,7 +457,8 @@ const AddNewProductForAdmin = () => {
               )}
             </Select>
           </div>
-        </div>
+        </div>}
+        
 
         <Button
           type="submit"
