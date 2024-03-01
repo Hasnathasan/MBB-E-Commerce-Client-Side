@@ -73,12 +73,15 @@ const AddNewProductForAdmin = () => {
                           product_tags,
                           product_categories,
                           description,
+                          rating: 0,
+                          reviews: [],
                           price: { regular_price, sale_price, cost_price },
                           addedBy,
                           prison_of_artist,
                       };
                       return axios.post("http://localhost:8000/products", product).then((res) => {
                           console.log(res.data);
+                          form.reset()
                           return res.data;
                       }).catch((error) => {
                           console.log(error.message);

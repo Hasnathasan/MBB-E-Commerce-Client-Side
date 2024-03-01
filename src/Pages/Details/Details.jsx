@@ -16,6 +16,9 @@ import { FiMinus, FiPlus } from "react-icons/fi";
 import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import PopularProductsCard from "../Home/PopularProducts/PopularProductsCard";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function ThumbnailPlugin(mainRef) {
   return (slider) => {
@@ -51,6 +54,8 @@ function ThumbnailPlugin(mainRef) {
 }
 
 const Details = () => {
+  const [product, setProduct] = useState();
+  const [relatedProducts, setRelatedProducts] = useState();
   const [sliderRef, instanceRef] = useKeenSlider({
     initial: 0,
   });
@@ -64,70 +69,56 @@ const Details = () => {
     },
     [ThumbnailPlugin(instanceRef)]
   );
+  const {id} = useParams();
+  console.log(id);
+  useEffect( () => {
+    axios.get(`https://mbb-e-commerce-server.vercel.app/singleProduct/${id}`)
+    .then(res => {
+      console.log(res.data);
+      setProduct(res.data)
+      if(res.data){
+        axios.get(`https://mbb-e-commerce-server.vercel.app/relatedProducts/${res.data?.product_categories}`)
+        .then(res => {
+          console.log(res.data);
+          setRelatedProducts(res.data)
+        })
+        .catch(error => console.log(error.message))
+      }
+    })
+    .catch(error => console.log(error.message))
+  },[id])
+  if(!product){
+    return
+  }
 
-  const products = [
-    {
-      name: "The Starry Night",
-      price: 50.0,
-      rating: 4.2,
-      img: product1,
-    },
-    {
-      name: "Girl with a Pearl Earring",
-      price: 42.0,
-      rating: 4.9,
-      img: product2,
-    },
-    {
-      name: "Las Meninas",
-      price: 120.0,
-      rating: 2.5,
-      img: product3,
-    },
-    {
-      name: "The Garden of Earthly Delights",
-      price: 70.0,
-      rating: 3.5,
-      img: product4,
-    },
-    {
-      name: "The Kiss",
-      price: 20.0,
-      rating: 4.2,
-      img: product5,
-    },
-    {
-      name: "Water lilies",
-      price: 20.0,
-      rating: 4.2,
-      img: product6,
-    },
-    {
-      name: "Las Meninas",
-      price: 70.0,
-      rating: 3.5,
-      img: product7,
-    },
-    {
-      name: "The Arnolfini Portrait",
-      price: 120.0,
-      rating: 2.5,
-      img: product8,
-    },
-  ];
+    const {
+      _id,
+      product_name,
+      available_quantity,
+      featured_photo,
+      gallery_photos,
+      product_tags,
+      product_categories,
+      description,
+      rating,
+      reviews,
+      price,
+      addedBy,
+      prison_of_artist,
+  } = product;
   return (
     <div className="mx-8 py-14">
       <div className="grid grid-cols-2 gap-10">
         <div className="col-span-1 flex w-full flex-col items-center">
           <div ref={sliderRef} className="keen-slider w-[380px] mb-2">
-            {products?.map((product, index) => (
+            {[featured_photo, ...gallery_photos]?.map((img, index) => (
               <div
                 key={index}
                 className={`keen-slider__slide w-full h-[360px]`}
               >
                 <img
                   className=" w-[90%] mx-auto h-full"
-                  src={product?.img}
+                  src={img}
                   alt=""
                 />
               </div>
@@ -135,10 +126,10 @@ const Details = () => {
           </div>
 
           <div ref={thumbnailRef} className="keen-slider !w-[90%] thumbnail">
-            {products?.map((product, index) => (
+            {[featured_photo, ...gallery_photos]?.map((img, index) => (
               <div key={index} className={`keen-slider__slide w-20 h-20`}>
                 <img
-                  src={product?.img}
+                  src={img}
                   className="cursor-pointer w-full h-full"
                   alt=""
                 />
@@ -148,7 +139,7 @@ const Details = () => {
         </div>
         <div className="space-y-4">
           <div className="flex items-start gap-2">
-            <h2 className="text-3xl font-semibold">The Arnolfini Portrait</h2>
+            <h2 className="text-3xl font-semibold">{product_name}</h2>
             <Chip color="success" variant="flat" radius="sm">
               In Stock
             </Chip>
@@ -159,10 +150,10 @@ const Details = () => {
               emptySymbol={<FaRegStar></FaRegStar>}
               fullSymbol={<FaStar></FaStar>}
               fractions={2}
-              initialRating={4}
+              initialRating={rating}
               readonly
             />
-            <h5 className="text-sm text-gray-700">4 review</h5>
+            <h5 className="text-sm text-gray-700">{reviews.length} review</h5>
             <span className="text-sm text-gray-500">|</span>
             <h5 className="text-sm text-gray-700">
               <span className="font-semibold text-gray-800">SKU:</span> 541254
@@ -170,19 +161,16 @@ const Details = () => {
           </div>
           <div className="flex items-center gap-3">
             <h5 className="text-lg text-gray-400 font-medium line-through">
-              $48.00
+              ${price?.regular_price}
             </h5>
-            <h5 className="text-xl mr-2 font-medium text-green-800">$35.25</h5>
+            <h5 className="text-xl mr-2 font-medium text-green-800">${price?.sale_price}</h5>
             <Chip color="danger" size="sm" variant="flat">
               65% off
             </Chip>
           </div>
           <div className="py-3 border-t border-b border-gray-300">
             <p className="text-sm text-gray-700">
-              Class aptent taciti sociosqu ad litora torquent per conubia
-              nostra, per inceptos himenaeos. Nulla nibh diam, blandit vel
-              consequat nec, ultrices et ipsum. Nulla varius magna a consequat
-              pulvinar.{" "}
+              {description}
             </p>
           </div>
           <div className="py-5 gap-3 border-b flex items-center border-gray-300">
@@ -220,23 +208,17 @@ const Details = () => {
           <div>
             <h5 className="text-sm mb-2 text-gray-700">
               <span className="font-medium text-gray-900">Category:</span>{" "}
-              Picture
+              {
+              product_categories?.map(category => <span className="font-medium text-gray-800 capitalize" key={category}>{category}</span>)
+              }
             </h5>
-            <h5 className="text-sm text-gray-700">
+            <h5 className="text-sm mb-2 text-gray-700">
               <span className="font-medium text-gray-900">Tags:</span>{" "}
-              <span className="hover:underline cursor-pointer hover:text-gray-900">
-                Picture
-              </span>{" "}
-              <span className="hover:underline cursor-pointer hover:text-gray-900">
-                Nothing
-              </span>{" "}
-              <span className="hover:underline cursor-pointer hover:text-gray-900">
-                Arts
-              </span>{" "}
-              <span className="hover:underline cursor-pointer hover:text-gray-900">
-                New Designs
-              </span>{" "}
+              {
+              product_tags?.map(category => <span  className="hover:underline mx-1 cursor-pointer hover:text-gray-900" key={category}>{category}</span>)
+              }
             </h5>
+            
           </div>
         </div>
       </div>
@@ -263,30 +245,7 @@ const Details = () => {
               </div>
             }
           >
-            <p className="mb-3">
-              Sed commodo aliquam dui ac porta. Fusce ipsum felis, imperdiet at
-              posuere ac, viverra at mauris. Maecenas tincidunt ligula a sem
-              vestibulum pharetra. Maecenas auctor tortor lacus, nec laoreet
-              nisi porttitor vel. Etiam tincidunt metus vel dui interdum
-              sollicitudin. Mauris sem ante, vestibulum nec orci vitae, aliquam
-              mollis lacus. Sed et condimentum arcu, id molestie tellus. Nulla
-              facilisi. Nam scelerisque vitae justo a convallis. Morbi urna
-              ipsum, placerat quis commodo quis, egestas elementum leo. Donec
-              convallis mollis enim. Aliquam id mi quam. Phasellus nec fringilla
-              elit. Nulla mauris tellus, feugiat quis pharetra sed, gravida ac
-              dui. Sed iaculis, metus faucibus elementum tincidunt, turpis mi
-              viverra velit, pellentesque tristique neque mi eget nulla. Proin
-              luctus elementum neque et pharetra.
-            </p>
-            <p>
-              Sed commodo aliquam dui ac porta. Fusce ipsum felis, imperdiet at
-              posuere ac, viverra at mauris. Maecenas tincidunt ligula a sem
-              vestibulum pharetra. Maecenas auctor tortor lacus, nec laoreet
-              nisi porttitor vel. Etiam tincidunt metus vel dui interdum
-              sollicitudin. Mauris sem ante, vestibulum nec orci vitae, aliquam
-              mollis lacus. Sed et condimentum arcu, id molestie tellus. Nulla
-              facilisi. Nam scelerisque vitae justo a convallis.
-            </p>
+            <p>{description}</p>
           </Tab>
           <Tab
             key="music"
@@ -347,7 +306,7 @@ const Details = () => {
         <h2 className="text-3xl font-semibold mb-5 text-center">
           Related Products
         </h2>
-        <div className="grid grid-cols-2 px-14 sm:grid-cols-2 gap-6 justify-center items-center md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+        {/* <div className="grid grid-cols-2 px-14 sm:grid-cols-2 gap-6 justify-center items-center md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {products?.map((product) => (
             <PopularProductsCard
               key={product?.name}
@@ -355,7 +314,7 @@ const Details = () => {
               isRounded={true}
             ></PopularProductsCard>
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -7,23 +7,37 @@ import { Link } from "react-router-dom";
 
 const PopularProductsCard = ({ product, isRounded }) => {
   const [hovered, setHovered] = useState(false);
-  const { name, price, rating, img } = product;
+  const {
+    _id,
+    product_name,
+    available_quantity,
+    featured_photo,
+    gallery_photos,
+    product_tags,
+    product_categories,
+    description,
+    rating,
+    reviews,
+    price,
+    addedBy,
+    prison_of_artist,
+} = product;
   return (
     <Link
-    to={"/details"}
+    to={`details/${_id}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={`px-3 relative transition-all w-full ${
         isRounded ? "rounded-lg" : ""
       } !duration-500 hover:shadow-small hover:shadow-green-600 hover:border-green-600 flex flex-col justify-between py-4 gap-3 border border-gray-200`}
     >
-      <img className="w-[90%] h-[200px] mx-auto" src={img} alt="" />
+      <img className="w-[90%] h-[200px] mx-auto" src={featured_photo} alt="" />
       <div className="flex justify-between items-center mt-3">
         <div>
           <h3 className={`text-sm ${hovered ? "text-green-600" : ""}`}>
-            {name}
+            {product_name}
           </h3>
-          <h3 className="font-medium">${price}</h3>
+          <h3 className="font-medium">${price?.sale_price || price?.regular_price}</h3>
           <Rating
             className="text-orange-400"
             emptySymbol={
