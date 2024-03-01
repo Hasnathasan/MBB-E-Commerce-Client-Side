@@ -389,6 +389,8 @@ const AddNewProductForAdmin = () => {
           </div>
         </div>
 
+
+
 { !(isArtistsDataLoading || isPrisonsDataLoading) && <div className="border border-gray-300 mb-8 rounded-lg">
           <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
             Seller Information
