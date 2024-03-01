@@ -22,103 +22,108 @@ import { useState } from "react";
 import Rating from "react-rating";
 import { IoStarSharp } from "react-icons/io5";
 import { LuSettings2 } from "react-icons/lu";
+import useProducts from "../../../Hooks/useProducts";
 const Products = () => {
   const [openFilter, setOpenFilter] = useState(false);
   const openFilterDrawer = () => setOpenFilter(true);
   const closeFilterDrawer = () => setOpenFilter(false);
-  const products = [
-    {
-      name: "The Starry Night",
-      price: 50.0,
-      rating: 4.2,
-      img: product1,
-    },
-    {
-      name: "Girl with a Pearl Earring",
-      price: 42.0,
-      rating: 4.9,
-      img: product2,
-    },
-    {
-      name: "Las Meninas",
-      price: 120.0,
-      rating: 2.5,
-      img: product3,
-    },
-    {
-      name: "The Garden of Earthly Delights",
-      price: 70.0,
-      rating: 3.5,
-      img: product4,
-    },
-    {
-      name: "The Kiss",
-      price: 20.0,
-      rating: 4.2,
-      img: product5,
-    },
-    {
-      name: "Water lilies",
-      price: 20.0,
-      rating: 4.2,
-      img: product6,
-    },
-    {
-      name: "Las Meninas",
-      price: 70.0,
-      rating: 3.5,
-      img: product7,
-    },
-    {
-      name: "The Arnolfini Portrait",
-      price: 120.0,
-      rating: 2.5,
-      img: product8,
-    },
-    {
-      name: "The Scream",
-      price: 42.0,
-      rating: 4.9,
-      img: product9,
-    },
-    {
-      name: "Guernica",
-      price: 50.0,
-      rating: 4.2,
-      img: product10,
-    },
-    {
-      name: "Las Meninas",
-      price: 120.0,
-      rating: 2.5,
-      img: product3,
-    },
-    {
-      name: "Green Apple",
-      price: 42.0,
-      rating: 4.9,
-      img: product7,
-    },
-    {
-      name: "Water lilies",
-      price: 20.0,
-      rating: 4.2,
-      img: product6,
-    },
-    {
-      name: "The Garden of Earthly Delights",
-      price: 70.0,
-      rating: 3.5,
-      img: product4,
-    },
-    {
-      name: "Girl with a Pearl Earring",
-      price: 42.0,
-      rating: 4.9,
-      img: product2,
-    },
-  ];
+  const [products, isProductsLoading] = useProducts();
+  // const products = [
+  //   {
+  //     name: "The Starry Night",
+  //     price: 50.0,
+  //     rating: 4.2,
+  //     img: product1,
+  //   },
+  //   {
+  //     name: "Girl with a Pearl Earring",
+  //     price: 42.0,
+  //     rating: 4.9,
+  //     img: product2,
+  //   },
+  //   {
+  //     name: "Las Meninas",
+  //     price: 120.0,
+  //     rating: 2.5,
+  //     img: product3,
+  //   },
+  //   {
+  //     name: "The Garden of Earthly Delights",
+  //     price: 70.0,
+  //     rating: 3.5,
+  //     img: product4,
+  //   },
+  //   {
+  //     name: "The Kiss",
+  //     price: 20.0,
+  //     rating: 4.2,
+  //     img: product5,
+  //   },
+  //   {
+  //     name: "Water lilies",
+  //     price: 20.0,
+  //     rating: 4.2,
+  //     img: product6,
+  //   },
+  //   {
+  //     name: "Las Meninas",
+  //     price: 70.0,
+  //     rating: 3.5,
+  //     img: product7,
+  //   },
+  //   {
+  //     name: "The Arnolfini Portrait",
+  //     price: 120.0,
+  //     rating: 2.5,
+  //     img: product8,
+  //   },
+  //   {
+  //     name: "The Scream",
+  //     price: 42.0,
+  //     rating: 4.9,
+  //     img: product9,
+  //   },
+  //   {
+  //     name: "Guernica",
+  //     price: 50.0,
+  //     rating: 4.2,
+  //     img: product10,
+  //   },
+  //   {
+  //     name: "Las Meninas",
+  //     price: 120.0,
+  //     rating: 2.5,
+  //     img: product3,
+  //   },
+  //   {
+  //     name: "Green Apple",
+  //     price: 42.0,
+  //     rating: 4.9,
+  //     img: product7,
+  //   },
+  //   {
+  //     name: "Water lilies",
+  //     price: 20.0,
+  //     rating: 4.2,
+  //     img: product6,
+  //   },
+  //   {
+  //     name: "The Garden of Earthly Delights",
+  //     price: 70.0,
+  //     rating: 3.5,
+  //     img: product4,
+  //   },
+  //   {
+  //     name: "Girl with a Pearl Earring",
+  //     price: 42.0,
+  //     rating: 4.9,
+  //     img: product2,
+  //   },
+  // ];
   const [value, setValue] = useState([100, 300]);
+  if(isProductsLoading){
+    return
+  }
   return (
     <>
       <div className="grid grid-cols-12 mx-2 lg:mx-8 mt-8 mb-24">

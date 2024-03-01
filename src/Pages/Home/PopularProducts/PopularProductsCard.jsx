@@ -24,7 +24,7 @@ const PopularProductsCard = ({ product, isRounded }) => {
 } = product;
   return (
     <Link
-    to={`details/${_id}`}
+    to={`/details/${_id}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={`px-3 relative transition-all w-full ${

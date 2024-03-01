@@ -108,7 +108,7 @@ console.log(relatedProducts);
   } = product;
   return (
     <div className="mx-8 py-14">
-      <div className="grid grid-cols-2 gap-10">
+      <div className="grid grid-cols-2 gap-2">
         <div className="col-span-1 flex w-full flex-col items-center">
           <div ref={sliderRef} className="keen-slider w-[380px] mb-2">
             {[featured_photo, ...gallery_photos]?.map((img, index) => (
@@ -306,15 +306,15 @@ console.log(relatedProducts);
         <h2 className="text-3xl font-semibold mb-5 text-center">
           Related Products
         </h2>
-        {/* <div className="grid grid-cols-2 px-14 sm:grid-cols-2 gap-6 justify-center items-center md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-          {products?.map((product) => (
+        <div className="grid grid-cols-2 px-14 sm:grid-cols-2 gap-6 justify-center items-center md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          {relatedProducts?.map((product) => (
             <PopularProductsCard
               key={product?.name}
               product={product}
               isRounded={true}
             ></PopularProductsCard>
           ))}
-        </div> */}
+        </div>
       </div>
     </div>
   );
