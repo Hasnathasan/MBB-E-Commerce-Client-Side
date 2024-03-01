@@ -74,10 +74,10 @@ const Details = () => {
   useEffect( () => {
     axios.get(`https://mbb-e-commerce-server.vercel.app/singleProduct/${id}`)
     .then(res => {
-      console.log(res.data);
+      console.log(res.data.product_categories);
       setProduct(res.data)
       if(res.data){
-        axios.get(`https://mbb-e-commerce-server.vercel.app/relatedProducts/${res.data?.product_categories}`)
+        axios.post(`http://localhost:8000/relatedProducts`, res.data.product_categories)
         .then(res => {
           console.log(res.data);
           setRelatedProducts(res.data)
@@ -87,10 +87,10 @@ const Details = () => {
     })
     .catch(error => console.log(error.message))
   },[id])
-  if(!product){
+  if(!product || !relatedProducts){
     return
   }
-
+console.log(relatedProducts);
     const {
       _id,
       product_name,
