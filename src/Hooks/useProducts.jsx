@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "./useAxiosSecure";
 
 
-const useProducts = () => {
+const useProducts = ({categoryFilter}) => {
     const [axiosSecure] = useAxiosSecure();
     const {
       data: products,
@@ -11,7 +11,7 @@ const useProducts = () => {
     } = useQuery({
       queryKey: ["products"],
       queryFn: async () => {
-        const res = await axiosSecure.get("/products");
+        const res = await axiosSecure.get(`/products?${categoryFilter ? `category=${categoryFilter}` : ""}`);
         return res.data;
       },
     });

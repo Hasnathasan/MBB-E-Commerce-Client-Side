@@ -18,6 +18,7 @@ const AuthProvider = ({ children }) => {
   const googleProvider = new GoogleAuthProvider();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [categoryFilter, setCategoryFilter] = useState(null)
 
 
 console.log(user);
@@ -45,6 +46,8 @@ console.log(user);
     signUpWithEmail,
     googleSignIn,
     logOut,
+    categoryFilter,
+    setCategoryFilter
   };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (loggedUser) => {

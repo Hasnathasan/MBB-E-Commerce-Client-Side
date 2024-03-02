@@ -8,16 +8,19 @@ import {
 } from "@nextui-org/react";
 import { Drawer, Option, Select, Typography } from "@material-tailwind/react";
 import PopularProductsCard from "../../Home/PopularProducts/PopularProductsCard";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Rating from "react-rating";
 import { IoStarSharp } from "react-icons/io5";
 import { LuSettings2 } from "react-icons/lu";
 import useProducts from "../../../Hooks/useProducts";
+import { AuthContext } from "../../../Providers/AuthProvider";
 const Products = () => {
+  const {categoryFilter, setCategoryFilter} = useContext(AuthContext);
   const [openFilter, setOpenFilter] = useState(false);
   const openFilterDrawer = () => setOpenFilter(true);
   const closeFilterDrawer = () => setOpenFilter(false);
-  const [products, isProductsLoading] = useProducts();
+
+  const [products, isProductsLoading] = useProducts({categoryFilter});
   const [value, setValue] = useState([100, 300]);
   if(isProductsLoading){
     return
