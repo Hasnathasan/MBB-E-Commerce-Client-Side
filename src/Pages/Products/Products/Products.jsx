@@ -7,16 +7,6 @@ import {
   Slider,
 } from "@nextui-org/react";
 import { Drawer, Option, Select, Typography } from "@material-tailwind/react";
-import product1 from "../../../assets/products1.png";
-import product2 from "../../../assets/products2.png";
-import product3 from "../../../assets/products3.png";
-import product4 from "../../../assets/products4.png";
-import product5 from "../../../assets/products5.png";
-import product6 from "../../../assets/products6.png";
-import product7 from "../../../assets/products7.jpg";
-import product8 from "../../../assets/products8.png";
-import product9 from "../../../assets/products9.png";
-import product10 from "../../../assets/products10.png";
 import PopularProductsCard from "../../Home/PopularProducts/PopularProductsCard";
 import { useState } from "react";
 import Rating from "react-rating";
@@ -28,102 +18,12 @@ const Products = () => {
   const openFilterDrawer = () => setOpenFilter(true);
   const closeFilterDrawer = () => setOpenFilter(false);
   const [products, isProductsLoading] = useProducts();
-  // const products = [
-  //   {
-  //     name: "The Starry Night",
-  //     price: 50.0,
-  //     rating: 4.2,
-  //     img: product1,
-  //   },
-  //   {
-  //     name: "Girl with a Pearl Earring",
-  //     price: 42.0,
-  //     rating: 4.9,
-  //     img: product2,
-  //   },
-  //   {
-  //     name: "Las Meninas",
-  //     price: 120.0,
-  //     rating: 2.5,
-  //     img: product3,
-  //   },
-  //   {
-  //     name: "The Garden of Earthly Delights",
-  //     price: 70.0,
-  //     rating: 3.5,
-  //     img: product4,
-  //   },
-  //   {
-  //     name: "The Kiss",
-  //     price: 20.0,
-  //     rating: 4.2,
-  //     img: product5,
-  //   },
-  //   {
-  //     name: "Water lilies",
-  //     price: 20.0,
-  //     rating: 4.2,
-  //     img: product6,
-  //   },
-  //   {
-  //     name: "Las Meninas",
-  //     price: 70.0,
-  //     rating: 3.5,
-  //     img: product7,
-  //   },
-  //   {
-  //     name: "The Arnolfini Portrait",
-  //     price: 120.0,
-  //     rating: 2.5,
-  //     img: product8,
-  //   },
-  //   {
-  //     name: "The Scream",
-  //     price: 42.0,
-  //     rating: 4.9,
-  //     img: product9,
-  //   },
-  //   {
-  //     name: "Guernica",
-  //     price: 50.0,
-  //     rating: 4.2,
-  //     img: product10,
-  //   },
-  //   {
-  //     name: "Las Meninas",
-  //     price: 120.0,
-  //     rating: 2.5,
-  //     img: product3,
-  //   },
-  //   {
-  //     name: "Green Apple",
-  //     price: 42.0,
-  //     rating: 4.9,
-  //     img: product7,
-  //   },
-  //   {
-  //     name: "Water lilies",
-  //     price: 20.0,
-  //     rating: 4.2,
-  //     img: product6,
-  //   },
-  //   {
-  //     name: "The Garden of Earthly Delights",
-  //     price: 70.0,
-  //     rating: 3.5,
-  //     img: product4,
-  //   },
-  //   {
-  //     name: "Girl with a Pearl Earring",
-  //     price: 42.0,
-  //     rating: 4.9,
-  //     img: product2,
-  //   },
-  // ];
   const [value, setValue] = useState([100, 300]);
   if(isProductsLoading){
     return
   }
+  const categories = [...new Set(products?.map(product => product.product_categories).flat().map(item => item.toLowerCase()))];
+  console.log(categories);
   return (
     <>
       <div className="grid grid-cols-12 mx-2 lg:mx-8 mt-8 mb-24">
@@ -152,18 +52,12 @@ const Products = () => {
                 color="success"
                 className="!mb-5"
               >
-                <Radio className="mb-[1px]" value="priceHighToLow">
-                  <Typography variant="small">Price High to Low</Typography>
-                </Radio>
-                <Radio className="mb-[1px]" value="priceLowToHigh">
-                  <Typography variant="small">Price Low to High</Typography>
-                </Radio>
-                <Radio className="mb-[1px]" value="ratingHighToLow">
-                  <Typography variant="small">Rating High to Low</Typography>
-                </Radio>
-                <Radio value="ratingLowToHigh">
-                  <Typography variant="small">Rating Low to High</Typography>
-                </Radio>
+                {
+                  categories?.map(category => <Radio key={category} value={category}>
+                  <Typography className="capitalize" variant="small">{category}</Typography>
+                </Radio>)
+                }
+                
               </RadioGroup>
             </AccordionItem>
             <AccordionItem key="2" aria-label="Accordion 2" title="Price">
