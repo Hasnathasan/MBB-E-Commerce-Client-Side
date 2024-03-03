@@ -1,10 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "./useAxiosSecure";
 import axios from "axios";
 
 
 const useProducts = ({categoryFilter, priceSlider, minRating}) => {
-    const [axiosSecure] = useAxiosSecure();
     const {
       data: products,
       isLoading: isProductsLoading,
