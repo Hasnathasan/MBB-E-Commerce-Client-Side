@@ -19,6 +19,8 @@ import PopularProductsCard from "../Home/PopularProducts/PopularProductsCard";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import useUser from "../../Hooks/useUser";
+import toast from "react-hot-toast";
 
 function ThumbnailPlugin(mainRef) {
   return (slider) => {
@@ -54,8 +56,10 @@ function ThumbnailPlugin(mainRef) {
 }
 
 const Details = () => {
+  const [userData, isUserDataLoading] = useUser();
   const [product, setProduct] = useState();
   const [relatedProducts, setRelatedProducts] = useState();
+  const [quantity, setQuantity] = useState(1);
   const [sliderRef, instanceRef] = useKeenSlider({
     initial: 0,
   });
@@ -72,6 +76,7 @@ const Details = () => {
   const {id} = useParams();
   console.log(id);
   useEffect( () => {
+    setQuantity(1)
     axios.get(`https://mbb-e-commerce-server.vercel.app/singleProduct/${id}`)
     .then(res => {
       console.log(res.data.product_categories);
@@ -87,7 +92,7 @@ const Details = () => {
     })
     .catch(error => console.log(error.message))
   },[id])
-  if(!product || !relatedProducts){
+  if(!product || !relatedProducts || isUserDataLoading){
     return
   }
 console.log(relatedProducts);
@@ -106,6 +111,18 @@ console.log(relatedProducts);
       addedBy,
       prison_of_artist,
   } = product;
+
+
+  const handleAddToCart = () => {
+    const cartProduct = {addedBy: userData?.email, quantity: quantity, product_id: _id, product_name, price, featured_photo, product_available_quantity: available_quantity};
+    axios.post(`http://localhost:8000/cart`, cartProduct)
+    .then(res => {
+      if(res.data.insertedId){
+        () => toast.success("Product added to cart")
+      }
+    })
+    .catch(error => console.log(error.message))
+  }
   return (
     <div className="mx-8 py-14">
       <div className="grid grid-cols-2 gap-2">
@@ -176,24 +193,29 @@ console.log(relatedProducts);
           <div className="py-5 gap-3 border-b flex items-center border-gray-300">
             <div className="flex border p-2 w-min border-gray-300 rounded-full justify-center items-center gap-3">
               <div>
-                <Button size="sm" radius="full" variant="flat" isIconOnly>
+                <Button onClick={() => setQuantity(quantity === 1 ? quantity : quantity - 1)} size="sm" radius="full" variant="flat" isIconOnly>
                   <FiMinus></FiMinus>
                 </Button>
               </div>
-              <div className="text-base">5</div>
+              <div className="text-base">{quantity}</div>
               <div>
-                <Button size="sm" radius="full" variant="flat" isIconOnly>
+                <Button onClick={() => setQuantity(quantity == available_quantity ? quantity : quantity + 1)} size="sm" radius="full" variant="flat" isIconOnly>
                   <FiPlus></FiPlus>
                 </Button>
               </div>
             </div>
-            <button
-              type="submit"
-              className=" text-white flex-1 bg-[#00B207] flex items-center justify-center gap-2 hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl px-7 py-3 text-center "
-            >
-              Add To Cart{" "}
+            <Button
+            isDisabled={!userData}
+            onClick={handleAddToCart}
+          type="submit"
+          size="lg"
+          color="success"
+          radius="full"
+          className={`text-white flex-1 mb-2 px-12 bg-green-500 ${userData ? "" : "cursor-not-allowed"}`}
+        >
+          Add to Cart
               <HiOutlineShoppingBag className="w-6 h-6"></HiOutlineShoppingBag>
-            </button>
+        </Button>
             <Button
               isIconOnly
               color="success"

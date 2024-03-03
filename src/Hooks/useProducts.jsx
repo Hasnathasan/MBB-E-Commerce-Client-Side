@@ -3,16 +3,16 @@ import useAxiosSecure from "./useAxiosSecure";
 import axios from "axios";
 
 
-const useProducts = ({categoryFilter, priceSlider}) => {
+const useProducts = ({categoryFilter, priceSlider, minRating}) => {
     const [axiosSecure] = useAxiosSecure();
     const {
       data: products,
       isLoading: isProductsLoading,
       refetch,
     } = useQuery({
-      queryKey: ["products", categoryFilter, priceSlider],
+      queryKey: ["products", categoryFilter, priceSlider, minRating],
       queryFn: async () => {
-        const res = await axios.get(`http://localhost:8000/products?${categoryFilter ? `category=${categoryFilter}` : ""}${priceSlider ? `&priceSlider=${priceSlider}` : ""}`);
+        const res = await axios.get(`http://localhost:8000/products?${categoryFilter ? `category=${categoryFilter}` : ""}${priceSlider ? `&priceSlider=${priceSlider}` : ""}${minRating ? `&minRating=${minRating}` : ""}`);
         return res.data;
       },
     });

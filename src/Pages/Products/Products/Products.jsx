@@ -15,7 +15,7 @@ import { AuthContext } from "../../../Providers/AuthProvider";
 import useCategories from "../../../Hooks/useCategories";
 import { Outlet } from "react-router-dom";
 const Products = () => {
-  const {categoryFilter, setCategoryFilter, priceSlider, setPriceSlider} = useContext(AuthContext);
+  const {categoryFilter, setCategoryFilter, priceSlider, setPriceSlider, minRating, setMinRating} = useContext(AuthContext);
   const [openFilter, setOpenFilter] = useState(false);
   const openFilterDrawer = () => setOpenFilter(true);
   const closeFilterDrawer = () => setOpenFilter(false);
@@ -89,7 +89,7 @@ const Products = () => {
               </div>
             </AccordionItem>
             <AccordionItem key="3" aria-label="Accordion 3" title="Rating">
-              <RadioGroup color="success" className="!mb-5">
+              <RadioGroup value={minRating} onValueChange={setMinRating} color="success" className="!mb-5">
                 <Radio className="mb-[1px]" value="rating5">
                   <div className=" flex items-start gap-2">
                     <Rating
@@ -316,7 +316,7 @@ const Products = () => {
               </div>
             </AccordionItem>
             <AccordionItem key="3" aria-label="Accordion 3" title="Rating">
-              <RadioGroup color="success" className="!mb-5">
+              <RadioGroup  value={minRating} onValueChange={setMinRating} color="success" className="!mb-5">
                 <Radio className="mb-[1px]" value="rating5">
                   <div className=" flex items-start gap-2">
                     <Rating

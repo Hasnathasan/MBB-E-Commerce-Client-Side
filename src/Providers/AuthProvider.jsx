@@ -20,7 +20,8 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState(null)
   const [priceSlider, setPriceSlider] = useState([0, 1000]);
-console.log(categoryFilter);
+  const [minRating, setMinRating] = useState(null)
+console.log(minRating);
 console.log(user);
   const loginWithEmail = (email, password) => {
     setLoading(true);
@@ -49,7 +50,9 @@ console.log(user);
     categoryFilter,
     setCategoryFilter,
     priceSlider,
-    setPriceSlider
+    setPriceSlider,
+    minRating,
+    setMinRating
   };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (loggedUser) => {
