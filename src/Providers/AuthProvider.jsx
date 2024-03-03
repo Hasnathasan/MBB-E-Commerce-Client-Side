@@ -19,7 +19,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState(null)
-
+  const [priceSlider, setPriceSlider] = useState([0, 1000]);
 console.log(categoryFilter);
 console.log(user);
   const loginWithEmail = (email, password) => {
@@ -47,7 +47,9 @@ console.log(user);
     googleSignIn,
     logOut,
     categoryFilter,
-    setCategoryFilter
+    setCategoryFilter,
+    priceSlider,
+    setPriceSlider
   };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (loggedUser) => {

@@ -15,16 +15,17 @@ import { AuthContext } from "../../../Providers/AuthProvider";
 import useCategories from "../../../Hooks/useCategories";
 import { Outlet } from "react-router-dom";
 const Products = () => {
-  const {categoryFilter, setCategoryFilter} = useContext(AuthContext);
+  const {categoryFilter, setCategoryFilter, priceSlider, setPriceSlider} = useContext(AuthContext);
   const [openFilter, setOpenFilter] = useState(false);
   const openFilterDrawer = () => setOpenFilter(true);
   const closeFilterDrawer = () => setOpenFilter(false);
 
   const [categories, isCategoriesLoading] = useCategories();
-  const [value, setValue] = useState([100, 300]);
+  
   if(isCategoriesLoading){
     return
   }
+  console.log(priceSlider);
   const allCategories = [...new Set(categories?.map(item => item.toLowerCase()))];
   console.log(categories, allCategories);
   return (
@@ -74,15 +75,15 @@ const Products = () => {
                   step={10}
                   maxValue={1000}
                   minValue={0}
-                  value={value}
-                  onChange={setValue}
+                  value={priceSlider}
+                  onChange={setPriceSlider}
                   className="max-w-[100%]"
                 />
                 <p className="text-default-500 font-medium mt-2 text-small">
                   Price:{" "}
                   <span className="font-medium text-gray-900">
-                    {Array.isArray(value) &&
-                      value.map((b) => `$${b}`).join(" – ")}
+                    {Array.isArray(priceSlider) &&
+                      priceSlider.map((b) => `$${b}`).join(" – ")}
                   </span>
                 </p>
               </div>
@@ -301,15 +302,15 @@ const Products = () => {
                   step={10}
                   maxValue={1000}
                   minValue={0}
-                  value={value}
-                  onChange={setValue}
+                  value={priceSlider}
+                  onChange={setPriceSlider}
                   className="max-w-[100%]"
                 />
                 <p className="text-default-500 font-medium mt-2 text-small">
                   Price:{" "}
                   <span className="font-medium text-gray-900">
-                    {Array.isArray(value) &&
-                      value.map((b) => `$${b}`).join(" – ")}
+                    {Array.isArray(priceSlider) &&
+                      priceSlider.map((b) => `$${b}`).join(" – ")}
                   </span>
                 </p>
               </div>

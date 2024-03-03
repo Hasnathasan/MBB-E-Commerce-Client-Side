@@ -35,9 +35,9 @@ const AddNewProductForAdmin = () => {
     const gallery_photos_files = form.gallery_photos.files;
     const multipleImages = [...gallery_photos_files];
     const description = form.description.value;
-    const regular_price = form.regular_price.value;
-    const sale_price = form.sale_price.value;
-    const cost_price = form.cost_price.value;
+    const regular_price = parseFloat(form.regular_price.value);
+    const sale_price = parseFloat(form.sale_price.value);
+    const cost_price = parseFloat(form.cost_price.value);
     const addedBy = artist;
     const prison_of_artist = prison;
     const product_tags = tags.map((tag) => tag.label);
