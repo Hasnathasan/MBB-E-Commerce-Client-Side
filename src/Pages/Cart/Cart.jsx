@@ -4,7 +4,13 @@ import "./Cart.css";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
+import useUserCart from "../../Hooks/useUserCart";
 const Cart = () => {
+  const [userCart, isUserCartLoading] = useUserCart();
+  if(isUserCartLoading){
+    return <h1>Loading</h1>
+  }
+  console.log(userCart);
   return (
     <div className="grid mx-8 mt-7 justify-start grid-cols-12 gap-10 mb-40">
       <div className=" border col-span-8 border-gray-300 rounded-lg overflow-hidden">
@@ -15,36 +21,38 @@ const Cart = () => {
             <th className="bg-transparent">QUANTITY</th>
             <th className="bg-transparent">SUBTOTAL</th>
           </tr>
-          <tr className="border-b border-gray-300">
-            <td className="flex py-6 items-center gap-3">
-              <img className="w-20" src={product1} alt="" />
-              <h3 className="font-semibold">The Starry Night</h3>
-            </td>
-            <td className="font-semibold">$549</td>
-            <td>
-              <div className="flex border p-2 w-min border-gray-300 rounded-full justify-center items-center gap-3">
-                <div>
-                  <Button size="sm" radius="full" variant="flat" isIconOnly>
-                    <FiMinus></FiMinus>
-                  </Button>
-                </div>
-                <div className="text-base">5</div>
-                <div>
-                  <Button size="sm" radius="full" variant="flat" isIconOnly>
-                    <FiPlus></FiPlus>
-                  </Button>
-                </div>
+         {
+          userCart?.map(cartProduct =>  <tr key={cartProduct?._id} className="border-b border-gray-300">
+          <td className="flex py-6 items-center gap-3">
+            <img className="w-20" src={cartProduct?.featured_photo} alt="" />
+            <h3 className="font-semibold">{cartProduct?.product_name}</h3>
+          </td>
+          <td className="font-semibold">${cartProduct?.price?.sale_price || cartProduct?.price?.regular_price}</td>
+          <td>
+            <div className="flex border p-2 w-min border-gray-300 rounded-full justify-center items-center gap-3">
+              <div>
+                <Button size="sm" radius="full" variant="flat" isIconOnly>
+                  <FiMinus></FiMinus>
+                </Button>
               </div>
-            </td>
-            <td>
-              <div className="font-semibold flex justify-between items-center">
-                <h4>$2639</h4>
-                <Button size="sm" radius="full" variant="bordered" isIconOnly>
-                  <RxCross2></RxCross2>
-                </Button>{" "}
+              <div className="text-base">{cartProduct?.quantity}</div>
+              <div>
+                <Button size="sm" radius="full" variant="flat" isIconOnly>
+                  <FiPlus></FiPlus>
+                </Button>
               </div>
-            </td>
-          </tr>
+            </div>
+          </td>
+          <td>
+            <div className="font-semibold flex justify-between items-center">
+              <h4>{cartProduct?.price?.sale_price ? (cartProduct?.price?.sale_price * cartProduct?.quantity): (cartProduct?.price?.regular_price * cartProduct?.quantity)}</h4>
+              <Button size="sm" radius="full" variant="bordered" isIconOnly>
+                <RxCross2></RxCross2>
+              </Button>{" "}
+            </div>
+          </td>
+        </tr>)
+         }
         </table>
       </div>
       <div className="col-span-4 border border-gray-300 rounded-lg">

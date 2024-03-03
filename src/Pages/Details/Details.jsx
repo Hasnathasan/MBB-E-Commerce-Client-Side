@@ -124,6 +124,7 @@ const success = () => toast.success("Product Successfully added to cart")
     })
     .catch(error => console.log(error.message))
   }
+  
   return (
     <div className="mx-8 py-14">
       <div className="grid grid-cols-2 gap-2">
