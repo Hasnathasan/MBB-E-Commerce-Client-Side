@@ -6,27 +6,27 @@ import {
   RadioGroup,
   Slider,
 } from "@nextui-org/react";
-import { Drawer, Option, Select, Typography } from "@material-tailwind/react";
-import PopularProductsCard from "../../Home/PopularProducts/PopularProductsCard";
+import { Drawer, Typography } from "@material-tailwind/react";
 import { useContext, useState } from "react";
 import Rating from "react-rating";
 import { IoStarSharp } from "react-icons/io5";
 import { LuSettings2 } from "react-icons/lu";
-import useProducts from "../../../Hooks/useProducts";
 import { AuthContext } from "../../../Providers/AuthProvider";
+import useCategories from "../../../Hooks/useCategories";
+import { Outlet } from "react-router-dom";
 const Products = () => {
   const {categoryFilter, setCategoryFilter} = useContext(AuthContext);
   const [openFilter, setOpenFilter] = useState(false);
   const openFilterDrawer = () => setOpenFilter(true);
   const closeFilterDrawer = () => setOpenFilter(false);
 
-  const [products, isProductsLoading] = useProducts({categoryFilter});
+  const [categories, isCategoriesLoading] = useCategories();
   const [value, setValue] = useState([100, 300]);
-  if(isProductsLoading){
+  if(isCategoriesLoading){
     return
   }
-  const categories = [...new Set(products?.map(product => product.product_categories).flat().map(item => item.toLowerCase()))];
-  console.log(categories);
+  const allCategories = [...new Set(categories?.map(item => item.toLowerCase()))];
+  console.log(categories, allCategories);
   return (
     <>
       <div className="grid grid-cols-12 mx-2 lg:mx-8 mt-8 mb-24">
@@ -55,8 +55,11 @@ const Products = () => {
                 color="success"
                 className="!mb-5"
               >
+                <Radio value={null}>
+                  <Typography className="capitalize" variant="small">All Products</Typography>
+                </Radio>
                 {
-                  categories?.map(category => <Radio key={category} value={category}>
+                  allCategories?.map(category => <Radio key={category} value={category}>
                   <Typography className="capitalize" variant="small">{category}</Typography>
                 </Radio>)
                 }
@@ -249,32 +252,7 @@ const Products = () => {
           </Accordion>
         </div>
         <div className="col-span-12 py-4 lg:col-span-9">
-          {/* <Outlet></Outlet> */}
-          <div className="flex flex-col sm:flex-row justify-between mb-6 gap-3 md:items-center">
-            <div className="flex justify-center gap-2 items-center">
-              <h3 className="text-nowrap text-sm text-gray-700">Sort By:</h3>
-              <Select size="sm" label="Select">
-                <Option>Newest</Option>
-                <Option>Oldest</Option>
-                <Option>A to Z</Option>
-              </Select>
-            </div>
-            <h3 className="text-gray-800 text-sm">
-              <span className="font-medium !text-gray-900">
-                {products?.length}
-              </span>{" "}
-              Results Found
-            </h3>
-          </div>
-          <div className="grid grid-cols-1 lg:px-5 xl:px-14 sm:col-span-2 md:grid-cols-3 gap-4 lg:gap-5 xl:gap-8 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4">
-            {products?.map((product) => (
-              <PopularProductsCard
-                key={product?.name}
-                product={product}
-                isRounded={true}
-              ></PopularProductsCard>
-            ))}
-          </div>
+          <Outlet></Outlet>
         </div>
       </div>
       <Drawer

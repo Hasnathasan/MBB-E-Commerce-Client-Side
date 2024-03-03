@@ -108,7 +108,7 @@ const NavigationBar = () => {
           <div className="flex justify-center items-center gap-8 text-sm font-medium">
             <NavLink to={"/"}>Home</NavLink>
             <NavLink to={"/artists"}>Artists</NavLink>
-            <NavLink to={"/products"}>Products</NavLink>
+            <NavLink to={"/products/filter"}>Products</NavLink>
             <NavLink to={"/aboutus"}>About MBB</NavLink>
             <NavLink to={"/contact"}>Contact Us</NavLink>
           </div>

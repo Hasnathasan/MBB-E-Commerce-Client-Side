@@ -25,6 +25,7 @@ import IAmWorkingOnIt from "../Components/IAmWorkingOnIt/IAmWorkingOnIt";
 import ManageCustomers from "../Dashboard/SuperAdminDashBoard/ManageCustomers/ManageCustomers";
 import ManageArtists from "../Dashboard/SuperAdminDashBoard/ManageArtists/ManageArtists";
 import ManageProducts from "../Dashboard/SuperAdminDashBoard/ManageProducts/ManageProducts";
+import ProductCardsForProductPage from "../Pages/Products/ProductCardsForProductPage/ProductCardsForProductPage";
 
 
 const router = createBrowserRouter([
@@ -42,7 +43,13 @@ const router = createBrowserRouter([
       },
       {
         path: "/products",
-        element: <Products></Products>
+        element: <Products></Products>,
+        children: [
+          {
+            path: "filter",
+            element: <ProductCardsForProductPage></ProductCardsForProductPage>
+          }
+        ]
       },
       {
         path: "/details/:id",
