@@ -50,8 +50,8 @@ const Products = () => {
               title="All Categories"
             >
               <RadioGroup
-                // value={filter}
-                // onValueChange={setFilter}
+                value={categoryFilter}
+                onValueChange={setCategoryFilter}
                 color="success"
                 className="!mb-5"
               >

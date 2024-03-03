@@ -20,7 +20,7 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState(null)
 
-
+console.log(categoryFilter);
 console.log(user);
   const loginWithEmail = (email, password) => {
     setLoading(true);

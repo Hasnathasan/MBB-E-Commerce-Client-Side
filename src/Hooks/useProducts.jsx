@@ -9,7 +9,7 @@ const useProducts = ({categoryFilter}) => {
       isLoading: isProductsLoading,
       refetch,
     } = useQuery({
-      queryKey: ["products"],
+      queryKey: ["products", categoryFilter],
       queryFn: async () => {
         const res = await axiosSecure.get(`/products?${categoryFilter ? `category=${categoryFilter}` : ""}`);
         return res.data;
