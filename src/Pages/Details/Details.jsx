@@ -82,7 +82,7 @@ const Details = () => {
       console.log(res.data.product_categories);
       setProduct(res.data)
       if(res.data){
-        axios.post(`http://localhost:8000/relatedProducts`, res.data.product_categories)
+        axios.post(`https://mbb-e-commerce-server.vercel.app/relatedProducts`, res.data.product_categories)
         .then(res => {
           console.log(res.data);
           setRelatedProducts(res.data)
@@ -115,7 +115,7 @@ const success = () => toast.success("Product Successfully added to cart")
 
   const handleAddToCart = () => {
     const cartProduct = {addedBy: userData?.email, quantity: quantity, product_id: _id, product_name, price, featured_photo, product_available_quantity: available_quantity};
-    axios.post(`http://localhost:8000/cart`, cartProduct)
+    axios.post(`https://mbb-e-commerce-server.vercel.app/cart`, cartProduct)
     .then(res => {
       if(res.data.insertedId){
         console.log(res.data.insertedId);

@@ -1,4 +1,4 @@
-import { Accordion, AccordionItem, Button } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { useRef, useState } from "react";
 import { MultiSelect } from "react-selectize";
 import "../../../../node_modules/react-selectize/themes/index.css";

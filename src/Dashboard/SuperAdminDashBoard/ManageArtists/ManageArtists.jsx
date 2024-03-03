@@ -82,7 +82,7 @@ const ManageArtists = () => {
         formData.append("image", selectedFile);
         console.log(selectedFile);
         axios
-          .post("http://localhost:8000/upload", formData, {
+          .post("https://mbb-e-commerce-server.vercel.app/upload", formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },

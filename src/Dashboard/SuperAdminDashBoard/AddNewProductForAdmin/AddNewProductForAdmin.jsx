@@ -46,7 +46,7 @@ const AddNewProductForAdmin = () => {
     const firstFormData = new FormData();
     firstFormData.append("image", featured_photo_file);
     const uploadAndInsertProduct = () => {
-      return axios.post("http://localhost:8000/upload", firstFormData, {
+      return axios.post("https://mbb-e-commerce-server.vercel.app/upload", firstFormData, {
           headers: {
               "Content-Type": "multipart/form-data",
           },
@@ -58,7 +58,7 @@ const AddNewProductForAdmin = () => {
               multipleImages.map((file, index) => {
                   secondFormData.append(`images`, file);
               });
-              return axios.post("http://localhost:8000/uploadMultiple", secondFormData, {
+              return axios.post("https://mbb-e-commerce-server.vercel.app/uploadMultiple", secondFormData, {
                   headers: {
                       "Content-Type": "multipart/form-data",
                   },
@@ -79,7 +79,7 @@ const AddNewProductForAdmin = () => {
                           addedBy,
                           prison_of_artist,
                       };
-                      return axios.post("http://localhost:8000/products", product).then((res) => {
+                      return axios.post("https://mbb-e-commerce-server.vercel.app/products", product).then((res) => {
                           console.log(res.data);
                           form.reset()
                           return res.data;

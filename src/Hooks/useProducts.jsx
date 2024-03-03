@@ -12,7 +12,7 @@ const useProducts = ({categoryFilter, priceSlider, minRating}) => {
     } = useQuery({
       queryKey: ["products", categoryFilter, priceSlider, minRating],
       queryFn: async () => {
-        const res = await axios.get(`http://localhost:8000/products?${categoryFilter ? `category=${categoryFilter}` : ""}${priceSlider ? `&priceSlider=${priceSlider}` : ""}${minRating ? `&minRating=${minRating}` : ""}`);
+        const res = await axios.get(`https://mbb-e-commerce-server.vercel.app/products?${categoryFilter ? `category=${categoryFilter}` : ""}${priceSlider ? `&priceSlider=${priceSlider}` : ""}${minRating ? `&minRating=${minRating}` : ""}`);
         return res.data;
       },
     });

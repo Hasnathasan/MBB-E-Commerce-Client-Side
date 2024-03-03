@@ -117,7 +117,7 @@ const PopularProducts = () => {
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
           className="w-32 text-left text-green-500 flex justify-center items-center gap-2 relative font-medium"
-          to={"/products"}
+          to={"/products/filter"}
         >
           View All{" "}
           <BsArrowRight

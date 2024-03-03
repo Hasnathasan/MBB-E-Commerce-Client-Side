@@ -68,7 +68,7 @@ const ArtistProfile = () => {
       //   console.error('Error uploading file: ', error);
       // });
       axios
-        .post("http://localhost:8000/upload", formData, {
+        .post("https://mbb-e-commerce-server.vercel.app/upload", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
