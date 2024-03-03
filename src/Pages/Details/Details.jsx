@@ -20,7 +20,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import useUser from "../../Hooks/useUser";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 function ThumbnailPlugin(mainRef) {
   return (slider) => {
@@ -111,14 +111,15 @@ console.log(relatedProducts);
       addedBy,
       prison_of_artist,
   } = product;
-
+const success = () => toast.success("Product Successfully added to cart")
 
   const handleAddToCart = () => {
     const cartProduct = {addedBy: userData?.email, quantity: quantity, product_id: _id, product_name, price, featured_photo, product_available_quantity: available_quantity};
     axios.post(`http://localhost:8000/cart`, cartProduct)
     .then(res => {
       if(res.data.insertedId){
-        () => toast.success("Product added to cart")
+        console.log(res.data.insertedId);
+        success()
       }
     })
     .catch(error => console.log(error.message))
@@ -338,6 +339,7 @@ console.log(relatedProducts);
           ))}
         </div>
       </div>
+      <Toaster></Toaster>
     </div>
   );
 };
