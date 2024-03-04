@@ -9,86 +9,28 @@ import product6 from "../../assets/products6.png";
 import product7 from "../../assets/products7.jpg";
 import product8 from "../../assets/products8.png";
 import PopularProductsCard from "../Home/PopularProducts/PopularProductsCard";
+import useArtist from "../../Hooks/useArtist";
+import { useParams } from "react-router-dom";
 const ArtistDetailsPage = () => {
-  const [userData] = useUser();
-  const products = [
-    {
-      name: "The Starry Night",
-      price: 50.0,
-      rating: 4.2,
-      img: product1,
-    },
-    {
-      name: "Girl with a Pearl Earring",
-      price: 42.0,
-      rating: 4.9,
-      img: product2,
-    },
-    {
-      name: "Las Meninas",
-      price: 120.0,
-      rating: 2.5,
-      img: product3,
-    },
-    {
-      name: "The Garden of Earthly Delights",
-      price: 70.0,
-      rating: 3.5,
-      img: product4,
-    },
-    {
-      name: "The Kiss",
-      price: 20.0,
-      rating: 4.2,
-      img: product5,
-    },
-    {
-      name: "Water lilies",
-      price: 20.0,
-      rating: 4.2,
-      img: product6,
-    },
-    {
-      name: "Las Meninas",
-      price: 70.0,
-      rating: 3.5,
-      img: product7,
-    },
-    {
-      name: "The Arnolfini Portrait",
-      price: 120.0,
-      rating: 2.5,
-      img: product8,
-    },
-  ];
+  const {email} = useParams();
+  const [artistData, isArtistDataLoading] = useArtist({email});
+  if(isArtistDataLoading){
+    return <h1>Loading</h1>
+  }
+  console.log(artistData);
   return (
     <div className=" mx-8 my-8">
       <div className="grid grid-cols-12 justify-center gap-6 border border-gray-300 p-5 rounded-lg ">
         <div className=" col-span-5 flex flex-col justify-center items-center gap-2">
-          <Avatar src={userData?.userPhoto} className="w-44 h-44 text-large" />
+          <Avatar src={artistData?.userPhoto} className="w-44 h-44 text-large" />
           <h2 className="text-2xl font-semibold">
-            {/* {userData?.userName || "Unknown"} */}
+            {artistData?.userName || "Unknown"}
             Harry Potter
           </h2>
-          {/* <h2>
-            Email:{" "}
-            <a className=" font-semibold" href={`mailto:${userData?.email}`}>
-              {userData?.email}
-            </a>
-          </h2>
-          <h2>
-            Phone Number:{" "}
-            <a
-              className=" font-semibold"
-              href={`tel:${userData?.userPhoneNumber}`}
-            >
-              {userData?.userPhoneNumber}
-            </a>
-          </h2> */}
         </div>
         <div className="col-span-7 flex justify-center items-center">
         <video controls>
-        <source src={"videoLink"} type="video/mp4" />
+        <source src={"https://www.youtube.com/watch?v=Y8Q9nX8I1dk"}  />
         Your browser does not support the video tag.
       </video>
         </div>
@@ -155,7 +97,7 @@ const ArtistDetailsPage = () => {
               </div>
             }
           >
-             <div className="grid grid-cols-2 mt-5 px-14 sm:grid-cols-2 gap-6 justify-center items-center md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+             {/* <div className="grid grid-cols-2 mt-5 px-14 sm:grid-cols-2 gap-6 justify-center items-center md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {products?.map((product) => (
             <PopularProductsCard
               key={product?.name}
@@ -163,7 +105,7 @@ const ArtistDetailsPage = () => {
               isRounded={true}
             ></PopularProductsCard>
           ))}
-        </div>
+        </div> */}
           </Tab>
         </Tabs>
       </div>

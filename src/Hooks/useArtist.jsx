@@ -5,8 +5,8 @@ import useAxiosSecure from "./useAxiosSecure";
 const useArtist = ({email}) => {
     const [axiosSecure] = useAxiosSecure();
   const {
-    data: artistsData,
-    isLoading: isArtistsDataLoading,
+    data: artistData,
+    isLoading: isArtistDataLoading,
     refetch,
   } = useQuery({
     queryKey: [`artist-${email}`, email],
@@ -15,7 +15,7 @@ const useArtist = ({email}) => {
       return res.data;
     },
   });
-  return [artistsData, isArtistsDataLoading, refetch];
+  return [artistData, isArtistDataLoading, refetch];
 };
 
 export default useArtist;
