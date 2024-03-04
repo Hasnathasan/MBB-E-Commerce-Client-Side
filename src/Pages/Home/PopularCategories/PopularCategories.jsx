@@ -1,31 +1,16 @@
 import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
-import image1 from "../../../assets/image1.png";
-import image2 from "../../../assets/image2.png";
-import image3 from "../../../assets/image3.png";
-import image4 from "../../../assets/image4.png";
-import image5 from "../../../assets/image5.png";
-import image6 from "../../../assets/image6.png";
-import image7 from "../../../assets/image7.png";
 import CategoryCard from "./CategoryCard";
 import { useState } from "react";
+import usePopularCategories from "../../../Hooks/usePopularCategories";
 
 const PopularCategories = () => {
   const [hovered, setHovered] = useState(false);
-  const categories = [
-    { img: image1, name: "Drawing" },
-    { img: image2, name: "Sculpture" },
-    { img: image3, name: "Cubism" },
-    { img: image4, name: "Abstract art" },
-    { img: image5, name: "Graphic design" },
-    { img: image6, name: "Advertising" },
-    { img: image7, name: "Art Design" },
-    { img: image3, name: "Cubism" },
-    { img: image1, name: "Drawing" },
-    { img: image6, name: "Advertising" },
-    { img: image2, name: "Sculpture" },
-    { img: image5, name: "Graphic design" },
-  ];
+  const [categories, isCategoriesLoading] = usePopularCategories();
+  if(isCategoriesLoading){
+    return <h1>Loading</h1>
+  }
+  console.log(categories);
   return (
     <div className="my-16">
       <div className="flex justify-between mb-4 items-center">
@@ -48,7 +33,7 @@ const PopularCategories = () => {
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 md:gap-5 justify-center items-center">
         {categories?.map((category) => (
-          <CategoryCard key={category.img} category={category}></CategoryCard>
+          <CategoryCard key={category.category} category={category}></CategoryCard>
         ))}
       </div>
     </div>

@@ -11,6 +11,7 @@ import product8 from "../../assets/products8.png";
 import PopularProductsCard from "../Home/PopularProducts/PopularProductsCard";
 import useArtist from "../../Hooks/useArtist";
 import { useParams } from "react-router-dom";
+import ReactPlayer from "react-player";
 const ArtistDetailsPage = () => {
   const {email} = useParams();
   const [artistData, isArtistDataLoading] = useArtist({email});
@@ -25,14 +26,10 @@ const ArtistDetailsPage = () => {
           <Avatar src={artistData?.userPhoto} className="w-44 h-44 text-large" />
           <h2 className="text-2xl font-semibold">
             {artistData?.userName || "Unknown"}
-            Harry Potter
           </h2>
         </div>
         <div className="col-span-7 flex justify-center items-center">
-        <video controls>
-        <source src={"https://www.youtube.com/watch?v=Y8Q9nX8I1dk"}  />
-        Your browser does not support the video tag.
-      </video>
+        <ReactPlayer url={artistData?.bio_video_link} />
         </div>
       </div>
       <div className="mt-7">
@@ -60,32 +57,16 @@ const ArtistDetailsPage = () => {
           >
             <h2 className="text-lg font-semibold text-gray-900">Bio:</h2>
             <p className="mb-6">
-              Sed commodo aliquam dui ac porta. Fusce ipsum felis, imperdiet at
-              posuere ac, viverra at mauris. Maecenas tincidunt ligula a sem
-              vestibulum pharetra. Maecenas auctor tortor lacus, nec laoreet
-              nisi porttitor vel. Etiam tincidunt metus vel dui interdum
-              sollicitudin. Mauris sem ante, vestibulum nec orci vitae, aliquam
-              mollis lacus. Sed et condimentum arcu, id molestie tellus. Nulla
-              facilisi. Nam scelerisque vitae justo a convallis. Morbi urna
-              ipsum, placerat quis commodo quis, egestas elementum leo. Donec
-              convallis mollis enim. Aliquam id mi quam. Phasellus nec fringilla
-              elit. Nulla mauris tellus, feugiat quis pharetra sed, gravida ac
-              dui. Sed iaculis, metus faucibus elementum tincidunt, turpis mi
-              viverra velit, pellentesque tristique neque mi eget nulla. Proin
-              luctus elementum neque et pharetra.
+              {artistData?.bio}
             </p>
             <h2 className="text-lg font-semibold text-gray-900">Art Description:</h2>
             <p className="mb-6">
-              Sed commodo aliquam dui ac porta. Fusce ipsum felis, imperdiet at
-              posuere ac, viverra at mauris. Maecenas tincidunt ligula a sem
-              vestibulum pharetra. Maecenas auctor tortor lacus, nec laoreet
-              nisi porttitor vel. Etiam tincidunt metus vel dui interdum
-              sollicitudin. Mauris sem ante.
+              {artistData?.art_description}
             </p>
 
             <h2 className="text-lg font-semibold mb-5 text-gray-900">Correctional System: <span className="text-gray-800">Unknown</span></h2>
-            <h2 className="text-lg font-semibold mb-5 text-gray-900">Keywords: <span className="text-gray-800">Artist, Rhythm, Shape</span></h2>
-            <h2 className="text-lg font-semibold text-gray-900">State: <span className="text-gray-800">New York</span></h2>
+            <h2 className="text-lg font-semibold mb-5 space-x-3 text-gray-900">Keywords: {artistData?.keyWords?.map(keyword => <span key={keyword} className="text-gray-800">{keyword}</span>)}</h2>
+            <h2 className="text-lg font-semibold text-gray-900">State: <span className="text-gray-800">{artistData?.billingInfo?.states}</span></h2>
             
           </Tab>
           <Tab

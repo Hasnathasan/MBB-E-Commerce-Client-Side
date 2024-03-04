@@ -19,7 +19,6 @@ const Artists = () => {
                     <Avatar src={artist?.userPhoto} className="w-40 h-40 text-large" />
                     <h3 className="text-xl font-semibold">{artist.userName}</h3>
                     <h4 className="text-sm font-medium">Total Products: {artist?.total_products}</h4>
-                    <h4 className="text-sm font-medium">Rating: {artist?.rating}</h4>
                 </div></Link>)
             }
             </div>
