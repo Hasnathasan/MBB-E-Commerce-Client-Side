@@ -12,13 +12,15 @@ import PopularProductsCard from "../Home/PopularProducts/PopularProductsCard";
 import useArtist from "../../Hooks/useArtist";
 import { useParams } from "react-router-dom";
 import ReactPlayer from "react-player";
+import useArtistProductsByEmail from "../../Hooks/useArtistProductsByEmail";
 const ArtistDetailsPage = () => {
   const {email} = useParams();
   const [artistData, isArtistDataLoading] = useArtist({email});
-  if(isArtistDataLoading){
+  const [products, isProductsLoading] = useArtistProductsByEmail({email})
+  if(isArtistDataLoading || isProductsLoading){
     return <h1>Loading</h1>
   }
-  console.log(artistData);
+  console.log(artistData, products);
   return (
     <div className=" mx-8 my-8">
       <div className="grid grid-cols-12 justify-center gap-6 border border-gray-300 p-5 rounded-lg ">
@@ -78,15 +80,17 @@ const ArtistDetailsPage = () => {
               </div>
             }
           >
-             {/* <div className="grid grid-cols-2 mt-5 px-14 sm:grid-cols-2 gap-6 justify-center items-center md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-          {products?.map((product) => (
-            <PopularProductsCard
-              key={product?.name}
-              product={product}
-              isRounded={true}
-            ></PopularProductsCard>
-          ))}
-        </div> */}
+             {
+              products?.length !== 0 ? <div className="grid grid-cols-2 mt-5 px-14 sm:grid-cols-2 gap-6 justify-center items-center md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+              {products?.map((product) => (
+                <PopularProductsCard
+                  key={product?.name}
+                  product={product}
+                  isRounded={true}
+                ></PopularProductsCard>
+              ))}
+            </div> : <div className="my-16"> <h1 className="text-3xl text-center font-semibold">No Products Available</h1></div>
+             }
           </Tab>
         </Tabs>
       </div>

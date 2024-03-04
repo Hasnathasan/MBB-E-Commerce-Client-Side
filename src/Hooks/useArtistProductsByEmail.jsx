@@ -11,7 +11,7 @@ const useArtistProductsByEmail = ({email}) => {
     } = useQuery({
       queryKey: [`artistProducts-${email}`, email],
       queryFn: async () => {
-        const res = await axiosSecure.get(`/eachArtistProduct`);
+        const res = await axiosSecure.get(`/eachArtistProducts/${email}`);
         return res.data;
       },
     });
