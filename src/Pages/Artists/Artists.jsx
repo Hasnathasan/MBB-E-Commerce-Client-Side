@@ -11,7 +11,10 @@ const Artists = () => {
     console.log(artistsData);
     return (
         <div className="mx-8 py-9">
-            <h1 className="text-2xl mb-5 font-semibold">All Arists</h1>
+            <div className="flex justify-between items-center mb-5">
+            <h1 className="text-2xl font-semibold">All Arists</h1>
+            <h1 className="text-sm text-gray-800  font-semibold">Total {artistsData?.length} Artist&apos;s found</h1>
+            </div>
             <div className="grid grid-cols-5 gap-5">
             {
                 artistsData?.map(artist => <Link to={`/artistDetails/${artist?.email}`} key={artist?._id}>

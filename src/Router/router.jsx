@@ -27,6 +27,7 @@ import ManageArtists from "../Dashboard/SuperAdminDashBoard/ManageArtists/Manage
 import ManageProducts from "../Dashboard/SuperAdminDashBoard/ManageProducts/ManageProducts";
 import ProductCardsForProductPage from "../Pages/Products/ProductCardsForProductPage/ProductCardsForProductPage";
 import Artists from "../Pages/Artists/Artists";
+import Categories from "../Pages/Categories/Categories";
 
 
 const router = createBrowserRouter([
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
       {
         path: "/artists",
         element: <Artists></Artists>
+      },
+      {
+        path: "/categories",
+        element: <Categories></Categories>
       },
       {
         path: "/signup",
