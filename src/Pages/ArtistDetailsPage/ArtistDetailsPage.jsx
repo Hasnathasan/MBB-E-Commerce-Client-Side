@@ -87,7 +87,10 @@ const ArtistDetailsPage = () => {
           </h2> */}
         </div>
         <div className="col-span-7 flex justify-center items-center">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/Y8Q9nX8I1dk?si=Dlt8fwTkPMW516fp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        <video controls>
+        <source src={"videoLink"} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
         </div>
       </div>
       <div className="mt-7">

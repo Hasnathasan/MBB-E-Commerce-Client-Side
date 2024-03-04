@@ -77,7 +77,7 @@ const router = createBrowserRouter([
         element: <CheckoutPage></CheckoutPage>
       },
       {
-        path: "/artistDetails",
+        path: "/artistDetails/:email",
         element: <ArtistDetailsPage></ArtistDetailsPage>
       },
       {

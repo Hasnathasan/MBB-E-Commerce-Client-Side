@@ -1,0 +1,171 @@
+[
+    {
+      "email": "photographer@gmail.com",
+      "userRole": "artist",
+      "userAddress": "789 Elm St, Springfield, USA",
+      "userName": "Johnathon Dane",
+      "userPhoneNumber": "+1987654321",
+      "userPhoto": "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "billingInfo": {
+        "address": "456 Pine St, Springfield, USA",
+        "companyName": "Snapshot Studios",
+        "country": "USA",
+        "states": "Illinois",
+        "zipCode": "62701"
+      },
+      "art_description": "Portrait photography with natural lighting",
+      "bio": "Capturing moments that tell stories and evoke emotions.",
+      "bio_video_link": "https://youtu.be/Y8Q9nX8I1dk?si=0CKR2-t2PYJZDzVh",
+      "keyWords": ["Photography", "Portraits", "Natural Light", "Emotions"],
+      "total_products": 0,
+      "rating": 0
+    },
+    {
+      "email": "sculptor@gmail.com",
+      "userRole": "artist",
+      "userAddress": "321 Maple Ave, Artville, USA",
+      "userName": "Charls Johnson",
+      "userPhoneNumber": "+1122334455",
+      "userPhoto": "https://images.unsplash.com/photo-1672229092597-634c07cdc1d1?q=80&w=1414&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "billingInfo": {
+        "address": "789 Oak St, Artville, USA",
+        "companyName": "Stone Works",
+        "country": "USA",
+        "states": "New York",
+        "zipCode": "10001"
+      },
+      "art_description": "Marble sculptures inspired by nature",
+      "bio": "Bringing stone to life with intricate designs and delicate details.",
+      "bio_video_link": "https://youtu.be/Y8Q9nX8I1dk?si=0CKR2-t2PYJZDzVh",
+      "keyWords": ["Sculpture", "Marble", "Nature", "Artisan"],
+      "total_products": 0,
+      "rating": 0
+    },
+    {
+      "email": "writer@gmail.com",
+      "userRole": "artist",
+      "userAddress": "456 Cedar Ln, Booktown, USA",
+      "userName": "Julie Williams",
+      "userPhoneNumber": "+1555666777",
+      "userPhoto": "https://images.unsplash.com/photo-1674040289371-1b8df519a3d0?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "billingInfo": {
+        "address": "123 Walnut St, Booktown, USA",
+        "companyName": "WordCraft",
+        "country": "USA",
+        "states": "Massachusetts",
+        "zipCode": "02108"
+      },
+      "art_description": "Fantasy novels with intricate world-building",
+      "bio": "Transporting readers to magical realms through vivid storytelling.",
+      "bio_video_link": "https://youtu.be/Y8Q9nX8I1dk?si=0CKR2-t2PYJZDzVh",
+      "keyWords": ["Writing", "Fantasy", "Novels", "Imagination"],
+      "total_products": 0,
+      "rating": 0
+    },
+    {
+      "email": "musician@gmail.com",
+      "userRole": "artist",
+      "userAddress": "987 Vine St, Melodyville, USA",
+      "userName": "Josh Brown",
+      "userPhoneNumber": "+1444333222",
+      "userPhoto": "https://images.unsplash.com/photo-1542458579-0efc5038d080?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "billingInfo": {
+        "address": "654 Oak St, Melodyville, USA",
+        "companyName": "Harmony Records",
+        "country": "USA",
+        "states": "Tennessee",
+        "zipCode": "37201"
+      },
+      "art_description": "Jazz saxophonist known for improvisation",
+      "bio": "Expressing emotions through the language of music, one note at a time.",
+      "bio_video_link": "https://youtu.be/Y8Q9nX8I1dk?si=0CKR2-t2PYJZDzVh",
+      "keyWords": ["Music", "Jazz", "Saxophone", "Improvisation"],
+      "total_products": 0,
+      "rating": 0
+    },
+    {
+      "email": "sarah@example.com",
+      "userRole": "artist",
+      "userAddress": "123 Art Street, Artland",
+      "userName": "Sarah Johnson",
+      "userPhoneNumber": "+1234567890",
+      "userPhoto": "https://images.unsplash.com/photo-1604857209516-fe60ee97246b?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "billingInfo": {
+          "address": "456 Paint Avenue, Art City",
+          "companyName": "Creative Minds",
+          "country": "USA",
+          "states": "California",
+          "zipCode": "90210"
+      },
+      "art_description": "Oil paintings inspired by nature",
+      "bio": "Passionate about capturing the beauty of landscapes through oil paintings.",
+      "bio_video_link": "https://youtu.be/69qKUoGhoQo?si=a2yK_kuJEFQSoUfi",
+      "keyWords": ["Oil Painting", "Nature", "Landscape", "Art"],
+      "total_products": 0,
+      "rating": 0
+  },
+  {
+      "email": "john@example.com",
+      "userRole": "artist",
+      "userAddress": "789 Canvas Avenue, Paintville",
+      "userName": "John Smith",
+      "userPhoneNumber": "+9876543210",
+      "userPhoto": "https://images.unsplash.com/photo-1559697242-07e90b48b9fe?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "billingInfo": {
+          "address": "890 Brush Street, Art Town",
+          "companyName": "Artistic Creations",
+          "country": "USA",
+          "states": "New York",
+          "zipCode": "10001"
+      },
+      "art_description": "Sculptures crafted from recycled materials",
+      "bio": "Dedicated to creating art that promotes sustainability and environmental awareness.",
+      "bio_video_link": "https://youtu.be/unG1bWGncdk?si=PvN0r8_wN4RGgsCU",
+      "keyWords": ["Sculpture", "Recycled Materials", "Environmental Art", "Sustainability"],
+      "total_products": 0,
+      "rating": 0
+  },
+  {
+      "email": "emily@example.com",
+      "userRole": "artist",
+      "userAddress": "321 Paintbrush Lane, Artville",
+      "userName": "Emily Brown",
+      "userPhoneNumber": "+1122334455",
+      "userPhoto": "https://images.unsplash.com/photo-1583777061702-a65b9cae2a4a?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "billingInfo": {
+          "address": "456 Artistic Street, Creativity City",
+          "companyName": "Artistic Expressions",
+          "country": "Canada",
+          "states": "Ontario",
+          "zipCode": "M5V 1M6"
+      },
+      "art_description": "Abstract mixed media artworks",
+      "bio": "Exploring the depths of creativity through abstract expressionism.",
+      "bio_video_link": "https://youtu.be/69qKUoGhoQo?si=a2yK_kuJEFQSoUfi",
+      "keyWords": ["Abstract Art", "Mixed Media", "Expressionism", "Creativity"],
+      "total_products": 0,
+      "rating": 0
+  },
+  {
+      "email": "alex@example.com",
+      "userRole": "artist",
+      "userAddress": "456 Palette Road, Artlandia",
+      "userName": "Alex Turner",
+      "userPhoneNumber": "+3344556677",
+      "userPhoto": "https://images.unsplash.com/photo-1583264277168-58ceba4b84e7?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "billingInfo": {
+          "address": "789 Gallery Street, Art Haven",
+          "companyName": "Artistic Visions",
+          "country": "UK",
+          "states": "London",
+          "zipCode": "WC2N 5DU"
+      },
+      "art_description": "Photorealistic pencil drawings",
+      "bio": "Bringing life to paper through detailed pencil sketches.",
+      "bio_video_link": "https://youtu.be/unG1bWGncdk?si=PvN0r8_wN4RGgsCU",
+      "keyWords": ["Pencil Drawing", "Realism", "Art", "Sketching"],
+      "total_products": 0,
+      "rating": 0
+  }
+  ]
+  
