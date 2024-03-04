@@ -44,82 +44,76 @@ const AddNewProductForAdmin = () => {
     const product_categories = categories.map((category) => category.label);
 
     const firstFormData = new FormData();
-    const formData = new FormData();
-      formData.append('file', featured_photo_file);
+    firstFormData.append('file', featured_photo_file);
 
-      axios.post('http://localhost:8000/upload', formData, {
+      
+      
+    const uploadAndInsertProduct = () => {
+      return axios.post('https://mbb-e-commerce-server.vercel.app/upload', firstFormData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
-      })
-      .then(response => console.log(response))
-      .catch(error => console.log(error))
-  //   const uploadAndInsertProduct = () => {
-  //     return axios.post("https://mbb-e-commerce-server.vercel.app/upload", firstFormData, {
-  //         headers: {
-  //             "Content-Type": "multipart/form-data",
-  //         },
-  //     }).then((response) => {
-  //         console.log(response.data);
-  //         if (response.data.url) {
-  //             const featured_photo = response.data.url;
-  //             const secondFormData = new FormData();
-  //             multipleImages.map((file, index) => {
-  //                 secondFormData.append(`images`, file);
-  //             });
-  //             return axios.post("https://mbb-e-commerce-server.vercel.app/uploadMultiple", secondFormData, {
-  //                 headers: {
-  //                     "Content-Type": "multipart/form-data",
-  //                 },
-  //             }).then((response) => {
-  //                 if (response?.data?.uploadResponses) {
-  //                     const gallery_photos = response.data?.uploadResponses;
-  //                     const product = {
-  //                         product_name,
-  //                         available_quantity,
-  //                         featured_photo,
-  //                         gallery_photos,
-  //                         product_tags,
-  //                         product_categories,
-  //                         description,
-  //                         rating: 0,
-  //                         reviews: [],
-  //                         price: { regular_price, sale_price, cost_price },
-  //                         addedBy,
-  //                         prison_of_artist,
-  //                     };
-  //                     return axios.post("https://mbb-e-commerce-server.vercel.app/products", product).then((res) => {
-  //                         console.log(res.data);
-  //                         form.reset()
-  //                         return res.data;
-  //                     }).catch((error) => {
-  //                         console.log(error.message);
-  //                         toast.error(`${error?.message}`)
-  //                         throw error;
-  //                     });
-  //                 } else {
-  //                     return Promise.reject(new Error("No upload responses found"));
-  //                 }
-  //             }).catch((error) => {
-  //                 console.log(error.message);
-  //                 toast.error(`${error?.message}`)
-  //                 throw error;
-  //             });
-  //         }
-  //     }).catch((error) => {
-  //         console.log(error.message);
-  //         () => toast.error(`${error?.message}`)
-  //         throw error;
-  //     });
-  // };
+      }).then((response) => {
+          console.log(response.data);
+          if (response.data.url) {
+              const featured_photo = response.data.url;
+              const secondFormData = new FormData();
+              multipleImages.map((file) => {
+                  secondFormData.append(`files`, file);
+              });
+              return axios.post("https://mbb-e-commerce-server.vercel.app/uploadMultiple", secondFormData, {
+                  headers: {
+                      "Content-Type": "multipart/form-data",
+                  },
+              }).then((response) => {
+                  if (response?.data?.imageUrls) {
+                      const gallery_photos = response.data?.imageUrls;
+                      const product = {
+                          product_name,
+                          available_quantity,
+                          featured_photo,
+                          gallery_photos,
+                          product_tags,
+                          product_categories,
+                          description,
+                          rating: 0,
+                          reviews: [],
+                          price: { regular_price, sale_price, cost_price },
+                          addedBy,
+                          prison_of_artist,
+                      };
+                      return axios.post("https://mbb-e-commerce-server.vercel.app/products", product).then((res) => {
+                          console.log(res.data);
+                          form.reset()
+                          return res.data;
+                      }).catch((error) => {
+                          console.log(error.message);
+                          toast.error(`${error?.message}`)
+                          throw error;
+                      });
+                  } else {
+                      return Promise.reject(new Error("No upload responses found"));
+                  }
+              }).catch((error) => {
+                  console.log(error.message);
+                  toast.error(`${error?.message}`)
+                  throw error;
+              });
+          }
+      }).catch((error) => {
+          console.log(error.message);
+          () => toast.error(`${error?.message}`)
+          throw error;
+      });
+  };
   
-  // const myPromise = uploadAndInsertProduct();
+  const myPromise = uploadAndInsertProduct();
   
-  // toast.promise(myPromise, {
-  //     loading: 'Please wait! while uploading product...',
-  //     success: 'Product inserted successfully',
-  //     error: 'An Error Occoured while uploading product',
-  // });
+  toast.promise(myPromise, {
+      loading: 'Please wait! while uploading product...',
+      success: 'Product inserted successfully',
+      error: 'An Error Occoured while uploading product',
+  });
    
   };
 
