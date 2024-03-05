@@ -5,13 +5,62 @@ import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 const Cart = () => {
-  const [userCart, setUserCart] = useState();
-  useEffect(() => {
-    const cart = localStorage.getItem("cart") || [];
-    setUserCart(JSON.parse(cart))
-  },[])
 
-  console.log(userCart);
+const [userCart, setUserCart] = useState([]);
+
+useEffect(() => {
+  // Try retrieving the cart from localStorage, with a default of an empty array if not found
+  const cart = localStorage.getItem("cart") || '[]';
+
+  // Parse the retrieved data (either an empty string or valid JSON string)
+  try {
+    setUserCart(JSON.parse(cart));
+  } catch (error) {
+    // Handle parsing error gracefully (e.g., log the error)
+    console.error("Error parsing local storage cart:", error);
+    // Set userCart to an empty array in case of parsing error
+    setUserCart([]);
+  }
+}, []);
+  const subTotal = userCart?.reduce((accumulator, product) => {
+    const price = product?.price;
+    return accumulator + (price.sale_price* product?.quantity || price.regular_price* product?.quantity); // Use nullish coalescing for price2
+  }, 0);
+  console.log(subTotal);
+  const handleQuantityMinus = (id) => {
+    setUserCart(prevCart => {
+      const updatedCart = prevCart.map(product => {
+        if (product.product_id === id && product.quantity > 1) {
+          return { ...product, quantity: product.quantity - 1 };
+        }
+        return product;
+      });
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      return updatedCart;
+    });
+  };
+  
+  const handleQuantityPlus = (id) => {
+    setUserCart(prevCart => {
+      const updatedCart = prevCart.map(product => {
+        if (product.product_id === id) {
+          return { ...product, quantity: product.quantity + 1 };
+        }
+        return product;
+      });
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      return updatedCart;
+    });
+  };
+  const handleDeleteFromCart = (id) => {
+    setUserCart(prevCart => {
+      const updatedCart = prevCart.filter(product => product.product_id !== id);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      return updatedCart;
+    });
+  };
+
+  
   return (
     <div className="grid mx-8 mt-7 justify-start grid-cols-12 gap-10 mb-40">
       <div className=" border col-span-8 border-gray-300 rounded-lg overflow-hidden">
@@ -23,7 +72,7 @@ const Cart = () => {
             <th className="bg-transparent">SUBTOTAL</th>
           </tr>
          {
-          userCart?.map(cartProduct =>  <tr key={cartProduct?._id} className="border-b border-gray-300">
+          userCart.length !== 0 ? userCart?.map(cartProduct =>  <tr key={cartProduct?._id} className="border-b border-gray-300">
           <td className="flex py-6 items-center gap-3">
             <img className="w-20" src={cartProduct?.featured_photo} alt="" />
             <h3 className="font-semibold">{cartProduct?.product_name}</h3>
@@ -32,13 +81,13 @@ const Cart = () => {
           <td>
             <div className="flex border p-2 w-min border-gray-300 rounded-full justify-center items-center gap-3">
               <div>
-                <Button size="sm" radius="full" variant="flat" isIconOnly>
+                <Button onClick={() => handleQuantityMinus(cartProduct?.product_id)} size="sm" radius="full" variant="flat" isIconOnly>
                   <FiMinus></FiMinus>
                 </Button>
               </div>
               <div className="text-base">{cartProduct?.quantity}</div>
               <div>
-                <Button size="sm" radius="full" variant="flat" isIconOnly>
+                <Button  onClick={() => handleQuantityPlus(cartProduct?.product_id)} size="sm" radius="full" variant="flat" isIconOnly>
                   <FiPlus></FiPlus>
                 </Button>
               </div>
@@ -47,12 +96,13 @@ const Cart = () => {
           <td>
             <div className="font-semibold flex justify-between items-center">
               <h4>{cartProduct?.price?.sale_price ? (cartProduct?.price?.sale_price * cartProduct?.quantity): (cartProduct?.price?.regular_price * cartProduct?.quantity)}</h4>
-              <Button size="sm" radius="full" variant="bordered" isIconOnly>
+              <Button onClick={() => handleDeleteFromCart(cartProduct?.product_id)} size="sm" radius="full" variant="bordered" isIconOnly>
                 <RxCross2></RxCross2>
               </Button>{" "}
             </div>
           </td>
-        </tr>)
+        </tr>) : <tr><td className="pt-10" colSpan={4}>
+          <h3 className="text-center font-semibold text-3xl">No Product Available</h3></td></tr>
          }
         </table>
       </div>
@@ -62,11 +112,11 @@ const Cart = () => {
         <div className="px-5 pb-5">
           <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
             <h3 className=" text-gray-500 text-sm font-medium">Subtotal:</h3>
-            <h5 className="text-sm font-medium">$5782</h5>
+            <h5 className="text-sm font-medium">${subTotal || 0.00}</h5>
           </div>
           <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
             <h3 className=" text-gray-500 text-sm font-medium">Discount:</h3>
-            <h5 className="text-sm font-medium">$57</h5>
+            <h5 className="text-sm font-medium">$00</h5>
           </div>
           <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
             <h3 className=" text-gray-500 text-sm font-medium">Shipping:</h3>
@@ -74,7 +124,7 @@ const Cart = () => {
           </div>
           <div className="flex justify-between pt-2 pb-3 items-center">
             <h3 className=" font-medium">Total</h3>
-            <h5 className="text-green-800 font-bold">$5839</h5>
+            <h5 className="text-green-800 font-bold">${subTotal || 0.00}</h5>
           </div>
           <Link to={"/checkout"}>
           <Button

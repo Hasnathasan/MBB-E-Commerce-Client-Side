@@ -22,8 +22,35 @@ const NavigationBar = () => {
   const [openCart, setOpenCart] = useState(false);
   const openCartDrawer = () => setOpenCart(true);
   const closeCartDrawer = () => setOpenCart(false);
+  const [userCart, setUserCart] = useState([]);
+
+useEffect(() => {
+  // Try retrieving the cart from localStorage, with a default of an empty array if not found
+  const cart = localStorage.getItem("cart") || '[]';
+
+  // Parse the retrieved data (either an empty string or valid JSON string)
+  try {
+    setUserCart(JSON.parse(cart));
+  } catch (error) {
+    // Handle parsing error gracefully (e.g., log the error)
+    console.error("Error parsing local storage cart:", error);
+    // Set userCart to an empty array in case of parsing error
+    setUserCart([]);
+  }
+}, []);
+const subTotal = userCart?.reduce((accumulator, product) => {
+  const price = product?.price;
+  return accumulator + (price.sale_price* product?.quantity || price.regular_price* product?.quantity); // Use nullish coalescing for price2
+}, 0);
   // const [userData, isUserDataLoading] = useUser();
   const navigate = useNavigate();
+  const handleDeleteFromCart = (id) => {
+    setUserCart(prevCart => {
+      const updatedCart = prevCart.filter(product => product.product_id !== id);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      return updatedCart;
+    });
+  };
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
@@ -613,7 +640,7 @@ const NavigationBar = () => {
         className="px-8 py-10 h-full flex flex-col shadow-large overflow-y-auto"
       >
         <div className="flex justify-between items-center mb-5">
-          <h2 className="text-xl font-semibold">Shoping Cart (2)</h2>
+          <h2 className="text-xl font-semibold">Shoping Cart ({userCart?.length})</h2>
           <Button
             onClick={closeCartDrawer}
             size="sm"
@@ -624,15 +651,18 @@ const NavigationBar = () => {
             <RxCross2 className="w-8 h-8"></RxCross2>
           </Button>
         </div>
-        <div className="flex flex-1 flex-col gap-4">
-          <div className="flex items-center gap-2">
-            <img className="w-20" src={image1} alt="" />
+        <div className="flex flex-1 flex-col overflow-y-auto gap-4">
+          {
+            userCart?.map(product => <div key={product?.product_id}>
+              <div className="flex items-center gap-2">
+            <img className="w-20 h-20" src={product?.featured_photo} alt="" />
             <div className="flex flex-1 items-center justify-between">
               <div>
-                <h5 className="text-sm font-medium">Fresh Indian Orange</h5>
-                <h6 className="text-sm text-gray-600">1kg * 5</h6>
+                <h5 className="text-sm font-medium">{product?.product_name}</h5>
+                <h6 className="text-sm text-gray-600">1kg * {product?.quantity}</h6>
               </div>
               <Button
+              onClick={() => handleDeleteFromCart(product?.product_id)}
                 size="sm"
                 className="p-0"
                 radius="full"
@@ -643,25 +673,10 @@ const NavigationBar = () => {
               </Button>{" "}
             </div>
           </div>
-          <span className=" border-t border-gray-200"></span>
-          <div className="flex items-center gap-2">
-            <img className="w-20" src={image1} alt="" />
-            <div className="flex flex-1 items-center justify-between">
-              <div>
-                <h5 className="text-sm font-medium">Fresh Indian Orange</h5>
-                <h6 className="text-sm text-gray-600">1kg * 5</h6>
-              </div>
-              <Button
-                size="sm"
-                className="p-0"
-                radius="full"
-                variant="bordered"
-                isIconOnly
-              >
-                <RxCross2></RxCross2>
-              </Button>{" "}
-            </div>
-          </div>
+          <span className=" border-t-2 border-gray-200"></span>
+            </div>)
+          }
+          
         </div>
         <div className="mt-auto">
           <div className="flex justify-between items-center mb-2">

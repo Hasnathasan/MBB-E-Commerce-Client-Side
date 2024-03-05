@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import useAxiosSecure from "./useAxiosSecure";
 
 
 const useProducts = ({categoryFilter, priceSlider, minRating, searchQuery}) => {
+  const [axiosSecure] = useAxiosSecure();
     const {
       data: products,
       isLoading: isProductsLoading,
@@ -10,7 +11,7 @@ const useProducts = ({categoryFilter, priceSlider, minRating, searchQuery}) => {
     } = useQuery({
       queryKey: ["products", categoryFilter, priceSlider, minRating, searchQuery],
       queryFn: async () => {
-        const res = await axios.get(`http://localhost:8000/products?${categoryFilter ? `category=${categoryFilter}` : ""}${priceSlider ? `&priceSlider=${priceSlider}` : ""}${minRating ? `&minRating=${minRating}` : ""}${searchQuery ? `&searchQuery=${searchQuery}` : ""}`);
+        const res = await axiosSecure.get(`/products?${categoryFilter ? `category=${categoryFilter}` : ""}${priceSlider ? `&priceSlider=${priceSlider}` : ""}${minRating ? `&minRating=${minRating}` : ""}${searchQuery ? `&searchQuery=${searchQuery}` : ""}`);
         return res.data;
       },
     });
