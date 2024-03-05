@@ -17,10 +17,11 @@ import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import PopularProductsCard from "../Home/PopularProducts/PopularProductsCard";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import useUser from "../../Hooks/useUser";
 import toast, { Toaster } from "react-hot-toast";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 function ThumbnailPlugin(mainRef) {
   return (slider) => {
@@ -56,6 +57,8 @@ function ThumbnailPlugin(mainRef) {
 }
 
 const Details = () => {
+  
+  const {user} = useContext(AuthContext);
   const [userData, isUserDataLoading] = useUser();
   const [product, setProduct] = useState();
   const [relatedProducts, setRelatedProducts] = useState();
@@ -74,7 +77,7 @@ const Details = () => {
     [ThumbnailPlugin(instanceRef)]
   );
   const {id} = useParams();
-  console.log(id);
+  console.log(user);
   useEffect( () => {
     setQuantity(1)
     axios.get(`https://mbb-e-commerce-server.vercel.app/singleProduct/${id}`)
@@ -115,16 +118,15 @@ const success = () => toast.success("Product Successfully added to cart")
 
   const handleAddToCart = () => {
     const cartProduct = {addedBy: userData?.email, quantity: quantity, product_id: _id, product_name, price, featured_photo, product_available_quantity: available_quantity};
-    axios.post(`https://mbb-e-commerce-server.vercel.app/cart`, cartProduct)
-    .then(res => {
-      if(res.data.insertedId){
-        console.log(res.data.insertedId);
-        success()
-      }
-    })
-    .catch(error => console.log(error.message))
+    let previousCart = JSON.parse(localStorage.getItem("cart")) || [];
+    const newCart = previousCart?.filter(product => product.product_id !== cartProduct.product_id);
+    
+    newCart.push(cartProduct);
+    localStorage.setItem("cart", JSON.stringify(newCart));
+    
+    success()
   }
-  
+  console.log(localStorage.getItem("cart"));
   return (
     <div className="mx-8 py-14">
       <div className="grid grid-cols-2 gap-2">

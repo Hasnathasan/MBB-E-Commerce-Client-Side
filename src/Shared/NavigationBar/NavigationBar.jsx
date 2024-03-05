@@ -14,7 +14,7 @@ import { RxCross2 } from "react-icons/rx";
 import { AuthContext } from "../../Providers/AuthProvider";
 // import useUser from "../../Hooks/useUser";
 const NavigationBar = () => {
-  const {setSearchQuery, setCategoryFilter, setPriceSlider, setMinRating,} = useContext(AuthContext);
+  const {setSearchQuery, setCategoryFilter, setPriceSlider, setMinRating, user} = useContext(AuthContext);
   const [isFixed, setIsFixed] = useState(false);
   const [open, setOpen] = useState(false);
   const openDrawer = () => setOpen(true);
@@ -65,7 +65,8 @@ const NavigationBar = () => {
             <h3>USD</h3>
           </div>
           <span>|</span>
-          <div className="flex justify-center gap-2 items-center">
+          {
+            !user ? <div className="flex justify-center gap-2 items-center">
             <Link to={"/signin"} className="cursor-pointer">
               Sign In
             </Link>{" "}
@@ -73,7 +74,8 @@ const NavigationBar = () => {
             <Link to={"signup"} className="cursor-pointer">
               Sign Up
             </Link>
-          </div>
+          </div> : <Link to={"/userDashboard/profile"}>Dashboard</Link>
+          }
         </div>
       </div>
       {/* isFixed ? "fixed1 transition-all duration-500" : "" */}

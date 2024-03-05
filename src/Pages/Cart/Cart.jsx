@@ -1,15 +1,16 @@
 import { Button } from "@nextui-org/react";
-import product1 from "../../assets/products1.png";
 import "./Cart.css";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
-import useUserCart from "../../Hooks/useUserCart";
+import { useEffect, useState } from "react";
 const Cart = () => {
-  const [userCart, isUserCartLoading] = useUserCart();
-  if(isUserCartLoading){
-    return <h1>Loading</h1>
-  }
+  const [userCart, setUserCart] = useState();
+  useEffect(() => {
+    const cart = localStorage.getItem("cart") || [];
+    setUserCart(JSON.parse(cart))
+  },[])
+
   console.log(userCart);
   return (
     <div className="grid mx-8 mt-7 justify-start grid-cols-12 gap-10 mb-40">
