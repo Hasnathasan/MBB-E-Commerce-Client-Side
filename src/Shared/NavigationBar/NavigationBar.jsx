@@ -1,18 +1,20 @@
 import { CiLocationOn, CiSearch } from "react-icons/ci";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import hamburger from "../../assets/hamburger.png";
 import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import "./NavigationBar.css";
 import { FiPhoneCall } from "react-icons/fi";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Drawer } from "@material-tailwind/react";
 import image1 from "../../assets/products1.png";
 import { Button } from "@nextui-org/react";
 import { RxCross2 } from "react-icons/rx";
+import { AuthContext } from "../../Providers/AuthProvider";
 // import useUser from "../../Hooks/useUser";
 const NavigationBar = () => {
+  const {setSearchQuery} = useContext(AuthContext);
   const [isFixed, setIsFixed] = useState(false);
   const [open, setOpen] = useState(false);
   const openDrawer = () => setOpen(true);
@@ -21,6 +23,7 @@ const NavigationBar = () => {
   const openCartDrawer = () => setOpenCart(true);
   const closeCartDrawer = () => setOpenCart(false);
   // const [userData, isUserDataLoading] = useUser();
+  const navigate = useNavigate();
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
@@ -37,6 +40,13 @@ const NavigationBar = () => {
   // const handleSiteAdminRequest = () => {
   //   // const siteAdminData = {email, userName, userPhoneNumber, userPhoto, }
   // }
+
+  const handleSearch = e => {
+    e.preventDefault();
+    const searchQuery = e.target.searchQuery.value;
+    setSearchQuery(searchQuery)
+    navigate("/products/filter")
+  }
   return (
     <div className="w-full relative z-[1000] mx-auto">
       {/* Top Info - Company name + sign In / sign up button */}
@@ -75,9 +85,11 @@ const NavigationBar = () => {
           </Link>
 
           <div className="">
-            <form className="h-10 w-full relative flex justify-center items-center">
+            <form onSubmit={handleSearch} className="h-10 w-full relative flex justify-center items-center">
               <CiSearch className="absolute w-5 h-5 top-2.5 left-2.5"></CiSearch>
               <input
+              name="searchQuery"
+              id="searchQuery"
                 className="h-full md:w-[240px] lg:w-[350px] ps-10 border border-gray-200 text-sm rounded-l outline-none"
                 type="text"
                 placeholder="Search"
@@ -140,14 +152,16 @@ const NavigationBar = () => {
           src={hamburger}
           alt=""
         />
-        <form className="h-8 relative flex justify-center  items-center">
+        <form onSubmit={handleSearch} className="h-8 relative flex justify-center  items-center">
           <CiSearch className="absolute w-4 h-4 top-2 left-1"></CiSearch>
           <input
+          id="searchQuery"
+          name="searchQuery"
             className="h-full w-[150px] sm:w-[250px] ps-7 border border-gray-200 text-sm rounded-l outline-none"
             type="text"
             placeholder="Search"
           />
-          <button className="bg-green-500 border text-white border-green-500 rounded-r text-xs px-3 h-full">
+          <button type="submit" className="bg-green-500 border text-white border-green-500 rounded-r text-xs px-3 h-full">
             Search
           </button>
         </form>

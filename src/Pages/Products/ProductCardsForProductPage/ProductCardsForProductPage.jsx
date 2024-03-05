@@ -8,8 +8,8 @@ import { AuthContext } from "../../../Providers/AuthProvider";
 
 const ProductCardsForProductPage = () => {
     
-  const {categoryFilter, priceSlider, minRating} = useContext(AuthContext);
-    const [products, isProductsLoading] = useProducts({categoryFilter, priceSlider, minRating});
+  const {categoryFilter, priceSlider, minRating, searchQuery} = useContext(AuthContext);
+    const [products, isProductsLoading] = useProducts({categoryFilter, priceSlider, minRating, searchQuery});
     if(isProductsLoading){
         return <h1>Loading</h1>
     }
