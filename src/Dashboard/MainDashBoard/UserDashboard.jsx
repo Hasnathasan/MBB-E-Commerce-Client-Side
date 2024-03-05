@@ -52,14 +52,14 @@ const UserDashboard = () => {
                 Settings
               </NavLink>
               {" "}
-              <NavLink className="p-4 flex items-center gap-3" to="artistProfile">
+              {/* <NavLink className="p-4 flex items-center gap-3" to="artistProfile">
               <IoSettingsOutline className="w-5 h-5"></IoSettingsOutline>{" "}
                 Artist Profile Settings
-              </NavLink>
-              <NavLink className="p-4 flex items-center gap-3" to="addnewproduct">
+              </NavLink> */}
+              {/* <NavLink className="p-4 flex items-center gap-3" to="addnewproduct">
                 <HiOutlineShoppingBag className="w-5 h-5"></HiOutlineShoppingBag>{" "}
                 Add New Product
-              </NavLink>
+              </NavLink> */}
           <div
             onClick={logOut}
             className="p-4 flex cursor-pointer items-center gap-3"

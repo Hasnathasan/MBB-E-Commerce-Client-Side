@@ -17,11 +17,12 @@ const AuthProvider = ({ children }) => {
   const auth = getAuth(app);
   const googleProvider = new GoogleAuthProvider();
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [categoryFilter, setCategoryFilter] = useState(null)
   const [priceSlider, setPriceSlider] = useState([0, 1000]);
   const [minRating, setMinRating] = useState(null)
-  const [searchQuery, setSearchQuery] = useState(null)
+  const [searchQuery, setSearchQuery] = useState(null);
+  const [isProductAdded, setIsProductAdded] = useState(1);
 console.log(minRating);
 console.log(user);
   const loginWithEmail = (email, password) => {
@@ -55,11 +56,14 @@ console.log(user);
     minRating,
     setMinRating,
     searchQuery, 
-    setSearchQuery
+    setSearchQuery,
+    isProductAdded,
+    setIsProductAdded
   };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (loggedUser) => {
       setUser(loggedUser);
+      setLoading(false);
       console.log(loggedUser);
         if(loggedUser){
           axios.post("https://mbb-e-commerce-server.vercel.app/jwt",{email: loggedUser?.email})
@@ -72,7 +76,7 @@ console.log(user);
           else{
             localStorage.removeItem("access-token")
           }
-      setLoading(false);
+     
     });
     return () => {
       return unsubscribe;

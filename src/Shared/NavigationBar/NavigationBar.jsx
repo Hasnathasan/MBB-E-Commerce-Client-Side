@@ -14,7 +14,7 @@ import { RxCross2 } from "react-icons/rx";
 import { AuthContext } from "../../Providers/AuthProvider";
 // import useUser from "../../Hooks/useUser";
 const NavigationBar = () => {
-  const {setSearchQuery, setCategoryFilter, setPriceSlider, setMinRating, user} = useContext(AuthContext);
+  const {setSearchQuery, setCategoryFilter, setPriceSlider, setMinRating, user, isProductAdded} = useContext(AuthContext);
   const [isFixed, setIsFixed] = useState(false);
   const [open, setOpen] = useState(false);
   const openDrawer = () => setOpen(true);
@@ -37,7 +37,7 @@ useEffect(() => {
     // Set userCart to an empty array in case of parsing error
     setUserCart([]);
   }
-}, []);
+}, [isProductAdded]);
 const subTotal = userCart?.reduce((accumulator, product) => {
   const price = product?.price;
   return accumulator + (price.sale_price* product?.quantity || price.regular_price* product?.quantity); // Use nullish coalescing for price2
@@ -142,7 +142,7 @@ const subTotal = userCart?.reduce((accumulator, product) => {
               <HiOutlineShoppingBag className="w-7 h-7"></HiOutlineShoppingBag>
               <div>
                 <h3 className="text-xs">Shopping Cart:</h3>
-                <h4 className="text-xs font-semibold">$ 57.00</h4>
+                <h4 className="text-xs font-semibold">$ {subTotal}</h4>
               </div>
             </div>
           </div>
@@ -651,7 +651,7 @@ const subTotal = userCart?.reduce((accumulator, product) => {
             <RxCross2 className="w-8 h-8"></RxCross2>
           </Button>
         </div>
-        <div className="flex flex-1 flex-col overflow-y-auto gap-4">
+        <div className="flex flex-1 flex-col overflow-y-auto my-4 gap-4">
           {
             userCart?.map(product => <div key={product?.product_id}>
               <div className="flex items-center gap-2">
@@ -659,7 +659,7 @@ const subTotal = userCart?.reduce((accumulator, product) => {
             <div className="flex flex-1 items-center justify-between">
               <div>
                 <h5 className="text-sm font-medium">{product?.product_name}</h5>
-                <h6 className="text-sm text-gray-600">1kg * {product?.quantity}</h6>
+                <h6 className="text-sm text-gray-600">(1 * {product?.quantity}) products</h6>
               </div>
               <Button
               onClick={() => handleDeleteFromCart(product?.product_id)}
@@ -673,15 +673,15 @@ const subTotal = userCart?.reduce((accumulator, product) => {
               </Button>{" "}
             </div>
           </div>
-          <span className=" border-t-2 border-gray-200"></span>
+          <span className=" border-t-2 border-gray-500"></span>
             </div>)
           }
           
         </div>
         <div className="mt-auto">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-medium">2 Product</span>
-            <span className="text-sm font-semibold">$26.00</span>
+            <span className="text-sm font-medium">{userCart?.length} Product</span>
+            <span className="text-sm font-semibold">${subTotal}</span>
           </div>
           <div className="space-y-2">
             <Link to={"/checkout"}>

@@ -58,7 +58,7 @@ function ThumbnailPlugin(mainRef) {
 
 const Details = () => {
   
-  const {user} = useContext(AuthContext);
+  const {user, setIsProductAdded} = useContext(AuthContext);
   const [userData, isUserDataLoading] = useUser();
   const [product, setProduct] = useState();
   const [relatedProducts, setRelatedProducts] = useState();
@@ -120,7 +120,7 @@ const success = () => toast.success("Product Successfully added to cart")
     const cartProduct = {addedBy: userData?.email, quantity: quantity, product_id: _id, product_name, price, featured_photo, product_available_quantity: available_quantity};
     let previousCart = JSON.parse(localStorage.getItem("cart")) || [];
     const newCart = previousCart?.filter(product => product.product_id !== cartProduct.product_id);
-    
+    setIsProductAdded(prevCount => prevCount + 1);
     newCart.push(cartProduct);
     localStorage.setItem("cart", JSON.stringify(newCart));
     
