@@ -14,7 +14,7 @@ import { RxCross2 } from "react-icons/rx";
 import { AuthContext } from "../../Providers/AuthProvider";
 // import useUser from "../../Hooks/useUser";
 const NavigationBar = () => {
-  const {setSearchQuery} = useContext(AuthContext);
+  const {setSearchQuery, setCategoryFilter, setPriceSlider, setMinRating,} = useContext(AuthContext);
   const [isFixed, setIsFixed] = useState(false);
   const [open, setOpen] = useState(false);
   const openDrawer = () => setOpen(true);
@@ -44,7 +44,11 @@ const NavigationBar = () => {
   const handleSearch = e => {
     e.preventDefault();
     const searchQuery = e.target.searchQuery.value;
+    setCategoryFilter(null)
+    setMinRating(null)
+    setPriceSlider([0,1000])
     setSearchQuery(searchQuery)
+
     navigate("/products/filter")
   }
   return (
