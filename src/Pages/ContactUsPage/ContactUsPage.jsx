@@ -1,18 +1,24 @@
+import { Button } from "@nextui-org/react";
 
 
 const ContactUsPage = () => {
     return (
         <div className="grid grid-cols-1 py-9 mx-8 md:grid-cols-2 gap-10">
-            <div className="flex flex-col justify-center">
-                <h2 className="text-xl font-semibold">Email Us: hasnathasan389@gamil.com</h2>
-            </div>
             <div>
-            <form className="flex flex-col mx-auto w-[95%] md:w-[70%] border p-7">
+            <h2 className="text-3xl font-semibold mb-8">Contact Us</h2>
+            <div className="flex flex-col gap-5 justify-center">
+                <h2 className="text-lg font-semibold">Email Us: <span className="text-gray-900 underline">hasnathasan389@gamil.com</span></h2>
+                <h2 className="text-lg font-semibold">Call Us: <span>(219) 555-0114</span></h2>
+                <h2 className="text-lg font-semibold">Address: <span>Lincoln- 344, Illinois, Chicago, USA</span></h2>
+            </div>
+            </div>
+            <div className="mx-5 md:mx-10">
+            <form className="flex flex-col mx-auto  border p-7">
           <label className="text-lg font-medium" htmlFor="name">
             Name
           </label>
           <input
-            className="py-3 px-4 mb-3 border-2 border-slate-700 text-base bg-[#f8f8f8] text-[#222222] font-medium outline-none rounded-lg"
+            className="py-3 px-4 mb-3 border-2 border-slate-700 text-base bg-[#f8f8f8] text-[#222222] font-medium outline-2 outline-green-500 rounded-lg"
             type="text"
             id="name"
             name="name"
@@ -22,7 +28,7 @@ const ContactUsPage = () => {
             Your email
           </label>
           <input
-            className="py-3 px-4 mb-3 border-2 border-slate-700 text-base bg-[#f8f8f8] font-medium outline-none rounded-lg"
+            className="py-3 px-4 mb-3 border-2 border-slate-700 text-base bg-[#f8f8f8] font-medium outline-2 outline-green-500 rounded-lg"
             type="email"
             id="email"
             name="email"
@@ -32,16 +38,20 @@ const ContactUsPage = () => {
             Message
           </label>
           <textarea
-            className="py-3 px-4 mb-3 border-2 border-slate-700 text-base bg-[#f8f8f8] font-medium outline-none rounded-lg"
+            className="py-3 px-4 mb-3 border-2 border-slate-700 text-base bg-[#f8f8f8] font-medium outline-2 outline-green-500 rounded-lg"
             id="message"
             name="message"
             rows={4}
           ></textarea>
-          <input
-            className="px-8 py-3 flex w-48 cursor-pointer justify-center items-center gap-2 mt-4 border-2 border-gray-800 bg-[#1b1b1b] transition hover:bg-transparent hover:text-[#1b1b1b] text-white rounded font-bold"
-            type="submit"
-            value="Send Message"
-          />
+          <Button
+          type="submit"
+          size="lg"
+          color="success"
+          radius="full"
+          className="text-white mb-2 px-12 bg-green-500"
+        >
+          Send Message
+        </Button>
         </form>
             </div>
         </div>
