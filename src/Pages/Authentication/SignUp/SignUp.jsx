@@ -6,6 +6,7 @@ import { AuthContext } from "../../../Providers/AuthProvider";
 import Swal from "sweetalert2";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { updateProfile } from "firebase/auth";
 
 const SignUp = () => {
   const { signUpWithEmail, logOut } = useContext(AuthContext);
@@ -14,7 +15,7 @@ const SignUp = () => {
   const [passhide2, setPasshide2] = useState(true);
   const navigate = useNavigate();
   const onSubmit = (data) => {
-    const { email, password, confirmPass } = data;
+    const { name, email, password, confirmPass } = data;
     if (password !== confirmPass) {
       return toast.error("Confirmation password didn't match")
     }
@@ -22,29 +23,37 @@ const SignUp = () => {
       email,
       userRole: "user",
       userAddress: "",
-      userName: "",
+      userName: name,
       userPhoneNumber: "",
       userPhoto: "",
       billingInfo: {},
     };
     signUpWithEmail(email, password)
       .then((result) => {
-        console.log(result.user);
-        reset();
-        axios.post("https://mbb-e-commerce-server.vercel.app/users", newUser).then((data) => {
-          if (data.data.insertedId) {
-            logOut();
-            reset();
-            Swal.fire(
-              "Sign Up Successfull",
-              "Now Login to Continue",
-              "success"
-            );
-            // setLoading(false);
-            // setError("");
-            navigate("/signin");
-          }
-        });
+        updateProfile(result.user, {
+          displayName: name,
+        })
+        .then(() => {
+          reset();
+          axios.post("https://mbb-e-commerce-server.vercel.app/users", newUser).then((data) => {
+            if (data.data.insertedId) {
+              logOut();
+              reset();
+              Swal.fire(
+                "Sign Up Successfull",
+                "Now Login to Continue",
+                "success"
+              );
+              // setLoading(false);
+              // setError("");
+              navigate("/signin");
+            }
+          });
+        })
+        .catch(error => {
+          toast.error(`${error.message}`)
+        })
+        
 
         // navigate(from, { replace: true });
       })
@@ -69,6 +78,15 @@ const SignUp = () => {
           action="#"
         >
           {/* <h3 className="text-base text-red-600">{error}</h3> */}
+          <input
+            {...register("name", { required: true })}
+            type="text"
+            name="name"
+            id="name"
+            className=" border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
+            placeholder="Your Name"
+            required
+          />
           <input
             {...register("email", { required: true })}
             type="email"

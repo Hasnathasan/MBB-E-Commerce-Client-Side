@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { IoStarOutline, IoStarSharp } from "react-icons/io5";
 import Rating from "react-rating";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../Providers/AuthProvider";
+import toast, { Toaster } from "react-hot-toast";
 
 const PopularProductsCard = ({ product, isRounded }) => {
   const [hovered, setHovered] = useState(false);
+  
+  const {user, setIsProductAdded} = useContext(AuthContext);
   const {
     _id,
     product_name,
@@ -22,7 +26,26 @@ const PopularProductsCard = ({ product, isRounded }) => {
     addedBy,
     prison_of_artist,
 } = product;
+const handleWishList = e => {
+  e.preventDefault();
+
+}
+const success = () => toast.success("Product Successfully added to cart")
+
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    const cartProduct = {addedBy: user?.email, quantity: 1, product_id: _id, product_name, price, featured_photo, product_available_quantity: available_quantity};
+    let previousCart = JSON.parse(localStorage.getItem("cart")) || [];
+    const newCart = previousCart?.filter(product => product.product_id !== cartProduct.product_id);
+    setIsProductAdded(prevCount => prevCount + 1);
+    newCart.push(cartProduct);
+    localStorage.setItem("cart", JSON.stringify(newCart));
+    
+    success()
+  }
+
   return (
+    <>
     <Link
     to={`/details/${_id}`}
       onMouseEnter={() => setHovered(true)}
@@ -49,22 +72,24 @@ const PopularProductsCard = ({ product, isRounded }) => {
             readonly
           />
         </div>
-        <div className="bg-[#ebebeb] rounded-full cursor-pointer flex justify-center items-center w-10 h-10">
+        <div onClick={handleAddToCart} className={`bg-[#ebebeb] absolute bottom-3 right-3 z-50 rounded-full cursor-pointer  flex justify-center items-center w-10 h-10`}>
           <HiOutlineShoppingBag className="w-5 h-5"></HiOutlineShoppingBag>
         </div>
       </div>
 
       {/* Hovered Buttons - Details + Wishlist */}
       <div
-        className={`absolute right-3 top-3 flex transition-all !duration-500 ${
+        className={`absolute right-3 z-50 top-3 flex transition-all !duration-500 ${
           hovered ? "opacity-100" : "opacity-0"
         } flex-col justify-center items-center gap-5`}
       >
-        <div className="bg-[#ffffff] border border-gray-100 shadow rounded-full cursor-pointer flex justify-center items-center w-10 h-10">
+        <div onClick={handleWishList} className="bg-[#ffffff] border border-gray-100 shadow rounded-full cursor-pointer flex justify-center items-center w-10 h-10">
           <GoHeart className="w-5 h-5" />
         </div>
       </div>
+      
     </Link>
+    <Toaster /></>
   );
 };
 
