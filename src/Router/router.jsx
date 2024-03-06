@@ -26,6 +26,8 @@ import ProductCardsForProductPage from "../Pages/Products/ProductCardsForProduct
 import Artists from "../Pages/Artists/Artists";
 import Categories from "../Pages/Categories/Categories";
 import AboutUs from "../Pages/AboutUs/AboutUs";
+import PrivateRoute from "../Components/PrivateRoute/PrivateRoute";
+import ContactUsPage from "../Pages/ContactUsPage/ContactUsPage";
 
 
 const router = createBrowserRouter([
@@ -60,7 +62,7 @@ const router = createBrowserRouter([
         element: <SignIn></SignIn>
       },
       {
-        path: "/aboutUs",
+        path: "/about-us",
         element: <AboutUs></AboutUs>
       },
       {
@@ -76,6 +78,10 @@ const router = createBrowserRouter([
         element: <SignUp></SignUp>
       },
       {
+        path: "/contact-us",
+        element: <ContactUsPage></ContactUsPage>
+      },
+      {
         path: "/mycart",
         element: <Cart></Cart>
       },
@@ -89,7 +95,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/userdashboard",
-        element: <UserDashboard></UserDashboard>,
+        element: <PrivateRoute><UserDashboard></UserDashboard></PrivateRoute>,
         children: [
           {
             path: "profile",
@@ -127,7 +133,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/adminDashboard",
-    element: <SuperAdminMainDashBoard></SuperAdminMainDashBoard>,
+    element: <PrivateRoute><SuperAdminMainDashBoard></SuperAdminMainDashBoard></PrivateRoute>,
     children: [
     {
       path: "overview",
