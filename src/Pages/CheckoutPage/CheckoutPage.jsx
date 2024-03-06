@@ -5,19 +5,31 @@ import product2 from "../../assets/products2.png";
 
 const CheckoutPage = () => {
   const [userData] = useUser();
+  const handlePlaceOrder = e => {
+    e.preventDefault();
+    const form = e.target;
+    const updatedName = form.userName.value;
+    const companyName = form.companyName.value;
+    const country = form.country.value;
+    const states = form.states.value;
+    const updatedAddress = form.address.value;
+    const zipCode = form.zipCode.value;
+    const updatedNum = form.phoneNumber.value;
+    console.log({updatedName}, companyName, country, updatedAddress, states, zipCode, updatedNum);
+  }
   return (
-    <div className="grid grid-cols-12 items-start py-10 mx-8 gap-6">
+    <form onSubmit={handlePlaceOrder} className="grid grid-cols-12 items-start py-10 mx-8 gap-6">
       <div className="col-span-8">
         <div className={`border-b border-gray-300 pb-5`}>
           <h4 className="mb-5 text-2xl font-semibold">Billing Information</h4>
           <div className="">
             <div className="grid grid-cols-2 gap-5">
               <div>
-                <label htmlFor="name">Your Name</label>
+                <label htmlFor="userName">Your Name</label>
                 <input
                   type="text"
-                  name="name"
-                  id="name"
+                  name="userName"
+                  id="userName"
                   className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                   placeholder="Name"
                   defaultValue={userData?.userName}
@@ -179,6 +191,7 @@ const CheckoutPage = () => {
               <Radio value="stripe">Stripe</Radio>
             </RadioGroup>
             <Button
+            type="submit"
               color="success"
               radius="full"
               size="lg"
@@ -189,7 +202,7 @@ const CheckoutPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 
