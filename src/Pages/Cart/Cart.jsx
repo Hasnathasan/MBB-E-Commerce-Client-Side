@@ -41,12 +41,13 @@ useEffect(() => {
       return updatedCart;
     });
   };
-  
+
   const handleQuantityPlus = (id) => {
     setUserCart(prevCart => {
       const updatedCart = prevCart.map(product => {
+        console.log(product);
         if (product.product_id === id) {
-          return { ...product, quantity: product.quantity + 1 };
+          return { ...product, quantity: product?.quantity == product?.product_available_quantity ? product?.quantity : product?.quantity + 1 };
         }
         return product;
       });

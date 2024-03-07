@@ -39,7 +39,8 @@ useEffect(() => {
     const updatedAddress = form.address.value;
     const zipCode = form.zipCode.value;
     const userPhoneNumber = form.phoneNumber.value;
-    console.log(
+    const additional_info = form.additional_info.value;
+    console.log(email, additional_info,
       userName,
       companyName,
       country,
@@ -169,15 +170,14 @@ useEffect(() => {
         <div className="mt-6">
           <h4 className="mb-4 text-2xl font-semibold">Additional Info</h4>
           <div>
-            <label htmlFor="name">Order notes (optional)</label>
+            <label htmlFor="additional_info">Order notes (optional)</label>
             <textarea
               type="text"
-              name="name"
-              id="name"
+              name="additional_info"
+              id="additional_info"
               className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
               placeholder="Notes about your order, e.g. special notes for delivery"
               rows={4}
-              required
             />
           </div>
         </div>
@@ -185,25 +185,27 @@ useEffect(() => {
       <div className="col-span-4 border border-gray-300 rounded-lg">
         <h3 className=" text-2xl font-semibold p-5">Order Summery</h3>
         <div className="px-5">
+          <div className="max-h-60 overflow-y-auto">
           {
             userCart?.map(product => <div key={product?.product_id} className="flex items-center mb-3 justify-between gap-2">
             <div className="flex items-center gap-2">
               <img className="w-16 h-14" src={product?.featured_photo} alt="" />
               <h3 className="font-semibold text-sm flex justify-between items-center gap-3">
-                {product?.product_name} <span>x{product?.quantity}</span>
+                {product?.product_name.slice(0, 20)}... <span>x{product?.quantity}</span>
               </h3>
             </div>
-            <h4 className="text-sm font-semibold">${product?.price?.sale_price || product?.price?.sale_price}</h4>
+            <h4 className="text-sm font-semibold">${product?.price?.sale_price ? (product?.price?.sale_price * product?.quantity): (product?.price?.regular_price * product?.quantity)}</h4>
           </div>)
           }
+          </div>
           <div className="py-5">
             <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
               <h3 className=" text-gray-700 text-sm font-medium">Subtotal:</h3>
-              <h5 className="text-sm font-semibold">$5782</h5>
+              <h5 className="text-sm font-semibold">${subTotal}</h5>
             </div>
             <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
               <h3 className=" text-gray-700 text-sm font-medium">Discount:</h3>
-              <h5 className="text-sm font-semibold">$57</h5>
+              <h5 className="text-sm font-semibold">$0</h5>
             </div>
             <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
               <h3 className=" text-gray-700 text-sm font-medium">Shipping:</h3>
@@ -211,11 +213,10 @@ useEffect(() => {
             </div>
             <div className="flex justify-between pt-2 pb-5 items-center">
               <h3 className=" font-semibold">Total</h3>
-              <h5 className="text-gray-900 font-bold">$5839</h5>
+              <h5 className="text-gray-900 font-bold">${subTotal}</h5>
             </div>
             <h3 className=" text-2xl font-semibold">Payment Method</h3>
-            <RadioGroup size="sm" className="my-3">
-              <Radio value="cashOnDelevery">Cash on delevery</Radio>
+            <RadioGroup defaultValue="stripe" color="success" size="sm" className="my-4">
               <Radio value="stripe">Stripe</Radio>
             </RadioGroup>
             <Button
