@@ -32,6 +32,7 @@ import { useRef, useState } from "react";
 import { MultiSelect } from "react-selectize";
 import useUser from "../../../Hooks/useUser";
 import { IoEyeOffSharp, IoEyeOutline } from "react-icons/io5";
+import toast, { Toaster } from "react-hot-toast";
 
 const ManageArtists = () => {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -41,6 +42,7 @@ const ManageArtists = () => {
     const [selectedFile, setSelectedFile] = useState(null);
   const [passhide, setPasshide] = useState(true);
   const [passhide2, setPasshide2] = useState(true);
+  const [prison, setPrison] = useState(null);
     const fileInputRef = useRef(null);
   console.log(userData);
     const handleFileChange = (event) => {
@@ -59,9 +61,69 @@ const ManageArtists = () => {
     );
 
     
-    const addNewArtist = () => {
+    const addNewArtist = (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const userName = form.name.value;
+      const email = form.email.value;
+      const password = form.password.value;
+      const confirmPass = form.confirmPass.value;
+      const bio = form.bio.value;
+      const art_description = form.art_description.value;
+      const bio_video_link = form.bio_video.value;
+      const keywords = tags?.map((tag) => tag.label);
+      const country = form.country.value;
+      const states = form.states.value;
+      const address = form.address.value;
+      const zipCode = form.zipCode.value;
+      const userPhoneNumber = form.phoneNumber.value;
 
+
+      let billingInfo = {
+        userName,
+        country,
+        states,
+        address,
+        userPhoneNumber,
+        zipCode,
+      };
+      if (password !== confirmPass) {
+        return toast.error("Confirmation password didn't match")
+      }
+      console.log({email,prison,userName, bio, art_description, bio_video_link, keywords, country, states, address, zipCode, userPhoneNumber});
+      let artist = {email, password, userName, art_description, bio, bio_video_link, keywords, userPhoneNumber, billingInfo, userRole: "artist"}
+      if (selectedFile) {
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+        console.log(selectedFile);
+        axios
+          .post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then(response => {
+            console.log(response.data.url);
+            artist.userPhoto = response.data.url;
+            if(response.data.url){
+              axios
+        .post(
+          `http://localhost:8000/artistByAdmin`,
+          artist
+        )
+        .then((res) => {
+          console.log(res.data);
+          
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+            }
+          })
+          .catch(error => console.log(error))
     }
+
+  }
 
 
     const handleUserUpdate = async (e) => {
@@ -78,56 +140,38 @@ const ManageArtists = () => {
       const address = form.address.value;
       const zipCode = form.zipCode.value;
       const phone_number = form.phoneNumber.value;
-      let billingInfo = {
-        user_name,
-        company_name,
-        country,
-        states,
-        address,
-        phone_number,
-        zipCode,
-      };
       
-      if (selectedFile) {
-        const formData = new FormData();
-        formData.append("image", selectedFile);
-        console.log(selectedFile);
-        axios
-          .post("https://mbb-e-commerce-server.vercel.app/upload", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
-          .then((response) => {
-            console.log(response.data.url);
-            if (response.data?.url) {
-              billingInfo.user_photo = response.data?.url;
-              const newUser = {};
-              axios
-                .post(
-                  `https://mbb-e-commerce-server.vercel.app/user`,
-                  billingInfo
-                )
-                .then((res) => {
-                  console.log(res.data);
-                  if (res.data.modifiedCount > 0) {
-                    Swal.fire(
-                      "Congratulation",
-                      "Successfully Updated Your Data",
-                      "success"
-                    );
-                  }
-                })
-                .catch((error) => {
-                  console.log(error);
-                });
-            }
-          })
-          .catch((error) => {
-            console.error("Error uploading file: ", error);
-          });
+      
+      
+          // .then((response) => {
+          //   console.log(response.data.url);
+          //   if (response.data?.url) {
+          //     billingInfo.user_photo = response.data?.url;
+          //     const newUser = {};
+          //     axios
+          //       .post(
+          //         `https://mbb-e-commerce-server.vercel.app/user`,
+          //         billingInfo
+          //       )
+          //       .then((res) => {
+          //         console.log(res.data);
+          //         if (res.data.modifiedCount > 0) {
+          //           Swal.fire(
+          //             "Congratulation",
+          //             "Successfully Updated Your Data",
+          //             "success"
+          //           );
+          //         }
+          //       })
+          //       .catch((error) => {
+          //         console.log(error);
+          //       });
+          //   }
+          // })
+          // .catch((error) => {
+          //   console.error("Error uploading file: ", error);
+          // });
       }
-    };
     const handlePaymentInfoUpdate = (e) => {
       e.preventDefault();
       const form = e.target;
@@ -273,38 +317,45 @@ const ManageArtists = () => {
             <>
               <ModalHeader className="flex flex-col gap-1">Add a New Artist</ModalHeader>
               <ModalBody>
-        <form onSubmit={handleUserUpdate} className="">
+        <form onSubmit={addNewArtist} className="">
         <div className="border border-gray-300 rounded-lg mb-6">
         <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">
           Sign Up Credentials
         </h4>
         <div className="grid grid-cols-2 gap-5 p-5 ">
+        <div>
+        <label htmlFor="name">Artist Name</label>
         <input
             type="text"
             name="name"
             id="name"
-            className=" border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
+            className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
             placeholder="Your Name"
             required
           />
+        </div>
+        <div>
+        <label htmlFor="email">Artist Email</label>
           <input
             type="email"
             name="email"
             id="email"
-            className=" border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
+            className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
             placeholder="Email"
             required
           />
+        </div>
           <div className="relative">
+        <label htmlFor="password">Password</label>
             <input
               type={passhide ? "password" : "text"}
               name="password"
               id="password"
               placeholder="Password"
-              className=" border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
+              className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
               required
             />
-            <span className="absolute right-4 top-3">
+            <span className="absolute right-4 bottom-3">
               {passhide ? (
                 <IoEyeOutline
                   className="cursor-pointer"
@@ -319,15 +370,16 @@ const ManageArtists = () => {
             </span>
           </div>
           <div className="relative">
+        <label htmlFor="confirmPass">Confirmation Password</label>
             <input
               type={passhide2 ? "password" : "text"}
               name="confirmPass"
               id="confirmPass"
               placeholder="Confirm Password"
-              className=" border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
+              className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
               required
             />
-            <span className="absolute right-4 top-3">
+            <span className="absolute right-4 bottom-3">
               {passhide2 ? (
                 <IoEyeOutline
                   className="cursor-pointer"
@@ -469,12 +521,13 @@ const ManageArtists = () => {
                 placeholder="Select a user"
                 labelPlacement="outside"
                 className="w-full"
+                onChange={e => setPrison(e.target.value)}
               >
                 {(prison) => (
                   <SelectItem
-                    key={prison?._id}
+                    key={`${prison?.email}=${prison?.prison_name}`}
                     variant="bordered"
-                    textValue={prison?.prison_name}
+                    textValue={`${prison?.email} ${prison?.prison_name}`}
                   >
                     <div className="flex gap-2 items-center">
                       <Avatar
@@ -509,7 +562,7 @@ const ManageArtists = () => {
           </div>
           </div>
           
-          <div className="grid grid-cols-3 gap-5">
+          <div className="grid grid-cols-2 gap-5">
             <div>
               <label htmlFor="country">Country / Region</label>
               <input
@@ -532,7 +585,10 @@ const ManageArtists = () => {
                 required
               />
             </div>
-            <div>
+          </div>
+          <div className="grid grid-cols-2 gap-5">
+
+          <div>
               <label htmlFor="zipCode">Zip Code</label>
               <input
                 type="number"
@@ -543,20 +599,6 @@ const ManageArtists = () => {
                 required
               />
             </div>
-          </div>
-          <div className="grid grid-cols-2 gap-5">
-            <div>
-              <label htmlFor="email">Email Address</label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                placeholder="Email Address"
-                required
-              />
-            </div>
-
             <div>
               <label htmlFor="phoneNumber">Phone Number</label>
               <input
@@ -591,6 +633,7 @@ const ManageArtists = () => {
           )}
         </ModalContent>
       </Modal>
+      <Toaster></Toaster>
     </div>
     );
 };
