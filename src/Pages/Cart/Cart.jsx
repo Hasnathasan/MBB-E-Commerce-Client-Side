@@ -3,11 +3,12 @@ import "./Cart.css";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../Providers/AuthProvider";
 const Cart = () => {
 
 const [userCart, setUserCart] = useState([]);
-
+const {setIsProductAdded} = useContext(AuthContext)
 useEffect(() => {
   // Try retrieving the cart from localStorage, with a default of an empty array if not found
   const cart = localStorage.getItem("cart") || '[]';
@@ -35,6 +36,7 @@ useEffect(() => {
         }
         return product;
       });
+      setIsProductAdded(prevCount => prevCount + 1);
       localStorage.setItem("cart", JSON.stringify(updatedCart));
       return updatedCart;
     });
@@ -48,6 +50,7 @@ useEffect(() => {
         }
         return product;
       });
+      setIsProductAdded(prevCount => prevCount + 1);
       localStorage.setItem("cart", JSON.stringify(updatedCart));
       return updatedCart;
     });
@@ -56,6 +59,7 @@ useEffect(() => {
     setUserCart(prevCart => {
       const updatedCart = prevCart.filter(product => product.product_id !== id);
       localStorage.setItem("cart", JSON.stringify(updatedCart));
+      setIsProductAdded(prevCount => prevCount + 1);
       return updatedCart;
     });
   };

@@ -2,12 +2,36 @@ import { Button, Radio, RadioGroup } from "@nextui-org/react";
 import useUser from "../../Hooks/useUser";
 import product1 from "../../assets/products1.png";
 import product2 from "../../assets/products2.png";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const CheckoutPage = () => {
   const [userData] = useUser();
+  const [userCart, setUserCart] = useState([]);
+  const {isProductAdded} = useContext(AuthContext)
+useEffect(() => {
+  // Try retrieving the cart from localStorage, with a default of an empty array if not found
+  const cart = localStorage.getItem("cart") || '[]';
+
+  // Parse the retrieved data (either an empty string or valid JSON string)
+  try {
+    setUserCart(JSON.parse(cart));
+  } catch (error) {
+    // Handle parsing error gracefully (e.g., log the error)
+    console.error("Error parsing local storage cart:", error);
+    // Set userCart to an empty array in case of parsing error
+    setUserCart([]);
+  }
+}, [isProductAdded]);
+  const subTotal = userCart?.reduce((accumulator, product) => {
+    const price = product?.price;
+    return accumulator + (price.sale_price* product?.quantity || price.regular_price* product?.quantity); // Use nullish coalescing for price2
+  }, 0);
+  console.log(subTotal);
   const handlePlaceOrder = (e) => {
     e.preventDefault();
     const form = e.target;
+    const email = form.email.value;
     const userName = form.userName.value;
     const companyName = form.companyName.value;
     const country = form.country.value;
@@ -161,24 +185,17 @@ const CheckoutPage = () => {
       <div className="col-span-4 border border-gray-300 rounded-lg">
         <h3 className=" text-2xl font-semibold p-5">Order Summery</h3>
         <div className="px-5">
-          <div className="flex items-center mb-3 justify-between gap-2">
+          {
+            userCart?.map(product => <div key={product?.product_id} className="flex items-center mb-3 justify-between gap-2">
             <div className="flex items-center gap-2">
-              <img className="w-16 h-14" src={product1} alt="" />
+              <img className="w-16 h-14" src={product?.featured_photo} alt="" />
               <h3 className="font-semibold text-sm flex justify-between items-center gap-3">
-                The Starry Night <span>x5</span>
+                {product?.product_name} <span>x{product?.quantity}</span>
               </h3>
             </div>
-            <h4 className="text-sm font-semibold">$70.00</h4>
-          </div>
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <img className="w-16 h-14" src={product2} alt="" />
-              <h3 className="font-semibold text-sm flex justify-between items-center gap-3">
-                Girl with a Pearl Earring <span>x2</span>
-              </h3>
-            </div>
-            <h4 className="text-sm font-semibold">$270.00</h4>
-          </div>
+            <h4 className="text-sm font-semibold">${product?.price?.sale_price || product?.price?.sale_price}</h4>
+          </div>)
+          }
           <div className="py-5">
             <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
               <h3 className=" text-gray-700 text-sm font-medium">Subtotal:</h3>

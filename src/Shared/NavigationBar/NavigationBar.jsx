@@ -14,7 +14,7 @@ import { RxCross2 } from "react-icons/rx";
 import { AuthContext } from "../../Providers/AuthProvider";
 // import useUser from "../../Hooks/useUser";
 const NavigationBar = () => {
-  const {setSearchQuery, setCategoryFilter, setPriceSlider, setMinRating, user, isProductAdded} = useContext(AuthContext);
+  const {setSearchQuery, setCategoryFilter, setPriceSlider, setMinRating, user, isProductAdded, setIsProductAdded} = useContext(AuthContext);
   const [isFixed, setIsFixed] = useState(false);
   const [open, setOpen] = useState(false);
   const openDrawer = () => setOpen(true);
@@ -48,6 +48,7 @@ const subTotal = userCart?.reduce((accumulator, product) => {
     setUserCart(prevCart => {
       const updatedCart = prevCart.filter(product => product.product_id !== id);
       localStorage.setItem("cart", JSON.stringify(updatedCart));
+      setIsProductAdded(prevCount => prevCount + 1);
       return updatedCart;
     });
   };
