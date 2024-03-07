@@ -31,6 +31,7 @@ import Swal from "sweetalert2";
 import { useRef, useState } from "react";
 import { MultiSelect } from "react-selectize";
 import useUser from "../../../Hooks/useUser";
+import { IoEyeOffSharp, IoEyeOutline } from "react-icons/io5";
 
 const ManageArtists = () => {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -38,6 +39,8 @@ const ManageArtists = () => {
   const [userData, isUserDataLoading] = useUser();
     const [artistsData, isArtistsDataLoading] = useArtists();
     const [selectedFile, setSelectedFile] = useState(null);
+  const [passhide, setPasshide] = useState(true);
+  const [passhide2, setPasshide2] = useState(true);
     const fileInputRef = useRef(null);
   console.log(userData);
     const handleFileChange = (event) => {
@@ -46,6 +49,7 @@ const ManageArtists = () => {
         setSelectedFile(file);
       }
     };
+    
     console.log(selectedFile);
     const handleButtonClick = () => {
       fileInputRef.current.click();
@@ -53,6 +57,13 @@ const ManageArtists = () => {
     const [tags, setTags] = useState(
       []?.map((str) => ({ label: str, value: str }))
     );
+
+    
+    const addNewArtist = () => {
+
+    }
+
+
     const handleUserUpdate = async (e) => {
       e.preventDefault();
       const form = e.target;
@@ -91,7 +102,7 @@ const ManageArtists = () => {
             console.log(response.data.url);
             if (response.data?.url) {
               billingInfo.user_photo = response.data?.url;
-              const newUser = {}
+              const newUser = {};
               axios
                 .post(
                   `https://mbb-e-commerce-server.vercel.app/user`,
@@ -263,6 +274,75 @@ const ManageArtists = () => {
               <ModalHeader className="flex flex-col gap-1">Add a New Artist</ModalHeader>
               <ModalBody>
         <form onSubmit={handleUserUpdate} className="">
+        <div className="border border-gray-300 rounded-lg mb-6">
+        <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">
+          Sign Up Credentials
+        </h4>
+        <div className="grid grid-cols-2 gap-5 p-5 ">
+        <input
+            type="text"
+            name="name"
+            id="name"
+            className=" border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
+            placeholder="Your Name"
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className=" border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
+            placeholder="Email"
+            required
+          />
+          <div className="relative">
+            <input
+              type={passhide ? "password" : "text"}
+              name="password"
+              id="password"
+              placeholder="Password"
+              className=" border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
+              required
+            />
+            <span className="absolute right-4 top-3">
+              {passhide ? (
+                <IoEyeOutline
+                  className="cursor-pointer"
+                  onClick={() => setPasshide(!passhide)}
+                />
+              ) : (
+                <IoEyeOffSharp
+                  className="cursor-pointer"
+                  onClick={() => setPasshide(!passhide)}
+                />
+              )}
+            </span>
+          </div>
+          <div className="relative">
+            <input
+              type={passhide2 ? "password" : "text"}
+              name="confirmPass"
+              id="confirmPass"
+              placeholder="Confirm Password"
+              className=" border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
+              required
+            />
+            <span className="absolute right-4 top-3">
+              {passhide2 ? (
+                <IoEyeOutline
+                  className="cursor-pointer"
+                  onClick={() => setPasshide2(!passhide2)}
+                />
+              ) : (
+                <IoEyeOffSharp
+                  className="cursor-pointer"
+                  onClick={() => setPasshide2(!passhide2)}
+                />
+              )}
+            </span>
+          </div>
+          </div>
+        </div>
               <div className={`border rounded-lg overflow-auto border-gray-300 mb-6`}>
         <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">
           Artist&apos;s personal Info
@@ -270,15 +350,7 @@ const ManageArtists = () => {
           <div className="p-5 grid grid-cols-12 gap-5 items-center justify-center">
             <div className="col-span-9">
               {/* <h3 className="text-base text-red-600">{error}</h3> */}
-              <label htmlFor="name">Your Name</label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
-                placeholder="Name"
-                required
-              />
+              
               <label htmlFor="bio">Artist Bio</label>
               <textarea
                 name="bio"

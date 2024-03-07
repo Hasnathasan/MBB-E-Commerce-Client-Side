@@ -9,7 +9,7 @@ import {
   signOut,
 } from "firebase/auth";
 import axios from "axios";
-import {app} from "../Firebase/Firebase.config";
+import app from "../Firebase/Firebase.config";
 
 export const AuthContext = createContext(null);
 // eslint-disable-next-line react/prop-types
