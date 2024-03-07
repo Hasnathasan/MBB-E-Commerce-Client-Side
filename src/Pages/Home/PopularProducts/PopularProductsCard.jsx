@@ -40,7 +40,7 @@ const PopularProductsCard = ({ product, isRounded }) => {
       product_name,
       price,
       featured_photo,
-      product_available_quantity: available_quantity,
+      product_available_quantity: parseInt(available_quantity),
     };
     let previousCart = JSON.parse(localStorage.getItem("cart")) || [];
     const newCart = previousCart?.filter(

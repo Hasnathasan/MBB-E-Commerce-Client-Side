@@ -27,7 +27,7 @@ useEffect(() => {
     const price = product?.price;
     return accumulator + (price.sale_price* product?.quantity || price.regular_price* product?.quantity); // Use nullish coalescing for price2
   }, 0);
-  console.log(subTotal);
+  console.log(userCart);
   const handleQuantityMinus = (id) => {
     setUserCart(prevCart => {
       const updatedCart = prevCart.map(product => {

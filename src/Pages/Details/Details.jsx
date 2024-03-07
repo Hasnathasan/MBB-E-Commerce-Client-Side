@@ -117,7 +117,7 @@ console.log(relatedProducts);
 const success = () => toast.success("Product Successfully added to cart")
 
   const handleAddToCart = () => {
-    const cartProduct = {addedBy: userData?.email, quantity: quantity, product_id: _id, product_name, price, featured_photo, product_available_quantity: available_quantity};
+    const cartProduct = {addedBy: userData?.email, quantity: quantity, product_id: _id, product_name, price, featured_photo, product_available_quantity: parseInt(available_quantity)};
     let previousCart = JSON.parse(localStorage.getItem("cart")) || [];
     const newCart = previousCart?.filter(product => product.product_id !== cartProduct.product_id);
     setIsProductAdded(prevCount => prevCount + 1);
