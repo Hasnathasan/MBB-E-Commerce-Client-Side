@@ -91,7 +91,7 @@ const OverView = () => {
               Total Orders - {productsLength?.length}
             </h2>
             <Link
-              to={"/adminDashboard/products"}
+              to={"/adminDashboard/orders"}
               className="text-white font-bold  text-[10px] md:text-sm"
             >
               View Details
@@ -105,7 +105,7 @@ const OverView = () => {
               Total Customers - {productsLength?.length}
             </h2>
             <Link
-              to={"/adminDashboard/products"}
+              to={"/adminDashboard/customers"}
               className="text-white font-bold  text-[10px] md:text-sm"
             >
               View Details
@@ -119,7 +119,7 @@ const OverView = () => {
               Total Artists - {productsLength?.length}
             </h2>
             <Link
-              to={"/adminDashboard/products"}
+              to={"/adminDashboard/artists"}
               className="text-white font-bold text-sm"
             >
               View Details

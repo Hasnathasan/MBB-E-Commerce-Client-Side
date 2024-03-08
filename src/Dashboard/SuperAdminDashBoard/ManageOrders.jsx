@@ -15,7 +15,7 @@ import {
     User,
   } from "@nextui-org/react";
 import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
-import useUsers from "../../../Hooks/useUsers";
+import useUsers from "../../Hooks/useUsers";
 
 const ManageOrders = () => {
     const [usersData] = useUsers();

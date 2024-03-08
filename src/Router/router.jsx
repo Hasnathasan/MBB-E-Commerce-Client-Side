@@ -29,6 +29,7 @@ import AboutUs from "../Pages/AboutUs/AboutUs";
 import PrivateRoute from "../Components/PrivateRoute/PrivateRoute";
 import ContactUsPage from "../Pages/ContactUsPage/ContactUsPage";
 import OverView from "../Dashboard/SuperAdminDashBoard/OverView/OverView";
+import ManageOrders from "../Dashboard/SuperAdminDashBoard/ManageOrders";
 
 
 const router = createBrowserRouter([
@@ -154,7 +155,7 @@ const router = createBrowserRouter([
     },
     {
       path: "orders",
-      element: <IAmWorkingOnIt></IAmWorkingOnIt>
+      element: <ManageOrders></ManageOrders>
     },
     {
       path: "sales-report",
