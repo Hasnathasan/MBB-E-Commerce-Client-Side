@@ -236,11 +236,11 @@ useEffect(() => {
         </div>
       </div>
     </form>
-    <Modal scrollBehavior="outside" size="5xl" backdrop="opaque" className="!z-50" isOpen={isOpen} onOpenChange={onOpenChange}>
+    <Modal scrollBehavior="outside" size="2xl" backdrop="opaque" className="!z-50" isOpen={isOpen} onOpenChange={onOpenChange}>
     <ModalContent>
       {(onClose) => (
         <>
-          <ModalHeader className="flex flex-col gap-1">Add a New Product</ModalHeader>
+          <ModalHeader className="flex flex-col gap-1">Payment with card</ModalHeader>
           <ModalBody>
           <PaymentCard></PaymentCard>
           </ModalBody>

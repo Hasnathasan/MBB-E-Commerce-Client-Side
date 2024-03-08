@@ -7,8 +7,7 @@ const stritePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
 const PaymentCard = () => {
   return (
     <>
-        <div className="w-[95%] md:w-[60%]">
-          <h2 className="text-2xl mb-4">Teka teka tmi uira uira aso</h2>
+        <div className="w-[95%] mx-auto">
           <Elements stripe={stritePromise}>
             <PaymentProcess></PaymentProcess>
           </Elements>

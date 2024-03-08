@@ -3,6 +3,7 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import toast, { Toaster } from "react-hot-toast";
 
 const PaymentProcess = () => {
     const stripe = useStripe();
@@ -93,8 +94,10 @@ useEffect(() => {
         }
         setProcessing(false)
         if(paymentIntent.status === "succeeded"){
-          const transactionId = paymentIntent.id;
-          console.log(transactionId);
+            const transactionId = paymentIntent.id;
+            console.log(transactionId);
+            const paymentSuccessToast = () => toast.success(`Payment successfully completed`)
+            paymentSuccessToast()
           setTransactionId(transactionId)
         }
     }
@@ -103,9 +106,6 @@ useEffect(() => {
        <div className="mb-20">
        {
         error? <p className="text-red-400">{error}</p>: ""
-       }
-    {
-        transactionId? <p className="text-green-400">Payment successfully completed with transaction id <span className="text-green-500"> {transactionId}</span></p>: ""
        }
        </div>
          <form onSubmit={handleSubmit}>
@@ -127,6 +127,7 @@ useEffect(() => {
       />
       <Button type="submit" className="mt-5" color="blue" disabled={!stripe || !clientSecret || processing}>Pay</Button>
     </form>
+    <Toaster />
        </>
        
     );
