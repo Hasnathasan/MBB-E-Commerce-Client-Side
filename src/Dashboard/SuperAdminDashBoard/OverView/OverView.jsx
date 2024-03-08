@@ -4,17 +4,48 @@ import cubes from "../../../assets/cubes.png";
 import packages from "../../../assets/package.png";
 import team from "../../../assets/team.png";
 import Chart from "react-apexcharts";
+import useUsersByRole from "../../../Hooks/useUsersByRole";
 const OverView = () => {
   const [productsLength, isProductsLengthLoading] = useProductLength();
-  if (isProductsLengthLoading) {
+  const [usersByRole, isUsersByRoleDataLoading] = useUsersByRole();
+  if (isProductsLengthLoading || isUsersByRoleDataLoading) {
     return <h1>Loading</h1>;
   }
+  console.log(usersByRole);
+  var options = {
+    chart: {
+    height: 200,
+    type: 'area'
+  },
+  dataLabels: {
+    enabled: false
+  },
+  stroke: {
+    curve: 'smooth'
+  },
+  xaxis: {
+    type: 'month',
+    categories: ["jan", "Feb", "Mar", "April", "May", "Jun", "july", "Aug", "sep", "Oct", "Nov", "Dec" ]
+  },
+  tooltip: {
+    x: {
+      format: 'dd/MM/yy HH:mm'
+    },
+  },
+  };
+  const series = [{
+    name: 'Product selled',
+    data: [31, 40, 28, 51, 42, 109, 100, 110, 90, 140, 150, 155]
+  }, {
+    name: 'Product canceled',
+    data: [11, 32, 45, 32, 34, 52, 70, 150, 50, 100, 57, 70]
+  }]
   var optionsForPie = {
     chart: {
     width: 380,
     type: 'donut',
   },
-  labels: ["Customer's", "Artist's", "Admin"],
+  labels: ["Customer", "Artist", "Admin"],
   dataLabels: {
     enabled: false
   },
@@ -35,7 +66,7 @@ const OverView = () => {
     height: 18,
   }
   };
-  const seriseForDonut = [44, 55, 13, 22];
+  const seriseForDonut = [usersByRole?.user, usersByRole?.artist, usersByRole?.mbbAdmin];
   return (
     <div className="w-[97%] mx-auto">
       <div className="grid grid-cols-2 xl:grid-cols-4 w-full gap-5 justify-center">
@@ -96,14 +127,23 @@ const OverView = () => {
           </div>
         </div>
       </div>
-      <div>
-      <div className="bg-white max-w-60 flex flex-col justify-center relative w-full h-full items-center rounded-md shadow-md">
-        <h2>User's in Chart</h2>
+      <div className="my-8 grid grid-cols-12">
+      <div className="bg-white col-span-4 max-w-80 p-4 flex flex-col justify-center relative w-full h-full items-center rounded-md shadow-md">
+        <h2 className="text-xl absolute top-4 text-center font-semibold">User's in Chart</h2>
            <Chart
               options={optionsForPie}
               series={seriseForDonut}
               type="donut"
               width="120%"
+            />
+           </div>
+           <div className="bg-white p-3 col-span-8 rounded-md shadow-md">
+            <h3 className="font-semibold p-2 text-gray-800">Product Selling Update</h3>
+           <Chart
+              options={options}
+              series={series}
+              type="area"
+              width="100%"
             />
            </div>
       </div>

@@ -11,7 +11,7 @@ const useProductLength = () => {
     } = useQuery({
       queryKey: ["productsLength"],
       queryFn: async () => {
-        const res = await axiosSecure.get(`/productLength`);
+        const res = await axiosSecure.get(`/productsLength`);
         return res.data;
       },
     });
