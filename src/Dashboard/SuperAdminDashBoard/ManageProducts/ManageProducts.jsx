@@ -33,101 +33,17 @@ import product9 from "../../../assets/products9.png";
 import product10 from "../../../assets/products10.png";
 import AddNewProductForAdmin from "../AddNewProductForAdmin/AddNewProductForAdmin";
 import { Toaster } from "react-hot-toast";
+import useProducts from "../../../Hooks/useProducts";
+import { useContext } from "react";
+import { AuthContext } from "../../../Providers/AuthProvider";
 
 const ManageProducts = () => {
+  const {categoryFilter, priceSlider, minRating, searchQuery} = useContext(AuthContext);
+    const [products, isProductsLoading] = useProducts({categoryFilter, priceSlider, minRating, searchQuery});
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
-    const products = [
-        {
-          name: "The Starry Night",
-          price: 50.0,
-          rating: 4.2,
-          img: product1,
-        },
-        {
-          name: "Girl with a Pearl Earring",
-          price: 42.0,
-          rating: 4.9,
-          img: product2,
-        },
-        {
-          name: "Las Meninas",
-          price: 120.0,
-          rating: 2.5,
-          img: product3,
-        },
-        {
-          name: "The Garden of Earthly Delights",
-          price: 70.0,
-          rating: 3.5,
-          img: product4,
-        },
-        {
-          name: "The Kiss",
-          price: 20.0,
-          rating: 4.2,
-          img: product5,
-        },
-        {
-          name: "Water lilies",
-          price: 20.0,
-          rating: 4.2,
-          img: product6,
-        },
-        {
-          name: "Las Meninas",
-          price: 70.0,
-          rating: 3.5,
-          img: product7,
-        },
-        {
-          name: "The Arnolfini Portrait",
-          price: 120.0,
-          rating: 2.5,
-          img: product8,
-        },
-        {
-          name: "The Scream",
-          price: 42.0,
-          rating: 4.9,
-          img: product9,
-        },
-        {
-          name: "Guernica",
-          price: 50.0,
-          rating: 4.2,
-          img: product10,
-        },
-        {
-          name: "Las Meninas",
-          price: 120.0,
-          rating: 2.5,
-          img: product3,
-        },
-        {
-          name: "Green Apple",
-          price: 42.0,
-          rating: 4.9,
-          img: product7,
-        },
-        {
-          name: "Water lilies",
-          price: 20.0,
-          rating: 4.2,
-          img: product6,
-        },
-        {
-          name: "The Garden of Earthly Delights",
-          price: 70.0,
-          rating: 3.5,
-          img: product4,
-        },
-        {
-          name: "Girl with a Pearl Earring",
-          price: 42.0,
-          rating: 4.9,
-          img: product2,
-        },
-      ];
+   if(isProductsLoading){
+    return <h1>Loading.....</h1>
+   }
     return (
         <div className="overflow-x-auto w-[95%] mx-auto">
       <div className="flex flex-col  gap-4">
@@ -187,6 +103,7 @@ const ManageProducts = () => {
       <Table aria-label="Example table with custom cells">
         <TableHeader>
           <TableColumn>Name</TableColumn>
+          <TableColumn>Added By</TableColumn>
           <TableColumn>Price</TableColumn>
           <TableColumn>Rating</TableColumn>
           <TableColumn>
@@ -197,11 +114,12 @@ const ManageProducts = () => {
           {products?.map((product) => (
             <TableRow key={product.name}>
               <TableCell>
-                <div className="flex justify-start items-center gap-3"><img src={product?.img} className="w-12 h-12" alt="" />
-                <h3>{product?.name}</h3>
+                <div className="flex justify-start items-center gap-3"><img src={product?.featured_photo} className="w-12 h-12" alt="" />
+                <h3>{product?.product_name}</h3>
                 </div>
               </TableCell>
-              <TableCell>${product?.price}</TableCell>
+              <TableCell>{product?.addedBy}</TableCell>
+              <TableCell>${product?.price?.sale_price || product?.price?.regular_price}</TableCell>
               <TableCell>
                 {product?.rating}
               </TableCell>

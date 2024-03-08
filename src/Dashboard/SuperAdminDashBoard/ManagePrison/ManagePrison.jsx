@@ -23,6 +23,7 @@ import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
 import axios from "axios";
 import Swal from "sweetalert2";
 import usePrisons from "../../../Hooks/usePrisons";
+import toast, { Toaster } from "react-hot-toast";
 
 const ManagePrison = () => {
     const [prisons] = usePrisons();
@@ -49,21 +50,17 @@ const ManagePrison = () => {
         console.log(prison);
         axios
           .post(
-            `https://mbb-e-commerce-server.vercel.app/prisons`,
+            `http://localhost:8000/prisons`,
             prison
           )
           .then((res) => {
             console.log(res.data);
             if (res.data.insertedId) {
-              Swal.fire(
-                "Congratulation",
-                "Successfully added new prison",
-                "success"
-              );
+              return toast.success("Successfully added Prison")
             }
           })
           .catch((error) => {
-            console.log(error);
+            return toast.error(error?.response?.data?.message || "An Unknown Error Occurred")
           });
       };
     return (
@@ -265,6 +262,7 @@ const ManagePrison = () => {
           )}
         </ModalContent>
       </Modal>
+      <Toaster></Toaster>
     </div>
     );
 };

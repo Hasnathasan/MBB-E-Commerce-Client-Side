@@ -112,8 +112,8 @@ const ManageArtists = () => {
                           return res.data; // Return data to handle success message
                       })
                       .catch((error) => {
-                          console.log(error);
-                          throw error; // Throw error to handle error message
+                          console.log(error.response.data); // Log server-side error
+                          throw error.response.data; // Throw server-side error
                       });
               } else {
                   return Promise.reject(new Error("No image URL found"));
@@ -130,8 +130,13 @@ const ManageArtists = () => {
       toast.promise(artistPromise, {
           loading: 'Please wait! while uploading artist...',
           success: 'Artist uploaded successfully',
-          error: 'An error occurred while uploading artist',
+          error: (error) => {
+              return error?.message || 'An error occurred while uploading artist'; // Display server-side error if available
+          },
       });
+    }
+    else{
+      return toast.error("Please, select an Image")
     }
 
   }
@@ -212,7 +217,7 @@ const ManageArtists = () => {
                 <User
                   avatarProps={{ radius: "md", src: user.photoUrl }}
                   description={user.email || user.phoneNumber}
-                  name={user.name || "Unknown"}
+                  name={user.userName || "Unknown"}
                 ></User>
               </TableCell>
               <TableCell>{user.email || user.phoneNumber}</TableCell>

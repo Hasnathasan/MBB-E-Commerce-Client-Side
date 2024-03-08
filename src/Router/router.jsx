@@ -28,6 +28,7 @@ import Categories from "../Pages/Categories/Categories";
 import AboutUs from "../Pages/AboutUs/AboutUs";
 import PrivateRoute from "../Components/PrivateRoute/PrivateRoute";
 import ContactUsPage from "../Pages/ContactUsPage/ContactUsPage";
+import OverView from "../Dashboard/SuperAdminDashBoard/OverView/OverView";
 
 
 const router = createBrowserRouter([
@@ -137,7 +138,7 @@ const router = createBrowserRouter([
     children: [
     {
       path: "overview",
-      element: <IAmWorkingOnIt></IAmWorkingOnIt>
+      element: <OverView></OverView>
     },
     {
       path: "products",
