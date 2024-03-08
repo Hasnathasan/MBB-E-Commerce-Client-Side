@@ -3,12 +3,39 @@ import useProductLength from "../../../Hooks/useProductLength";
 import cubes from "../../../assets/cubes.png";
 import packages from "../../../assets/package.png";
 import team from "../../../assets/team.png";
-
+import Chart from "react-apexcharts";
 const OverView = () => {
   const [productsLength, isProductsLengthLoading] = useProductLength();
   if (isProductsLengthLoading) {
     return <h1>Loading</h1>;
   }
+  var optionsForPie = {
+    chart: {
+    width: 380,
+    type: 'donut',
+  },
+  labels: ["Customer's", "Artist's", "Admin"],
+  dataLabels: {
+    enabled: false
+  },
+  responsive: [{
+    breakpoint: 480,
+    options: {
+      chart: {
+        width: 350
+      },
+      legend: {
+        height: 30,
+      }
+    }
+  }],
+  legend: {
+    position: 'bottom',
+    offsetY: 0,
+    height: 18,
+  }
+  };
+  const seriseForDonut = [44, 55, 13, 22];
   return (
     <div className="w-[97%] mx-auto">
       <div className="grid grid-cols-2 xl:grid-cols-4 w-full gap-5 justify-center">
@@ -68,6 +95,17 @@ const OverView = () => {
             </Link>
           </div>
         </div>
+      </div>
+      <div>
+      <div className="bg-white max-w-60 flex flex-col justify-center relative w-full h-full items-center rounded-md shadow-md">
+        <h2>User's in Chart</h2>
+           <Chart
+              options={optionsForPie}
+              series={seriseForDonut}
+              type="donut"
+              width="120%"
+            />
+           </div>
       </div>
     </div>
   );
