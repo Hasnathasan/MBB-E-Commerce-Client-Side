@@ -1,14 +1,16 @@
-import { Button, Radio, RadioGroup } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Radio, RadioGroup, useDisclosure } from "@nextui-org/react";
 import useUser from "../../Hooks/useUser";
 import product1 from "../../assets/products1.png";
 import product2 from "../../assets/products2.png";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
+import PaymentCard from "../../Components/Payment/PaymentCard";
 
 const CheckoutPage = () => {
   const [userData] = useUser();
   const [userCart, setUserCart] = useState([]);
-  const {isProductAdded} = useContext(AuthContext)
+  const {isProductAdded} = useContext(AuthContext);
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
 useEffect(() => {
   // Try retrieving the cart from localStorage, with a default of an empty array if not found
   const cart = localStorage.getItem("cart") || '[]';
@@ -49,9 +51,11 @@ useEffect(() => {
       zipCode,
       userPhoneNumber
     );
+    onOpen()
   };
   return (
-    <form
+    <div>
+      <form
       onSubmit={handlePlaceOrder}
       className="grid grid-cols-12 items-start py-10 mx-8 gap-6"
     >
@@ -232,6 +236,24 @@ useEffect(() => {
         </div>
       </div>
     </form>
+    <Modal scrollBehavior="outside" size="5xl" backdrop="opaque" className="!z-50" isOpen={isOpen} onOpenChange={onOpenChange}>
+    <ModalContent>
+      {(onClose) => (
+        <>
+          <ModalHeader className="flex flex-col gap-1">Add a New Product</ModalHeader>
+          <ModalBody>
+          <PaymentCard></PaymentCard>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="danger" variant="light" onPress={onClose}>
+              Close
+            </Button>
+          </ModalFooter>
+        </>
+      )}
+    </ModalContent>
+  </Modal>
+    </div>
   );
 };
 

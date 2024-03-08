@@ -1,8 +1,8 @@
 import { Button } from "@material-tailwind/react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useContext, useEffect, useState } from "react";
-import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import { AuthContext } from "../../Providers/AuthProvider";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const PaymentProcess = () => {
     const stripe = useStripe();
