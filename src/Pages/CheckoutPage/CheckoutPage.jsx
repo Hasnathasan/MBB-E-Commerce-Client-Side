@@ -9,6 +9,7 @@ import PaymentCard from "../../Components/Payment/PaymentCard";
 const CheckoutPage = () => {
   const [userData] = useUser();
   const [userCart, setUserCart] = useState([]);
+  const [userDetails, setUserDetails] = useState();
   const {isProductAdded} = useContext(AuthContext);
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 useEffect(() => {
@@ -38,19 +39,19 @@ useEffect(() => {
     const companyName = form.companyName.value;
     const country = form.country.value;
     const states = form.states.value;
-    const updatedAddress = form.address.value;
+    const address = form.address.value;
     const zipCode = form.zipCode.value;
     const userPhoneNumber = form.phoneNumber.value;
     const additional_info = form.additional_info.value;
-    console.log(email, additional_info,
+    const data = {email, additional_info,
       userName,
       companyName,
       country,
-      updatedAddress,
+      address,
       states,
       zipCode,
-      userPhoneNumber
-    );
+      userPhoneNumber};
+      setUserDetails(data);
     onOpen()
   };
   return (
@@ -242,7 +243,7 @@ useEffect(() => {
         <>
           <ModalHeader className="flex flex-col gap-1">Payment with card</ModalHeader>
           <ModalBody>
-          <PaymentCard></PaymentCard>
+          <PaymentCard userDetails={userDetails}></PaymentCard>
           </ModalBody>
           <ModalFooter>
             <Button color="danger" variant="light" onPress={onClose}>

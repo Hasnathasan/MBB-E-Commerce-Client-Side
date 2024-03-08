@@ -4,12 +4,12 @@ import PaymentProcess from "./PaymentProcess";
 
 const stritePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
 
-const PaymentCard = () => {
+const PaymentCard = ({userDetails}) => {
   return (
     <>
         <div className="w-[95%] mx-auto">
           <Elements stripe={stritePromise}>
-            <PaymentProcess></PaymentProcess>
+            <PaymentProcess userDetails={userDetails}></PaymentProcess>
           </Elements>
         </div>
     </>
