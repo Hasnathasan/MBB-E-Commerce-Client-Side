@@ -96,121 +96,47 @@ const ManageArtists = () => {
         const formData = new FormData();
         formData.append("file", selectedFile);
         console.log(selectedFile);
-        axios
-          .post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
+        const uploadAndInsertArtist = () => {
+          return axios.post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
+              headers: {
+                  "Content-Type": "multipart/form-data",
+              },
           })
           .then(response => {
-            console.log(response.data.url);
-            artist.userPhoto = response.data.url;
-            if(response.data.url){
-              axios
-        .post(
-          `http://localhost:8000/artistByAdmin`,
-          artist
-        )
-        .then((res) => {
-          console.log(res.data);
-          
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-            }
+              console.log(response.data.url);
+              artist.userPhoto = response.data.url;
+              if (response.data.url) {
+                  return axios.post(`http://localhost:8000/artistByAdmin`, artist)
+                      .then((res) => {
+                          console.log(res.data);
+                          return res.data; // Return data to handle success message
+                      })
+                      .catch((error) => {
+                          console.log(error);
+                          throw error; // Throw error to handle error message
+                      });
+              } else {
+                  return Promise.reject(new Error("No image URL found"));
+              }
           })
-          .catch(error => console.log(error))
+          .catch(error => {
+              console.log(error);
+              throw error; // Throw error to handle error message
+          });
+      };
+      
+      const artistPromise = uploadAndInsertArtist();
+      
+      toast.promise(artistPromise, {
+          loading: 'Please wait! while uploading artist...',
+          success: 'Artist uploaded successfully',
+          error: 'An error occurred while uploading artist',
+      });
     }
 
   }
 
-
-    const handleUserUpdate = async (e) => {
-      e.preventDefault();
-      const form = e.target;
-      const user_name = form.name.value;
-      const bio = form.bio.value;
-      const art_description = form.art_description.value;
-      const bio_video_link = form.bio_video.value;
-      const keywords = tags?.map((tag) => tag.label);
-      const company_name = form.companyName.value;
-      const country = form.country.value;
-      const states = form.states.value;
-      const address = form.address.value;
-      const zipCode = form.zipCode.value;
-      const phone_number = form.phoneNumber.value;
-      
-      
-      
-          // .then((response) => {
-          //   console.log(response.data.url);
-          //   if (response.data?.url) {
-          //     billingInfo.user_photo = response.data?.url;
-          //     const newUser = {};
-          //     axios
-          //       .post(
-          //         `https://mbb-e-commerce-server.vercel.app/user`,
-          //         billingInfo
-          //       )
-          //       .then((res) => {
-          //         console.log(res.data);
-          //         if (res.data.modifiedCount > 0) {
-          //           Swal.fire(
-          //             "Congratulation",
-          //             "Successfully Updated Your Data",
-          //             "success"
-          //           );
-          //         }
-          //       })
-          //       .catch((error) => {
-          //         console.log(error);
-          //       });
-          //   }
-          // })
-          // .catch((error) => {
-          //   console.error("Error uploading file: ", error);
-          // });
-      }
-    const handlePaymentInfoUpdate = (e) => {
-      e.preventDefault();
-      const form = e.target;
-      const updatedName = form.name.value;
-      const companyName = form.companyName.value;
-      const country = form.country.value;
-      const states = form.states.value;
-      const updatedAddress = form.address.value;
-      const zipCode = form.zipCode.value;
-      const updatedNum = form.phoneNumber.value;
-      const billingInfo = {
-        updatedName,
-        companyName,
-        country,
-        states,
-        updatedAddress,
-        zipCode,
-        updatedNum,
-      };
-  
-      axios
-        .patch(
-          `https://mbb-e-commerce-server.vercel.app/userBillingInfoUpdate/${user?.email}`,
-          billingInfo
-        )
-        .then((res) => {
-          console.log(res.data);
-          if (res.data.modifiedCount > 0) {
-            Swal.fire(
-              "Congratulation",
-              "Successfully Updated Your Billing Info",
-              "success"
-            );
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
+    
     if(isPrisonsDataLoading || isArtistsDataLoading){
       return <h1>Loading.......</h1>
     }
