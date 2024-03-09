@@ -12,15 +12,18 @@ import {
     TableColumn,
     TableHeader,
     TableRow,
-    User,
   } from "@nextui-org/react";
 import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
-import useUsers from "../../Hooks/useUsers";
+import useAllOrders from "../../../Hooks/useAllOrders";
 
 const ManageOrders = () => {
-    const [usersData] = useUsers();
+    const [orders, isOrdersLoading] = useAllOrders();
+    if(isOrdersLoading){
+      return <h1>Loading..</h1>
+    }
+    console.log(orders);
     return (
-        <div className="overflow-x-auto w-full md:w-[80%]">
+        <div className="overflow-x-auto w-full md:w-[95%]">
       <div className="flex flex-col  gap-4">
         <div className="flex justify-between p-5 bg-white rounded-xl gap-3 items-end">
           <Input
@@ -72,37 +75,35 @@ const ManageOrders = () => {
           </div>
         </div>
         <span className="text-gray-600 mb-2">
-          Total {usersData?.length} users
+          Total {orders?.length} users
         </span>
       </div>
       <Table aria-label="Example table with custom cells">
         <TableHeader>
-          <TableColumn>Name</TableColumn>
-          <TableColumn>Email / Number</TableColumn>
-          <TableColumn>User Role</TableColumn>
+          <TableColumn>Transaction Id</TableColumn>
+          <TableColumn>Date</TableColumn>
+          <TableColumn>Price</TableColumn>
+          <TableColumn>Status</TableColumn>
           <TableColumn>
             <h5 className="text-center">Details</h5>
           </TableColumn>
         </TableHeader>
         <TableBody>
-          {usersData?.map((user) => (
-            <TableRow key={user._id}>
+          {orders?.map((order) => (
+            <TableRow key={order._id}>
               <TableCell>
-                <User
-                  avatarProps={{ radius: "md", src: user.photoUrl }}
-                  description={user.email || user.phoneNumber}
-                  name={user.name || "Unknown"}
-                ></User>
+                {order?.transactionId}
               </TableCell>
-              <TableCell>{user.email || user.phoneNumber}</TableCell>
+              <TableCell>{order?.createdAt.slice(0,10)}</TableCell>
+              <TableCell>{order?.total_price} ({order?.products.length} products)</TableCell>
               <TableCell>
                 <Chip
                   className="capitalize"
-                  color={user.userRole == "mbbAdmin" ? "danger" : "success"}
+                  color={order.status == "completed" ? "success" : "danger"}
                   size="sm"
                   variant="flat"
                 >
-                  {user.userRole}
+                  {order.status}
                 </Chip>
               </TableCell>
               <TableCell>

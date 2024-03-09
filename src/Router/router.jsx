@@ -29,7 +29,7 @@ import AboutUs from "../Pages/AboutUs/AboutUs";
 import PrivateRoute from "../Components/PrivateRoute/PrivateRoute";
 import ContactUsPage from "../Pages/ContactUsPage/ContactUsPage";
 import OverView from "../Dashboard/SuperAdminDashBoard/OverView/OverView";
-import ManageOrders from "../Dashboard/SuperAdminDashBoard/ManageOrders";
+import ManageOrders from "../Dashboard/SuperAdminDashBoard/ManageOrders/ManageOrders";
 
 
 const router = createBrowserRouter([

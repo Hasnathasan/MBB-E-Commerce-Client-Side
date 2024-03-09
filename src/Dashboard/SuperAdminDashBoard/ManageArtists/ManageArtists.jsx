@@ -215,7 +215,7 @@ const ManageArtists = () => {
             <TableRow key={user._id}>
               <TableCell>
                 <User
-                  avatarProps={{ radius: "md", src: user.photoUrl }}
+                  avatarProps={{ radius: "md", src: user.userPhoto }}
                   description={user.email || user.phoneNumber}
                   name={user.userName || "Unknown"}
                 ></User>
