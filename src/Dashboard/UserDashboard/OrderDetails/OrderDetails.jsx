@@ -3,18 +3,31 @@ import { AuthContext } from "../../../Providers/AuthProvider";
 import "./OrderDetails.css";
 import product1 from "../../../assets/products1.png";
 import { useParams } from "react-router-dom";
+import useSingleOrderById from "../../../Hooks/useSingleOrderById";
 
 const OrderDetails = () => {
   const {id} = useParams();
-  console.log(id);
   const { user } = useContext(AuthContext);
+  const [order, isOrderLoading, refetch] = useSingleOrderById({id});
+  if(isOrderLoading){
+    return <h1>Loading</h1>
+  }
+  const {email, additional_info,
+    userName,
+    companyName,
+    country,
+    address,
+    states,
+    zipCode,
+    userPhoneNumber} = order.userDetails;
+  console.log(id, order, email);
   return (
     <div className="border border-gray-300 rounded-lg">
       <div className="flex border-b border-gray-300 p-5 justify-between items-center">
         <div className="flex justify-center items-center gap-4">
           <h1 className="text-xl font-semibold">Order Details</h1>
-          <h4 className="text-sm text-gray-800">April 24, 2021</h4>
-          <h4 className="text-sm text-gray-800">3 Products</h4>
+          <h4 className="text-sm text-gray-800">{order?.createdAt.slice(0,10)}</h4>
+          <h4 className="text-sm text-gray-800">{order?.products?.length} Products</h4>
         </div>
       </div>
       <div className="p-6">
@@ -28,19 +41,19 @@ const OrderDetails = () => {
               <div className="p-4">
                 <div className="mb-4">
                   <h2 className="text-xl font-medium">
-                    {user?.displayName || "Unknown"}
+                    {userName || "Unknown"}
                   </h2>
                   <h3 className="text-gray-600 text-sm">
-                    4140 Parker Rd. Allentown, New Mexico 31134
+                    {address}
                   </h3>
                 </div>
                 <div>
                   <h3 className="text-gray-600 text-sm">Email</h3>
                   <h3 className="text-gray-900 mb-2 font-medium">
-                    {user?.email}
+                    {email}
                   </h3>
                   <h3 className="text-gray-600 text-sm">Phone</h3>
-                  <h3 className="text-gray-900 font-medium">(671) 555-0110</h3>
+                  <h3 className="text-gray-900 font-medium">{userPhoneNumber}</h3>
                 </div>
               </div>
             </div>
@@ -53,19 +66,19 @@ const OrderDetails = () => {
               <div className="p-4">
                 <div className="mb-4">
                   <h2 className="text-xl font-medium">
-                    {user?.displayName || "Unknown"}
+                    {userName || "Unknown"}
                   </h2>
                   <h3 className="text-gray-600 text-sm">
-                    4140 Parker Rd. Allentown, New Mexico 31134
+                    {address}
                   </h3>
                 </div>
                 <div>
                   <h3 className="text-gray-600 text-sm">Email</h3>
                   <h3 className="text-gray-900 mb-2 font-medium">
-                    {user?.email}
+                    {email}
                   </h3>
                   <h3 className="text-gray-600 text-sm">Phone</h3>
-                  <h3 className="text-gray-900 font-medium">(671) 555-0110</h3>
+                  <h3 className="text-gray-900 font-medium">{userPhoneNumber}</h3>
                 </div>
               </div>
             </div>
@@ -94,13 +107,7 @@ const OrderDetails = () => {
                 <h3 className=" text-gray-500 text-sm font-medium">
                   Subtotal:
                 </h3>
-                <h5 className="text-sm font-medium">$5782</h5>
-              </div>
-              <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
-                <h3 className=" text-gray-500 text-sm font-medium">
-                  Discount:
-                </h3>
-                <h5 className="text-sm font-medium">$57</h5>
+                <h5 className="text-sm font-medium">${order?.total_price}</h5>
               </div>
               <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
                 <h3 className=" text-gray-500 text-sm font-medium">
@@ -110,7 +117,7 @@ const OrderDetails = () => {
               </div>
               <div className="flex justify-between pt-2 pb-3 items-center">
                 <h3 className=" font-medium">Total</h3>
-                <h5 className="text-green-800 font-bold">$5839</h5>
+                <h5 className="text-green-800 font-bold">${order?.total_price}</h5>
               </div>
             </div>
           </div>
@@ -124,33 +131,17 @@ const OrderDetails = () => {
           <th>QUANTITY</th>
           <th>SUBTOTAL</th>
         </tr>
-        <tr>
-          <td className="flex items-center gap-2">
-            <img className="w-16" src={product1} alt="" />
-            <h3 className="font-semibold">The Starry Night</h3>
-          </td>
-          <td>$549</td>
-          <td>x5</td>
-          <td>$2638</td>
-        </tr>
-        <tr>
-          <td className="flex items-center gap-2">
-            <img className="w-16" src={product1} alt="" />
-            <h3 className="font-semibold">The Starry Night</h3>
-          </td>
-          <td>$549</td>
-          <td>x5</td>
-          <td>$2638</td>
-        </tr>
-        <tr>
-          <td className="flex items-center gap-2">
-            <img className="w-16" src={product1} alt="" />
-            <h3 className="font-semibold">The Starry Night</h3>
-          </td>
-          <td>$549</td>
-          <td>x5</td>
-          <td>$2638</td>
-        </tr>
+        {
+          order?.products?.map(product => <tr key={product?.product_id}>
+            <td className="flex items-center gap-2">
+              <img className="w-16" src={product?.featured_photo} alt="" />
+              <h3 className="font-semibold">{product?.product_name}</h3>
+            </td>
+            <td>${product?.price?.sale_price || product?.price?.regular_price}</td>
+            <td>x{product?.quantity}</td>
+            <td>${product?.price?.sale_price * product?.quantity || product?.price?.regular_price * product?.quantity}</td>
+          </tr>)
+        }
       </table>
     </div>
   );

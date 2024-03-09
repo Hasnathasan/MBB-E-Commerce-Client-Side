@@ -31,7 +31,7 @@ const OrderHistory = () => {
           {
             orders?.map(order => <tr key={order?._id}>
             <td>{order?.transactionId}</td>
-            <td>{order?.createdAt}</td>
+            <td>{order?.createdAt?.slice(0, 10)}</td>
             <td>${order?.total_price} ({order?.products?.length} Products)</td>
             <td className="capitalize">{order?.status}</td>
             <td className="text-green-500 font-semibold">
