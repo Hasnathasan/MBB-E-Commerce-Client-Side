@@ -2,8 +2,11 @@ import { useContext } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import "./OrderDetails.css";
 import product1 from "../../../assets/products1.png";
+import { useParams } from "react-router-dom";
 
 const OrderDetails = () => {
+  const {id} = useParams();
+  console.log(id);
   const { user } = useContext(AuthContext);
   return (
     <div className="border border-gray-300 rounded-lg">

@@ -237,7 +237,7 @@ useEffect(() => {
         </div>
       </div>
     </form>
-    <Modal scrollBehavior="outside" size="2xl" backdrop="opaque" className="!z-50" isOpen={isOpen} onOpenChange={onOpenChange}>
+    <Modal scrollBehavior="outside" size="2xl" backdrop="opaque" className="!absolute !z-[5000]" isOpen={isOpen} onOpenChange={onOpenChange}>
     <ModalContent>
       {(onClose) => (
         <>

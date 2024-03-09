@@ -80,7 +80,7 @@ const subTotal = userCart?.reduce((accumulator, product) => {
     navigate("/products/filter")
   }
   return (
-    <div className="w-full relative z-[1000] mx-auto">
+    <div className="w-full relative z-[50] mx-auto">
       {/* Top Info - Company name + sign In / sign up button */}
       <div className="flex justify-between items-center bg-[#2e2e2e] px-1 md:px-4 lg:px-8 md:mb-8 text-gray-400 text-[8px] md:text-[12px] py-2">
         <div className="flex justify-center items-center gap-1">

@@ -1,102 +1,20 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import "./OrderHistory.css";
+import useUserOrders from "../../../Hooks/useUserOrders";
 
 const OrderHistory = () => {
   const location = useLocation();
   console.log(location);
-  const orders = [{
-    orderedBy: "artist@gmail.com",
-    transaction_id: "#2cd34v2345234qfvqw",
-    ordered_products: [
-      {
-        quantity: 1,
-        product_id: "65e5f6784f5e29197010d3f0",
-        product_name: "Whistler's Mother",
-        price: {
-          regular_price: 123,
-          sale_price: 123,
-          cost_price: 12,
-        },
-        featured_photo: "https://res.cloudinary.com/dyewzhari/image/upload/v1709569651/wqyldvfaucawdiz9uox5.jpg",
-        product_available_quantity: 23,
-      },
-      {
-        quantity: 20,
-        product_id: "65e43ea98f369c4198bc0493",
-        product_name: "Water lilies",
-        price: {
-          regular_price: 25,
-          sale_price: 28,
-          cost_price: 5,
-        },
-        featured_photo: "https://res.cloudinary.com/dyewzhari/image/upload/v1709457061/r1xtpssbea5i3txfpmz9.jpg",
-        product_available_quantity: 20,
-      }
-    ]
-  },{
-    orderedBy: "artist@gmail.com",
-    transaction_id: "#2cd34v2345234qfvqw",
-    ordered_products: [
-      {
-        quantity: 1,
-        product_id: "65e5f6784f5e29197010d3f0",
-        product_name: "Whistler's Mother",
-        price: {
-          regular_price: 123,
-          sale_price: 123,
-          cost_price: 12,
-        },
-        featured_photo: "https://res.cloudinary.com/dyewzhari/image/upload/v1709569651/wqyldvfaucawdiz9uox5.jpg",
-        product_available_quantity: 23,
-      },
-      {
-        quantity: 20,
-        product_id: "65e43ea98f369c4198bc0493",
-        product_name: "Water lilies",
-        price: {
-          regular_price: 25,
-          sale_price: 28,
-          cost_price: 5,
-        },
-        featured_photo: "https://res.cloudinary.com/dyewzhari/image/upload/v1709457061/r1xtpssbea5i3txfpmz9.jpg",
-        product_available_quantity: 20,
-      }
-    ]
-  },{
-    orderedBy: "artist@gmail.com",
-    transaction_id: "#2cd34v2345234qfvqw",
-    ordered_products: [
-      {
-        quantity: 1,
-        product_id: "65e5f6784f5e29197010d3f0",
-        product_name: "Whistler's Mother",
-        price: {
-          regular_price: 123,
-          sale_price: 123,
-          cost_price: 12,
-        },
-        featured_photo: "https://res.cloudinary.com/dyewzhari/image/upload/v1709569651/wqyldvfaucawdiz9uox5.jpg",
-        product_available_quantity: 23,
-      },
-      {
-        quantity: 20,
-        product_id: "65e43ea98f369c4198bc0493",
-        product_name: "Water lilies",
-        price: {
-          regular_price: 25,
-          sale_price: 28,
-          cost_price: 5,
-        },
-        featured_photo: "https://res.cloudinary.com/dyewzhari/image/upload/v1709457061/r1xtpssbea5i3txfpmz9.jpg",
-        product_available_quantity: 20,
-      }
-    ]
-  }]
+  const [orders, isOrdersLoading, refetch] = useUserOrders();
+  if(isOrdersLoading){
+    return <h1>Loading</h1>
+  }
+  console.log(orders);
   return (
     <>
       <div
         className={`border rounded-lg overflow-auto ${
-          location?.pathname === "/userdashboard/orderhistory/orderdetails"
+          location?.pathname.includes("/userdashboard/orderhistory/orderdetails") 
             ? "hidden"
             : ""
         } border-gray-300`}
@@ -110,42 +28,21 @@ const OrderHistory = () => {
             <th>Status</th>
             <th>Action</th>
           </tr>
+          {
+            orders?.map(order => <tr key={order?._id}>
+            <td>{order?.transactionId}</td>
+            <td>{order?.createdAt}</td>
+            <td>${order?.total_price} ({order?.products?.length} Products)</td>
+            <td className="capitalize">{order?.status}</td>
+            <td className="text-green-500 font-semibold">
+              <Link to={`/userdashboard/orderhistory/orderdetails/${order?._id}`}>
+                View Details
+              </Link>
+            </td>
+          </tr>)
+          }
           
-          <tr>
-            <td>#2233</td>
-            <td>27 Mar, 2021</td>
-            <td>$250.00 (4 Products)</td>
-            <td>Completed</td>
-            <td className="text-green-500 font-semibold">
-              <Link to={"/userdashboard/orderhistory/orderdetails"}>
-                View Details
-              </Link>
-            </td>
-          </tr>
-          <tr>
-            <td>#2233</td>
-            <td>27 Mar, 2021</td>
-            <td>$250.00 (4 Products)</td>
-            <td>Completed</td>
-            <td className="text-green-500 font-semibold">
-              <Link to={"/userdashboard/orderhistory/orderdetails"}>
-                View Details
-              </Link>
-            </td>
-          </tr>
-          <tr>
-            <td>#2233</td>
-            <td>27 Mar, 2021</td>
-            <td>$250.00 (4 Products)</td>
-            <td>Completed</td>
-            <td className="text-green-500 font-semibold">
-              <Link to={"/userdashboard/orderhistory/orderdetails"}>
-                <Link to={"/userdashboard/orderhistory/orderdetails"}>
-                  View Details
-                </Link>
-              </Link>
-            </td>
-          </tr>
+          
         </table>
       </div>
       <Outlet></Outlet>
