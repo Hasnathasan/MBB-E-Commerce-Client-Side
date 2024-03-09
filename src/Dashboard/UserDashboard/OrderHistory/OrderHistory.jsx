@@ -5,7 +5,7 @@ import useUserOrders from "../../../Hooks/useUserOrders";
 const OrderHistory = () => {
   const location = useLocation();
   console.log(location);
-  const [orders, isOrdersLoading, refetch] = useUserOrders();
+  const [orders, isOrdersLoading] = useUserOrders();
   if(isOrdersLoading){
     return <h1>Loading</h1>
   }
@@ -22,7 +22,7 @@ const OrderHistory = () => {
         <h4 className="p-4 text-lg font-semibold">Order History</h4>
         <table className="overflow-auto w-full">
           <tr>
-            <th>Order Id</th>
+            <th>Transaction Id</th>
             <th>Date</th>
             <th>Total</th>
             <th>Status</th>
@@ -41,8 +41,6 @@ const OrderHistory = () => {
             </td>
           </tr>)
           }
-          
-          
         </table>
       </div>
       <Outlet></Outlet>
