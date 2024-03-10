@@ -1,5 +1,5 @@
 import { Avatar, Button, Select, SelectItem } from "@nextui-org/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MultiSelect } from "react-selectize";
 import "../../../../node_modules/react-selectize/themes/index.css";
 import useArtists from "../../../Hooks/useArtists";
@@ -23,9 +23,46 @@ const AddNewProductForAdmin = () => {
   const [costPrice, setCostPrice] = useState();
   const [artist, setArtist] = useState(null);
   const [prison, setPrison] = useState(null);
-
+const [artistProfit, setArtistProfit] = useState();
+const [websiteProfit, setWebsiteProfit] = useState();
+const [prisonProfit, setPrisonProfit] = useState();
   console.log(tags, categories, regularPrice, prison, artist);
+  function calculateArtistProfit(salePrice, regularPrice, costPrice) {
+    const sale = Number(salePrice) || 0.0;
+    const regular = Number(regularPrice) || 0.0;
+    const cost = Number(costPrice) || 0.0;
 
+    const firstPart = ((sale || regular) - cost) * 0.7;
+
+    return firstPart.toFixed(2)
+}
+const calculateWebsiteProfit = (salePrice, regularPrice, costPrice) => {
+  return regularPrice && costPrice
+      ? (((salePrice || regularPrice) - costPrice) * 0.15).toFixed(2)
+      : 0.0;
+};
+
+const calculatePrisonProfit = (salePrice, regularPrice, costPrice) => {
+  return regularPrice && costPrice
+      ? (((salePrice || regularPrice) - costPrice) * 0.15).toFixed(2)
+      : 0.0;
+};
+
+
+
+
+
+
+// Example usage:
+useEffect(() => {
+  const artistProfit = calculateArtistProfit(salePrice, regularPrice, costPrice);
+  setArtistProfit(artistProfit)
+  const websiteProfit = calculateWebsiteProfit(salePrice, regularPrice, costPrice);
+  setWebsiteProfit(websiteProfit);
+  const prisonProfit = calculatePrisonProfit(salePrice, regularPrice, costPrice);
+  setPrisonProfit(prisonProfit)
+},[costPrice, regularPrice, salePrice])
+console.log(artistProfit, websiteProfit, prisonProfit);
   const handleProductAdding = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -81,6 +118,7 @@ const AddNewProductForAdmin = () => {
                           price: { regular_price, sale_price, cost_price },
                           addedBy,
                           prison_of_artist,
+                          createdAt: new Date()
                       };
                       return axios.post("https://mbb-e-commerce-server.vercel.app/products", product).then((res) => {
                           console.log(res.data);

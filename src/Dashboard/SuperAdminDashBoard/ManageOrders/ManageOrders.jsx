@@ -15,15 +15,22 @@ import {
   } from "@nextui-org/react";
 import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
 import useAllOrders from "../../../Hooks/useAllOrders";
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 
 const ManageOrders = () => {
     const [orders, isOrdersLoading] = useAllOrders();
+    const location = useLocation();
     if(isOrdersLoading){
       return <h1>Loading..</h1>
     }
     console.log(orders);
     return (
-        <div className="overflow-x-auto w-full md:w-[95%]">
+        <>
+        <div className={`overflow-x-auto w-full md:w-[95%] ${
+          location?.pathname.includes("/adminDashboard/orders/orderDetails/") 
+            ? "hidden"
+            : ""
+        }`}>
       <div className="flex flex-col  gap-4">
         <div className="flex justify-between p-5 bg-white rounded-xl gap-3 items-end">
           <Input
@@ -107,15 +114,19 @@ const ManageOrders = () => {
                 </Chip>
               </TableCell>
               <TableCell>
-                <Button color="success" radius="lg" className="text-white">
+                <NavLink to={`/adminDashboard/orders/orderDetails/${order?._id}`}><Button color="success" radius="lg" className="text-white">
                   View Details
-                </Button>
+                </Button></NavLink>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </div>
+    <div className="w-[95%] mx-auto">
+    <Outlet></Outlet>
+    </div>
+    </>
     );
 };
 

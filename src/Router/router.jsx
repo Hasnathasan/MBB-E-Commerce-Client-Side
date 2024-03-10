@@ -155,7 +155,13 @@ const router = createBrowserRouter([
     },
     {
       path: "orders",
-      element: <ManageOrders></ManageOrders>
+      element: <ManageOrders></ManageOrders>,
+      children: [
+        {
+          path: "orderDetails/:id",
+          element: <OrderDetails></OrderDetails>
+        }
+      ]
     },
     {
       path: "sales-report",

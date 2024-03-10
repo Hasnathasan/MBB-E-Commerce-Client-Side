@@ -5,10 +5,12 @@ import packages from "../../../assets/package.png";
 import team from "../../../assets/team.png";
 import Chart from "react-apexcharts";
 import useUsersByRole from "../../../Hooks/useUsersByRole";
+import useOrdersLength from "../../../Hooks/useOrdersLength";
 const OverView = () => {
   const [productsLength, isProductsLengthLoading] = useProductLength();
+  const [ordersLength, isOrdersLengthLoading] = useOrdersLength();
   const [usersByRole, isUsersByRoleDataLoading] = useUsersByRole();
-  if (isProductsLengthLoading || isUsersByRoleDataLoading) {
+  if (isProductsLengthLoading || isUsersByRoleDataLoading || isOrdersLengthLoading) {
     return <h1>Loading</h1>;
   }
   console.log(usersByRole);
@@ -88,7 +90,7 @@ const OverView = () => {
           <img className="w-3 md:w-8 xl:w-8" src={packages} alt="" />
           <div>
             <h2 className="text-white text-nowrap font-bold">
-              Total Orders - {productsLength?.length}
+              Total Orders - {ordersLength?.length}
             </h2>
             <Link
               to={"/adminDashboard/orders"}
