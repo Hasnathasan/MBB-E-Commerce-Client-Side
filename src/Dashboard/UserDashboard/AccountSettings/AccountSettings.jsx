@@ -1,4 +1,4 @@
-import { Avatar } from "@nextui-org/react";
+import { Avatar, Button } from "@nextui-org/react";
 import useUser from "../../../Hooks/useUser";
 import axios from "axios";
 import { useContext, useRef, useState } from "react";
@@ -142,7 +142,7 @@ const AccountSettings = () => {
           </div>
           <div className="flex justify-center col-span-2 items-center gap-5 flex-col">
               <Avatar
-                src={"userData?.userPhoto"}
+                src={userData?.userPhoto}
                 className="w-48 h-48 text-large"
               />
               {/* <img src={`data:image/png;base64,${binaryCode}`} alt="Decoded Image" /> */}
@@ -156,7 +156,7 @@ const AccountSettings = () => {
                 onClick={handleButtonClick}
                 color="success"
                 radius="full"
-                className="text-white mb-2 bg-green-500 w-full"
+                className="text-white mb-2 bg-green-500 px-8"
               >
                 Choose Image
               </Button>
