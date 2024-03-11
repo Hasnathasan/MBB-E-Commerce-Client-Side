@@ -1,26 +1,26 @@
 import {
-    Button,
-    Chip,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownTrigger,
-    Input,
-    Table,
-    TableBody,
-    TableCell,
-    TableColumn,
-    TableHeader,
-    TableRow,
-    User,
-  } from "@nextui-org/react";
+  Button,
+  Chip,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Input,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+  User,
+} from "@nextui-org/react";
 import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
 import useCustomers from "../../../Hooks/useCustomers";
 
 const ManageCustomers = () => {
-    const [customersData] = useCustomers();
-    return (
-        <div className="overflow-x-auto w-[95%] mx-auto">
+  const [customersData] = useCustomers();
+  return (
+    <div className="overflow-x-auto w-[95%] mx-auto">
       <div className="flex flex-col  gap-4">
         <div className="flex justify-between p-5 bg-white rounded-xl gap-3 items-end">
           <Input
@@ -115,7 +115,7 @@ const ManageCustomers = () => {
         </TableBody>
       </Table>
     </div>
-    );
+  );
 };
 
 export default ManageCustomers;
