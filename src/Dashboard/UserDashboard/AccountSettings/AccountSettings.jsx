@@ -8,21 +8,21 @@ import toast, { Toaster } from "react-hot-toast";
 
 const AccountSettings = () => {
   const { user } = useContext(AuthContext);
-  const [userData, isUserDataLoading] = useUser();
+  const [userData, isUserDataLoading, refetch] = useUser();
   const fileInputRef = useRef(null);
-  const [selectedFile, setSelectedFile] = useState(null)
+  const [selectedFile, setSelectedFile] = useState(null);
   console.log(userData);
-    const handleFileChange = (event) => {
-      const file = event.target.files[0];
-      if (file) {
-        setSelectedFile(file);
-      }
-    };
-    
-    console.log(selectedFile);
-    const handleButtonClick = () => {
-      fileInputRef.current.click();
-    };
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+    }
+  };
+
+  console.log(selectedFile);
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
   if (isUserDataLoading) {
     return <h1>Loading......</h1>;
   }
@@ -33,41 +33,42 @@ const AccountSettings = () => {
     const updatedName = form.name.value;
     const updatedNum = form.phoneNumber.value;
     console.log(updatedName, updatedNum);
-    if(!selectedFile){
-      return toast.error("Please Select an Image")
+    if (!selectedFile) {
+      return toast.error("Please Select an Image");
     }
     const formData = new FormData();
-    formData.append("file", selectedFile)
-    axios.post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
-              headers: {
-                  "Content-Type": "multipart/form-data",
-              },
-          })
-          .then(res => {
-            console.log(res.data.url);
-            if(res.data.url){
-              axios
-              .patch(`https://mbb-e-commerce-server.vercel.app/userUpdate/${user?.email}`, {
+    formData.append("file", selectedFile);
+    axios
+      .post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res.data.url);
+        if (res.data.url) {
+          axios
+            .patch(
+              `https://mbb-e-commerce-server.vercel.app/userUpdate/${user?.email}`,
+              {
                 updatedName,
                 updatedNum,
-              })
-              .then((res) => {
-                console.log(res.data);
-                if (res.data.modifiedCount > 0) {
-                  Swal.fire(
-                    "Congratulation",
-                    "Successfully Updated Your Data",
-                    "success"
-                  );
-                }
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-            }
-          })
-          .catch(error => console.log(error))
-    
+                userphoto: res?.data?.url,
+              }
+            )
+            .then((res) => {
+              console.log(res.data);
+              refetch();
+              if (res.data.modifiedCount > 0) {
+                return toast.success("User data updated");
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   const handleBillingUpdate = (e) => {
@@ -159,26 +160,26 @@ const AccountSettings = () => {
             </form>
           </div>
           <div className="flex justify-center col-span-2 items-center gap-5 flex-col">
-              <Avatar
-                src={userData?.userPhoto}
-                className="w-48 h-48 text-large"
-              />
-              {/* <img src={`data:image/png;base64,${binaryCode}`} alt="Decoded Image" /> */}
-              <input
-                type="file"
-                ref={fileInputRef}
-                style={{ display: "none" }}
-                onChange={handleFileChange}
-              />
-              <Button
-                onClick={handleButtonClick}
-                color="success"
-                radius="full"
-                className="text-white mb-2 bg-green-500 px-8"
-              >
-                Choose Image
-              </Button>
-            </div>
+            <Avatar
+              src={userData?.userPhoto}
+              className="w-48 h-48 text-large"
+            />
+            {/* <img src={`data:image/png;base64,${binaryCode}`} alt="Decoded Image" /> */}
+            <input
+              type="file"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+            />
+            <Button
+              onClick={handleButtonClick}
+              color="success"
+              radius="full"
+              className="text-white mb-2 bg-green-500 px-8"
+            >
+              Choose Image
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -277,6 +278,7 @@ const AccountSettings = () => {
                 placeholder="Email Address"
                 defaultValue={userData?.email}
                 required
+                disabled
               />
             </div>
 
