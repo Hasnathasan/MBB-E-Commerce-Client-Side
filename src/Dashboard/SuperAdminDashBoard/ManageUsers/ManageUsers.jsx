@@ -1,26 +1,26 @@
 import {
-    Button,
-    Chip,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownTrigger,
-    Input,
-    Table,
-    TableBody,
-    TableCell,
-    TableColumn,
-    TableHeader,
-    TableRow,
-    User,
-  } from "@nextui-org/react";
+  Button,
+  Chip,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Input,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+  User,
+} from "@nextui-org/react";
 import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
 import useUsers from "../../../Hooks/useUsers";
 
 const ManageUsers = () => {
-    const [usersData] = useUsers();
-    return (
-        <div className="overflow-x-auto w-full md:w-[80%]">
+  const [usersData] = useUsers();
+  return (
+    <div className="overflow-x-auto w-full md:w-[80%]">
       <div className="flex flex-col  gap-4">
         <div className="flex justify-between p-5 bg-white rounded-xl gap-3 items-end">
           <Input
@@ -115,7 +115,7 @@ const ManageUsers = () => {
         </TableBody>
       </Table>
     </div>
-    );
+  );
 };
 
 export default ManageUsers;
