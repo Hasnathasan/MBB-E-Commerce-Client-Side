@@ -78,7 +78,11 @@ const PaymentProcess = ({ userDetails }) => {
 
     setProcessing(true);
     const order = {userDetails, products: userCart, status: "pending", createdAt: new Date(), total_price: subTotal};
-    axios.post("http://localhost:8000/orders", order)
+    const orderProductsId = userCart?.map(product => {
+      return {"product_id": product?.product_id, quantity: product?.quantity}
+    });
+    console.log(orderProductsId);
+    axios.post("https://mbb-e-commerce-server.vercel.app/orders", order)
     .then(async(result) => {
       console.log(result);
       if(result.data.insertedId){
@@ -99,7 +103,7 @@ const PaymentProcess = ({ userDetails }) => {
     setProcessing(false);
     if (paymentIntent.status === "succeeded") {
       const transactionId = paymentIntent.id;
-      axios.patch(`http://localhost:8000/orders/${result?.data?.insertedId}?transactionId=${transactionId}`)
+      axios.post(`https://mbb-e-commerce-server.vercel.app/ordersUpdate/${result?.data?.insertedId}?transactionId=${transactionId}`, orderProductsId)
       .then(result => {
         console.log(result);
         const paymentSuccessToast = () =>
@@ -116,7 +120,7 @@ const PaymentProcess = ({ userDetails }) => {
       
     }
     else{
-      axios.delete(`http://localhost:8000/orders/${result?.data?.insertedId}`)
+      axios.delete(`https://mbb-e-commerce-server.vercel.app/orders/${result?.data?.insertedId}`)
       .then(result => console.log(result))
       .catch(error => console.log(error))
     }

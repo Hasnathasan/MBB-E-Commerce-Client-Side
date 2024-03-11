@@ -22,6 +22,7 @@ const PopularProductsCard = ({ product, isRounded }) => {
     description,
     rating,
     reviews,
+    profit_distribution,
     price,
     addedBy,
     prison_of_artist,
@@ -39,6 +40,7 @@ const PopularProductsCard = ({ product, isRounded }) => {
       product_id: _id,
       product_name,
       price,
+      profit_distribution,
       featured_photo,
       product_available_quantity: parseInt(available_quantity),
     };

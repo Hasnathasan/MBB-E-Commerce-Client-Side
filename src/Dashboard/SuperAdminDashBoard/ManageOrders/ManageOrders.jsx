@@ -114,9 +114,9 @@ const ManageOrders = () => {
                 </Chip>
               </TableCell>
               <TableCell>
-                <NavLink to={`/adminDashboard/orders/orderDetails/${order?._id}`}><Button color="success" radius="lg" className="text-white">
+                <Link to={`/adminDashboard/orders/orderDetails/${order?._id}`}><Button color="success" radius="lg" className="text-white">
                   View Details
-                </Button></NavLink>
+                </Button></Link>
               </TableCell>
             </TableRow>
           ))}

@@ -106,7 +106,7 @@ const ManageArtists = () => {
               console.log(response.data.url);
               artist.userPhoto = response.data.url;
               if (response.data.url) {
-                  return axios.post(`http://localhost:8000/artistByAdmin`, artist)
+                  return axios.post(`https://mbb-e-commerce-server.vercel.app/artistByAdmin`, artist)
                       .then((res) => {
                           console.log(res.data);
                           return res.data; // Return data to handle success message

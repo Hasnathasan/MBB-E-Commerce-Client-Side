@@ -1,10 +1,8 @@
 
 import axios from 'axios';
-import useAxiosSecure from './useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 
 const useUsersByRole = () => {
-    const [axiosSecure] = useAxiosSecure();
     const {
       data: usersByRole,
       isLoading: isUsersByRoleDataLoading,
@@ -12,7 +10,7 @@ const useUsersByRole = () => {
     } = useQuery({
       queryKey: ["user's By role"],
       queryFn: async () => {
-        const res = await axios.get("http://localhost:8000/usersByRole");
+        const res = await axios.get("https://mbb-e-commerce-server.vercel.app/usersByRole");
         return res.data;
       },
     });

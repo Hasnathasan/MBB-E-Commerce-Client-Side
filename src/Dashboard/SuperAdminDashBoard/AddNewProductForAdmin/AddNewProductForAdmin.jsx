@@ -79,7 +79,7 @@ console.log(artistProfit, websiteProfit, prisonProfit);
     e.preventDefault();
     const form = e.target;
     const product_name = form.product_name.value;
-    const available_quantity = form.available_quantity.value;
+    const available_quantity = parseInt(form.available_quantity.value);
     const featured_photo_file = form.featured_photo.files[0];
     const gallery_photos_files = form.gallery_photos.files;
     const multipleImages = [...gallery_photos_files];
