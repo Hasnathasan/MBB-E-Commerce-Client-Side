@@ -1,13 +1,27 @@
 import { Avatar } from "@nextui-org/react";
 import useUser from "../../../Hooks/useUser";
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import Swal from "sweetalert2";
 
 const AccountSettings = () => {
   const { user } = useContext(AuthContext);
   const [userData, isUserDataLoading] = useUser();
+  const fileInputRef = useRef(null);
+  const [selectedFile, setSelectedFile] = useState(null)
+  console.log(userData);
+    const handleFileChange = (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        setSelectedFile(file);
+      }
+    };
+    
+    console.log(selectedFile);
+    const handleButtonClick = () => {
+      fileInputRef.current.click();
+    };
   if (isUserDataLoading) {
     return <h1>Loading......</h1>;
   }
@@ -127,17 +141,26 @@ const AccountSettings = () => {
             </form>
           </div>
           <div className="flex justify-center col-span-2 items-center gap-5 flex-col">
-            <Avatar
-              src={userData?.userPhoto}
-              className="w-48 h-48 text-large"
-            />
-            <button
-              type="submit"
-              className=" text-white bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl text-sm px-7 py-2.5 text-center "
-            >
-              Chose Image
-            </button>
-          </div>
+              <Avatar
+                src={"userData?.userPhoto"}
+                className="w-48 h-48 text-large"
+              />
+              {/* <img src={`data:image/png;base64,${binaryCode}`} alt="Decoded Image" /> */}
+              <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+              />
+              <Button
+                onClick={handleButtonClick}
+                color="success"
+                radius="full"
+                className="text-white mb-2 bg-green-500 w-full"
+              >
+                Choose Image
+              </Button>
+            </div>
         </div>
       </div>
 
