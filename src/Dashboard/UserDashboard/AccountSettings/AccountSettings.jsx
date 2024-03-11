@@ -4,6 +4,7 @@ import axios from "axios";
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import Swal from "sweetalert2";
+import toast, { Toaster } from "react-hot-toast";
 
 const AccountSettings = () => {
   const { user } = useContext(AuthContext);
@@ -32,24 +33,41 @@ const AccountSettings = () => {
     const updatedName = form.name.value;
     const updatedNum = form.phoneNumber.value;
     console.log(updatedName, updatedNum);
-    axios
-      .patch(`https://mbb-e-commerce-server.vercel.app/userUpdate/${user?.email}`, {
-        updatedName,
-        updatedNum,
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.modifiedCount > 0) {
-          Swal.fire(
-            "Congratulation",
-            "Successfully Updated Your Data",
-            "success"
-          );
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if(!selectedFile){
+      return toast.error("Please Select an Image")
+    }
+    const formData = new FormData();
+    formData.append("file", selectedFile)
+    axios.post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
+              headers: {
+                  "Content-Type": "multipart/form-data",
+              },
+          })
+          .then(res => {
+            console.log(res.data.url);
+            if(res.data.url){
+              axios
+              .patch(`https://mbb-e-commerce-server.vercel.app/userUpdate/${user?.email}`, {
+                updatedName,
+                updatedNum,
+              })
+              .then((res) => {
+                console.log(res.data);
+                if (res.data.modifiedCount > 0) {
+                  Swal.fire(
+                    "Congratulation",
+                    "Successfully Updated Your Data",
+                    "success"
+                  );
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+            }
+          })
+          .catch(error => console.log(error))
+    
   };
 
   const handleBillingUpdate = (e) => {
@@ -283,6 +301,7 @@ const AccountSettings = () => {
           </button>
         </form>
       </div>
+      <Toaster />
     </div>
   );
 };
