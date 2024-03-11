@@ -1,25 +1,25 @@
 import {
-    Button,
-    Chip,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownTrigger,
-    Input,
-    Modal,
-    ModalBody,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    Table,
-    TableBody,
-    TableCell,
-    TableColumn,
-    TableHeader,
-    TableRow,
-    User,
-    useDisclosure,
-  } from "@nextui-org/react";
+  Button,
+  Chip,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+  User,
+  useDisclosure,
+} from "@nextui-org/react";
 import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
 import product1 from "../../../assets/products1.png";
 import product2 from "../../../assets/products2.png";
@@ -38,14 +38,20 @@ import { useContext } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
 
 const ManageProducts = () => {
-  const {categoryFilter, priceSlider, minRating, searchQuery} = useContext(AuthContext);
-    const [products, isProductsLoading] = useProducts({categoryFilter, priceSlider, minRating, searchQuery});
-    const {isOpen, onOpen, onOpenChange} = useDisclosure();
-   if(isProductsLoading){
-    return <h1>Loading.....</h1>
-   }
-    return (
-        <div className="overflow-x-auto w-[95%] mx-auto">
+  const { categoryFilter, priceSlider, minRating, searchQuery } =
+    useContext(AuthContext);
+  const [products, isProductsLoading] = useProducts({
+    categoryFilter,
+    priceSlider,
+    minRating,
+    searchQuery,
+  });
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  if (isProductsLoading) {
+    return <h1>Loading.....</h1>;
+  }
+  return (
+    <div className="overflow-x-auto w-[95%] mx-auto">
       <div className="flex flex-col  gap-4">
         <div className="flex justify-between p-5 bg-white rounded-xl gap-3 items-end">
           <Input
@@ -91,7 +97,11 @@ const ManageProducts = () => {
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
-            <Button  onPress={onOpen} color="primary" endContent={<FaPlus></FaPlus>}>
+            <Button
+              onPress={onOpen}
+              color="primary"
+              endContent={<FaPlus></FaPlus>}
+            >
               Add New
             </Button>
           </div>
@@ -106,23 +116,26 @@ const ManageProducts = () => {
           <TableColumn>Added By</TableColumn>
           <TableColumn>Price</TableColumn>
           <TableColumn>Rating</TableColumn>
-          <TableColumn>
-            Details
-          </TableColumn>
+          <TableColumn>Details</TableColumn>
         </TableHeader>
         <TableBody>
           {products?.map((product) => (
             <TableRow key={product.name}>
               <TableCell>
-                <div className="flex justify-start items-center gap-3"><img src={product?.featured_photo} className="w-12 h-12" alt="" />
-                <h3>{product?.product_name}</h3>
+                <div className="flex justify-start items-center gap-3">
+                  <img
+                    src={product?.featured_photo}
+                    className="w-12 h-12"
+                    alt=""
+                  />
+                  <h3>{product?.product_name}</h3>
                 </div>
               </TableCell>
               <TableCell>{product?.addedBy}</TableCell>
-              <TableCell>${product?.price?.sale_price || product?.price?.regular_price}</TableCell>
               <TableCell>
-                {product?.rating}
+                ${product?.price?.sale_price || product?.price?.regular_price}
               </TableCell>
+              <TableCell>{product?.rating}</TableCell>
               <TableCell>
                 <Button color="success" radius="lg" className="text-white">
                   View Details
@@ -133,14 +146,22 @@ const ManageProducts = () => {
         </TableBody>
       </Table>
 
-
-      <Modal scrollBehavior="outside" size="5xl" backdrop="opaque" className="!z-50" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal
+        scrollBehavior="outside"
+        size="5xl"
+        backdrop="opaque"
+        className="!z-50"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      >
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Add a New Product</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">
+                Add a New Product
+              </ModalHeader>
               <ModalBody>
-              <AddNewProductForAdmin></AddNewProductForAdmin>
+                <AddNewProductForAdmin></AddNewProductForAdmin>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
@@ -151,13 +172,9 @@ const ManageProducts = () => {
           )}
         </ModalContent>
       </Modal>
-      <Toaster
-
-  position="top-center"
-  reverseOrder={false}
-/>
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
-    );
+  );
 };
 
 export default ManageProducts;
