@@ -15,8 +15,11 @@ const AddNewProductForAdmin = () => {
   const [categories, setCategories] = useState(
     [].map((str) => ({ label: str, value: str }))
   );
-  const regularPriceRef = useRef(null);
   const salePriceRef = useRef(null);
+  const regularPriceRef = useRef(null);
+  const artistPercentRef = useRef(null);
+  const websitePercentRef = useRef(null);
+  const prisonPercentRef = useRef(null);
   const costPriceRef = useRef(null);
   const [regularPrice, setRegularPrice] = useState();
   const [salePrice, setSalePrice] = useState();
@@ -24,32 +27,38 @@ const AddNewProductForAdmin = () => {
   const [artist, setArtist] = useState(null);
   const [prison, setPrison] = useState(null);
 const [artistProfit, setArtistProfit] = useState();
+const [artistPercent, setArtistPercent] = useState(artistPercentRef?.current?.value);
 const [websiteProfit, setWebsiteProfit] = useState();
+const [websitePercent, setWebsitePercent] = useState(websitePercentRef?.current?.value);
 const [prisonProfit, setPrisonProfit] = useState();
+const [prisonPercent, setPrisonPercent] = useState(prisonPercentRef?.current?.value);
   console.log(tags, artistProfit, costPrice, prison, artist);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   function calculateArtistProfit(salePrice, regularPrice, costPrice) {
     const sale = Number(salePrice) || 0.0;
     const regular = Number(regularPrice) || 0.0;
     const cost = Number(costPrice) || 0.0;
 
-    const firstPart = ((sale || regular) - cost) * 0.7;
+    const firstPart = ((sale || regular) - cost) * (parseFloat(artistPercent) / 100);
     return parseFloat(firstPart.toFixed(2))
 }
+// eslint-disable-next-line react-hooks/exhaustive-deps
 const calculateWebsiteProfit = (salePrice, regularPrice, costPrice) => {
   return regularPrice && costPrice
-      ? parseFloat((((salePrice || regularPrice) - costPrice) * 0.15).toFixed(2))
+      ? parseFloat((((salePrice || regularPrice) - costPrice) * (parseFloat(websitePercent) / 100)).toFixed(2))
       : 0.0;
 };
 
+// eslint-disable-next-line react-hooks/exhaustive-deps
 const calculatePrisonProfit = (salePrice, regularPrice, costPrice) => {
   return regularPrice && costPrice
-      ? parseFloat((((salePrice || regularPrice) - costPrice) * 0.15).toFixed(2))
+      ? parseFloat((((salePrice || regularPrice) - costPrice) * (parseFloat(prisonPercent) / 100)).toFixed(2))
       : 0.0;
 };
 
 
 
-
+console.log(prisonPercent, websitePercent, artistPercent, artistPercentRef?.current?.value);
 
 
 // Example usage:
@@ -61,7 +70,10 @@ useEffect(() => {
   setWebsiteProfit(websiteProfit);
   const prisonProfit = calculatePrisonProfit(salePrice, regularPrice, costPrice);
   setPrisonProfit(prisonProfit)
-},[costPrice, regularPrice, salePrice])
+  setArtistPercent(artistPercentRef.current.value)
+  setWebsitePercent(websitePercentRef.current.value)
+  setPrisonPercent(prisonPercentRef.current.value)
+},[calculateArtistProfit, calculatePrisonProfit, calculateWebsiteProfit, costPrice, regularPrice, salePrice])
 console.log(artistProfit, websiteProfit, prisonProfit);
   const handleProductAdding = (e) => {
     e.preventDefault();
@@ -75,6 +87,9 @@ console.log(artistProfit, websiteProfit, prisonProfit);
     const regular_price = parseFloat(form.regular_price.value);
     const sale_price = parseFloat(form.sale_price.value);
     const cost_price = parseFloat(form.cost_price.value);
+    const artist_percentage = parseFloat(form.artist_percentage.value);
+    const website_percentage = parseFloat(form.website_percentage.value);
+    const prison_percentage = parseFloat(form.prison_percentage.value);
     const addedBy = artist;
     const prison_of_artist = prison;
     const product_tags = tags.map((tag) => tag.label);
@@ -115,7 +130,9 @@ console.log(artistProfit, websiteProfit, prisonProfit);
                           description,
                           rating: 0,
                           profit_distribution: {
-                            artist_profit_details:{artistProfit}
+                            artist_profit_details:{artist_percentage, artistProfit, artistTotal: artistProfit + cost_price},
+                            website_profit_details:{website_percentage, websiteProfit},
+                            prison_profit_details:{prison_percentage, prisonProfit}
                           },
                           reviews: [],
                           price: { regular_price, sale_price, cost_price },
@@ -123,6 +140,7 @@ console.log(artistProfit, websiteProfit, prisonProfit);
                           prison_of_artist,
                           createdAt: new Date()
                       };
+                      console.log(product);
                       return axios.post("https://mbb-e-commerce-server.vercel.app/products", product).then((res) => {
                           console.log(res.data);
                           form.reset()
@@ -374,10 +392,13 @@ console.log(artistProfit, websiteProfit, prisonProfit);
               Artist(you){" "}
               <span className="relative">
                 <input
+                name="artist_percentage"
+                id="artist_percentage"
                   defaultValue={70}
                   className="max-w-16 text-right pr-5 bg-gray-300 outline-none rounded-sm p-1 text-sm"
-                  disabled
                   type="number"
+                  ref={artistPercentRef}
+                  onChange={e => setArtistPercent(parseFloat(e.target.value))}
                 />
                 <span className="absolute top-1/2 right-0 transform -translate-x-1/2 -translate-y-1/2">
                   %
@@ -390,10 +411,13 @@ console.log(artistProfit, websiteProfit, prisonProfit);
               MBB{" "}
               <span className="relative">
                 <input
+                name="website_percentage"
+                id="website_percentage"
                   defaultValue={15}
                   className="max-w-16 text-right pr-5 bg-gray-300 outline-none rounded-sm p-1 text-sm"
-                  disabled
                   type="number"
+                  ref={websitePercentRef}
+                  onChange={e => setWebsitePercent(parseFloat(e.target.value))}
                 />
                 <span className="absolute top-1/2 right-0 transform -translate-x-1/2 -translate-y-1/2">
                   %
@@ -406,10 +430,13 @@ console.log(artistProfit, websiteProfit, prisonProfit);
               Prison{" "}
               <span className="relative">
                 <input
+                name="prison_percentage"
+                id="prison_percentage"
                   defaultValue={15}
                   className="max-w-16 text-right pr-5 bg-gray-300 outline-none rounded-sm p-1 text-sm"
-                  disabled
                   type="number"
+                  ref={prisonPercentRef}
+                  onChange={e => setPrisonPercent(parseFloat(e.target.value))}
                 />
                 <span className="absolute top-1/2 right-0 transform -translate-x-1/2 -translate-y-1/2">
                   %
