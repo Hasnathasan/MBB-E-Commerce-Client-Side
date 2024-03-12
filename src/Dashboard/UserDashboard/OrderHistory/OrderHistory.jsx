@@ -6,15 +6,17 @@ const OrderHistory = () => {
   const location = useLocation();
   console.log(location);
   const [orders, isOrdersLoading] = useUserOrders();
-  if(isOrdersLoading){
-    return <h1>Loading</h1>
+  if (isOrdersLoading) {
+    return <h1>Loading</h1>;
   }
   console.log(orders);
   return (
     <>
       <div
         className={`border rounded-lg overflow-auto ${
-          location?.pathname.includes("/userdashboard/orderhistory/orderdetails") 
+          location?.pathname.includes(
+            "/userdashboard/orderhistory/orderdetails"
+          )
             ? "hidden"
             : ""
         } border-gray-300`}
@@ -28,19 +30,23 @@ const OrderHistory = () => {
             <th>Status</th>
             <th>Action</th>
           </tr>
-          {
-            orders?.map(order => <tr key={order?._id}>
-            <td>{order?.transactionId}</td>
-            <td>{order?.createdAt?.slice(0, 10)}</td>
-            <td>${order?.total_price} ({order?.products?.length} Products)</td>
-            <td className="capitalize">{order?.status}</td>
-            <td className="text-green-500 font-semibold">
-              <Link to={`/userdashboard/orderhistory/orderdetails/${order?._id}`}>
-                View Details
-              </Link>
-            </td>
-          </tr>)
-          }
+          {orders?.map((order) => (
+            <tr key={order?._id}>
+              <td>{order?.transactionId}</td>
+              <td>{order?.createdAt?.slice(0, 10)}</td>
+              <td>
+                ${order?.total_price} ({order?.products?.length} Products)
+              </td>
+              <td className="capitalize">{order?.status}</td>
+              <td className="text-green-500 font-semibold">
+                <Link
+                  to={`/userdashboard/orderhistory/orderdetails/${order?._id}`}
+                >
+                  View Details
+                </Link>
+              </td>
+            </tr>
+          ))}
         </table>
       </div>
       <Outlet></Outlet>
