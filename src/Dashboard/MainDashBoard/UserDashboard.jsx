@@ -27,36 +27,33 @@ const UserDashboard = () => {
           >
             <MdDashboard className="w-5 h-5"></MdDashboard> DashBoard
           </NavLink>
-              <NavLink
-                className="p-4 flex items-center gap-3"
-                to="/userdashboard/orderhistory"
-              >
-                <img className="w-5 h-5" src={orderHistory} alt="" /> Order
-                History
-              </NavLink>
-              <NavLink
-                className="p-4 flex items-center gap-3"
-                to="/userdashboard/wishlist"
-              >
-                <GoHeart className="w-5 h-5"></GoHeart> Wish List
-              </NavLink>
-              <NavLink className="p-4 flex items-center gap-3" to="/mycart">
-                <HiOutlineShoppingBag className="w-5 h-5"></HiOutlineShoppingBag>{" "}
-                Shopping Cart
-              </NavLink>
-              <NavLink
-                className="p-4 flex items-center gap-3"
-                to="/userdashboard/settings"
-              >
-                <IoSettingsOutline className="w-5 h-5"></IoSettingsOutline>{" "}
-                Settings
-              </NavLink>
-              {" "}
-              {/* <NavLink className="p-4 flex items-center gap-3" to="artistProfile">
+          <NavLink
+            className="p-4 flex items-center gap-3"
+            to="/userdashboard/orderhistory"
+          >
+            <img className="w-5 h-5" src={orderHistory} alt="" /> Order History
+          </NavLink>
+          <NavLink
+            className="p-4 flex items-center gap-3"
+            to="/userdashboard/wishlist"
+          >
+            <GoHeart className="w-5 h-5"></GoHeart> Wish List
+          </NavLink>
+          <NavLink className="p-4 flex items-center gap-3" to="/mycart">
+            <HiOutlineShoppingBag className="w-5 h-5"></HiOutlineShoppingBag>{" "}
+            Shopping Cart
+          </NavLink>
+          <NavLink
+            className="p-4 flex items-center gap-3"
+            to="/userdashboard/settings"
+          >
+            <IoSettingsOutline className="w-5 h-5"></IoSettingsOutline> Settings
+          </NavLink>{" "}
+          {/* <NavLink className="p-4 flex items-center gap-3" to="artistProfile">
               <IoSettingsOutline className="w-5 h-5"></IoSettingsOutline>{" "}
                 Artist Profile Settings
               </NavLink> */}
-              {/* <NavLink className="p-4 flex items-center gap-3" to="addnewproduct">
+          {/* <NavLink className="p-4 flex items-center gap-3" to="addnewproduct">
                 <HiOutlineShoppingBag className="w-5 h-5"></HiOutlineShoppingBag>{" "}
                 Add New Product
               </NavLink> */}
