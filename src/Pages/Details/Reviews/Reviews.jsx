@@ -2,6 +2,7 @@ import Rating from "react-rating";
 import { IoStarOutline, IoStarSharp } from "react-icons/io5";
 import { BsShieldCheck } from "react-icons/bs";
 import { useState } from "react";
+import axios from "axios";
 
 // To Do: To make the reviews dynamic
 
@@ -12,7 +13,10 @@ const Reviews = ({ product }) => {
   const handleReviewPost = e => {
     e.preventDefault()
     const review = e.target.review.value;
-    console.log(review, reviewByUser);
+    const reviewByUser = {review, rating, createdAt: new Date()}
+    axios.post(`http://localhost:8000/reviews/${product?.product_id}`, reviewByUser)
+    .then(result => console.log(result))
+    .catch(error => console.log(error))
   }
   return (
     <div>
@@ -44,7 +48,7 @@ const Reviews = ({ product }) => {
         </form>
         <div className="flex items-end gap-8">
           <div className=" space-y-1">
-            <h2 className="text-[42px] text-gray-800">{rating}</h2>
+            <h2 className="text-5xl text-gray-800">{rating}</h2>
             <Rating
               className="text-orange-400"
               emptySymbol={<IoStarOutline></IoStarOutline>}
