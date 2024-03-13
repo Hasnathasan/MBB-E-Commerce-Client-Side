@@ -91,7 +91,7 @@ const PopularProductsCard = ({ product, isRounded }) => {
           </div>
           <div
             onClick={handleAddToCart}
-            className={`bg-[#ebebeb] absolute bottom-3 right-3 z-50 rounded-full cursor-pointer  flex justify-center items-center w-10 h-10`}
+            className={`bg-[#ebebeb] absolute bottom-3 right-3 z-10 rounded-full cursor-pointer  flex justify-center items-center w-10 h-10`}
           >
             <HiOutlineShoppingBag className="w-5 h-5"></HiOutlineShoppingBag>
           </div>

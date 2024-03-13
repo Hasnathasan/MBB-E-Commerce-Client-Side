@@ -3,7 +3,7 @@ import useUser from "../../../Hooks/useUser";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
@@ -40,7 +40,7 @@ useEffect(() => {
     const price = product?.price;
     return accumulator + (price.sale_price* product?.quantity || price.regular_price* product?.quantity); // Use nullish coalescing for price2
   }, 0);
-  console.log(subTotal);
+  console.log(subTotal, userCart.length);
   useEffect(() => {
     if (subTotal > 0) {
       axiosSecure.post("/create-payment-intent", { subTotal }).then((res) => {
@@ -115,6 +115,9 @@ useEffect(() => {
         },
       });
     if (confirmError) {
+      axios.delete(`https://mbb-e-commerce-server.vercel.app/orders/${result?.data?.insertedId}`)
+      .then(result => console.log(result))
+      .catch(error => console.log(error))
       console.log(confirmError.message);
       setError(confirmError.message);
     }
@@ -136,11 +139,6 @@ useEffect(() => {
       })
       console.log(order);
       
-    }
-    else{
-      axios.delete(`https://mbb-e-commerce-server.vercel.app/orders/${result?.data?.insertedId}`)
-      .then(result => console.log(result))
-      .catch(error => console.log(error))
     }
       }
     })
@@ -319,7 +317,7 @@ useEffect(() => {
               <Radio value="stripe">Stripe</Radio>
             </RadioGroup>
             <div>
-            <div className="mb-20">
+            <div className="mb-8">
         {error ? <p className="text-red-400">{error}</p> : ""}
         {userCart.length == 0 ? <p className="text-red-400">No Product available in your cart</p> : ""}
       </div>
@@ -341,13 +339,12 @@ useEffect(() => {
           }}
         />
         <Button
-        // onClick={handleSubmit}
               type="submit"
               color="success"
               radius="full"
               size="lg"
-              className="text-white mb-2 bg-green-500 w-full"
-          disabled={!stripe || !clientSecret || processing}
+              className="text-white my-5 bg-green-500 w-full"
+              isDisabled={!stripe || !clientSecret || processing || userCart.length === 0 || !user}
             >
               Place Order
             </Button>
@@ -357,23 +354,7 @@ useEffect(() => {
         </div>
       </div>
     </form>
-    {/* <Modal scrollBehavior="outside" size="2xl" backdrop="opaque" className="!absolute !z-[5000]" isOpen={isOpen} onOpenChange={onOpenChange}>
-    <ModalContent>
-      {(onClose) => (
-        <>
-          <ModalHeader className="flex flex-col gap-1">Payment with card</ModalHeader>
-          <ModalBody>
-          
-          </ModalBody>
-          <ModalFooter>
-            <Button color="danger" variant="light" onPress={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </>
-      )}
-    </ModalContent>
-  </Modal> */}
+    <Toaster />
     </div>
   );
 };
