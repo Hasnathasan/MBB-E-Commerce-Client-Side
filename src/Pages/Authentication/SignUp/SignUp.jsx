@@ -17,7 +17,7 @@ const SignUp = () => {
   const onSubmit = (data) => {
     const { name, email, password, confirmPass } = data;
     if (password !== confirmPass) {
-      return toast.error("Confirmation password didn't match")
+      return toast.error("Confirmation password didn't match");
     }
     const newUser = {
       email,
@@ -33,27 +33,28 @@ const SignUp = () => {
         updateProfile(result.user, {
           displayName: name,
         })
-        .then(() => {
-          reset();
-          axios.post("https://mbb-e-commerce-server.vercel.app/users", newUser).then((data) => {
-            if (data.data.insertedId) {
-              logOut();
-              reset();
-              const success = () => toast.success("Successfuly signed up")
-              success()
-              navigate("/signin");
-            }
+          .then(() => {
+            reset();
+            axios
+              .post("https://mbb-e-commerce-server.vercel.app/users", newUser)
+              .then((data) => {
+                if (data.data.insertedId) {
+                  logOut();
+                  reset();
+                  const success = () => toast.success("Successfuly signed up");
+                  success();
+                  navigate("/signin");
+                }
+              });
+          })
+          .catch((error) => {
+            toast.error(`${error.message}`);
           });
-        })
-        .catch(error => {
-          toast.error(`${error.message}`)
-        })
-        
 
         // navigate(from, { replace: true });
       })
       .catch((error) => {
-        toast.error(`${error.message}`)
+        toast.error(`${error.message}`);
         console.log(error.message);
         // setErrorMessage(error.message);
       });
