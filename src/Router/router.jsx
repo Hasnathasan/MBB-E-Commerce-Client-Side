@@ -12,7 +12,7 @@ import Cart from "../Pages/Cart/Cart";
 import Products from "../Pages/Products/Products/Products";
 import Details from "../Pages/Details/Details";
 import Error from "../Pages/Error/Error";
-import CheckoutPage from "../Pages/CheckoutPage/CheckoutPage";
+import CheckoutPage from "../Pages/CheckoutPage/CheckOutFunctionality/CheckOutFunctionality";
 import ArtistDetailsPage from "../Pages/ArtistDetailsPage/ArtistDetailsPage";
 import AddNewProduct from "../Dashboard/ArtistDashboard/AddNewProduct/AddNewProduct";
 import ArtistProfile from "../Dashboard/ArtistDashboard/ArtistProfile/ArtistProfile";
@@ -30,6 +30,7 @@ import PrivateRoute from "../Components/PrivateRoute/PrivateRoute";
 import ContactUsPage from "../Pages/ContactUsPage/ContactUsPage";
 import OverView from "../Dashboard/SuperAdminDashBoard/OverView/OverView";
 import ManageOrders from "../Dashboard/SuperAdminDashBoard/ManageOrders/ManageOrders";
+import CheckOutElement from "../Pages/CheckoutPage/CheckOutElement/CheckOutElement";
 
 
 const router = createBrowserRouter([
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
         element: <Error></Error>
       },
       {
-        path: "/products",
+        path: "/shop",
         element: <Products></Products>,
         children: [
           {
@@ -89,7 +90,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/checkout",
-        element: <CheckoutPage></CheckoutPage>
+        element: <CheckOutElement></CheckOutElement>
       },
       {
         path: "/artistDetails/:email",

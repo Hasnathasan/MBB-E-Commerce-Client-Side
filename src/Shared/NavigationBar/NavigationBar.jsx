@@ -75,7 +75,7 @@ const subTotal = userCart?.reduce((accumulator, product) => {
     setPriceSlider([0,1000])
     setSearchQuery(searchQuery)
 
-    navigate("/products/filter")
+    navigate("/shop/filter")
   }
   return (
     <div className="w-full relative z-[50] mx-auto">
@@ -153,7 +153,7 @@ const subTotal = userCart?.reduce((accumulator, product) => {
             <NavLink to={"/"}>Home</NavLink>
             <NavLink to={"/artists"}>Artists</NavLink>
             <NavLink to={"/categories"}>Categories</NavLink>
-            <NavLink to={"/products/filter"}>Products</NavLink>
+            <NavLink to={"/shop/filter"}>Products</NavLink>
             <NavLink to={"/about-us"}>About MBB</NavLink>
             <NavLink to={"/contact-us"}>Contact Us</NavLink>
           </div>

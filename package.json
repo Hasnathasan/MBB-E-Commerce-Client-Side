@@ -34,6 +34,7 @@
     "react-selectize": "^3.0.1",
     "react-spinners": "^0.13.8",
     "react-tabs": "^6.0.2",
+    "react-toastify": "^10.0.4",
     "sort-by": "^1.2.0",
     "sweetalert2": "^11.10.4"
   },

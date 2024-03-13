@@ -1,4 +1,5 @@
-import { Button } from "@material-tailwind/react";
+import { Button } from "@nextui-org/react";
+
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
@@ -137,7 +138,7 @@ const PaymentProcess = ({ userDetails }) => {
         {error ? <p className="text-red-400">{error}</p> : ""}
         {userCart.length == 0 ? <p className="text-red-400">No Product available in your cart</p> : ""}
       </div>
-      <form onSubmit={handleSubmit}>
+      <div>
         <CardElement
           options={{
             style: {
@@ -155,14 +156,17 @@ const PaymentProcess = ({ userDetails }) => {
           }}
         />
         <Button
-          type="submit"
-          className="mt-5"
-          color="blue"
+        onClick={handleSubmit}
+              type="submit"
+              color="success"
+              radius="full"
+              size="lg"
+              className="text-white mb-2 bg-green-500 w-full"
           disabled={!stripe || !clientSecret || processing}
-        >
-          Pay
-        </Button>
-      </form>
+            >
+              Place Order
+            </Button>
+      </div>
       <Toaster />
     </>
   );

@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IoEyeOffSharp, IoEyeOutline } from "react-icons/io5";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../Providers/AuthProvider";
+import Swal from "sweetalert2";
 import toast, { Toaster } from "react-hot-toast";
 const SignIn = () => {
   const { loginWithEmail } = useContext(AuthContext);
@@ -11,25 +12,27 @@ const SignIn = () => {
   const navigate = useNavigate();
   const location = useLocation();
   let from = location.state?.from?.pathname || "/";
-
+  
   const onSubmit = (data) => {
-    const success = () => toast.error("user Login Successfull");
     const { email, password } = data;
     loginWithEmail(email, password)
       .then((result) => {
         console.log(result.user);
         reset();
-        toast.success('Successfully toasted!')
+        Swal.fire(
+          "User Login Successfull",
+          "",
+          "success"
+        );
         navigate(from, { replace: true });
       })
       .catch((error) => {
-        toast.error(`${error.message}`);
+        toast.error(`${error.message}`)
         console.log(error.message);
         // setErrorMessage(error.message);
       });
   };
   return (
-    <>
     <div className="flex justify-center min-h-[500px] items-center">
       <div
         style={{ boxShadow: "0px 0px 50px -15px #cccccc" }}
@@ -115,9 +118,8 @@ const SignIn = () => {
           </p>
         </form>
       </div>
+      <Toaster />
     </div>
-    <Toaster position="top-left" reverseOrder={false} />
-    </>
   );
 };
 

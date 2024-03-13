@@ -7,7 +7,7 @@ const CategoryCard = ({ category, totalProduct }) => {
   const {setCategoryFilter} = useContext(AuthContext)
   const handleCategoryClick = () => {
     setCategoryFilter(category?.category)
-    navigate("/products/filter")
+    navigate("/shop/filter")
   }
   return (
     <div onClick={handleCategoryClick} className="w-[100%] bg-white  flex flex-col border-2 cursor-pointer border-gray-200 hover:border-[#3fb643] hover:text-green-600 transition-all duration-300 py-6 rounded-md justify-center items-center gap-2">
