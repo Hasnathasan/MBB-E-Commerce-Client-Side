@@ -6,7 +6,7 @@ import useArtists from "../../../Hooks/useArtists";
 import usePrisons from "../../../Hooks/usePrisons";
 import axios from "axios";
 import toast from "react-hot-toast";
-const AddNewProductForAdmin = () => {
+const AddNewProductForAdmin = ({refetchProducts}) => {
   const [artistData, isArtistsDataLoading] = useArtists();
   const [prisonsData, isPrisonsDataLoading] = usePrisons();
   const [tags, setTags] = useState(
@@ -207,6 +207,7 @@ const AddNewProductForAdmin = () => {
                     .then((res) => {
                       console.log(res.data);
                       form.reset();
+                      refetchProducts()
                       return res.data;
                     })
                     .catch((error) => {

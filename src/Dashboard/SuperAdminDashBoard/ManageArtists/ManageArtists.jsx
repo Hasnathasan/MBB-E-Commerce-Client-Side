@@ -38,7 +38,7 @@ const ManageArtists = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [prisons, isPrisonsDataLoading] = usePrisons();
   const [userData, isUserDataLoading] = useUser();
-  const [artistsData, isArtistsDataLoading] = useArtists();
+  const [artistsData, isArtistsDataLoading, refetch] = useArtists();
   const [selectedFile, setSelectedFile] = useState(null);
   const [passhide, setPasshide] = useState(true);
   const [passhide2, setPasshide2] = useState(true);
@@ -140,6 +140,7 @@ const ManageArtists = () => {
                 )
                 .then((res) => {
                   console.log(res.data);
+                  refetch()
                   return res.data; // Return data to handle success message
                 })
                 .catch((error) => {
@@ -463,14 +464,6 @@ const ManageArtists = () => {
                             />
                           </div>
                         </div>
-                        <Button
-                          type="submit"
-                          color="success"
-                          radius="full"
-                          className="text-white mb-2 bg-green-500"
-                        >
-                          Save Changes
-                        </Button>
                       </div>
                       <div className="flex justify-center col-span-2 items-center gap-5 flex-col">
                         <Avatar
@@ -603,7 +596,7 @@ const ManageArtists = () => {
                         type="submit"
                         className=" text-white bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl text-sm px-7 py-2.5 text-center "
                       >
-                        Save Changes
+                        Add Artist
                       </button>
                     </div>
                   </div>

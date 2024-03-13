@@ -40,7 +40,7 @@ import { AuthContext } from "../../../Providers/AuthProvider";
 const ManageProducts = () => {
   const { categoryFilter, priceSlider, minRating, searchQuery } =
     useContext(AuthContext);
-  const [products, isProductsLoading] = useProducts({
+  const [products, isProductsLoading, refetch] = useProducts({
     categoryFilter,
     priceSlider,
     minRating,
@@ -161,7 +161,7 @@ const ManageProducts = () => {
                 Add a New Product
               </ModalHeader>
               <ModalBody>
-                <AddNewProductForAdmin></AddNewProductForAdmin>
+                <AddNewProductForAdmin refetchProducts={refetch}></AddNewProductForAdmin>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
