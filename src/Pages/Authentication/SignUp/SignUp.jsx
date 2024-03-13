@@ -39,13 +39,8 @@ const SignUp = () => {
             if (data.data.insertedId) {
               logOut();
               reset();
-              Swal.fire(
-                "Sign Up Successfull",
-                "Now Login to Continue",
-                "success"
-              );
-              // setLoading(false);
-              // setError("");
+              const success = () => toast.success("Successfuly signed up")
+              success()
               navigate("/signin");
             }
           });

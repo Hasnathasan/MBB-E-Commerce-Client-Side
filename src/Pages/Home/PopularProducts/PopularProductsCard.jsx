@@ -10,7 +10,7 @@ import toast, { Toaster } from "react-hot-toast";
 const PopularProductsCard = ({ product, isRounded }) => {
   const [hovered, setHovered] = useState(false);
 
-  const { user, setIsProductAdded } = useContext(AuthContext);
+  const { user, setIsProductAdded, setOpenCart } = useContext(AuthContext);
   const {
     _id,
     product_name,
@@ -51,7 +51,7 @@ const PopularProductsCard = ({ product, isRounded }) => {
     setIsProductAdded((prevCount) => prevCount + 1);
     newCart.push(cartProduct);
     localStorage.setItem("cart", JSON.stringify(newCart));
-
+      setOpenCart(true)
     success();
   };
 

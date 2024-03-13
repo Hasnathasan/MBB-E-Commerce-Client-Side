@@ -89,7 +89,6 @@ useEffect(() => {
                   className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                   placeholder="companyName"
                   defaultValue={userData?.billingInfo?.companyName}
-                  required
                 />
               </div>
             </div>

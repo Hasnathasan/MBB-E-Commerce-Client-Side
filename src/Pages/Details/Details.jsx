@@ -59,7 +59,7 @@ function ThumbnailPlugin(mainRef) {
 
 const Details = () => {
   
-  const {user, setIsProductAdded} = useContext(AuthContext);
+  const {user, setIsProductAdded, setOpenCart} = useContext(AuthContext);
   const [userData, isUserDataLoading] = useUser();
   const [product, setProduct] = useState();
   const [relatedProducts, setRelatedProducts] = useState();
@@ -125,7 +125,7 @@ const success = () => toast.success("Product Successfully added to cart")
     setIsProductAdded(prevCount => prevCount + 1);
     newCart.push(cartProduct);
     localStorage.setItem("cart", JSON.stringify(newCart));
-    
+    setOpenCart(true)
     success()
   }
   console.log(localStorage.getItem("cart"));

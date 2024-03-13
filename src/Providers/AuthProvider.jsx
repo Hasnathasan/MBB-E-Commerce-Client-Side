@@ -22,6 +22,7 @@ const AuthProvider = ({ children }) => {
   const [priceSlider, setPriceSlider] = useState([0, 1000]);
   const [minRating, setMinRating] = useState(null)
   const [searchQuery, setSearchQuery] = useState(null);
+  const [openCart, setOpenCart] = useState(false);
   const [isProductAdded, setIsProductAdded] = useState(1);
 console.log(minRating);
 console.log(user);
@@ -58,7 +59,9 @@ console.log(user);
     searchQuery, 
     setSearchQuery,
     isProductAdded,
-    setIsProductAdded
+    setIsProductAdded,
+    openCart,
+    setOpenCart
   };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (loggedUser) => {
