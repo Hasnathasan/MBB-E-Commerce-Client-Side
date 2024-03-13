@@ -1,16 +1,16 @@
 import { useContext } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import "./OrderDetails.css";
-import product1 from "../../../assets/products1.png";
 import { useParams } from "react-router-dom";
 import useSingleOrderById from "../../../Hooks/useSingleOrderById";
+import Loader from "../../../Components/Loader/Loader";
 
 const OrderDetails = () => {
   const { id } = useParams();
   const { user } = useContext(AuthContext);
   const [order, isOrderLoading, refetch] = useSingleOrderById({ id });
   if (isOrderLoading) {
-    return <h1>Loading</h1>;
+    return <Loader></Loader>;
   }
   const {
     email,

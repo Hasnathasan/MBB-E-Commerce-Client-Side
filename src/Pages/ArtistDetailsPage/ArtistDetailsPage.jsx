@@ -4,12 +4,13 @@ import useArtist from "../../Hooks/useArtist";
 import { useParams } from "react-router-dom";
 import ReactPlayer from "react-player";
 import useArtistProductsByEmail from "../../Hooks/useArtistProductsByEmail";
+import Loader from "../../Components/Loader/Loader";
 const ArtistDetailsPage = () => {
   const {email} = useParams();
   const [artistData, isArtistDataLoading] = useArtist({email});
   const [products, isProductsLoading] = useArtistProductsByEmail({email})
   if(isArtistDataLoading || isProductsLoading){
-    return <h1>Loading</h1>
+    return <Loader></Loader>
   }
   console.log(artistData, products);
   return (

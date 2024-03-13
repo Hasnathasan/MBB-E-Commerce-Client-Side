@@ -36,6 +36,7 @@ import { Toaster } from "react-hot-toast";
 import useProducts from "../../../Hooks/useProducts";
 import { useContext } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
+import Loader from "../../../Components/Loader/Loader";
 
 const ManageProducts = () => {
   const { categoryFilter, priceSlider, minRating, searchQuery } =
@@ -48,7 +49,7 @@ const ManageProducts = () => {
   });
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   if (isProductsLoading) {
-    return <h1>Loading.....</h1>;
+    return <Loader></Loader>;
   }
   return (
     <div className="overflow-x-auto w-[95%] mx-auto">

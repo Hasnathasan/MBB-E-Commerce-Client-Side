@@ -1,4 +1,5 @@
 
+import Loader from "../../Components/Loader/Loader";
 import usePopularCategories from "../../Hooks/usePopularCategories";
 import CategoryCard from "../Home/PopularCategories/CategoryCard";
 
@@ -6,7 +7,7 @@ import CategoryCard from "../Home/PopularCategories/CategoryCard";
 const Categories = () => {
     const [categories, isCategoriesLoading] = usePopularCategories();
     if(isCategoriesLoading){
-        return <h1>Loading</h1>
+        return <Loader></Loader>
     }
     console.log(categories);
     return (

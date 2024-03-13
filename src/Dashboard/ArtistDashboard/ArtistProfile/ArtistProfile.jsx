@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { Avatar, Button, Select, SelectItem } from "@nextui-org/react";
 import { MultiSelect } from "react-selectize";
 import usePrisons from "../../../Hooks/usePrisons";
+import Loader from "../../../Components/Loader/Loader";
 
 const ArtistProfile = () => {
   const { user } = useContext(AuthContext);
@@ -150,7 +151,7 @@ const ArtistProfile = () => {
       });
   };
   if (isPrisonsLoading || isUserDataLoading) {
-    return <h1>Loading......</h1>;
+    return <Loader></Loader>;
   }
   const defaultPrisons = [
     {

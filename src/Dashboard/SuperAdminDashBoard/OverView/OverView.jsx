@@ -6,6 +6,7 @@ import team from "../../../assets/team.png";
 import Chart from "react-apexcharts";
 import useUsersByRole from "../../../Hooks/useUsersByRole";
 import useOrdersLength from "../../../Hooks/useOrdersLength";
+import Loader from "../../../Components/Loader/Loader";
 const OverView = () => {
   const [productsLength, isProductsLengthLoading] = useProductLength();
   const [ordersLength, isOrdersLengthLoading] = useOrdersLength();
@@ -15,7 +16,7 @@ const OverView = () => {
     isUsersByRoleDataLoading ||
     isOrdersLengthLoading
   ) {
-    return <h1>Loading</h1>;
+    return <Loader></Loader>;
   }
   console.log(usersByRole);
   var options = {

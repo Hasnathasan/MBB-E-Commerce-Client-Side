@@ -1,13 +1,14 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import "./OrderHistory.css";
 import useUserOrders from "../../../Hooks/useUserOrders";
+import Loader from "../../../Components/Loader/Loader";
 
 const OrderHistory = () => {
   const location = useLocation();
   console.log(location);
   const [orders, isOrdersLoading] = useUserOrders();
   if (isOrdersLoading) {
-    return <h1>Loading</h1>;
+    return <Loader></Loader>;
   }
   console.log(orders);
   return (

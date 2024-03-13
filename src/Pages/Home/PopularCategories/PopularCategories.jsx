@@ -3,12 +3,13 @@ import { BsArrowRight } from "react-icons/bs";
 import CategoryCard from "./CategoryCard";
 import { useState } from "react";
 import usePopularCategories from "../../../Hooks/usePopularCategories";
+import Loader from "../../../Components/Loader/Loader";
 
 const PopularCategories = () => {
   const [hovered, setHovered] = useState(false);
   const [categories, isCategoriesLoading] = usePopularCategories();
   if(isCategoriesLoading){
-    return <h1>Loading</h1>
+    return <Loader></Loader>
   }
   console.log(categories);
   return (

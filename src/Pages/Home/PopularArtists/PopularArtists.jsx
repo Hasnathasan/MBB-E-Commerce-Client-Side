@@ -2,11 +2,12 @@
 import PopularArtistsCard from "./PopularArtistsCard";
 
 import usePopularArtist from "../../../Hooks/usePopularArtist";
+import Loader from "../../../Components/Loader/Loader";
 
 const PopularArtists = () => {
   const [artistsData, isArtistDataLoading] = usePopularArtist();
   if(isArtistDataLoading){
-    return <h1>Loading</h1>
+    return <Loader></Loader>
   }
   console.log(artistsData);
   return (

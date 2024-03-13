@@ -3,6 +3,7 @@ import PopularProductsCard from "../../Home/PopularProducts/PopularProductsCard"
 import useProducts from "../../../Hooks/useProducts";
 import { useContext } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
+import Loader from "../../../Components/Loader/Loader";
 
 
 
@@ -11,7 +12,7 @@ const ProductCardsForProductPage = () => {
   const {categoryFilter, priceSlider, minRating, searchQuery} = useContext(AuthContext);
     const [products, isProductsLoading] = useProducts({categoryFilter, priceSlider, minRating, searchQuery});
     if(isProductsLoading){
-        return <h1>Loading</h1>
+        return <Loader></Loader>
     }
     return (
         <div>

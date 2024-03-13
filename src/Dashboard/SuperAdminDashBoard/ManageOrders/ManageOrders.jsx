@@ -16,12 +16,13 @@ import {
 import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
 import useAllOrders from "../../../Hooks/useAllOrders";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import Loader from "../../../Components/Loader/Loader";
 
 const ManageOrders = () => {
   const [orders, isOrdersLoading] = useAllOrders();
   const location = useLocation();
   if (isOrdersLoading) {
-    return <h1>Loading..</h1>;
+    return <Loader></Loader>;
   }
   console.log(orders);
   return (

@@ -5,6 +5,7 @@ import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import Swal from "sweetalert2";
 import toast, { Toaster } from "react-hot-toast";
+import Loader from "../../../Components/Loader/Loader";
 
 const AccountSettings = () => {
   const { user } = useContext(AuthContext);
@@ -24,7 +25,7 @@ const AccountSettings = () => {
     fileInputRef.current.click();
   };
   if (isUserDataLoading) {
-    return <h1>Loading......</h1>;
+    return <Loader></Loader>;
   }
   console.log(userData);
   const handleUserUpdate = (e) => {

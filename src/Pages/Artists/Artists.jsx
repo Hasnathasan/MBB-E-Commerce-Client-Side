@@ -1,12 +1,13 @@
 import { Avatar } from "@nextui-org/react";
 import useArtists from "../../Hooks/useArtists";
 import { Link } from "react-router-dom";
+import Loader from "../../Components/Loader/Loader";
 
 
 const Artists = () => {
     const [artistsData, isArtistsDataLoading] = useArtists();
     if(isArtistsDataLoading){
-        return <h1>Loading</h1>
+        return <Loader></Loader>
     }
     console.log(artistsData);
     return (

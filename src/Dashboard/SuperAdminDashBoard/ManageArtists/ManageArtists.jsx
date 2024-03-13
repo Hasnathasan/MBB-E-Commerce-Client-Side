@@ -33,6 +33,7 @@ import { MultiSelect } from "react-selectize";
 import useUser from "../../../Hooks/useUser";
 import { IoEyeOffSharp, IoEyeOutline } from "react-icons/io5";
 import toast, { Toaster } from "react-hot-toast";
+import Loader from "../../../Components/Loader/Loader";
 
 const ManageArtists = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -172,7 +173,7 @@ const ManageArtists = () => {
   };
 
   if (isPrisonsDataLoading || isArtistsDataLoading) {
-    return <h1>Loading.......</h1>;
+    return <Loader></Loader>;
   }
   return (
     <div className="overflow-x-auto w-[95%] mx-auto">
