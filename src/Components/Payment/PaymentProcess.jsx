@@ -78,65 +78,80 @@ const PaymentProcess = ({ userDetails }) => {
     }
 
     setProcessing(true);
-    const order = {userDetails, products: userCart, status: "pending", createdAt: new Date(), total_price: subTotal};
-    const orderProductsId = userCart?.map(product => {
-      return {"product_id": product?.product_id, quantity: product?.quantity}
+    const order = {
+      userDetails,
+      products: userCart,
+      status: "pending",
+      createdAt: new Date(),
+      total_price: subTotal,
+    };
+    const orderProductsId = userCart?.map((product) => {
+      return { product_id: product?.product_id, quantity: product?.quantity };
     });
     console.log(orderProductsId);
-    axios.post("https://mbb-e-commerce-server.vercel.app/orders", order)
-    .then(async(result) => {
-      console.log(result);
-      if(result.data.insertedId){
-        const { paymentIntent, error: confirmError } =
-      await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: card,
-          billing_details: {
-            email: user?.email || "unknown ",
-            name: user?.displayName || "anonymous",
-          },
-        },
-      });
-    if (confirmError) {
-      console.log(confirmError.message);
-      setError(confirmError.message);
-    }
-    setProcessing(false);
-    if (paymentIntent.status === "succeeded") {
-      const transactionId = paymentIntent.id;
-      axios.post(`https://mbb-e-commerce-server.vercel.app/ordersUpdate/${result?.data?.insertedId}?transactionId=${transactionId}`, orderProductsId)
-      .then(result => {
+    axios
+      .post("https://mbb-e-commerce-server.vercel.app/orders", order)
+      .then(async (result) => {
         console.log(result);
-        const paymentSuccessToast = () =>
-        toast.success(`Payment successfully completed`);
-      paymentSuccessToast();
-      setTransactionId(transactionId);
-      localStorage.removeItem("cart")
-      setIsProductAdded(prevCount => prevCount + 1);
+        if (result.data.insertedId) {
+          const { paymentIntent, error: confirmError } =
+            await stripe.confirmCardPayment(clientSecret, {
+              payment_method: {
+                card: card,
+                billing_details: {
+                  email: user?.email || "unknown ",
+                  name: user?.displayName || "anonymous",
+                },
+              },
+            });
+          if (confirmError) {
+            console.log(confirmError.message);
+            setError(confirmError.message);
+          }
+          setProcessing(false);
+          if (paymentIntent.status === "succeeded") {
+            const transactionId = paymentIntent.id;
+            axios
+              .post(
+                `https://mbb-e-commerce-server.vercel.app/ordersUpdate/${result?.data?.insertedId}?transactionId=${transactionId}`,
+                orderProductsId
+              )
+              .then((result) => {
+                console.log(result);
+                const paymentSuccessToast = () =>
+                  toast.success(`Payment successfully completed`);
+                paymentSuccessToast();
+                setTransactionId(transactionId);
+                localStorage.removeItem("cart");
+                setIsProductAdded((prevCount) => prevCount + 1);
+              })
+              .catch((error) => {
+                return toast.error(error.message);
+              });
+            console.log(order);
+          } else {
+            axios
+              .delete(
+                `https://mbb-e-commerce-server.vercel.app/orders/${result?.data?.insertedId}`
+              )
+              .then((result) => console.log(result))
+              .catch((error) => console.log(error));
+          }
+        }
       })
-      .catch(error => {
-        return toast.error(error.message)
-      })
-      console.log(order);
-      
-    }
-    else{
-      axios.delete(`https://mbb-e-commerce-server.vercel.app/orders/${result?.data?.insertedId}`)
-      .then(result => console.log(result))
-      .catch(error => console.log(error))
-    }
-      }
-    })
-    .catch(error => {
-      return toast.error(error.message)
-    })
-    
+      .catch((error) => {
+        return toast.error(error.message);
+      });
   };
   return (
     <>
       <div className="mb-20">
         {error ? <p className="text-red-400">{error}</p> : ""}
-        {userCart.length == 0 ? <p className="text-red-400">No Product available in your cart</p> : ""}
+        {userCart.length == 0 ? (
+          <p className="text-red-400">No Product available in your cart</p>
+        ) : (
+          ""
+        )}
       </div>
       <div>
         <CardElement
@@ -156,16 +171,16 @@ const PaymentProcess = ({ userDetails }) => {
           }}
         />
         <Button
-        onClick={handleSubmit}
-              type="submit"
-              color="success"
-              radius="full"
-              size="lg"
-              className="text-white mb-2 bg-green-500 w-full"
+          onClick={handleSubmit}
+          type="submit"
+          color="success"
+          radius="full"
+          size="lg"
+          className="text-white mb-2 bg-green-500 w-full"
           disabled={!stripe || !clientSecret || processing}
-            >
-              Place Order
-            </Button>
+        >
+          Place Order
+        </Button>
       </div>
       <Toaster />
     </>
