@@ -31,7 +31,7 @@ const OrderHistory = () => {
             <th>Status</th>
             <th>Action</th>
           </tr>
-          {orders?.map((order) => (
+          {orders.length !== 0 ? orders?.map((order) => (
             <tr key={order?._id}>
               <td>{order?.transactionId}</td>
               <td>{order?.createdAt?.slice(0, 10)}</td>
@@ -47,7 +47,8 @@ const OrderHistory = () => {
                 </Link>
               </td>
             </tr>
-          ))}
+          )) : <tr><td className="py-10" colSpan={5}>
+          <h3 className="text-center font-semibold text-3xl">No Order's to show</h3></td></tr>}
         </table>
       </div>
       <Outlet></Outlet>

@@ -27,7 +27,6 @@ import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
 import useArtists from "../../../Hooks/useArtists";
 import usePrisons from "../../../Hooks/usePrisons";
 import axios from "axios";
-import Swal from "sweetalert2";
 import { useRef, useState } from "react";
 import { MultiSelect } from "react-selectize";
 import useUser from "../../../Hooks/useUser";
