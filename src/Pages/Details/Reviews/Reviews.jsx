@@ -9,7 +9,7 @@ import { AuthContext } from "../../../Providers/AuthProvider";
 
 const Reviews = ({ product, refetch }) => {
   const { user } = useContext(AuthContext);
-  const [reviewByUser, setReviewByUser] = useState();
+  const [ratingByUser, setRatingByUser] = useState();
   console.log(product);
   const { reviews, rating } = product;
   const handleReviewPost = (e) => {
@@ -18,13 +18,15 @@ const Reviews = ({ product, refetch }) => {
     const reviewByUser = {
       review,
       reviewBy: user?.email,
-      rating,
+      rating: ratingByUser,
       createdAt: new Date(),
     };
     axios
       .patch(`http://localhost:8000/reviews/${product?._id}`, reviewByUser)
       .then((result) => {
         console.log(result.data);
+        setRatingByUser(0)
+        e.target.reset()
         refetch()
       })
       .catch((error) => console.log(error));
@@ -35,8 +37,8 @@ const Reviews = ({ product, refetch }) => {
         <form onSubmit={handleReviewPost} className="space-y-2">
           <h4 className="text-gray-700 text-lg">Rate this product</h4>
           <Rating
-            onChange={(value) => setReviewByUser(value)}
-            initialRating={reviewByUser}
+            onChange={(value) => setRatingByUser(value)}
+            initialRating={ratingByUser}
             className="text-orange-400"
             emptySymbol={
               <IoStarOutline className="w-6 h-6 opacity-75"></IoStarOutline>
@@ -95,7 +97,7 @@ const Reviews = ({ product, refetch }) => {
                     emptySymbol={<IoStarOutline></IoStarOutline>}
                     fullSymbol={<IoStarSharp></IoStarSharp>}
                     fractions={2}
-                    initialRating={rating}
+                    initialRating={review.rating}
                     readonly
                   />
                   <p className="text-green-500 flex items-center gap-1">
