@@ -7,7 +7,7 @@ import { AuthContext } from "../../../Providers/AuthProvider";
 
 // To Do: To make the reviews dynamic
 
-const Reviews = ({ product }) => {
+const Reviews = ({ product, refetch }) => {
   const { user } = useContext(AuthContext);
   const [reviewByUser, setReviewByUser] = useState();
   console.log(product);
@@ -23,7 +23,10 @@ const Reviews = ({ product }) => {
     };
     axios
       .patch(`http://localhost:8000/reviews/${product?._id}`, reviewByUser)
-      .then((result) => console.log(result))
+      .then((result) => {
+        console.log(result.data);
+        refetch()
+      })
       .catch((error) => console.log(error));
   };
   return (

@@ -1,14 +1,6 @@
 import "keen-slider/keen-slider.min.css";
 import "./Details.css";
 import { useKeenSlider } from "keen-slider/react";
-import product1 from "../../assets/products1.png";
-import product2 from "../../assets/products2.png";
-import product3 from "../../assets/products3.png";
-import product4 from "../../assets/products4.png";
-import product5 from "../../assets/products5.png";
-import product6 from "../../assets/products6.png";
-import product7 from "../../assets/products7.jpg";
-import product8 from "../../assets/products8.png";
 import { Button, Chip, Tab, Tabs } from "@nextui-org/react";
 import Rating from "react-rating";
 import { FaRegStar, FaStar } from "react-icons/fa";
@@ -23,6 +15,7 @@ import useUser from "../../Hooks/useUser";
 import toast, { Toaster } from "react-hot-toast";
 import { AuthContext } from "../../Providers/AuthProvider";
 import Reviews from "./Reviews/Reviews";
+import useSingleProduct from "../../Hooks/useSingleProduct";
 
 function ThumbnailPlugin(mainRef) {
   return (slider) => {
@@ -58,10 +51,11 @@ function ThumbnailPlugin(mainRef) {
 }
 
 const Details = () => {
+  const {id} = useParams();
   
   const {user, setIsProductAdded, setOpenCart} = useContext(AuthContext);
   const [userData, isUserDataLoading] = useUser();
-  const [product, setProduct] = useState();
+  const [product, isProductLoading, refetch] = useSingleProduct({id});
   const [relatedProducts, setRelatedProducts] = useState();
   const [quantity, setQuantity] = useState(1);
   const [sliderRef, instanceRef] = useKeenSlider({
@@ -77,26 +71,18 @@ const Details = () => {
     },
     [ThumbnailPlugin(instanceRef)]
   );
-  const {id} = useParams();
   console.log(user);
   useEffect( () => {
     setQuantity(1)
-    axios.get(`https://mbb-e-commerce-server.vercel.app/singleProduct/${id}`)
-    .then(res => {
-      console.log(res.data.product_categories);
-      setProduct(res.data)
-      if(res.data){
-        axios.post(`https://mbb-e-commerce-server.vercel.app/relatedProducts`, res.data.product_categories)
+        axios.post(`https://mbb-e-commerce-server.vercel.app/relatedProducts`, product?.product_categories)
         .then(res => {
           console.log(res.data);
           setRelatedProducts(res.data)
         })
         .catch(error => console.log(error.message))
-      }
-    })
-    .catch(error => console.log(error.message))
-  },[id])
-  if(!product || !relatedProducts || isUserDataLoading){
+      
+  },[id, product?.product_categories])
+  if(!product || !relatedProducts || isUserDataLoading || isProductLoading){
     return
   }
 console.log(relatedProducts);
@@ -282,7 +268,7 @@ const success = () => toast.success("Product Successfully added to cart")
               </div>
             }
           >
-            <Reviews product={product}></Reviews>
+            <Reviews refetch={refetch} product={product}></Reviews>
           </Tab>
         </Tabs>
       </div>
