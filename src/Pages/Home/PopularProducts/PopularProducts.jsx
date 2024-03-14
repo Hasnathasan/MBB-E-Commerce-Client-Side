@@ -7,7 +7,6 @@ import usePopularProducts from "../../../Hooks/usePopularProducts";
 const PopularProducts = () => {
   const [hovered, setHovered] = useState(false);
   const [products, isProductsLoading] = usePopularProducts();
-  
 
   return (
     <div className="my-20">

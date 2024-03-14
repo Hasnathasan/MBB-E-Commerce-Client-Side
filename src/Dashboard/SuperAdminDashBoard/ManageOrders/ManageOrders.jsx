@@ -115,11 +115,11 @@ const ManageOrders = () => {
                 <TableCell>
                   <Chip
                     className="capitalize"
-                    color={order.status == "completed" ? "success" : "danger"}
+                    color={order?.status == "completed" ? "success" : "danger"}
                     size="sm"
                     variant="flat"
                   >
-                    {order.status}
+                    {order?.status}
                   </Chip>
                 </TableCell>
                 <TableCell>

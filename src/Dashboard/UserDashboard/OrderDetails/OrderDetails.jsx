@@ -12,21 +12,21 @@ const OrderDetails = () => {
   if (isOrderLoading) {
     return <Loader></Loader>;
   }
-  const {
-    email,
-    additional_info,
-    userName,
-    companyName,
-    country,
-    address,
-    states,
-    zipCode,
-    userPhoneNumber,
-  } = order.userDetails;
-  console.log(id, order, email);
+  // const {
+  //   email,
+  //   additional_info,
+  //   userName,
+  //   companyName,
+  //   country,
+  //   address,
+  //   states,
+  //   zipCode,
+  //   userPhoneNumber,
+  // } = order.userDetails;
+  console.log(id, order);
   return (
     <div className="border border-gray-300 rounded-lg">
-      <div className="flex border-b border-gray-300 p-5 justify-between items-center">
+      {/* <div className="flex border-b border-gray-300 p-5 justify-between items-center">
         <div className="flex justify-center items-center gap-4">
           <h1 className="text-xl font-semibold">Order Details</h1>
           <h4 className="text-sm text-gray-800">
@@ -36,11 +36,11 @@ const OrderDetails = () => {
             {order?.products?.length} Products
           </h4>
         </div>
-      </div>
-      <div className="p-6">
+      </div> */}
+      {/* <div className="p-6">
         <div className="grid grid-cols-6 gap-7">
           <div className="col-span-4 h-[300px] grid grid-cols-2 border border-gray-300 rounded-lg">
-            {/* 1st column */}
+            
             <div className="border-r border-gray-300">
               <h2 className=" text-gray-500 border-b border-gray-300 px-4 py-3 font-medium">
                 Billing Address
@@ -63,7 +63,6 @@ const OrderDetails = () => {
               </div>
             </div>
 
-            {/* 2nd column */}
             <div className="">
               <h2 className=" text-gray-500 border-b border-gray-300 px-4 py-3 font-medium">
                 Shipping Address
@@ -87,7 +86,6 @@ const OrderDetails = () => {
             </div>
           </div>
 
-          {/* 3rd column */}
           <div className="col-span-2 border border-gray-300 rounded-lg">
             <div className=" border-b border-gray-300 items-center gap-7 p-4">
               <h3 className=" text-gray-500 mb-3 text-sm font-medium">
@@ -121,9 +119,9 @@ const OrderDetails = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <table className="overflow-auto w-full">
+      {/* <table className="overflow-auto w-full">
         <tr>
           <th>PRODUCT</th>
           <th>PRICE</th>
@@ -147,7 +145,7 @@ const OrderDetails = () => {
             </td>
           </tr>
         ))}
-      </table>
+      </table> */}
     </div>
   );
 };

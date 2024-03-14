@@ -19,7 +19,6 @@ const CheckOutFunctionality = () => {
   const { setIsProductAdded, user } = useContext(AuthContext);
   const [userData] = useUser();
   const [userCart, setUserCart] = useState([]);
-  const [userDetails, setUserDetails] = useState();
   const { isProductAdded } = useContext(AuthContext);
   useEffect(() => {
     // Try retrieving the cart from localStorage, with a default of an empty array if not found
@@ -75,7 +74,6 @@ const CheckOutFunctionality = () => {
       zipCode,
       userPhoneNumber,
     };
-    setUserDetails(data);
 
     if (!stripe || !elements) {
       return;
@@ -102,7 +100,7 @@ const CheckOutFunctionality = () => {
 
     setProcessing(true);
     const order = {
-      userDetails,
+      userDetails: data,
       products: userCart,
       status: "pending",
       createdAt: new Date(),

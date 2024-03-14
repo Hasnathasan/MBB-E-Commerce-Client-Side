@@ -7,11 +7,11 @@ const stritePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
 const CheckOutElement = () => {
   return (
     <>
-        <div className="mx-auto">
-          <Elements stripe={stritePromise}>
-            <CheckOutFunctionality></CheckOutFunctionality>
-          </Elements>
-        </div>
+      <div className="mx-auto">
+        <Elements stripe={stritePromise}>
+          <CheckOutFunctionality></CheckOutFunctionality>
+        </Elements>
+      </div>
     </>
   );
 };
