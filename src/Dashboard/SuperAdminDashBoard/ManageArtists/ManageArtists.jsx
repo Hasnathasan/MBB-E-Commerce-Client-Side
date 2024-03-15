@@ -27,7 +27,7 @@ import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
 import useArtists from "../../../Hooks/useArtists";
 import usePrisons from "../../../Hooks/usePrisons";
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MultiSelect } from "react-selectize";
 import useUser from "../../../Hooks/useUser";
 import { IoEyeOffSharp, IoEyeOutline } from "react-icons/io5";
@@ -43,6 +43,7 @@ const ManageArtists = () => {
   const [passhide, setPasshide] = useState(true);
   const [passhide2, setPasshide2] = useState(true);
   const [prison, setPrison] = useState(null);
+  const [prisonEmail, setPrisonEmail] = useState(null);
   const fileInputRef = useRef(null);
   console.log(userData);
   const handleFileChange = (event) => {
@@ -59,7 +60,12 @@ const ManageArtists = () => {
   const [tags, setTags] = useState(
     []?.map((str) => ({ label: str, value: str }))
   );
-
+  useEffect(() => {
+    const selectedPrison = prisons?.find(eachPrison => eachPrison?.email == prisonEmail);
+    
+    setPrison(selectedPrison)
+  },[prisonEmail, prisons])
+console.log("Prison",prison);
   const addNewArtist = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -83,6 +89,7 @@ const ManageArtists = () => {
       states,
       address,
       userPhoneNumber,
+      prison: {prison_name: prison?.prison_name, prison_email: prison?.email},
       zipCode,
     };
     if (password !== confirmPass) {
@@ -141,6 +148,7 @@ const ManageArtists = () => {
                 .then((res) => {
                   console.log(res.data);
                   refetch()
+                  form.reset();
                   return res.data; // Return data to handle success message
                 })
                 .catch((error) => {
@@ -170,6 +178,7 @@ const ManageArtists = () => {
       return toast.error("Please, select an Image");
     }
   };
+
 
   if (isPrisonsDataLoading || isArtistsDataLoading) {
     return <Loader></Loader>;
@@ -503,13 +512,13 @@ const ManageArtists = () => {
                             placeholder="Select a user"
                             labelPlacement="outside"
                             className="w-full"
-                            onChange={(e) => setPrison(e.target.value)}
+                            onChange={(e) => setPrisonEmail(e.target.value)}
                           >
                             {(prison) => (
                               <SelectItem
-                                key={`${prison?.email}=${prison?.prison_name}`}
+                                key={prison?.email}
                                 variant="bordered"
-                                textValue={`${prison?.email} ${prison?.prison_name}`}
+                                textValue={prison?.prison_name}
                               >
                                 <div className="flex gap-2 items-center">
                                   <Avatar

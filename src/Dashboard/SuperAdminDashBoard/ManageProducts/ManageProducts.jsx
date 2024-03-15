@@ -17,20 +17,9 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-  User,
   useDisclosure,
 } from "@nextui-org/react";
 import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
-import product1 from "../../../assets/products1.png";
-import product2 from "../../../assets/products2.png";
-import product3 from "../../../assets/products3.png";
-import product4 from "../../../assets/products4.png";
-import product5 from "../../../assets/products5.png";
-import product6 from "../../../assets/products6.png";
-import product7 from "../../../assets/products7.jpg";
-import product8 from "../../../assets/products8.png";
-import product9 from "../../../assets/products9.png";
-import product10 from "../../../assets/products10.png";
 import AddNewProductForAdmin from "../AddNewProductForAdmin/AddNewProductForAdmin";
 import { Toaster } from "react-hot-toast";
 import useProducts from "../../../Hooks/useProducts";

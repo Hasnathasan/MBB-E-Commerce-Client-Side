@@ -3,12 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import { MultiSelect } from "react-selectize";
 import "../../../../node_modules/react-selectize/themes/index.css";
 import useArtists from "../../../Hooks/useArtists";
-import usePrisons from "../../../Hooks/usePrisons";
 import axios from "axios";
 import toast from "react-hot-toast";
 const AddNewProductForAdmin = ({refetchProducts}) => {
   const [artistData, isArtistsDataLoading] = useArtists();
-  const [prisonsData, isPrisonsDataLoading] = usePrisons();
   const [tags, setTags] = useState(
     [].map((str) => ({ label: str, value: str }))
   );
@@ -82,9 +80,9 @@ const AddNewProductForAdmin = ({refetchProducts}) => {
 
   // Example usage:
   useEffect(() => {
-    const selectedArtist = artistData.filter(eachArtist => eachArtist.email === artist);
-    console.log("object", selectedArtist);
-    setPrison(selectedArtist[0]?.billingInfo?.companyName)
+    const selectedArtist = artistData?.filter(eachArtist => eachArtist.email === artist);
+    console.log("object", selectedArtist[0].billingInfo?.prison?.prison_name);
+    setPrison(selectedArtist[0]?.billingInfo?.prison)
     const artistProfit = calculateArtistProfit(
       salePrice,
       regularPrice,
@@ -125,7 +123,7 @@ const AddNewProductForAdmin = ({refetchProducts}) => {
     const website_percentage = parseFloat(form.website_percentage.value);
     const prison_percentage = parseFloat(form.prison_percentage.value);
     const addedBy = artist;
-    const prison_of_artist = prison;
+    const prison_of_artist = prison?.prison_email;
     const product_tags = tags.map((tag) => tag.label);
     const product_categories = categories.map((category) => category.label);
 
@@ -395,7 +393,7 @@ const AddNewProductForAdmin = ({refetchProducts}) => {
           </div>
         </div>
 
-        {!(isArtistsDataLoading || isPrisonsDataLoading) && (
+        {!(isArtistsDataLoading) && (
           <div className="border border-gray-300 mb-8 rounded-lg">
             <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
               Seller Information
@@ -404,7 +402,7 @@ const AddNewProductForAdmin = ({refetchProducts}) => {
               <Select
                 items={artistData}
                 label="Assign to an Artist"
-                placeholder="Select a user"
+                placeholder="Select an Artist"
                 labelPlacement="outside"
                 className="w-full"
                 onChange={(e) => setArtist(e.target.value)}
@@ -465,15 +463,19 @@ const AddNewProductForAdmin = ({refetchProducts}) => {
                   </SelectItem>
                 )}
               </Select> */}
+              <div>
+                
+              <label htmlFor="regular_price">Prison of Artist</label>
               <input
                 type="text"
-                value={prison}
+                value={prison?.prison_name}
                 name="prison_of_artist"
                 id="prison_of_artist"
-                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                className=" border w-full border-gray-300 mb-6 mt-2 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                 placeholder="Prison Of Artist"
                 disabled
               />
+              </div>
             </div>
           </div>
         )}

@@ -7,7 +7,7 @@ const ContactUsPage = () => {
             <div>
             <h2 className="text-3xl font-semibold mb-8">Contact Us</h2>
             <div className="flex flex-col gap-5 justify-center">
-                <h2 className="text-lg font-semibold">Email Us: <span className="text-gray-900 underline">hasnathasan389@gamil.com</span></h2>
+                <h2 className="text-lg font-semibold">Email Us: <span className="text-gray-900 underline">mbbadmin@gmail.com</span></h2>
                 <h2 className="text-lg font-semibold">Call Us: <span>(219) 555-0114</span></h2>
                 <h2 className="text-lg font-semibold">Address: <span>Lincoln- 344, Illinois, Chicago, USA</span></h2>
             </div>
