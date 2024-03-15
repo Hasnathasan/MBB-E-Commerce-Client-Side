@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "./useAxiosSecure";
 
 const useCategories = () => {
-    const [axiosSecure] = useAxiosSecure();
+  const [axiosSecure] = useAxiosSecure();
   const {
     data: categories,
     isLoading: isCategoriesLoading,
