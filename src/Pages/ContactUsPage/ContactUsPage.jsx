@@ -1,19 +1,25 @@
 import { Button } from "@nextui-org/react";
 
-
 const ContactUsPage = () => {
-    return (
-        <div className="grid grid-cols-1 py-9 mx-8 md:grid-cols-2 gap-10">
-            <div>
-            <h2 className="text-3xl font-semibold mb-8">Contact Us</h2>
-            <div className="flex flex-col gap-5 justify-center">
-                <h2 className="text-lg font-semibold">Email Us: <span className="text-gray-900 underline">mbbadmin@gmail.com</span></h2>
-                <h2 className="text-lg font-semibold">Call Us: <span>(219) 555-0114</span></h2>
-                <h2 className="text-lg font-semibold">Address: <span>Lincoln- 344, Illinois, Chicago, USA</span></h2>
-            </div>
-            </div>
-            <div className="mx-5 md:mx-10">
-            <form className="flex flex-col mx-auto  border p-7">
+  return (
+    <div className="grid grid-cols-1 py-9 mx-8 md:grid-cols-2 gap-10">
+      <div>
+        <h2 className="text-3xl font-semibold mb-8">Contact Us</h2>
+        <div className="flex flex-col gap-5 justify-center">
+          <h2 className="text-lg font-semibold">
+            Email Us:{" "}
+            <span className="text-gray-900 underline">mbbadmin@gmail.com</span>
+          </h2>
+          <h2 className="text-lg font-semibold">
+            Call Us: <span>(219) 555-0114</span>
+          </h2>
+          <h2 className="text-lg font-semibold">
+            Address: <span>Lincoln- 344, Illinois, Chicago, USA</span>
+          </h2>
+        </div>
+      </div>
+      <div className="mx-5 md:mx-10">
+        <form className="flex flex-col mx-auto  border p-7">
           <label className="text-lg font-medium" htmlFor="name">
             Name
           </label>
@@ -44,18 +50,18 @@ const ContactUsPage = () => {
             rows={4}
           ></textarea>
           <Button
-          type="submit"
-          size="lg"
-          color="success"
-          radius="full"
-          className="text-white mb-2 px-12 bg-green-500"
-        >
-          Send Message
-        </Button>
+            type="submit"
+            size="lg"
+            color="success"
+            radius="full"
+            className="text-white mb-2 px-12 bg-green-500"
+          >
+            Send Message
+          </Button>
         </form>
-            </div>
-        </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default ContactUsPage;

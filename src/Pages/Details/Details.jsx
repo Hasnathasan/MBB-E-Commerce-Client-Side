@@ -189,13 +189,13 @@ const success = () => toast.success("Product Successfully added to cart")
           <div className="py-5 gap-3 border-b flex items-center border-gray-300">
             <div className="flex border p-2 w-min border-gray-300 rounded-full justify-center items-center gap-3">
               <div>
-                <Button onClick={() => setQuantity(quantity === 1 ? quantity : quantity - 1)} size="sm" radius="full" variant="flat" isIconOnly>
+                <Button onClick={() => setQuantity(quantity <= 0  ? quantity : quantity - 1)} size="sm" radius="full" variant="flat" isIconOnly>
                   <FiMinus></FiMinus>
                 </Button>
               </div>
               <div className="text-base">{quantity}</div>
               <div>
-                <Button onClick={() => setQuantity(quantity == available_quantity ? quantity : quantity + 1)} size="sm" radius="full" variant="flat" isIconOnly>
+                <Button onClick={() => setQuantity(quantity >= available_quantity ? available_quantity : quantity + 1)} size="sm" radius="full" variant="flat" isIconOnly>
                   <FiPlus></FiPlus>
                 </Button>
               </div>

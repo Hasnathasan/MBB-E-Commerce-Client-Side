@@ -111,7 +111,7 @@ const CheckOutFunctionality = () => {
     });
     console.log(orderProductsId);
     axios
-      .post("https://mbb-e-commerce-server.vercel.app/orders", order)
+      .post("http://localhost:8000/orders", order)
       .then(async (result) => {
         console.log(result);
         if (result.data.insertedId) {
@@ -160,7 +160,7 @@ const CheckOutFunctionality = () => {
         }
       })
       .catch((error) => {
-        return toast.error(error.message);
+        return toast.error(error?.response?.data?.message);
       });
   };
   return (
