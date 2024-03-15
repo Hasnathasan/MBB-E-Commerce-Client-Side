@@ -40,9 +40,11 @@ const PopularProductsCard = ({ product, isRounded }) => {
     }
     const cartProduct = {
       addedBy: user?.email,
+      artist_details: {artist: addedBy, prison_of_artist},
       quantity: 1,
       product_id: _id,
       product_name,
+      total: (price?.sale_price ? (price?.sale_price * 1): (price?.regular_price * 1)),
       price,
       profit_distribution,
       featured_photo,
