@@ -31,6 +31,7 @@ import ContactUsPage from "../Pages/ContactUsPage/ContactUsPage";
 import OverView from "../Dashboard/SuperAdminDashBoard/OverView/OverView";
 import ManageOrders from "../Dashboard/SuperAdminDashBoard/ManageOrders/ManageOrders";
 import CheckOutElement from "../Pages/CheckoutPage/CheckOutElement/CheckOutElement";
+import ManageCategories from "../Dashboard/SuperAdminDashBoard/ManageCategories/ManageCategories";
 
 
 const router = createBrowserRouter([
@@ -145,6 +146,10 @@ const router = createBrowserRouter([
     {
       path: "products",
       element: <ManageProducts></ManageProducts>
+    },
+    {
+      path: "categories",
+      element: <ManageCategories></ManageCategories>
     },
     {
       path: "artists",

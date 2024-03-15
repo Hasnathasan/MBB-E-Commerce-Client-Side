@@ -1,5 +1,6 @@
 import {
     Button,
+    ButtonGroup,
     Dropdown,
     DropdownItem,
     DropdownMenu,
@@ -21,38 +22,38 @@ import {
   } from "@nextui-org/react";
   import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
   import axios from "axios";
-  import usePrisons from "../../../Hooks/usePrisons";
   import toast, { Toaster } from "react-hot-toast";
+import usePopularCategories from "../../../Hooks/usePopularCategories";
   
   const ManageCategories = () => {
-    const [prisons] = usePrisons();
+    const [categories, isCategoriesLoading] = usePopularCategories();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const handlePrisonAdding = (e) => {
+    const hangleCategoryAdding = (e) => {
       e.preventDefault();
       const form = e.target;
-      const prison_name = form.prison_name.value;
-      const country = form.country.value;
-      const states = form.states.value;
-      const address = form.address.value;
-      const zipCode = form.zipCode.value;
-      const email = form.email.value;
-      const number = form.phoneNumber.value;
-      const prison = {
-        prison_name,
-        country,
-        states,
-        address,
-        zipCode,
-        email,
-        number,
+      const category = form.category.value;
+      const imageFile = form.image.files[0];
+      const formData = new FormData();
+      formData.append("file",imageFile)
+      const category_details = {
+        category,imageFile
       };
-      console.log(prison);
+      console.log(category_details);
       axios
-        .post(`https://mbb-e-commerce-server.vercel.app/prisons`, prison)
+      axios
+      .post(
+        "https://mbb-e-commerce-server.vercel.app/uploadSingle",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
         .then((res) => {
           console.log(res.data);
-          if (res.data.insertedId) {
-            return toast.success("Successfully added Prison");
+          if (res.data.url) {
+            axios.post("https://mbb-e-commerce-server.vercel.app/uploadSingle")
           }
         })
         .catch((error) => {
@@ -118,31 +119,34 @@ import {
             </div>
           </div>
           <span className="text-gray-600 mb-2">
-            Total {prisons?.length} users
+            Total {categories?.length} Categories
           </span>
         </div>
         <Table aria-label="Example table with custom cells">
           <TableHeader>
-            <TableColumn>Prison Name</TableColumn>
-            <TableColumn>Number</TableColumn>
-            <TableColumn>Country</TableColumn>
-            <TableColumn>State</TableColumn>
-            <TableColumn>Zip code</TableColumn>
+            <TableColumn>Category Image</TableColumn>
+            <TableColumn>Category Name</TableColumn>
+            <TableColumn>Total Product's found</TableColumn>
+            <TableColumn className="text-center">Action's</TableColumn>
           </TableHeader>
           <TableBody>
-            {prisons?.map((prison) => (
-              <TableRow key={prison?._id}>
+            {categories?.map((category) => (
+              <TableRow key={category?.category}>
                 <TableCell>
-                  <User
-                    avatarProps={{ radius: "md", src: prison?.photoUrl }}
-                    description={prison?.email}
-                    name={prison?.prison_name || "Unknown"}
-                  ></User>
+                  <img src={category.image} className="w-16 h-16" alt="" />
                 </TableCell>
-                <TableCell>{prison?.number}</TableCell>
-                <TableCell>{prison?.country}</TableCell>
-                <TableCell>{prison?.states}</TableCell>
-                <TableCell>{prison?.zipCode}</TableCell>
+                <TableCell className="capitalize">
+                    {category?.category}
+                </TableCell>
+                <TableCell>
+                    {category?.count} product's found
+                </TableCell>
+                <TableCell className="text-center">
+                <ButtonGroup size="sm">
+      <Button>Update</Button>
+      <Button>Delete</Button>
+    </ButtonGroup>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -158,102 +162,41 @@ import {
             {(onClose) => (
               <>
                 <ModalHeader className="flex flex-col gap-1">
-                  Add Prison
+                  Add Category
                 </ModalHeader>
                 <ModalBody>
-                  <form onSubmit={handlePrisonAdding} className="p-5">
-                    <div className="grid grid-cols-2 gap-5">
+                  <form onSubmit={hangleCategoryAdding} className="p-5">
                       <div>
-                        <label htmlFor="prison_name">Prison Name</label>
+                        <label htmlFor="image">Category Image</label>
+                        <input
+                          type="file"
+                          name="image"
+                          id="image"
+                          className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                          placeholder="Category Image"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="category">Category Name</label>
                         <input
                           type="text"
-                          name="prison_name"
-                          id="prison_name"
+                          name="category"
+                          id="category"
                           className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                          placeholder="Prison Name"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="address">Street Address</label>
-                        <input
-                          type="text"
-                          name="address"
-                          id="address"
-                          className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                          placeholder="Street Address"
-                          required
-                        />
-                      </div>
-                    </div>
-  
-                    <div className="grid grid-cols-3 gap-5">
-                      <div>
-                        <label htmlFor="country">Country / Region</label>
-                        <input
-                          type="text"
-                          name="country"
-                          id="country"
-                          className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                          placeholder="Country"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="states">States</label>
-                        <input
-                          type="text"
-                          name="states"
-                          id="states"
-                          className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                          placeholder="States Name"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="zipCode">Zip Code</label>
-                        <input
-                          type="number"
-                          name="zipCode"
-                          id="zipCode"
-                          className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                          placeholder="Zip Code"
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-5">
-                      <div>
-                        <label htmlFor="email">Email Address</label>
-                        <input
-                          type="email"
-                          name="email"
-                          id="email"
-                          className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                          placeholder="Email Address"
+                          placeholder="Category Name"
                           required
                         />
                       </div>
   
-                      <div>
-                        <label htmlFor="phoneNumber">Phone Number</label>
-                        <input
-                          type="tel"
-                          name="phoneNumber"
-                          id="phoneNumber"
-                          className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                          placeholder="Phone Number"
-                          required
-                        />
-                      </div>
-                    </div>
+                    
                     <Button
                       type="submit"
                       color="success"
                       radius="full"
                       className="text-white mb-2 px-12 bg-green-500"
                     >
-                      Add Prison
+                      Add Category
                     </Button>
                   </form>
                 </ModalBody>

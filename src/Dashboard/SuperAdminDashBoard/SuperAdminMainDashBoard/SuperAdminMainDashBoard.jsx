@@ -75,6 +75,11 @@ const SuperAdminMainDashBoard = () => {
             </NavLink>
           </li>
           <li>
+            <NavLink className="p-3 text-base" to="categories">
+              <FaProductHunt></FaProductHunt> Categories
+            </NavLink>
+          </li>
+          <li>
             <NavLink className="p-3 text-base" to="customers">
               <BsFillPeopleFill></BsFillPeopleFill> Customers
             </NavLink>
