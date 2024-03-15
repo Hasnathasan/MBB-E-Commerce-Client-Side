@@ -102,6 +102,7 @@ console.log(relatedProducts);
       addedBy,
       prison_of_artist,
   } = product;
+  const {regular_price, sale_price} = price;
 const success = () => toast.success("Product Successfully added to cart")
 
   const handleAddToCart = () => {
@@ -149,9 +150,13 @@ const success = () => toast.success("Product Successfully added to cart")
         <div className="space-y-4">
           <div className="flex items-start gap-2">
             <h2 className="text-3xl font-semibold">{product_name}</h2>
-            <Chip color="success" variant="flat" radius="sm">
+            {
+              available_quantity > 0 ? <Chip color="success" variant="flat" radius="sm">
               In Stock
+            </Chip> : <Chip color="danger" variant="flat" radius="sm">
+              Out Of Stock
             </Chip>
+            }
           </div>
           <div className="flex items-center gap-3">
             <Rating
@@ -163,19 +168,18 @@ const success = () => toast.success("Product Successfully added to cart")
               readonly
             />
             <h5 className="text-sm text-gray-700">{reviews.length} review</h5>
-            <span className="text-sm text-gray-500">|</span>
-            <h5 className="text-sm text-gray-700">
-              <span className="font-semibold text-gray-800">SKU:</span> 541254
-            </h5>
           </div>
           <div className="flex items-center gap-3">
             <h5 className="text-lg text-gray-400 font-medium line-through">
               ${price?.regular_price}
             </h5>
             <h5 className="text-xl mr-2 font-medium text-green-800">${price?.sale_price}</h5>
-            <Chip color="danger" size="sm" variant="flat">
-              65% off
-            </Chip>
+            {
+              regular_price > sale_price ? <Chip color="danger" size="sm" variant="flat">
+              {(((regular_price - sale_price) * 100) / regular_price).toFixed(2)} % off
+            </Chip> : <></>
+            }
+            
           </div>
           <div className="py-3 border-t border-b border-gray-300">
             <p className="text-sm text-gray-700">
@@ -203,6 +207,7 @@ const success = () => toast.success("Product Successfully added to cart")
           color="success"
           radius="full"
           className={`text-white flex-1 mb-2 px-12 bg-green-500`}
+          isDisabled={available_quantity === 0}
         >
           Add to Cart
               <HiOutlineShoppingBag className="w-6 h-6"></HiOutlineShoppingBag>

@@ -6,6 +6,7 @@ import Rating from "react-rating";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import toast, { Toaster } from "react-hot-toast";
+import { Button } from "@nextui-org/react";
 
 const PopularProductsCard = ({ product, isRounded }) => {
   const [hovered, setHovered] = useState(false);
@@ -34,6 +35,9 @@ const PopularProductsCard = ({ product, isRounded }) => {
 
   const handleAddToCart = (e) => {
     e.preventDefault();
+    if(available_quantity === 0){
+      return toast.error("This Product is out of stock")
+    }
     const cartProduct = {
       addedBy: user?.email,
       quantity: 1,
@@ -89,12 +93,12 @@ const PopularProductsCard = ({ product, isRounded }) => {
               readonly
             />
           </div>
-          <div
+          <Button radius="full" isIconOnly 
             onClick={handleAddToCart}
             className={`bg-[#ebebeb] absolute bottom-3 right-3 z-10 rounded-full cursor-pointer  flex justify-center items-center w-10 h-10`}
           >
             <HiOutlineShoppingBag className="w-5 h-5"></HiOutlineShoppingBag>
-          </div>
+          </Button>
         </div>
 
         {/* Hovered Buttons - Details + Wishlist */}
