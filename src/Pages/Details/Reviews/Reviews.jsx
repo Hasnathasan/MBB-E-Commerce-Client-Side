@@ -25,9 +25,9 @@ const Reviews = ({ product, refetch }) => {
       .patch(`http://localhost:8000/reviews/${product?._id}`, reviewByUser)
       .then((result) => {
         console.log(result.data);
-        setRatingByUser(0)
-        e.target.reset()
-        refetch()
+        setRatingByUser(0);
+        e.target.reset();
+        refetch();
       })
       .catch((error) => console.log(error));
   };

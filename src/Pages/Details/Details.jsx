@@ -51,11 +51,11 @@ function ThumbnailPlugin(mainRef) {
 }
 
 const Details = () => {
-  const {id} = useParams();
-  
-  const {user, setIsProductAdded, setOpenCart} = useContext(AuthContext);
+  const { id } = useParams();
+
+  const { user, setIsProductAdded, setOpenCart } = useContext(AuthContext);
   const [userData, isUserDataLoading] = useUser();
-  const [product, isProductLoading, refetch] = useSingleProduct({id});
+  const [product, isProductLoading, refetch] = useSingleProduct({ id });
   const [relatedProducts, setRelatedProducts] = useState();
   const [quantity, setQuantity] = useState(1);
   const [sliderRef, instanceRef] = useKeenSlider({
@@ -72,49 +72,67 @@ const Details = () => {
     [ThumbnailPlugin(instanceRef)]
   );
   console.log(user);
-  useEffect( () => {
-    setQuantity(1)
-        axios.post(`https://mbb-e-commerce-server.vercel.app/relatedProducts`, product?.product_categories)
-        .then(res => {
-          console.log(res.data);
-          setRelatedProducts(res.data)
-        })
-        .catch(error => console.log(error.message))
-      
-  },[id, product?.product_categories])
-  if(!product || !relatedProducts || isUserDataLoading || isProductLoading){
-    return
+  useEffect(() => {
+    setQuantity(1);
+    axios
+      .post(
+        `https://mbb-e-commerce-server.vercel.app/relatedProducts`,
+        product?.product_categories
+      )
+      .then((res) => {
+        console.log(res.data);
+        setRelatedProducts(res.data);
+      })
+      .catch((error) => console.log(error.message));
+  }, [id, product?.product_categories]);
+  if (!product || !relatedProducts || isUserDataLoading || isProductLoading) {
+    return;
   }
-console.log(relatedProducts);
-    const {
-      _id,
-      product_name,
-      available_quantity,
-      featured_photo,
-      gallery_photos,
-      product_tags,
-      product_categories,
-      description,
-      rating,
-      reviews,
-      price,
-      profit_distribution,
-      addedBy,
-      prison_of_artist,
+  console.log(relatedProducts);
+  const {
+    _id,
+    product_name,
+    available_quantity,
+    featured_photo,
+    gallery_photos,
+    product_tags,
+    product_categories,
+    description,
+    rating,
+    reviews,
+    price,
+    profit_distribution,
+    addedBy,
+    prison_of_artist,
   } = product;
-  const {regular_price, sale_price} = price;
-const success = () => toast.success("Product Successfully added to cart")
+  const { regular_price, sale_price } = price;
+  const success = () => toast.success("Product Successfully added to cart");
 
   const handleAddToCart = () => {
-    const cartProduct = {addedBy: userData?.email, quantity: quantity, total: (price?.sale_price ? (price?.sale_price * quantity): (price?.regular_price * quantity)), artist_details: {artist: addedBy, prison_of_artist}, product_id: _id, product_name, price, profit_distribution, featured_photo, product_available_quantity: parseInt(available_quantity)};
+    const cartProduct = {
+      addedBy: userData?.email,
+      quantity: quantity,
+      total: price?.sale_price
+        ? price?.sale_price * quantity
+        : price?.regular_price * quantity,
+      artist_details: { artist: addedBy, prison_of_artist },
+      product_id: _id,
+      product_name,
+      price,
+      profit_distribution,
+      featured_photo,
+      product_available_quantity: parseInt(available_quantity),
+    };
     let previousCart = JSON.parse(localStorage.getItem("cart")) || [];
-    const newCart = previousCart?.filter(product => product.product_id !== cartProduct.product_id);
-    setIsProductAdded(prevCount => prevCount + 1);
+    const newCart = previousCart?.filter(
+      (product) => product.product_id !== cartProduct.product_id
+    );
+    setIsProductAdded((prevCount) => prevCount + 1);
     newCart.push(cartProduct);
     localStorage.setItem("cart", JSON.stringify(newCart));
-    setOpenCart(true)
-    success()
-  }
+    setOpenCart(true);
+    success();
+  };
   console.log(localStorage.getItem("cart"));
   return (
     <div className="mx-8 py-14">
@@ -126,11 +144,7 @@ const success = () => toast.success("Product Successfully added to cart")
                 key={index}
                 className={`keen-slider__slide w-full h-[360px]`}
               >
-                <img
-                  className=" w-[90%] mx-auto h-full"
-                  src={img}
-                  alt=""
-                />
+                <img className=" w-[90%] mx-auto h-full" src={img} alt="" />
               </div>
             ))}
           </div>
@@ -150,13 +164,15 @@ const success = () => toast.success("Product Successfully added to cart")
         <div className="space-y-4">
           <div className="flex items-start gap-2">
             <h2 className="text-3xl font-semibold">{product_name}</h2>
-            {
-              available_quantity > 0 ? <Chip color="success" variant="flat" radius="sm">
-              In Stock
-            </Chip> : <Chip color="danger" variant="flat" radius="sm">
-              Out Of Stock
-            </Chip>
-            }
+            {available_quantity > 0 ? (
+              <Chip color="success" variant="flat" radius="sm">
+                In Stock
+              </Chip>
+            ) : (
+              <Chip color="danger" variant="flat" radius="sm">
+                Out Of Stock
+              </Chip>
+            )}
           </div>
           <div className="flex items-center gap-3">
             <Rating
@@ -173,45 +189,69 @@ const success = () => toast.success("Product Successfully added to cart")
             <h5 className="text-lg text-gray-400 font-medium line-through">
               ${price?.regular_price}
             </h5>
-            <h5 className="text-xl mr-2 font-medium text-green-800">${price?.sale_price}</h5>
-            {
-              regular_price > sale_price ? <Chip color="danger" size="sm" variant="flat">
-              {(((regular_price - sale_price) * 100) / regular_price).toFixed(2)} % off
-            </Chip> : <></>
-            }
-            
+            <h5 className="text-xl mr-2 font-medium text-green-800">
+              ${price?.sale_price}
+            </h5>
+            {regular_price > sale_price ? (
+              <Chip color="danger" size="sm" variant="flat">
+                {(((regular_price - sale_price) * 100) / regular_price).toFixed(
+                  2
+                )}{" "}
+                % off
+              </Chip>
+            ) : (
+              <></>
+            )}
           </div>
           <div className="py-3 border-t border-b border-gray-300">
-            <p className="text-sm text-gray-700">
-              {description}
-            </p>
+            <p className="text-sm text-gray-700">{description}</p>
           </div>
           <div className="py-5 gap-3 border-b flex items-center border-gray-300">
             <div className="flex border p-2 w-min border-gray-300 rounded-full justify-center items-center gap-3">
               <div>
-                <Button onClick={() => setQuantity(quantity <= 0  ? quantity : quantity - 1)} size="sm" radius="full" variant="flat" isIconOnly>
+                <Button
+                  onClick={() =>
+                    setQuantity(quantity <= 0 ? quantity : quantity - 1)
+                  }
+                  size="sm"
+                  radius="full"
+                  variant="flat"
+                  isIconOnly
+                >
                   <FiMinus></FiMinus>
                 </Button>
               </div>
               <div className="text-base">{quantity}</div>
               <div>
-                <Button onClick={() => setQuantity(quantity >= available_quantity ? available_quantity : quantity + 1)} size="sm" radius="full" variant="flat" isIconOnly>
+                <Button
+                  onClick={() =>
+                    setQuantity(
+                      quantity >= available_quantity
+                        ? available_quantity
+                        : quantity + 1
+                    )
+                  }
+                  size="sm"
+                  radius="full"
+                  variant="flat"
+                  isIconOnly
+                >
                   <FiPlus></FiPlus>
                 </Button>
               </div>
             </div>
             <Button
-            onClick={handleAddToCart}
-          type="submit"
-          size="lg"
-          color="success"
-          radius="full"
-          className={`text-white flex-1 mb-2 px-12 bg-green-500`}
-          isDisabled={available_quantity === 0}
-        >
-          Add to Cart
+              onClick={handleAddToCart}
+              type="submit"
+              size="lg"
+              color="success"
+              radius="full"
+              className={`text-white flex-1 mb-2 px-12 bg-green-500`}
+              isDisabled={available_quantity === 0}
+            >
+              Add to Cart
               <HiOutlineShoppingBag className="w-6 h-6"></HiOutlineShoppingBag>
-        </Button>
+            </Button>
             <Button
               isIconOnly
               color="success"
@@ -226,17 +266,26 @@ const success = () => toast.success("Product Successfully added to cart")
           <div>
             <h5 className="text-sm mb-2 text-gray-700">
               <span className="font-medium text-gray-900">Category:</span>{" "}
-              {
-              product_categories?.map(category => <span className="font-medium text-gray-800 capitalize" key={category}>{category}</span>)
-              }
+              {product_categories?.map((category) => (
+                <span
+                  className="font-medium text-gray-800 capitalize"
+                  key={category}
+                >
+                  {category}
+                </span>
+              ))}
             </h5>
             <h5 className="text-sm mb-2 text-gray-700">
               <span className="font-medium text-gray-900">Tags:</span>{" "}
-              {
-              product_tags?.map(category => <span  className="hover:underline mx-1 cursor-pointer hover:text-gray-900" key={category}>{category}</span>)
-              }
+              {product_tags?.map((category) => (
+                <span
+                  className="hover:underline mx-1 cursor-pointer hover:text-gray-900"
+                  key={category}
+                >
+                  {category}
+                </span>
+              ))}
             </h5>
-            
           </div>
         </div>
       </div>
