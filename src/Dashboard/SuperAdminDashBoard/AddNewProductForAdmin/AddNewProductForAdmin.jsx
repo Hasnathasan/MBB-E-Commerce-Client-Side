@@ -5,7 +5,7 @@ import "../../../../node_modules/react-selectize/themes/index.css";
 import useArtists from "../../../Hooks/useArtists";
 import axios from "axios";
 import toast from "react-hot-toast";
-const AddNewProductForAdmin = ({refetchProducts}) => {
+const AddNewProductForAdmin = ({ refetchProducts }) => {
   const [artistData, isArtistsDataLoading] = useArtists();
   const [tags, setTags] = useState(
     [].map((str) => ({ label: str, value: str }))
@@ -80,9 +80,10 @@ const AddNewProductForAdmin = ({refetchProducts}) => {
 
   // Example usage:
   useEffect(() => {
-    const selectedArtist = artistData?.filter(eachArtist => eachArtist.email === artist);
-    console.log("object", selectedArtist[0].billingInfo?.prison?.prison_name);
-    setPrison(selectedArtist[0]?.billingInfo?.prison)
+    const selectedArtist =
+      artistData?.filter((eachArtist) => eachArtist.email === artist) || [];
+    console.log("object", selectedArtist[0]?.billingInfo?.prison?.prison_name);
+    setPrison(selectedArtist[0]?.billingInfo?.prison);
     const artistProfit = calculateArtistProfit(
       salePrice,
       regularPrice,
@@ -105,7 +106,16 @@ const AddNewProductForAdmin = ({refetchProducts}) => {
     setArtistPercent(artistPercentRef.current.value);
     setWebsitePercent(websitePercentRef.current.value);
     setPrisonPercent(prisonPercentRef.current.value);
-  }, [artist, artistData, calculateArtistProfit, calculatePrisonProfit, calculateWebsiteProfit, costPrice, regularPrice, salePrice]);
+  }, [
+    artist,
+    artistData,
+    calculateArtistProfit,
+    calculatePrisonProfit,
+    calculateWebsiteProfit,
+    costPrice,
+    regularPrice,
+    salePrice,
+  ]);
   console.log(artistProfit, websiteProfit, prisonProfit);
   const handleProductAdding = (e) => {
     e.preventDefault();
@@ -201,7 +211,7 @@ const AddNewProductForAdmin = ({refetchProducts}) => {
                     .then((res) => {
                       console.log(res.data);
                       form.reset();
-                      refetchProducts()
+                      refetchProducts();
                       return res.data;
                     })
                     .catch((error) => {
@@ -393,7 +403,7 @@ const AddNewProductForAdmin = ({refetchProducts}) => {
           </div>
         </div>
 
-        {!(isArtistsDataLoading) && (
+        {!isArtistsDataLoading && (
           <div className="border border-gray-300 mb-8 rounded-lg">
             <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
               Seller Information
@@ -464,17 +474,16 @@ const AddNewProductForAdmin = ({refetchProducts}) => {
                 )}
               </Select> */}
               <div>
-                
-              <label htmlFor="regular_price">Prison of Artist</label>
-              <input
-                type="text"
-                value={prison?.prison_name}
-                name="prison_of_artist"
-                id="prison_of_artist"
-                className=" border w-full border-gray-300 mb-6 mt-2 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                placeholder="Prison Of Artist"
-                disabled
-              />
+                <label htmlFor="regular_price">Prison of Artist</label>
+                <input
+                  type="text"
+                  value={prison?.prison_name}
+                  name="prison_of_artist"
+                  id="prison_of_artist"
+                  className=" border w-full border-gray-300 mb-6 mt-2 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                  placeholder="Prison Of Artist"
+                  disabled
+                />
               </div>
             </div>
           </div>
@@ -594,8 +603,6 @@ const AddNewProductForAdmin = ({refetchProducts}) => {
             </h4>
           </div>
         </div>
-
-        
 
         <Button
           type="submit"

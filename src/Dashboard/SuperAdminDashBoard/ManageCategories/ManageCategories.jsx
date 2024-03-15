@@ -36,10 +36,9 @@ import usePopularCategories from "../../../Hooks/usePopularCategories";
       const formData = new FormData();
       formData.append("file",imageFile)
       const category_details = {
-        category,imageFile
+        category
       };
       console.log(category_details);
-      axios
       axios
       .post(
         "https://mbb-e-commerce-server.vercel.app/uploadSingle",
@@ -53,7 +52,10 @@ import usePopularCategories from "../../../Hooks/usePopularCategories";
         .then((res) => {
           console.log(res.data);
           if (res.data.url) {
-            axios.post("https://mbb-e-commerce-server.vercel.app/uploadSingle")
+            category_details.image = res.data.url;
+            axios.post("https://mbb-e-commerce-server.vercel.app/categories", category_details)
+            .then(res => console.log(res))
+            .catch(error => console.log(error))
           }
         })
         .catch((error) => {
@@ -62,6 +64,9 @@ import usePopularCategories from "../../../Hooks/usePopularCategories";
           );
         });
     };
+    const handleDelete = name => {
+        console.log(name);
+    }
     return (
       <div className="overflow-x-auto w-full md:w-[95%]">
         <div className="flex flex-col  gap-4">
@@ -144,7 +149,7 @@ import usePopularCategories from "../../../Hooks/usePopularCategories";
                 <TableCell className="text-center">
                 <ButtonGroup size="sm">
       <Button>Update</Button>
-      <Button>Delete</Button>
+      <Button onClick={() => handleDelete(category?.category)}>Delete</Button>
     </ButtonGroup>
                 </TableCell>
               </TableRow>
