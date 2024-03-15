@@ -82,6 +82,9 @@ const AddNewProductForAdmin = ({refetchProducts}) => {
 
   // Example usage:
   useEffect(() => {
+    const selectedArtist = artistData.filter(eachArtist => eachArtist.email === artist);
+    console.log("object", selectedArtist);
+    setPrison(selectedArtist[0]?.billingInfo?.companyName)
     const artistProfit = calculateArtistProfit(
       salePrice,
       regularPrice,
@@ -104,14 +107,7 @@ const AddNewProductForAdmin = ({refetchProducts}) => {
     setArtistPercent(artistPercentRef.current.value);
     setWebsitePercent(websitePercentRef.current.value);
     setPrisonPercent(prisonPercentRef.current.value);
-  }, [
-    calculateArtistProfit,
-    calculatePrisonProfit,
-    calculateWebsiteProfit,
-    costPrice,
-    regularPrice,
-    salePrice,
-  ]);
+  }, [artist, artistData, calculateArtistProfit, calculatePrisonProfit, calculateWebsiteProfit, costPrice, regularPrice, salePrice]);
   console.log(artistProfit, websiteProfit, prisonProfit);
   const handleProductAdding = (e) => {
     e.preventDefault();
@@ -398,6 +394,90 @@ const AddNewProductForAdmin = ({refetchProducts}) => {
             </div>
           </div>
         </div>
+
+        {!(isArtistsDataLoading || isPrisonsDataLoading) && (
+          <div className="border border-gray-300 mb-8 rounded-lg">
+            <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
+              Seller Information
+            </h4>
+            <div className="grid grid-cols-2 w-full gap-10 justify-center items-center p-5">
+              <Select
+                items={artistData}
+                label="Assign to an Artist"
+                placeholder="Select a user"
+                labelPlacement="outside"
+                className="w-full"
+                onChange={(e) => setArtist(e.target.value)}
+              >
+                {(artist) => (
+                  <SelectItem
+                    key={artist.email}
+                    variant="bordered"
+                    textValue={artist?.email}
+                  >
+                    <div className="flex gap-2 items-center">
+                      <Avatar
+                        alt={artist?.prison_name}
+                        className="flex-shrink-0"
+                        size="sm"
+                        src={artist?.avatar}
+                      />
+                      <div className="flex flex-col">
+                        <span className="text-small">{artist?.name}</span>
+                        <span className="text-tiny text-default-400">
+                          {artist?.email}
+                        </span>
+                      </div>
+                    </div>
+                  </SelectItem>
+                )}
+              </Select>
+              {/* <Select
+                items={prisonsData}
+                label="Assign to a Prison/Organization"
+                placeholder="Select a prison"
+                labelPlacement="outside"
+                className="w-full"
+                onChange={(e) => setPrison(e.target.value)}
+              >
+                {(prison) => (
+                  <SelectItem
+                    key={prison?.email}
+                    variant="bordered"
+                    textValue={prison?.email}
+                  >
+                    <div className="flex gap-2 items-center">
+                      <Avatar
+                        alt={prison?.prison_name}
+                        className="flex-shrink-0"
+                        size="sm"
+                        src={prison?.avatar}
+                      />
+                      <div className="flex flex-col">
+                        <span className="text-small">
+                          {prison?.prison_name}
+                        </span>
+                        <span className="text-tiny text-default-400">
+                          {prison?.email}
+                        </span>
+                      </div>
+                    </div>
+                  </SelectItem>
+                )}
+              </Select> */}
+              <input
+                type="text"
+                value={prison}
+                name="prison_of_artist"
+                id="prison_of_artist"
+                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                placeholder="Prison Of Artist"
+                disabled
+              />
+            </div>
+          </div>
+        )}
+
         <div className="border border-gray-300 mb-8 rounded-lg">
           <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
             Pricing Section
@@ -513,79 +593,7 @@ const AddNewProductForAdmin = ({refetchProducts}) => {
           </div>
         </div>
 
-        {!(isArtistsDataLoading || isPrisonsDataLoading) && (
-          <div className="border border-gray-300 mb-8 rounded-lg">
-            <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
-              Seller Information
-            </h4>
-            <div className="grid grid-cols-2 w-full gap-10 justify-center items-center p-5">
-              <Select
-                items={artistData}
-                label="Assign to an Artist"
-                placeholder="Select a user"
-                labelPlacement="outside"
-                className="w-full"
-                onChange={(e) => setArtist(e.target.value)}
-              >
-                {(artist) => (
-                  <SelectItem
-                    key={artist.email}
-                    variant="bordered"
-                    textValue={artist?.email}
-                  >
-                    <div className="flex gap-2 items-center">
-                      <Avatar
-                        alt={artist?.prison_name}
-                        className="flex-shrink-0"
-                        size="sm"
-                        src={artist?.avatar}
-                      />
-                      <div className="flex flex-col">
-                        <span className="text-small">{artist?.name}</span>
-                        <span className="text-tiny text-default-400">
-                          {artist?.email}
-                        </span>
-                      </div>
-                    </div>
-                  </SelectItem>
-                )}
-              </Select>
-              <Select
-                items={prisonsData}
-                label="Assign to a Prison/Organization"
-                placeholder="Select a prison"
-                labelPlacement="outside"
-                className="w-full"
-                onChange={(e) => setPrison(e.target.value)}
-              >
-                {(prison) => (
-                  <SelectItem
-                    key={prison?.email}
-                    variant="bordered"
-                    textValue={prison?.email}
-                  >
-                    <div className="flex gap-2 items-center">
-                      <Avatar
-                        alt={prison?.prison_name}
-                        className="flex-shrink-0"
-                        size="sm"
-                        src={prison?.avatar}
-                      />
-                      <div className="flex flex-col">
-                        <span className="text-small">
-                          {prison?.prison_name}
-                        </span>
-                        <span className="text-tiny text-default-400">
-                          {prison?.email}
-                        </span>
-                      </div>
-                    </div>
-                  </SelectItem>
-                )}
-              </Select>
-            </div>
-          </div>
-        )}
+        
 
         <Button
           type="submit"
