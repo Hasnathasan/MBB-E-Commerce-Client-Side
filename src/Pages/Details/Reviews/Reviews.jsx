@@ -22,7 +22,7 @@ const Reviews = ({ product, refetch }) => {
       createdAt: new Date(),
     };
     axios
-      .patch(`http://localhost:8000/reviews/${product?._id}`, reviewByUser)
+      .patch(`https://mbb-e-commerce-server.vercel.app/reviews/${product?._id}`, reviewByUser)
       .then((result) => {
         console.log(result.data);
         setRatingByUser(0);

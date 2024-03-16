@@ -32,6 +32,7 @@ import OverView from "../Dashboard/SuperAdminDashBoard/OverView/OverView";
 import ManageOrders from "../Dashboard/SuperAdminDashBoard/ManageOrders/ManageOrders";
 import CheckOutElement from "../Pages/CheckoutPage/CheckOutElement/CheckOutElement";
 import ManageCategories from "../Dashboard/SuperAdminDashBoard/ManageCategories/ManageCategories";
+import OrderDetailsForAdmin from "../Dashboard/SuperAdminDashBoard/OrderDetailsForAdmin/OrderDetailsForAdmin";
 
 
 const router = createBrowserRouter([
@@ -165,7 +166,7 @@ const router = createBrowserRouter([
       children: [
         {
           path: "orderDetails/:id",
-          element: <OrderDetails></OrderDetails>
+          element: <OrderDetailsForAdmin></OrderDetailsForAdmin>
         }
       ]
     },
