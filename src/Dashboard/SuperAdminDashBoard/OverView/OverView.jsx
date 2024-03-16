@@ -7,19 +7,23 @@ import Chart from "react-apexcharts";
 import useUsersByRole from "../../../Hooks/useUsersByRole";
 import useOrdersLength from "../../../Hooks/useOrdersLength";
 import Loader from "../../../Components/Loader/Loader";
+import useOrdersCountByMonth from "../../../Hooks/useOrdersCountByMonth";
+import useProductCountFormOrderByMonth from "../../../Hooks/useProductCountFormOrderByMonth";
 const OverView = () => {
   const [productsLength, isProductsLengthLoading] = useProductLength();
   const [ordersLength, isOrdersLengthLoading] = useOrdersLength();
   const [usersByRole, isUsersByRoleDataLoading] = useUsersByRole();
-  const []
+  const [ordersByMonth, isOrdersByMonthLoading] = useOrdersCountByMonth();
+  const [soldProductByMonth, isSoldProductByMonthLoading] = useProductCountFormOrderByMonth();
   if (
     isProductsLengthLoading ||
-    isUsersByRoleDataLoading ||
+    isUsersByRoleDataLoading || isOrdersByMonthLoading || isSoldProductByMonthLoading ||
     isOrdersLengthLoading
   ) {
     return <Loader></Loader>;
   }
-  console.log(usersByRole);
+  console.log(ordersByMonth);
+  
   var options = {
     chart: {
       height: 200,
@@ -33,20 +37,7 @@ const OverView = () => {
     },
     xaxis: {
       type: "month",
-      categories: [
-        "jan",
-        "Feb",
-        "Mar",
-        "April",
-        "May",
-        "Jun",
-        "july",
-        "Aug",
-        "sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
+      categories:  Object.keys(ordersByMonth),
     },
     tooltip: {
       x: {
@@ -56,12 +47,12 @@ const OverView = () => {
   };
   const series = [
     {
-      name: "Product selled",
-      data: [31, 40, 28, 51, 42, 109, 100, 110, 90, 140, 150, 155],
+      name: "Total Orders",
+      data: Object.values(ordersByMonth),
     },
     {
-      name: "Product canceled",
-      data: [11, 32, 45, 32, 34, 52, 70, 150, 50, 100, 57, 70],
+      name: "Product selled",
+      data: Object.values(soldProductByMonth),
     },
   ];
   var optionsForPie = {
@@ -93,9 +84,9 @@ const OverView = () => {
     },
   };
   const seriseForDonut = [
-    usersByRole?.user,
-    usersByRole?.artist,
-    usersByRole?.mbbAdmin,
+    usersByRole?.user || 0,
+    usersByRole?.artist || 0,
+    usersByRole?.admin || 0,
   ];
   return (
     <div className="w-[97%] mx-auto">
@@ -104,7 +95,7 @@ const OverView = () => {
           <img className="w-5 md:w-8 xl:w-8" src={cubes} alt="" />
           <div>
             <h2 className="text-white text-nowrap text-[10px] md:text-base font-bold ">
-              Total Products - {productsLength?.length}
+              Total Products: {productsLength?.length}
             </h2>
             <Link
               to={"/adminDashboard/products"}
@@ -118,7 +109,7 @@ const OverView = () => {
           <img className="w-3 md:w-8 xl:w-8" src={packages} alt="" />
           <div>
             <h2 className="text-white text-nowrap font-bold">
-              Total Orders - {ordersLength?.length}
+              Total Orders: {ordersLength?.length}
             </h2>
             <Link
               to={"/adminDashboard/orders"}
@@ -132,7 +123,7 @@ const OverView = () => {
           <img className="w-3 md:w-8 xl:w-8" src={team} alt="" />
           <div>
             <h2 className="text-white text-nowrap font-bold">
-              Total Customers - {productsLength?.length}
+              Total Customers: {usersByRole?.user}
             </h2>
             <Link
               to={"/adminDashboard/customers"}
@@ -146,7 +137,7 @@ const OverView = () => {
           <img className="w-3 md:w-8 xl:w-8" src={team} alt="" />
           <div>
             <h2 className="text-white text-nowrap font-bold">
-              Total Artists - {productsLength?.length}
+              Total Artists: {usersByRole?.artist}
             </h2>
             <Link
               to={"/adminDashboard/artists"}

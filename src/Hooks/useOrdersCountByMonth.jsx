@@ -11,7 +11,7 @@ const useOrdersCountByMonth = () => {
   } = useQuery({
     queryKey: ["orders-by-month"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/orders-by-month");
+      const res = await axiosSecure.get("/orders-last-12-months");
       return res.data;
     },
   });
