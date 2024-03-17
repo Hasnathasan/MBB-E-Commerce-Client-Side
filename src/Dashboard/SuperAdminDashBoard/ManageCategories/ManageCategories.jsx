@@ -24,10 +24,45 @@ import {
   import axios from "axios";
   import toast, { Toaster } from "react-hot-toast";
 import usePopularCategories from "../../../Hooks/usePopularCategories";
+import { useState } from "react";
   
   const ManageCategories = () => {
     const [categories, isCategoriesLoading] = usePopularCategories();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const [categoryToUpdate, setCategoryToUpdate] = useState();
+  const { isOpen: isUpdateOpen, onOpen: onUpdateOpen, onOpenChange: onUpdateOpenChange } = useDisclosure();
+  const handleCategoryUpdate = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const category = form.category.value;
+    const imageFile = form.image.files[0];
+    let image;
+    const updatedCategoryData = {category, image, id: categoryToUpdate?._id};
+    if(imageFile){
+      const formData = new FormData();
+      formData.append("file",imageFile)
+      axios
+      .post(
+        "https://mbb-e-commerce-server.vercel.app/uploadSingle",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+        .then((res) => {
+          if(res.data.url){
+            image = res.data.url;
+          }
+        })
+        .catch(err => console.log(err))
+    }
+    console.log(categoryToUpdate);
+    axios.patch("http://localhost:8000/updateCategories", updatedCategoryData)
+            .then(res => console.log(res))
+            .catch(error => console.log(error))
+  }
     const hangleCategoryAdding = (e) => {
       e.preventDefault();
       const form = e.target;
@@ -148,7 +183,7 @@ import usePopularCategories from "../../../Hooks/usePopularCategories";
                 </TableCell>
                 <TableCell className="text-center">
                 <ButtonGroup size="sm">
-      <Button>Update</Button>
+      <Button onClick={() => setCategoryToUpdate(category)} onPress={onUpdateOpen}>Update</Button>
       <Button onClick={() => handleDelete(category?.category)}>Delete</Button>
     </ButtonGroup>
                 </TableCell>
@@ -214,6 +249,65 @@ import usePopularCategories from "../../../Hooks/usePopularCategories";
             )}
           </ModalContent>
         </Modal>
+        <Modal
+        scrollBehavior="outside"
+        size="2xl"
+        backdrop="opaque"
+        className="!z-50"
+        isOpen={isUpdateOpen}
+        onOpenChange={onUpdateOpenChange}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Add a New Product
+              </ModalHeader>
+              <ModalBody>
+              <form onSubmit={handleCategoryUpdate} className="p-5">
+                      <div>
+                        <label htmlFor="image">Category Image</label>
+                        <input
+                          type="file"
+                          name="image"
+                          id="image"
+                          className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                          placeholder="Category Image"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="category">Category Name</label>
+                        <input
+                          type="text"
+                          name="category"
+                          id="category"
+                          className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                          placeholder="Category Name"
+                          defaultValue={categoryToUpdate?.category}
+                          required
+                        />
+                      </div>
+  
+                    
+                    <Button
+                      type="submit"
+                      color="success"
+                      radius="full"
+                      className="text-white mb-2 px-12 bg-green-500"
+                    >
+                      Add Category
+                    </Button>
+                  </form>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
         <Toaster></Toaster>
       </div>
     );

@@ -28,7 +28,7 @@ import { AuthContext } from "../../../Providers/AuthProvider";
 import Loader from "../../../Components/Loader/Loader";
 
 const ManageProducts = () => {
-  const { categoryFilter, priceSlider, minRating, searchQuery } =
+  const { categoryFilter, priceSlider, minRating, searchQuery, setSearchQuery } =
     useContext(AuthContext);
   const [products, isProductsLoading, refetch] = useProducts({
     categoryFilter,
@@ -37,56 +37,20 @@ const ManageProducts = () => {
     searchQuery,
   });
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  if (isProductsLoading) {
-    return <Loader></Loader>;
-  }
   return (
     <div className="overflow-x-auto w-[95%] mx-auto">
       <div className="flex flex-col  gap-4">
         <div className="flex justify-between p-5 bg-white rounded-xl gap-3 items-end">
           <Input
-            isClearable
+            isClearable={false}
+            type="text"
+            onClear={() => console.log("cleared")}
             className="w-full sm:max-w-[44%]"
-            placeholder="Search by name..."
+            placeholder="Search by name/category..."
             startContent={<FaSearch></FaSearch>}
+            onChange={e => setSearchQuery(e.target.value)}
           />
           <div className="flex gap-3">
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<FaArrowDown></FaArrowDown>} variant="flat">
-                  Status
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={["data"]}
-                selectionMode="multiple"
-              >
-                <DropdownItem key={"data"} className="capitalize">
-                  Data
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<FaArrowDown></FaArrowDown>} variant="flat">
-                  Columns
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={["hi"]}
-                selectionMode="multiple"
-              >
-                <DropdownItem key={"hi"} className="capitalize">
-                  Hi
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
             <Button
               onPress={onOpen}
               color="primary"
@@ -162,6 +126,7 @@ const ManageProducts = () => {
           )}
         </ModalContent>
       </Modal>
+      
       <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
