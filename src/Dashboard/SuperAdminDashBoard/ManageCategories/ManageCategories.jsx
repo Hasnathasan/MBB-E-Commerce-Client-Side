@@ -29,15 +29,17 @@ import { useState } from "react";
   const ManageCategories = () => {
     const [categories, isCategoriesLoading] = usePopularCategories();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [categoryToUpdate, setCategoryToUpdate] = useState();
+    const [categoryToUpdate, setCategoryToUpdate] = useState(null);
   const { isOpen: isUpdateOpen, onOpen: onUpdateOpen, onOpenChange: onUpdateOpenChange } = useDisclosure();
+  const handleModalOpen = category => {
+    setCategoryToUpdate(category);
+    onUpdateOpen()
+  }
   const handleCategoryUpdate = (e) => {
     e.preventDefault();
     const form = e.target;
     const category = form.category.value;
     const imageFile = form.image.files[0];
-    let image;
-    const updatedCategoryData = {category, image, id: categoryToUpdate?._id};
     if(imageFile){
       const formData = new FormData();
       formData.append("file",imageFile)
@@ -53,15 +55,30 @@ import { useState } from "react";
       )
         .then((res) => {
           if(res.data.url){
-            image = res.data.url;
+            console.log(res.data.url, "Image");
+    const updatedCategoryData = {category, image: res.data.url, id: categoryToUpdate?._id, previous_category: categoryToUpdate?.category};
+            axios.patch("http://localhost:8000/updateCategories", updatedCategoryData)
+            .then(res => {
+              if(res.data.updatedCategory?.modifiedCount > 0){
+                toast.success("Product Category Updated")
+              }
+            })
+            .catch(error => console.log(error))
           }
         })
         .catch(err => console.log(err))
     }
-    console.log(categoryToUpdate);
-    axios.patch("http://localhost:8000/updateCategories", updatedCategoryData)
-            .then(res => console.log(res))
+    else{
+      const updatedCategoryData = {category, image: undefined, id: categoryToUpdate?._id, previous_category: categoryToUpdate?.category};
+      axios.patch("http://localhost:8000/updateCategories", updatedCategoryData)
+            .then(res => {
+              if(res.data.updatedCategory?.modifiedCount > 0){
+                toast.success("Product Category Updated")
+              }
+            })
             .catch(error => console.log(error))
+    }
+    
   }
     const hangleCategoryAdding = (e) => {
       e.preventDefault();
@@ -89,7 +106,11 @@ import { useState } from "react";
           if (res.data.url) {
             category_details.image = res.data.url;
             axios.post("https://mbb-e-commerce-server.vercel.app/categories", category_details)
-            .then(res => console.log(res))
+            .then(res => {
+              if(res.data.insertedId){
+                toast.success("Product Category Added")
+              }
+            })
             .catch(error => console.log(error))
           }
         })
@@ -183,7 +204,7 @@ import { useState } from "react";
                 </TableCell>
                 <TableCell className="text-center">
                 <ButtonGroup size="sm">
-      <Button onClick={() => setCategoryToUpdate(category)} onPress={onUpdateOpen}>Update</Button>
+      <Button onClick={() => handleModalOpen(category)}>Update</Button>
       <Button onClick={() => handleDelete(category?.category)}>Delete</Button>
     </ButtonGroup>
                 </TableCell>
