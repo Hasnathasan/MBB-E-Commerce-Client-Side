@@ -1,18 +1,18 @@
-import { useContext } from "react";
+
 import useAxiosSecure from "./useAxiosSecure";
-import { AuthContext } from "../Providers/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 
-const useAllOrders = () => {
+const useAllOrders = ({status}) => {
   const [axiosSecure] = useAxiosSecure();
+  console.log(status);
   const {
     data: orders,
     isLoading: isOrdersLoading,
     refetch,
   } = useQuery({
-    queryKey: ["allOrdersForAdmin"],
+    queryKey: ["allOrdersForAdmin", status],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/allOrders`);
+      const res = await axiosSecure.get(`/allOrders${status ? `?status=${status}` : ""}`);
       return res.data;
     },
   });

@@ -6,6 +6,8 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Input,
+  Select,
+  SelectItem,
   Table,
   TableBody,
   TableCell,
@@ -13,17 +15,23 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/react";
-import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
+import { FaArrowDown, FaPlus } from "react-icons/fa";
 import useAllOrders from "../../../Hooks/useAllOrders";
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import Loader from "../../../Components/Loader/Loader";
+import { useState } from "react";
 
 const ManageOrders = () => {
-  const [orders, isOrdersLoading] = useAllOrders();
+  const [value, setValue] = useState();
+  const [orders, isOrdersLoading] = useAllOrders({status: value});
+  const handleSelectionChange = (e) => {
+    setValue(e.target.value);
+  };
+
   const location = useLocation();
-  if (isOrdersLoading) {
-    return <Loader></Loader>;
-  }
+  // if (isOrdersLoading) {
+  //   return <Loader></Loader>;
+  // }
   console.log(orders);
   return (
     <>
@@ -35,63 +43,31 @@ const ManageOrders = () => {
         }`}
       >
         <div className="flex flex-col  gap-4">
-          <div className="flex justify-between p-5 bg-white rounded-xl gap-3 items-end">
-            <Input
-              isClearable
-              className="w-full sm:max-w-[44%]"
-              placeholder="Search by name..."
-              startContent={<FaSearch></FaSearch>}
-            />
+          <div className="flex justify-end p-5 bg-white rounded-xl gap-3 items-end">
+            
             <div className="flex gap-3">
-              <Dropdown>
-                <DropdownTrigger className="hidden sm:flex">
-                  <Button
-                    endContent={<FaArrowDown></FaArrowDown>}
-                    variant="flat"
-                  >
-                    Status
-                  </Button>
-                </DropdownTrigger>
-                <DropdownMenu
-                  disallowEmptySelection
-                  aria-label="Table Columns"
-                  closeOnSelect={false}
-                  selectedKeys={["data"]}
-                  selectionMode="multiple"
-                >
-                  <DropdownItem key={"data"} className="capitalize">
-                    Data
-                  </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-              <Dropdown>
-                <DropdownTrigger className="hidden sm:flex">
-                  <Button
-                    endContent={<FaArrowDown></FaArrowDown>}
-                    variant="flat"
-                  >
-                    Columns
-                  </Button>
-                </DropdownTrigger>
-                <DropdownMenu
-                  disallowEmptySelection
-                  aria-label="Table Columns"
-                  closeOnSelect={false}
-                  selectedKeys={["hi"]}
-                  selectionMode="multiple"
-                >
-                  <DropdownItem key={"hi"} className="capitalize">
-                    Hi
-                  </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-              <Button color="primary" endContent={<FaPlus></FaPlus>}>
-                Add New
-              </Button>
+                <Select
+      placeholder="Change Status"
+      label={"Status"}
+      className="w-40 text-nowrap"
+      disableSelectorIconRotation
+      onChange={handleSelectionChange}
+    >
+        <SelectItem key={"pending"} value={"pending"}>
+          Pending
+        </SelectItem>
+        <SelectItem key={"processing"} value={"processing"}>
+          Processing
+        </SelectItem>
+        <SelectItem key={"delevered"} value={"delevered"}>
+          Delevered
+        </SelectItem>
+    </Select>
+    
             </div>
           </div>
           <span className="text-gray-600 mb-2">
-            Total {orders?.length} users
+            Total {orders?.length} Orders
           </span>
         </div>
         <Table aria-label="Example table with custom cells">
