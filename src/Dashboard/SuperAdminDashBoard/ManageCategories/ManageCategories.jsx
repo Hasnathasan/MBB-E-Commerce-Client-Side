@@ -17,7 +17,6 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-  User,
   useDisclosure,
 } from "@nextui-org/react";
 import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
