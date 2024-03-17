@@ -27,13 +27,23 @@ import usePopularCategories from "../../../Hooks/usePopularCategories";
 import { useState } from "react";
   
   const ManageCategories = () => {
-    const [categories, isCategoriesLoading] = usePopularCategories();
+    const [categories, isCategoriesLoading, refetch] = usePopularCategories();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [categoryToUpdate, setCategoryToUpdate] = useState(null);
   const { isOpen: isUpdateOpen, onOpen: onUpdateOpen, onOpenChange: onUpdateOpenChange } = useDisclosure();
   const handleModalOpen = category => {
     setCategoryToUpdate(category);
-    onUpdateOpen()
+    onUpdateOpen();
+  }
+  const handleCategoryDelete = category => {
+    axios.delete(`http://localhost:8000/deleteCategory/${category}`)
+    .then(res => {
+      if(res.data.deletedCategory.deletedCount > 0){
+        refetch()
+        toast.success("Category Deleted from All Products")
+      }
+    })
+    .catch(err => console.log(err))
   }
   const handleCategoryUpdate = (e) => {
     e.preventDefault();
@@ -60,6 +70,8 @@ import { useState } from "react";
             axios.patch("http://localhost:8000/updateCategories", updatedCategoryData)
             .then(res => {
               if(res.data.updatedCategory?.modifiedCount > 0){
+                refetch();
+                form.reset;
                 toast.success("Product Category Updated")
               }
             })
@@ -73,6 +85,8 @@ import { useState } from "react";
       axios.patch("http://localhost:8000/updateCategories", updatedCategoryData)
             .then(res => {
               if(res.data.updatedCategory?.modifiedCount > 0){
+                refetch();
+                form.reset;
                 toast.success("Product Category Updated")
               }
             })
@@ -120,9 +134,6 @@ import { useState } from "react";
           );
         });
     };
-    const handleDelete = name => {
-        console.log(name);
-    }
     return (
       <div className="overflow-x-auto w-full md:w-[95%]">
         <div className="flex flex-col  gap-4">
@@ -205,7 +216,7 @@ import { useState } from "react";
                 <TableCell className="text-center">
                 <ButtonGroup size="sm">
       <Button onClick={() => handleModalOpen(category)}>Update</Button>
-      <Button onClick={() => handleDelete(category?.category)}>Delete</Button>
+      <Button onClick={() => handleCategoryDelete(category?.category)}>Delete</Button>
     </ButtonGroup>
                 </TableCell>
               </TableRow>
