@@ -1,14 +1,20 @@
-import { useContext } from "react";
-import { AuthContext } from "../../../Providers/AuthProvider";
+
 import "./OrderDetailsForAdmin.css";
 import { useParams } from "react-router-dom";
 import useSingleOrderById from "../../../Hooks/useSingleOrderById";
 import Loader from "../../../Components/Loader/Loader";
+import { Button, Select, SelectItem } from "@nextui-org/react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 const OrderDetailsForAdmin = () => {
   const { id } = useParams();
-  const { user } = useContext(AuthContext);
-  const [order, isOrderLoading, refetch] = useSingleOrderById({ id });
+  const [order, isOrderLoading] = useSingleOrderById({ id });
+  const [value, setValue] = useState();
+  useEffect(() => {
+    setValue(order?.status)
+  },[order?.status])
   if (isOrderLoading) {
     return <Loader></Loader>;
   }
@@ -24,9 +30,23 @@ const OrderDetailsForAdmin = () => {
     userPhoneNumber,
   } = order.userDetails;
   console.log(id, order, email);
+  const handleSelectionChange = (e) => {
+    setValue(e.target.value);
+  };
+  const handleStatusUpdate = () => {
+    console.log(value);
+    axios.patch(`http://localhost:8000/orderStatusUpdate/${order?._id}?status=${value.toLowerCase()}`)
+    .then(res => {
+      if(res.status === 200){
+        toast.success("Order Status Updated")
+      }
+    })
+    .catch(err => toast.error("An Unknown Error Occoured"))
+  }
   return (
     <div className="border border-gray-300 rounded-lg">
-      <div className="flex border-b border-gray-300 p-5 justify-between items-center">
+      <div className="flex justify-between items-center border-b border-gray-300 p-5">
+      <div className="flex justify-between items-center">
         <div className="flex justify-center items-center gap-4">
           <h1 className="text-xl font-semibold">Order Details</h1>
           <h4 className="text-sm text-gray-800">
@@ -36,6 +56,29 @@ const OrderDetailsForAdmin = () => {
             {order?.products?.length} Products
           </h4>
         </div>
+      </div>
+      <div className="min-w-64 flex justify-between items-center gap-3">
+      <Select
+      placeholder="Change Status"
+      labelPlacement="outside-left"
+      className="max-w-xl text-nowrap"
+      disableSelectorIconRotation
+     
+      selectedKeys={[value]}
+      onChange={handleSelectionChange}
+    >
+        <SelectItem key={"pending"} value={"pending"}>
+          Pending
+        </SelectItem>
+        <SelectItem key={"processing"} value={"processing"}>
+          Processing
+        </SelectItem>
+        <SelectItem key={"delevered"} value={"delevered"}>
+          Delevered
+        </SelectItem>
+    </Select>
+    <Button onClick={handleStatusUpdate} color="success" className="text-white">Update</Button>
+      </div>
       </div>
       <div className="p-6">
         <div className="grid grid-cols-6 gap-7">
@@ -148,6 +191,7 @@ const OrderDetailsForAdmin = () => {
           </tr>
         ))}
       </table>
+      <Toaster />
     </div>
   );
 };

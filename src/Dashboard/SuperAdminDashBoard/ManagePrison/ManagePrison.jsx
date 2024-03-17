@@ -21,7 +21,6 @@ import {
 } from "@nextui-org/react";
 import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
 import axios from "axios";
-import Swal from "sweetalert2";
 import usePrisons from "../../../Hooks/usePrisons";
 import toast, { Toaster } from "react-hot-toast";
 
