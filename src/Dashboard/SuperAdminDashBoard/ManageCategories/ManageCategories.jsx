@@ -1,287 +1,306 @@
 import {
-    Button,
-    ButtonGroup,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownTrigger,
-    Input,
-    Modal,
-    ModalBody,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    Table,
-    TableBody,
-    TableCell,
-    TableColumn,
-    TableHeader,
-    TableRow,
-    User,
-    useDisclosure,
-  } from "@nextui-org/react";
-  import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
-  import axios from "axios";
-  import toast, { Toaster } from "react-hot-toast";
+  Button,
+  ButtonGroup,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+  User,
+  useDisclosure,
+} from "@nextui-org/react";
+import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 import usePopularCategories from "../../../Hooks/usePopularCategories";
 import { useState } from "react";
-  
-  const ManageCategories = () => {
-    const [categories, isCategoriesLoading, refetch] = usePopularCategories();
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [categoryToUpdate, setCategoryToUpdate] = useState(null);
-  const { isOpen: isUpdateOpen, onOpen: onUpdateOpen, onOpenChange: onUpdateOpenChange } = useDisclosure();
-  const handleModalOpen = category => {
+
+const ManageCategories = () => {
+  const [categories, isCategoriesLoading, refetch] = usePopularCategories();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [categoryToUpdate, setCategoryToUpdate] = useState(null);
+  const {
+    isOpen: isUpdateOpen,
+    onOpen: onUpdateOpen,
+    onOpenChange: onUpdateOpenChange,
+  } = useDisclosure();
+  const handleModalOpen = (category) => {
     setCategoryToUpdate(category);
     onUpdateOpen();
-  }
-  const handleCategoryDelete = category => {
-    axios.delete(`http://localhost:8000/deleteCategory/${category}`)
-    .then(res => {
-      if(res.data.deletedCategory.deletedCount > 0){
-        refetch()
-        toast.success("Category Deleted from All Products")
-      }
-    })
-    .catch(err => console.log(err))
-  }
+  };
+  const handleCategoryDelete = (category) => {
+    axios
+      .delete(`http://localhost:8000/deleteCategory/${category}`)
+      .then((res) => {
+        if (res.data.deletedCategory.deletedCount > 0) {
+          refetch();
+          toast.success("Category Deleted from All Products");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   const handleCategoryUpdate = (e) => {
     e.preventDefault();
     const form = e.target;
     const category = form.category.value;
     const imageFile = form.image.files[0];
-    if(imageFile){
+    if (imageFile) {
       const formData = new FormData();
-      formData.append("file",imageFile)
+      formData.append("file", imageFile);
       axios
-      .post(
-        "https://mbb-e-commerce-server.vercel.app/uploadSingle",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
-        .then((res) => {
-          if(res.data.url){
-            console.log(res.data.url, "Image");
-    const updatedCategoryData = {category, image: res.data.url, id: categoryToUpdate?._id, previous_category: categoryToUpdate?.category};
-            axios.patch("http://localhost:8000/updateCategories", updatedCategoryData)
-            .then(res => {
-              if(res.data.updatedCategory?.modifiedCount > 0){
-                refetch();
-                form.reset;
-                toast.success("Product Category Updated")
-              }
-            })
-            .catch(error => console.log(error))
+        .post(
+          "https://mbb-e-commerce-server.vercel.app/uploadSingle",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
           }
-        })
-        .catch(err => console.log(err))
-    }
-    else{
-      const updatedCategoryData = {category, image: undefined, id: categoryToUpdate?._id, previous_category: categoryToUpdate?.category};
-      axios.patch("http://localhost:8000/updateCategories", updatedCategoryData)
-            .then(res => {
-              if(res.data.updatedCategory?.modifiedCount > 0){
-                refetch();
-                form.reset;
-                toast.success("Product Category Updated")
-              }
-            })
-            .catch(error => console.log(error))
-    }
-    
-  }
-    const hangleCategoryAdding = (e) => {
-      e.preventDefault();
-      const form = e.target;
-      const category = form.category.value;
-      const imageFile = form.image.files[0];
-      const formData = new FormData();
-      formData.append("file",imageFile)
-      const category_details = {
-        category
-      };
-      console.log(category_details);
-      axios
-      .post(
-        "https://mbb-e-commerce-server.vercel.app/uploadSingle",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
+        )
         .then((res) => {
-          console.log(res.data);
           if (res.data.url) {
-            category_details.image = res.data.url;
-            axios.post("https://mbb-e-commerce-server.vercel.app/categories", category_details)
-            .then(res => {
-              if(res.data.insertedId){
-                toast.success("Product Category Added")
-              }
-            })
-            .catch(error => console.log(error))
+            console.log(res.data.url, "Image");
+            const updatedCategoryData = {
+              category,
+              image: res.data.url,
+              id: categoryToUpdate?._id,
+              previous_category: categoryToUpdate?.category,
+            };
+            axios
+              .patch(
+                "http://localhost:8000/updateCategories",
+                updatedCategoryData
+              )
+              .then((res) => {
+                if (res.data.updatedCategory?.modifiedCount > 0) {
+                  refetch();
+                  form.reset;
+                  toast.success("Product Category Updated");
+                }
+              })
+              .catch((error) => console.log(error));
           }
         })
-        .catch((error) => {
-          return toast.error(
-            error?.response?.data?.message || "An Unknown Error Occurred"
-          );
-        });
+        .catch((err) => console.log(err));
+    } else {
+      const updatedCategoryData = {
+        category,
+        image: undefined,
+        id: categoryToUpdate?._id,
+        previous_category: categoryToUpdate?.category,
+      };
+      axios
+        .patch("http://localhost:8000/updateCategories", updatedCategoryData)
+        .then((res) => {
+          if (res.data.updatedCategory?.modifiedCount > 0) {
+            refetch();
+            form.reset;
+            toast.success("Product Category Updated");
+          }
+        })
+        .catch((error) => console.log(error));
+    }
+  };
+  const hangleCategoryAdding = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const category = form.category.value;
+    const imageFile = form.image.files[0];
+    const formData = new FormData();
+    formData.append("file", imageFile);
+    const category_details = {
+      category,
     };
-    return (
-      <div className="overflow-x-auto w-full md:w-[95%]">
-        <div className="flex flex-col  gap-4">
-          <div className="flex justify-between p-5 bg-white rounded-xl gap-3 items-end">
-            <Input
-              isClearable
-              className="w-full sm:max-w-[44%]"
-              placeholder="Search by name..."
-              startContent={<FaSearch></FaSearch>}
-            />
-            <div className="flex gap-3">
-              <Dropdown>
-                <DropdownTrigger className="hidden sm:flex">
-                  <Button endContent={<FaArrowDown></FaArrowDown>} variant="flat">
-                    Status
-                  </Button>
-                </DropdownTrigger>
-                <DropdownMenu
-                  disallowEmptySelection
-                  aria-label="Table Columns"
-                  closeOnSelect={false}
-                  selectedKeys={["data"]}
-                  selectionMode="multiple"
-                >
-                  <DropdownItem key={"data"} className="capitalize">
-                    Data
-                  </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-              <Dropdown>
-                <DropdownTrigger className="hidden sm:flex">
-                  <Button endContent={<FaArrowDown></FaArrowDown>} variant="flat">
-                    Columns
-                  </Button>
-                </DropdownTrigger>
-                <DropdownMenu
-                  disallowEmptySelection
-                  aria-label="Table Columns"
-                  closeOnSelect={false}
-                  selectedKeys={["hi"]}
-                  selectionMode="multiple"
-                >
-                  <DropdownItem key={"hi"} className="capitalize">
-                    Hi
-                  </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-              <Button
-                onPress={onOpen}
-                color="primary"
-                endContent={<FaPlus></FaPlus>}
+    console.log(category_details);
+    axios
+      .post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.url) {
+          category_details.image = res.data.url;
+          axios
+            .post(
+              "https://mbb-e-commerce-server.vercel.app/categories",
+              category_details
+            )
+            .then((res) => {
+              if (res.data.insertedId) {
+                toast.success("Product Category Added");
+              }
+            })
+            .catch((error) => console.log(error));
+        }
+      })
+      .catch((error) => {
+        return toast.error(
+          error?.response?.data?.message || "An Unknown Error Occurred"
+        );
+      });
+  };
+  return (
+    <div className="overflow-x-auto w-full md:w-[95%]">
+      <div className="flex flex-col  gap-4">
+        <div className="flex justify-between p-5 bg-white rounded-xl gap-3 items-end">
+          <Input
+            isClearable
+            className="w-full sm:max-w-[44%]"
+            placeholder="Search by name..."
+            startContent={<FaSearch></FaSearch>}
+          />
+          <div className="flex gap-3">
+            <Dropdown>
+              <DropdownTrigger className="hidden sm:flex">
+                <Button endContent={<FaArrowDown></FaArrowDown>} variant="flat">
+                  Status
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu
+                disallowEmptySelection
+                aria-label="Table Columns"
+                closeOnSelect={false}
+                selectedKeys={["data"]}
+                selectionMode="multiple"
               >
-                Add New
-              </Button>
-            </div>
+                <DropdownItem key={"data"} className="capitalize">
+                  Data
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+            <Dropdown>
+              <DropdownTrigger className="hidden sm:flex">
+                <Button endContent={<FaArrowDown></FaArrowDown>} variant="flat">
+                  Columns
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu
+                disallowEmptySelection
+                aria-label="Table Columns"
+                closeOnSelect={false}
+                selectedKeys={["hi"]}
+                selectionMode="multiple"
+              >
+                <DropdownItem key={"hi"} className="capitalize">
+                  Hi
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+            <Button
+              onPress={onOpen}
+              color="primary"
+              endContent={<FaPlus></FaPlus>}
+            >
+              Add New
+            </Button>
           </div>
-          <span className="text-gray-600 mb-2">
-            Total {categories?.length} Categories
-          </span>
         </div>
-        <Table aria-label="Example table with custom cells">
-          <TableHeader>
-            <TableColumn>Category Image</TableColumn>
-            <TableColumn>Category Name</TableColumn>
-            <TableColumn>Total Product's found</TableColumn>
-            <TableColumn className="text-center">Action's</TableColumn>
-          </TableHeader>
-          <TableBody>
-            {categories?.map((category) => (
-              <TableRow key={category?.category}>
-                <TableCell>
-                  <img src={category.image} className="w-16 h-16" alt="" />
-                </TableCell>
-                <TableCell className="capitalize">
-                    {category?.category}
-                </TableCell>
-                <TableCell>
-                    {category?.count} product's found
-                </TableCell>
-                <TableCell className="text-center">
+        <span className="text-gray-600 mb-2">
+          Total {categories?.length} Categories
+        </span>
+      </div>
+      <Table aria-label="Example table with custom cells">
+        <TableHeader>
+          <TableColumn>Category Image</TableColumn>
+          <TableColumn>Category Name</TableColumn>
+          <TableColumn>Total Product's found</TableColumn>
+          <TableColumn className="text-center">Action's</TableColumn>
+        </TableHeader>
+        <TableBody>
+          {categories?.map((category) => (
+            <TableRow key={category?.category}>
+              <TableCell>
+                <img src={category.image} className="w-16 h-16" alt="" />
+              </TableCell>
+              <TableCell className="capitalize">{category?.category}</TableCell>
+              <TableCell>{category?.count} product's found</TableCell>
+              <TableCell className="text-center">
                 <ButtonGroup size="sm">
-      <Button onClick={() => handleModalOpen(category)}>Update</Button>
-      <Button onClick={() => handleCategoryDelete(category?.category)}>Delete</Button>
-    </ButtonGroup>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <Modal
-          size="2xl"
-          backdrop="opaque"
-          className="!z-50"
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-        >
-          <ModalContent>
-            {(onClose) => (
-              <>
-                <ModalHeader className="flex flex-col gap-1">
-                  Add Category
-                </ModalHeader>
-                <ModalBody>
-                  <form onSubmit={hangleCategoryAdding} className="p-5">
-                      <div>
-                        <label htmlFor="image">Category Image</label>
-                        <input
-                          type="file"
-                          name="image"
-                          id="image"
-                          className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                          placeholder="Category Image"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="category">Category Name</label>
-                        <input
-                          type="text"
-                          name="category"
-                          id="category"
-                          className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                          placeholder="Category Name"
-                          required
-                        />
-                      </div>
-  
-                    
-                    <Button
-                      type="submit"
-                      color="success"
-                      radius="full"
-                      className="text-white mb-2 px-12 bg-green-500"
-                    >
-                      Add Category
-                    </Button>
-                  </form>
-                </ModalBody>
-                <ModalFooter>
-                  <Button color="danger" variant="light" onPress={onClose}>
-                    Close
+                  <Button onClick={() => handleModalOpen(category)}>
+                    Update
                   </Button>
-                </ModalFooter>
-              </>
-            )}
-          </ModalContent>
-        </Modal>
-        <Modal
+                  <Button
+                    onClick={() => handleCategoryDelete(category?.category)}
+                  >
+                    Delete
+                  </Button>
+                </ButtonGroup>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      <Modal
+        size="2xl"
+        backdrop="opaque"
+        className="!z-50"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Add Category
+              </ModalHeader>
+              <ModalBody>
+                <form onSubmit={hangleCategoryAdding} className="p-5">
+                  <div>
+                    <label htmlFor="image">Category Image</label>
+                    <input
+                      type="file"
+                      name="image"
+                      id="image"
+                      className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                      placeholder="Category Image"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="category">Category Name</label>
+                    <input
+                      type="text"
+                      name="category"
+                      id="category"
+                      className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                      placeholder="Category Name"
+                      required
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    color="success"
+                    radius="full"
+                    className="text-white mb-2 px-12 bg-green-500"
+                  >
+                    Add Category
+                  </Button>
+                </form>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+      <Modal
         scrollBehavior="outside"
         size="2xl"
         backdrop="opaque"
@@ -296,40 +315,39 @@ import { useState } from "react";
                 Add a New Product
               </ModalHeader>
               <ModalBody>
-              <form onSubmit={handleCategoryUpdate} className="p-5">
-                      <div>
-                        <label htmlFor="image">Category Image</label>
-                        <input
-                          type="file"
-                          name="image"
-                          id="image"
-                          className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                          placeholder="Category Image"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="category">Category Name</label>
-                        <input
-                          type="text"
-                          name="category"
-                          id="category"
-                          className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                          placeholder="Category Name"
-                          defaultValue={categoryToUpdate?.category}
-                          required
-                        />
-                      </div>
-  
-                    
-                    <Button
-                      type="submit"
-                      color="success"
-                      radius="full"
-                      className="text-white mb-2 px-12 bg-green-500"
-                    >
-                      Add Category
-                    </Button>
-                  </form>
+                <form onSubmit={handleCategoryUpdate} className="p-5">
+                  <div>
+                    <label htmlFor="image">Category Image</label>
+                    <input
+                      type="file"
+                      name="image"
+                      id="image"
+                      className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                      placeholder="Category Image"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="category">Category Name</label>
+                    <input
+                      type="text"
+                      name="category"
+                      id="category"
+                      className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                      placeholder="Category Name"
+                      defaultValue={categoryToUpdate?.category}
+                      required
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    color="success"
+                    radius="full"
+                    className="text-white mb-2 px-12 bg-green-500"
+                  >
+                    Add Category
+                  </Button>
+                </form>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
@@ -340,10 +358,9 @@ import { useState } from "react";
           )}
         </ModalContent>
       </Modal>
-        <Toaster></Toaster>
-      </div>
-    );
-  };
-  
-  export default ManageCategories;
-  
+      <Toaster></Toaster>
+    </div>
+  );
+};
+
+export default ManageCategories;
