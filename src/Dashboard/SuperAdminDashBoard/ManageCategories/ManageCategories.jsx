@@ -22,7 +22,7 @@ import usePopularCategories from "../../../Hooks/usePopularCategories";
 import { useState } from "react";
 
 const ManageCategories = () => {
-  const [categories, refetch] = usePopularCategories();
+  const [categories, , refetch] = usePopularCategories();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [categoryToUpdate, setCategoryToUpdate] = useState(null);
   const {
@@ -36,7 +36,7 @@ const ManageCategories = () => {
   };
   const handleCategoryDelete = (category) => {
     axios
-      .delete(`http://localhost:8000/deleteCategory/${category}`)
+      .delete(`https://mbb-e-commerce-server.vercel.app/deleteCategory/${category}`)
       .then((res) => {
         if (res.data.deletedCategory.deletedCount > 0) {
           refetch();
@@ -74,11 +74,12 @@ const ManageCategories = () => {
             };
             axios
               .patch(
-                "http://localhost:8000/updateCategories",
+                "https://mbb-e-commerce-server.vercel.app/updateCategories",
                 updatedCategoryData
               )
               .then((res) => {
                 if (res.data.updatedCategory?.modifiedCount > 0) {
+                  console.log(res.data);
                   refetch();
                   form.reset;
                   toast.success("Product Category Updated");
@@ -96,7 +97,7 @@ const ManageCategories = () => {
         previous_category: categoryToUpdate?.category,
       };
       axios
-        .patch("http://localhost:8000/updateCategories", updatedCategoryData)
+        .patch("https://mbb-e-commerce-server.vercel.app/updateCategories", updatedCategoryData)
         .then((res) => {
           if (res.data.updatedCategory?.modifiedCount > 0) {
             refetch();
@@ -134,6 +135,7 @@ const ManageCategories = () => {
               category_details
             )
             .then((res) => {
+              console.log(res.data);
               if (res.data.insertedId) {
                 toast.success("Product Category Added");
               }
@@ -271,7 +273,7 @@ const ManageCategories = () => {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Add a New Product
+                Update Category
               </ModalHeader>
               <ModalBody>
                 <form onSubmit={handleCategoryUpdate} className="p-5">
@@ -304,7 +306,7 @@ const ManageCategories = () => {
                     radius="full"
                     className="text-white mb-2 px-12 bg-green-500"
                   >
-                    Add Category
+                    Update Category
                   </Button>
                 </form>
               </ModalBody>

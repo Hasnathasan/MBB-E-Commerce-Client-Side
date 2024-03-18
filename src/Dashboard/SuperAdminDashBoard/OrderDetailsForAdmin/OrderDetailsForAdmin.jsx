@@ -35,7 +35,7 @@ const OrderDetailsForAdmin = () => {
   };
   const handleStatusUpdate = () => {
     console.log(value);
-    axios.patch(`http://localhost:8000/orderStatusUpdate/${order?._id}?status=${value.toLowerCase()}`)
+    axios.patch(`https://mbb-e-commerce-server.vercel.app/orderStatusUpdate/${order?._id}?status=${value.toLowerCase()}`)
     .then(res => {
       if(res.status === 200){
         toast.success("Order Status Updated")

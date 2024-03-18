@@ -1,6 +1,6 @@
 import { Avatar, Button, Select, SelectItem, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
 import useArtists from "../../../Hooks/useArtists";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Loader from "../../../Components/Loader/Loader";
 import useSalesReportByArtist from "../../../Hooks/useSalesReportByArtist";
 
@@ -8,11 +8,36 @@ import useSalesReportByArtist from "../../../Hooks/useSalesReportByArtist";
 const SalesReport = () => {
   const [artistData, isArtistsDataLoading] = useArtists();
   const [artist, setArtist] = useState();
-  const [products, isProductsLoading, refetch] = useSalesReportByArtist({artistEmail: artist});
-  if(isArtistsDataLoading || isProductsLoading){
+  const [salesReport, isSalesReportLoading, refetch] = useSalesReportByArtist({artistEmail: artist});
+  const [totalArtistProfit, setTotalArtistProfit] = useState(0)
+  const [totalWebsiteProfit, setTotalWebsiteProfit] = useState(0)
+  const [totalPrisonProfit, setTotalPrisonProfit] = useState(0)
+
+// Iterate through each product
+useEffect( () => {
+    salesReport?.products?.forEach(product => {
+        // Calculate total profit for each type and multiply by quantity
+        const artistProfit = product.profit_distribution.artist_profit_details.artistTotal * product.quantity;
+        const websiteProfit = product.profit_distribution.website_profit_details.websiteProfit * product.quantity;
+        const prisonProfit = product.profit_distribution.prison_profit_details.prisonProfit * product.quantity;
+    
+        // Accumulate the totals
+        setTotalArtistProfit(artistProfit);
+        setTotalWebsiteProfit(websiteProfit)
+        setTotalPrisonProfit(prisonProfit)
+    });
+},[salesReport?.products])
+  if(isArtistsDataLoading){
     return <Loader></Loader>
   }
-  console.log(artist, products);
+  console.log(artist, salesReport);
+  // Initialize variables to store total profits
+
+
+// Log the total profits
+console.log("Total Artist Profit:", totalArtistProfit);
+console.log("Total Website Profit:", totalWebsiteProfit);
+console.log("Total Prison Profit:", totalPrisonProfit);
     return (
         <div className="w-[95%]">
             <div className="flex justify-between">
@@ -64,23 +89,30 @@ h
         <TableColumn>Action</TableColumn>
       </TableHeader>
       <TableBody>
-          <TableRow key={products?._id}>
+          <TableRow key={salesReport?._id}>
             <TableCell>
               <div className="flex justify-start items-center gap-3">
-                <h3>{products?._id}</h3>
+                <h3>{salesReport?._id}</h3>
               </div>
             </TableCell>
-            <TableCell>{products?.artistEmail}</TableCell>
+            <TableCell>{salesReport?.artistEmail}</TableCell>
             <TableCell>
               <div className="flex justify-center gap-2 items-center">
-                <div>$577</div>
+                <div>
+                    <p>Artist</p>
+                    <p>${totalArtistProfit}</p>
+                </div>
                 <span>|</span>
-                <div>$234</div>
+                <div>
+                    <p>Website</p>
+                    <p>${totalWebsiteProfit}</p></div>
                 <span>|</span>
-                <div>$456</div>
+                <div>
+                    <p>Prison</p>
+                    <p>${totalPrisonProfit}</p></div>
               </div>
             </TableCell>
-            <TableCell>{products?.rating}</TableCell>
+            <TableCell>{salesReport?.rating}</TableCell>
             <TableCell>
               <Button color="success" radius="lg" className="text-white">
                 View Details
