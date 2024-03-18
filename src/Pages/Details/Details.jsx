@@ -8,7 +8,7 @@ import { FiMinus, FiPlus } from "react-icons/fi";
 import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import PopularProductsCard from "../Home/PopularProducts/PopularProductsCard";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import useUser from "../../Hooks/useUser";
@@ -52,6 +52,7 @@ function ThumbnailPlugin(mainRef) {
 
 const Details = () => {
   const { id } = useParams();
+  const location = useLocation();
 
   const { user, setIsProductAdded, setOpenCart } = useContext(AuthContext);
   const [userData, isUserDataLoading] = useUser();
@@ -135,7 +136,7 @@ const Details = () => {
   };
   console.log(localStorage.getItem("cart"));
   return (
-    <div className="mx-8 py-14">
+    <div className={`${location.pathname.includes("/adminDashboard") ? "mx-1" : "md:mx-8 mx-1"} py-14`}>
       <div className="grid grid-cols-2 gap-2">
         <div className="col-span-1 flex w-full flex-col items-center">
           <div ref={sliderRef} className="keen-slider w-[380px] mb-2">
@@ -330,7 +331,7 @@ const Details = () => {
         <h2 className="text-3xl font-semibold mb-5 text-center">
           Related Products
         </h2>
-        <div className="grid grid-cols-2 px-14 sm:grid-cols-2 gap-6 justify-center items-center md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+        <div className={`grid grid-cols-2 px-14 sm:grid-cols-2 ${location.pathname.includes("/adminDashboard") ? "xl:grid-cols-3 2xl:grid-cols-4" : "xl:grid-cols-4 2xl:grid-cols-5"} gap-6 justify-center items-center md:grid-cols-3`}>
           {relatedProducts?.map((product) => (
             <PopularProductsCard
               key={product?.name}

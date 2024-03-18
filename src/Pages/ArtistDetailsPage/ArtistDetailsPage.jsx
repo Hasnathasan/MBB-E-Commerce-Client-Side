@@ -1,14 +1,15 @@
 import { Avatar, Tab, Tabs } from "@nextui-org/react";
 import PopularProductsCard from "../Home/PopularProducts/PopularProductsCard";
 import useArtist from "../../Hooks/useArtist";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import ReactPlayer from "react-player";
 import useArtistProductsByEmail from "../../Hooks/useArtistProductsByEmail";
 import Loader from "../../Components/Loader/Loader";
 const ArtistDetailsPage = () => {
   const {email} = useParams();
   const [artistData, isArtistDataLoading] = useArtist({email});
-  const [products, isProductsLoading] = useArtistProductsByEmail({email})
+  const [products, isProductsLoading] = useArtistProductsByEmail({email});
+  const location = useLocation();
   if(isArtistDataLoading || isProductsLoading){
     return <Loader></Loader>
   }
@@ -73,7 +74,7 @@ const ArtistDetailsPage = () => {
             }
           >
              {
-              products?.length !== 0 ? <div className="grid grid-cols-2 mt-5 px-14 sm:grid-cols-2 gap-6 justify-center items-center md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+              products?.length !== 0 ? <div className={`grid grid-cols-2 mt-5 px-3 md:px-14  gap-6 justify-center items-center  ${location.pathname.includes("/adminDashboar")? "md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4" : "sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"}`}>
               {products?.map((product) => (
                 <PopularProductsCard
                   key={product?.name}
