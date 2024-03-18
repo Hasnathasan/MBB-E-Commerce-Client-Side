@@ -2,11 +2,6 @@ import {
   Avatar,
   Button,
   Chip,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-  Input,
   Modal,
   ModalBody,
   ModalContent,
@@ -23,7 +18,7 @@ import {
   User,
   useDisclosure,
 } from "@nextui-org/react";
-import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 import useArtists from "../../../Hooks/useArtists";
 import usePrisons from "../../../Hooks/usePrisons";
 import axios from "axios";
@@ -39,7 +34,7 @@ const ManageArtists = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [prisons, isPrisonsDataLoading] = usePrisons();
   const location = useLocation();
-  const [userData, isUserDataLoading] = useUser();
+  const [userData] = useUser();
   const [artistsData, isArtistsDataLoading, refetch] = useArtists();
   const [selectedFile, setSelectedFile] = useState(null);
   const [passhide, setPasshide] = useState(true);

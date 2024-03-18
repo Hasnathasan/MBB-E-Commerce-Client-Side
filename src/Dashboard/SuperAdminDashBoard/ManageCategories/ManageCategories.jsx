@@ -1,10 +1,6 @@
 import {
   Button,
   ButtonGroup,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
   Input,
   Modal,
   ModalBody,
@@ -19,14 +15,14 @@ import {
   TableRow,
   useDisclosure,
 } from "@nextui-org/react";
-import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
+import { FaPlus, FaSearch } from "react-icons/fa";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import usePopularCategories from "../../../Hooks/usePopularCategories";
 import { useState } from "react";
 
 const ManageCategories = () => {
-  const [categories, isCategoriesLoading, refetch] = usePopularCategories();
+  const [categories, refetch] = usePopularCategories();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [categoryToUpdate, setCategoryToUpdate] = useState(null);
   const {

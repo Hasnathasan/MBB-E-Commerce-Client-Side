@@ -2,11 +2,6 @@ import {
   Avatar,
   Button,
   Chip,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-  Input,
   Modal,
   ModalBody,
   ModalContent,
@@ -21,7 +16,6 @@ import {
   User,
   useDisclosure,
 } from "@nextui-org/react";
-import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
 import useCustomers from "../../../Hooks/useCustomers";
 import { useState } from "react";
 
