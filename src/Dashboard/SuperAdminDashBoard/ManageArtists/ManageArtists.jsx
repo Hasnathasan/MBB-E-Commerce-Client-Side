@@ -258,7 +258,7 @@ console.log("Prison",prison);
                   <form onSubmit={addNewArtist} className="">
                     <div className="border border-gray-300 rounded-lg mb-6">
                       <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">
-                        Sign Up Credentials
+                        Account Information
                       </h4>
                       <div className="grid grid-cols-2 gap-5 p-5 ">
                         <div>
@@ -466,8 +466,8 @@ console.log("Prison",prison);
                           <div>
                             <Select
                               items={prisons}
-                              label="Assigned to"
-                              placeholder="Select a user"
+                              label="Assigned to an Artist"
+                              placeholder="Select an Artist"
                               labelPlacement="outside"
                               className="w-full"
                               onChange={(e) => setPrisonEmail(e.target.value)}

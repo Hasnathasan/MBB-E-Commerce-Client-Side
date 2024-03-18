@@ -251,7 +251,7 @@ const AddNewProductForAdmin = ({ refetchProducts }) => {
       <form onSubmit={handleProductAdding} className={``}>
         <div className="border border-gray-300 rounded-lg mb-8">
           <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
-            Add a New Product
+            Product Information
           </h4>
           <div className="p-5">
             <div className="grid grid-cols-3 gap-3">
@@ -411,7 +411,7 @@ const AddNewProductForAdmin = ({ refetchProducts }) => {
             <div className="grid grid-cols-2 w-full gap-10 justify-center items-center p-5">
               <Select
                 items={artistData}
-                label="Assign to an Artist"
+                label="Select An Artist"
                 placeholder="Select an Artist"
                 labelPlacement="outside"
                 className="w-full"
@@ -440,48 +440,15 @@ const AddNewProductForAdmin = ({ refetchProducts }) => {
                   </SelectItem>
                 )}
               </Select>
-              {/* <Select
-                items={prisonsData}
-                label="Assign to a Prison/Organization"
-                placeholder="Select a prison"
-                labelPlacement="outside"
-                className="w-full"
-                onChange={(e) => setPrison(e.target.value)}
-              >
-                {(prison) => (
-                  <SelectItem
-                    key={prison?.email}
-                    variant="bordered"
-                    textValue={prison?.email}
-                  >
-                    <div className="flex gap-2 items-center">
-                      <Avatar
-                        alt={prison?.prison_name}
-                        className="flex-shrink-0"
-                        size="sm"
-                        src={prison?.avatar}
-                      />
-                      <div className="flex flex-col">
-                        <span className="text-small">
-                          {prison?.prison_name}
-                        </span>
-                        <span className="text-tiny text-default-400">
-                          {prison?.email}
-                        </span>
-                      </div>
-                    </div>
-                  </SelectItem>
-                )}
-              </Select> */}
               <div>
-                <label htmlFor="regular_price">Prison of Artist</label>
+                <label htmlFor="prison_of_artist">Company / Organization</label>
                 <input
                   type="text"
                   value={prison?.prison_name}
                   name="prison_of_artist"
                   id="prison_of_artist"
                   className=" border w-full border-gray-300 mb-6 mt-2 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                  placeholder="Prison Of Artist"
+                  placeholder="Company / Organization"
                   disabled
                 />
               </div>

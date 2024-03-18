@@ -33,6 +33,7 @@ import ManageOrders from "../Dashboard/SuperAdminDashBoard/ManageOrders/ManageOr
 import CheckOutElement from "../Pages/CheckoutPage/CheckOutElement/CheckOutElement";
 import ManageCategories from "../Dashboard/SuperAdminDashBoard/ManageCategories/ManageCategories";
 import OrderDetailsForAdmin from "../Dashboard/SuperAdminDashBoard/OrderDetailsForAdmin/OrderDetailsForAdmin";
+import SalesReport from "../Dashboard/SuperAdminDashBoard/SalesReport/SalesReport";
 
 
 const router = createBrowserRouter([
@@ -184,7 +185,7 @@ const router = createBrowserRouter([
     },
     {
       path: "sales-report",
-      element: <IAmWorkingOnIt></IAmWorkingOnIt>
+      element: <SalesReport></SalesReport>
     },
     {
       path: "settings",
