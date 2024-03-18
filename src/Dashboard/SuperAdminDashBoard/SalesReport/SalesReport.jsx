@@ -2,14 +2,17 @@ import { Avatar, Select, SelectItem } from "@nextui-org/react";
 import useArtists from "../../../Hooks/useArtists";
 import { useState } from "react";
 import Loader from "../../../Components/Loader/Loader";
+import useSalesReportByArtist from "../../../Hooks/useSalesReportByArtist";
 
 
 const SalesReport = () => {
   const [artistData, isArtistsDataLoading] = useArtists();
   const [artist, setArtist] = useState();
-  if(isArtistsDataLoading){
+  const [products, isProductsLoading, refetch] = useSalesReportByArtist({artistEmail: artist});
+  if(isArtistsDataLoading || isProductsLoading){
     return <Loader></Loader>
   }
+  console.log(artist, products);
     return (
         <div className="w-[95%]">
             <div className="flex justify-between">
