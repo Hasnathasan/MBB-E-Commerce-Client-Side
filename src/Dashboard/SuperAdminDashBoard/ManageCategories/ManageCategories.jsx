@@ -162,42 +162,6 @@ const ManageCategories = () => {
             startContent={<FaSearch></FaSearch>}
           />
           <div className="flex gap-3">
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<FaArrowDown></FaArrowDown>} variant="flat">
-                  Status
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={["data"]}
-                selectionMode="multiple"
-              >
-                <DropdownItem key={"data"} className="capitalize">
-                  Data
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<FaArrowDown></FaArrowDown>} variant="flat">
-                  Columns
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={["hi"]}
-                selectionMode="multiple"
-              >
-                <DropdownItem key={"hi"} className="capitalize">
-                  Hi
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
             <Button
               onPress={onOpen}
               color="primary"

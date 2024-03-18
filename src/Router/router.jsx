@@ -154,7 +154,13 @@ const router = createBrowserRouter([
     },
     {
       path: "artists",
-      element: <ManageArtists></ManageArtists>
+      element: <ManageArtists></ManageArtists>,
+      children: [
+        {
+          path: "artistDetails/:email",
+          element: <ArtistDetailsPage></ArtistDetailsPage>
+        }
+      ]
     },
     {
       path: "customers",
