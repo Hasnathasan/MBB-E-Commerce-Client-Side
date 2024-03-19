@@ -5,60 +5,59 @@ import axios from 'axios';
 
 const PDFGenerator = ({ salesReport }) => {
     console.log(salesReport);
-    const [totalArtistProfit, setTotalArtistProfit] = useState(0)
-  const [totalWebsiteProfit, setTotalWebsiteProfit] = useState(0)
-  const [totalPrisonProfit, setTotalPrisonProfit] = useState(0)
-  const [totalCostPrice, setTotalCostPrice] = useState(0)
-const [artist, setArtist] = useState();
-const [prison, setPrison] = useState();
-  
+    const [totalArtistProfit, setTotalArtistProfit] = useState(0);
+    const [totalWebsiteProfit, setTotalWebsiteProfit] = useState(0);
+    const [totalPrisonProfit, setTotalPrisonProfit] = useState(0);
+    const [totalCostPrice, setTotalCostPrice] = useState(0);
+    const [artist, setArtist] = useState();
+    const [prison, setPrison] = useState();
 
-// Iterate through each product
-useEffect(() => {
-  let totalArtistProfit = 0;
-  let totalWebsiteProfit = 0;
-  let totalPrisonProfit = 0;
-  let totalCostPrice = 0;
+    // Iterate through each product
+    useEffect(() => {
+        let totalArtistProfit = 0;
+        let totalWebsiteProfit = 0;
+        let totalPrisonProfit = 0;
+        let totalCostPrice = 0;
 
-  salesReport?.products?.forEach(product => {
-      // Calculate total profit for each type and multiply by quantity
-      const artistProfit = product.profit_distribution.artist_profit_details.artistProfit * product.quantity;
-      const websiteProfit = product.profit_distribution.website_profit_details.websiteProfit * product.quantity;
-      const prisonProfit = product.profit_distribution.prison_profit_details.prisonProfit * product.quantity;
-      const totalCost = product.price.cost_price * product.quantity;
+        salesReport?.products?.forEach(product => {
+            // Calculate total profit for each type and multiply by quantity
+            const artistProfit = product.profit_distribution.artist_profit_details.artistProfit * product.quantity;
+            const websiteProfit = product.profit_distribution.website_profit_details.websiteProfit * product.quantity;
+            const prisonProfit = product.profit_distribution.prison_profit_details.prisonProfit * product.quantity;
+            const totalCost = product.price.cost_price * product.quantity;
 
-      // Accumulate the totals
-      totalArtistProfit += artistProfit;
-      totalWebsiteProfit += websiteProfit;
-      totalPrisonProfit += prisonProfit;
-      totalCostPrice += totalCost;
-  });
+            // Accumulate the totals
+            totalArtistProfit += artistProfit;
+            totalWebsiteProfit += websiteProfit;
+            totalPrisonProfit += prisonProfit;
+            totalCostPrice += totalCost;
+        });
 
-  axios.get(`http://localhost:8000/artist/${salesReport?.artistEmail}`)
-    .then(res => {
-        setArtist(res.data)
-        console.log(res.data);
-        axios.get(`http://localhost:8000/prison/${res.data?.billingInfo?.prison?.prison_email}`)
-        .then(res => {
-            console.log(res.data);
-            setPrison(res.data)
-        })
-        .catch(err => console.log(err))
-    })
-    .catch(err => console.log(err))
-  // Set the total profits after iterating through all products
-  setTotalArtistProfit(totalArtistProfit);
-  setTotalWebsiteProfit(totalWebsiteProfit);
-  setTotalPrisonProfit(totalPrisonProfit);
-  setTotalCostPrice(totalCostPrice)
-}, [salesReport]);
+        axios.get(`http://localhost:8000/artist/${salesReport?.artistEmail}`)
+            .then(res => {
+                setArtist(res.data);
+                console.log(res.data);
+                axios.get(`http://localhost:8000/prison/${res.data?.billingInfo?.prison?.prison_email}`)
+                    .then(res => {
+                        console.log(res.data);
+                        setPrison(res.data);
+                    })
+                    .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err));
+        // Set the total profits after iterating through all products
+        setTotalArtistProfit(totalArtistProfit);
+        setTotalWebsiteProfit(totalWebsiteProfit);
+        setTotalPrisonProfit(totalPrisonProfit);
+        setTotalCostPrice(totalCostPrice);
+    }, [salesReport]);
 
-console.log(prison);
+    console.log(prison);
 
     const styles = StyleSheet.create({
         page: {
             flexDirection: 'row',
-            backgroundColor: '#E4E4E4',
+            backgroundColor: '#ffffff',
             overflow: "hidden"
         },
         section: {
@@ -76,7 +75,8 @@ console.log(prison);
             justifyContent: 'space-between',
         },
         table: {
-            marginTop: 20,
+            marginTop: 5,
+            marginBottom: 25,
             borderWidth: 1,
             borderColor: '#000',
             width: '100%',
@@ -99,10 +99,12 @@ console.log(prison);
         },
         optionsContainer: {
             flexDirection: 'row',
+            gap: 30,
             justifyContent: 'space-between',
             marginTop: 20,
         },
         optionColumn: {
+            marginTop: 5,
             flex: 1,
             flexDirection: 'column',
         },
@@ -110,12 +112,23 @@ console.log(prison);
             fontSize: 10,
             marginBottom: 5,
         },
+        title: {
+            fontSize: 14,
+            textDecoration: 'underline',
+            marginBottom: 5,
+            marginTop: 10,
+            textAlign: 'center',
+        },
         optionHeaderText: {
             fontSize: 14,
             marginBottom: 5,
         },
+        sectionWithGap: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginBottom: 20,
+        },
     });
-
 
     return (
         <div className='h-screen'>
@@ -128,6 +141,15 @@ console.log(prison);
                                 <View>
                                     <Text style={styles.headerText}>ID: {salesReport?._id}</Text>
                                     <Text style={styles.headerText}>Status: {salesReport?.status}</Text>
+                                </View>
+                            </View>
+                            <Text style={styles.title}>Sales Report</Text>
+                            <View style={styles.sectionWithGap}>
+                                {/* First Column */}
+                                <View style={styles.optionColumn}>
+                                    <Text style={styles.optionText}>Artist name: {artist?.userName}</Text>
+                                    <Text style={styles.optionText}>Artist Email: {artist?.email}</Text>
+                                    {/* Add more data as needed */}
                                 </View>
                             </View>
                             {/* Table */}
@@ -150,13 +172,13 @@ console.log(prison);
                                         <Text style={styles.tableCell}>${product?.profit_distribution?.prison_profit_details?.prisonProfit * product?.quantity}</Text>
                                     </View>
                                 ))}
-                                    <View style={styles.tableRow}>
+                                <View style={styles.tableRow}>
                                     <Text style={[styles.tableCell, { flex: 2 }]}>Total</Text>
                                     <Text style={styles.tableCell}>${totalCostPrice}</Text>
                                     <Text style={styles.tableCell}>${totalArtistProfit}</Text>
                                     <Text style={styles.tableCell}>${totalWebsiteProfit}</Text>
                                     <Text style={styles.tableCell}>${totalPrisonProfit}</Text>
-                                    </View>
+                                </View>
                             </View>
                             <View style={styles.optionsContainer}>
                                 <View style={styles.optionColumn}>
@@ -166,16 +188,14 @@ console.log(prison);
                                 <View style={styles.optionColumn}>
                                     <Text style={styles.optionHeaderText}>Artist</Text>
                                     <Text style={styles.optionText}>Balance: ${totalArtistProfit} + ${totalCostPrice} = ${totalArtistProfit + totalCostPrice}</Text>
-                                    <Text style={styles.optionText}>Address: {artist?.billingInfo?.address}</Text>
-                                    <Text style={styles.optionText}>Country: {artist?.billingInfo?.country}</Text>
-                                    <Text style={styles.optionText}>State: {artist?.billingInfo?.states}</Text>
+                                    <Text style={styles.optionText}>{artist?.userName}</Text>
+                                    <Text style={styles.optionText}>{artist?.billingInfo?.address}, {artist?.billingInfo?.states} {artist?.billingInfo?.zipCode}</Text>
                                 </View>
                                 <View style={styles.optionColumn}>
-                                <Text style={styles.optionHeaderText}>Prison</Text>
+                                    <Text style={styles.optionHeaderText}>Prison</Text>
                                     <Text style={styles.optionText}>Balance: ${totalPrisonProfit}</Text>
-                                    <Text style={styles.optionText}>Address: {prison?.address}</Text>
-                                    <Text style={styles.optionText}>Country: {prison?.country}</Text>
-                                    <Text style={styles.optionText}>State: {prison?.states}</Text>
+                                    <Text style={styles.optionText}>{prison?.prison_name}</Text>
+                                    <Text style={styles.optionText}>{prison?.address}, {prison?.states} {prison?.zipCode}</Text>
                                 </View>
                             </View>
                         </View>
@@ -187,3 +207,5 @@ console.log(prison);
 };
 
 export default PDFGenerator;
+
+

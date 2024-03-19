@@ -4,18 +4,23 @@ import { useEffect, useState } from "react";
 import Loader from "../../../Components/Loader/Loader";
 import useSalesReportByArtist from "../../../Hooks/useSalesReportByArtist";
 import PDFGenerator from "./PDFGenerator/PDFGenerator";
+import useAllSalesReport from "../../../Hooks/useAllSalesReport";
+
+import toast, { Toaster } from "react-hot-toast";
 
 const SalesReport = () => {
   const [artistData, isArtistsDataLoading] = useArtists();
   const [artist, setArtist] = useState();
-  const [salesReport, isSalesReportLoading, refetch] = useSalesReportByArtist({artistEmail: artist});
+  const [allSalesReport, isAllSalesReportLoading] = useAllSalesReport();
+  const [isArtistAvailable, setIsArtistAvailable] = useState(false)
+  const [salesReport, isSalesReportLoading] = useSalesReportByArtist({artistEmail: artist});
   const [totalArtistProfit, setTotalArtistProfit] = useState(0)
   const [totalWebsiteProfit, setTotalWebsiteProfit] = useState(0)
   const [totalPrisonProfit, setTotalPrisonProfit] = useState(0)
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   
-
+console.log(artist);
 // Iterate through each product
 useEffect(() => {
   let totalArtistProfit = 0;
@@ -34,12 +39,23 @@ useEffect(() => {
       totalPrisonProfit += prisonProfit;
   });
 
+  
+
   // Set the total profits after iterating through all products
   setTotalArtistProfit(totalArtistProfit);
   setTotalWebsiteProfit(totalWebsiteProfit);
   setTotalPrisonProfit(totalPrisonProfit);
 }, [salesReport, isSalesReportLoading]);
-  if(isArtistsDataLoading){
+
+const handleReportGenerate = e => {
+  e.preventDefault();
+  console.log("hello");
+  if(!artist){
+    return toast.error("No Artist Selected")
+  }
+  setIsArtistAvailable(true)
+}
+  if(isArtistsDataLoading || isAllSalesReportLoading){
     return <Loader></Loader>
   }
   console.log(artist, salesReport);
@@ -52,8 +68,8 @@ console.log("Total Website Profit:", totalWebsiteProfit);
 console.log("Total Prison Profit:", totalPrisonProfit);
     return (
         <div className="w-[95%]">
-            <div className="flex justify-between">
-                <div>
+            <div className="flex justify-between mb-5">
+                <form onSubmit={handleReportGenerate} className="flex justify-start gap-4 items-end">
                 <Select
                 items={artistData}
                 label="Select An Artist"
@@ -85,7 +101,8 @@ console.log("Total Prison Profit:", totalPrisonProfit);
                   </SelectItem>
                 )}
               </Select>
-                </div>
+              <Button type="submit" color="success" className="text-white">Generate Report</Button>
+                </form>
                 <div>
 h
                 </div>
@@ -101,7 +118,8 @@ h
         <TableColumn>Action</TableColumn>
       </TableHeader>
       <TableBody>
-          <TableRow key={salesReport?._id}>
+          {
+            isArtistAvailable ? <TableRow key={salesReport?._id}>
             <TableCell>
               <div className="flex justify-start items-center gap-3">
                 <h3>{salesReport?._id}</h3>
@@ -129,7 +147,36 @@ h
                 Download report
               </Button>
             </TableCell>
-          </TableRow>
+          </TableRow> : allSalesReport?.map(report => <TableRow key={report?._id}>
+            <TableCell>
+              <div className="flex justify-start items-center gap-3">
+                <h3>{report?._id}</h3>
+              </div>
+            </TableCell>
+            <TableCell>{report?.artistEmail}</TableCell>
+            <TableCell>
+              <div className="flex justify-center gap-3 items-center">
+                <div className="p-2 border-r-2">
+                    <p className="underline">Artist</p>
+                    <p className="font-semibold">${totalArtistProfit}</p>
+                </div>
+                <div className="p-2 border-r-2">
+                    <p className="underline">Website</p>
+                    <p className="font-semibold">${totalWebsiteProfit}</p></div>
+                
+                <div className="p-2">
+                    <p className="underline">Prison</p>
+                    <p className="font-semibold">${totalPrisonProfit}</p></div>
+              </div>
+            </TableCell>
+            <TableCell>{report?.status}</TableCell>
+            <TableCell>
+              <Button onPress={onOpen} color="success" radius="lg" className="text-white">
+                Download report
+              </Button>
+            </TableCell>
+          </TableRow>)
+          }
       </TableBody>
     </Table>
             </div>
@@ -160,6 +207,7 @@ h
         )}
       </ModalContent>
     </Modal>
+    <Toaster />
         </div>
     );
 };
