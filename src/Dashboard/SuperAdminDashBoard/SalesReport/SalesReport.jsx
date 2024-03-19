@@ -1,4 +1,4 @@
-import { Avatar, Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, useDisclosure } from "@nextui-org/react";
+import { Avatar, Button, ButtonGroup, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, useDisclosure } from "@nextui-org/react";
 import useArtists from "../../../Hooks/useArtists";
 import { useEffect, useState } from "react";
 import Loader from "../../../Components/Loader/Loader";
@@ -73,9 +73,14 @@ console.log("Total Prison Profit:", totalPrisonProfit);
 const handleDownloadReport = report => {
     setReportToDownload(report)
     onOpen()
-    axios.patch(`http://localhost:8000/sales-report-update/${report?._id}`)
-    .then(res => console.log(res.data))
-    .catch(err => console.log(err))
+    
+}
+const handleStatusUpdate = report => {
+  axios.patch(`http://localhost:8000/sales-report-update/${report?._id}`)
+  .then(res => {
+    console.log(res.data);
+  })
+  .catch(err => console.log(err))
 }
 
 const processSalesReport = (salesReport) => {
@@ -98,7 +103,7 @@ const processSalesReport = (salesReport) => {
 
 };
 
-console.log(allSalesReport);
+console.log(salesReport);
     return (
         <div className="w-[95%]">
             <div className="flex justify-between mt-10 mb-5">
@@ -160,9 +165,9 @@ console.log(allSalesReport);
         <TableColumn>Status</TableColumn>
         <TableColumn>Action</TableColumn>
       </TableHeader>
-      <TableBody>
+      <TableBody emptyContent={"No Report Available"}>
           {
-            isArtistAvailable ? <TableRow key={salesReport?._id}>
+            isArtistAvailable ? (salesReport?.products?.length !== 0 ? <TableRow key={salesReport?._id}>
             <TableCell>
               <div className="flex justify-start items-center gap-3">
                 <h3>{salesReport?._id}</h3>
@@ -185,14 +190,18 @@ console.log(allSalesReport);
               </div>
             </TableCell>
             <TableCell>{salesReport?.status}</TableCell>
-            <TableCell>
-              <Button onClick={() => handleDownloadReport(salesReport)} color="success" radius="lg" className="text-white">
-                Download report
+            <TableCell className="text-center">
+            <ButtonGroup size="sm" color="success" className="text-white">
+      <Button onClick={() => handleStatusUpdate(salesReport)} className="text-white">Mark As Paid</Button>
+      <Button onClick={() => handleDownloadReport(salesReport)} className="text-white">
+                Download
               </Button>
+    </ButtonGroup>
+              
             </TableCell>
-          </TableRow> 
+          </TableRow> : [])
           : 
-          allSalesReport?.map(report => <TableRow key={report?._id}>
+          allSalesReport ? allSalesReport?.map(report => <TableRow key={report?._id}>
             <TableCell>
               <div className="flex justify-start items-center gap-3">
                 <h3>{report?._id}</h3>
@@ -216,16 +225,14 @@ console.log(allSalesReport);
             </TableCell>
             <TableCell>{report?.status}</TableCell>
             <TableCell>
-              <Button 
-          onClick={() => {
-              setReportToDownload(report)
-              onOpen()
-          }}
-              color="success" radius="lg" className="text-white">
-                Download report
+            <ButtonGroup size="sm" color="success">
+      <Button onClick={() => handleStatusUpdate(report)} className="text-white">Mark As Paid</Button>
+      <Button onClick={() => handleDownloadReport(report)} className="text-white" >
+                Download
               </Button>
+    </ButtonGroup>
             </TableCell>
-          </TableRow>)
+          </TableRow>) : []
           }
       </TableBody>
     </Table>
