@@ -5,9 +5,10 @@ import "../../../../node_modules/react-selectize/themes/index.css";
 import useArtists from "../../../Hooks/useArtists";
 import axios from "axios";
 import toast from "react-hot-toast";
+import usePopularCategories from "../../../Hooks/usePopularCategories";
 const AddNewProductForAdmin = ({ refetchProducts }) => {
   const [artistData, isArtistsDataLoading] = useArtists();
-  
+  const [allCategories, isCategoriesLoading, refetch] = usePopularCategories();
   const [values, setValues] = useState(new Set([]));
   const [tags, setTags] = useState(
     [].map((str) => ({ label: str, value: str }))
@@ -38,7 +39,6 @@ const AddNewProductForAdmin = ({ refetchProducts }) => {
   const [prisonPercent, setPrisonPercent] = useState(
     prisonPercentRef?.current?.value
   );
-  console.log(tags, artistProfit, costPrice, prison, artist);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   function calculateArtistProfit(salePrice, regularPrice, costPrice) {
     const sale = Number(salePrice) || 0.0;
@@ -137,7 +137,10 @@ const AddNewProductForAdmin = ({ refetchProducts }) => {
     const addedBy = artist;
     const prison_of_artist = prison?.prison_email;
     const product_tags = tags.map((tag) => tag.label);
-    const product_categories = categories.map((category) => category.label);
+    const new_categories = categories.map((category) => category.label);
+    const existingCategories = Array.from(values);
+
+    const product_categories = [...new_categories, ...existingCategories];
 
     const firstFormData = new FormData();
     firstFormData.append("file", featured_photo_file);
@@ -284,7 +287,7 @@ const AddNewProductForAdmin = ({ refetchProducts }) => {
             </div>
             <div className="grid grid-cols-2 gap-5 mb-10">
             <div>
-                <label htmlFor="category">Product Category</label>
+                <label htmlFor="category">Add New Category</label>
                 <MultiSelect
                   values={categories}
                   delimiters={[188]}
@@ -326,16 +329,17 @@ const AddNewProductForAdmin = ({ refetchProducts }) => {
                 />
               </div>
               <Select
-        label="Favorite Animal"
+        label="Select Existing Category"
         selectionMode="multiple"
-        placeholder="Select an animal"
+        placeholder="Select Multiple Category"
+        labelPlacement="outside"
         selectedKeys={values}
-        className="max-w-xs"
+        className="max-w-md"
         onSelectionChange={setValues}
       >
-        {animals.map((animal) => (
-          <SelectItem key={animal.value} value={animal.value}>
-            {animal.label}
+        {allCategories?.map((category) => (
+          <SelectItem key={category.category} value={category.category}>
+            {category.category}
           </SelectItem>
         ))}
       </Select>
