@@ -51,7 +51,7 @@ const OverView = () => {
       data: Object.values(ordersByMonth),
     },
     {
-      name: "Product selled",
+      name: "Product sold",
       data: Object.values(soldProductByMonth),
     },
   ];

@@ -33,11 +33,11 @@ const PDFGenerator = ({ salesReport }) => {
             totalCostPrice += totalCost;
         });
 
-        axios.get(`http://localhost:8000/artist/${salesReport?.artistEmail}`)
+        axios.get(`https://mbb-e-commerce-server.vercel.app/artist/${salesReport?.artistEmail}`)
             .then(res => {
                 setArtist(res.data);
                 console.log(res.data);
-                axios.get(`http://localhost:8000/prison/${res.data?.billingInfo?.prison?.prison_email}`)
+                axios.get(`https://mbb-e-commerce-server.vercel.app/prison/${res.data?.billingInfo?.prison?.prison_email}`)
                     .then(res => {
                         console.log(res.data);
                         setPrison(res.data);

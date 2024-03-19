@@ -73,8 +73,14 @@ const OrderDetailsForAdmin = () => {
         <SelectItem key={"processing"} value={"processing"}>
           Processing
         </SelectItem>
+        <SelectItem key={"shipped"} value={"shipped"}>
+          Shipped
+        </SelectItem>
         <SelectItem key={"delevered"} value={"delevered"}>
           Delevered
+        </SelectItem>
+        <SelectItem key={"canceled"} value={"canceled"}>
+          Canceled
         </SelectItem>
     </Select>
     <Button onClick={handleStatusUpdate} color="success" className="text-white">Update</Button>

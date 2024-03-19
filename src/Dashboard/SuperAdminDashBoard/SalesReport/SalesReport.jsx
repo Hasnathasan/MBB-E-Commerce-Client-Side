@@ -11,8 +11,9 @@ import axios from "axios";
 
 const SalesReport = () => {
   const [artistData, isArtistsDataLoading] = useArtists();
+  const [status, setStatus] = useState();
   const [artist, setArtist] = useState();
-  const [allSalesReport, isAllSalesReportLoading, refetch] = useAllSalesReport();
+  const [allSalesReport, isAllSalesReportLoading, refetch] = useAllSalesReport({status});
   const [reportToDownload, setReportToDownload] = useState(null);
   const [isArtistAvailable, setIsArtistAvailable] = useState(false)
   const [salesReport, isSalesReportLoading] = useSalesReportByArtist({artistEmail: artist});
@@ -20,6 +21,7 @@ const SalesReport = () => {
   const [totalWebsiteProfit, setTotalWebsiteProfit] = useState(0)
   const [totalPrisonProfit, setTotalPrisonProfit] = useState(0)
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [dummyStatus, setDummyStatus] = useState("unpaid");
 
   
 console.log(artist);
@@ -76,9 +78,14 @@ const handleDownloadReport = report => {
     
 }
 const handleStatusUpdate = report => {
-  axios.patch(`http://localhost:8000/sales-report-update/${report?._id}`)
+  axios.patch(`https://mbb-e-commerce-server.vercel.app/sales-report-update/${report?._id}`)
   .then(res => {
     console.log(res.data);
+    if(res.data.modifiedCount > 0){
+      setDummyStatus("paid")
+      toast.success("Status updated to paid")
+      refetch()
+    }
   })
   .catch(err => console.log(err))
 }
@@ -120,7 +127,7 @@ console.log(salesReport);
                   toast(
                     "Click on the Generate Report Button to see result",
                     {
-                      duration: 1500,
+                      duration: 2000,
                     }
                   );
                   setArtist(e.target.value)
@@ -152,7 +159,22 @@ console.log(salesReport);
               <Button type="submit" color="success" className="text-white">Generate Report</Button>
                 </form>
                 <div>
-
+                <Select
+      placeholder="Filter By Status"
+      className="w-40 text-nowrap"
+      disableSelectorIconRotation
+      onChange={(e) => setStatus(e.target.value)}
+    >
+        <SelectItem key={"all"} value={"all"}>
+          Filter By Status
+        </SelectItem>
+        <SelectItem key={"paid"} value={"paid"}>
+          Paid
+        </SelectItem>
+        <SelectItem key={"unpaid"} value={"unpaid"}>
+          Unpaid
+        </SelectItem>
+    </Select>
                 </div>
             </div>
 
@@ -189,7 +211,7 @@ console.log(salesReport);
                     <p className="font-semibold">${totalPrisonProfit}</p></div>
               </div>
             </TableCell>
-            <TableCell>{salesReport?.status}</TableCell>
+            <TableCell>{dummyStatus}</TableCell>
             <TableCell className="text-center">
             <ButtonGroup size="sm" color="success" className="text-white">
       <Button onClick={() => handleStatusUpdate(salesReport)} className="text-white">Mark As Paid</Button>

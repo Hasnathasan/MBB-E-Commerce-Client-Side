@@ -47,20 +47,28 @@ const ManageOrders = () => {
             
             <div className="flex gap-3">
                 <Select
-      placeholder="Change Status"
-      label={"Status"}
+      placeholder="Filter By Status"
       className="w-40 text-nowrap"
       disableSelectorIconRotation
       onChange={handleSelectionChange}
     >
+        <SelectItem key={"all"} value={"all"}>
+          Filter By Status
+        </SelectItem>
         <SelectItem key={"pending"} value={"pending"}>
           Pending
         </SelectItem>
         <SelectItem key={"processing"} value={"processing"}>
           Processing
         </SelectItem>
+        <SelectItem key={"shipped"} value={"shipped"}>
+          Shipped
+        </SelectItem>
         <SelectItem key={"delevered"} value={"delevered"}>
           Delevered
+        </SelectItem>
+        <SelectItem key={"canceled"} value={"canceled"}>
+          Canceled
         </SelectItem>
     </Select>
     

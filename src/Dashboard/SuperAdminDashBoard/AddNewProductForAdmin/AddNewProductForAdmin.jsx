@@ -7,6 +7,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 const AddNewProductForAdmin = ({ refetchProducts }) => {
   const [artistData, isArtistsDataLoading] = useArtists();
+  
+  const [values, setValues] = useState(new Set([]));
   const [tags, setTags] = useState(
     [].map((str) => ({ label: str, value: str }))
   );
@@ -254,7 +256,7 @@ const AddNewProductForAdmin = ({ refetchProducts }) => {
             Product Information
           </h4>
           <div className="p-5">
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 gap-3">
               <div>
                 <label htmlFor="product_name">Product Name</label>
                 <input
@@ -266,7 +268,22 @@ const AddNewProductForAdmin = ({ refetchProducts }) => {
                   required
                 />
               </div>
+              
               <div>
+                <label htmlFor="available_quantity">Available quantity</label>
+                <input
+                  type="number"
+                  name="available_quantity"
+                  min={0}
+                  id="available_quantity"
+                  className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
+                  placeholder="Available quantity"
+                  required
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-5 mb-10">
+            <div>
                 <label htmlFor="category">Product Category</label>
                 <MultiSelect
                   values={categories}
@@ -308,18 +325,20 @@ const AddNewProductForAdmin = ({ refetchProducts }) => {
                   )}
                 />
               </div>
-              <div>
-                <label htmlFor="available_quantity">Available quantity</label>
-                <input
-                  type="number"
-                  name="available_quantity"
-                  min={0}
-                  id="available_quantity"
-                  className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
-                  placeholder="Available quantity"
-                  required
-                />
-              </div>
+              <Select
+        label="Favorite Animal"
+        selectionMode="multiple"
+        placeholder="Select an animal"
+        selectedKeys={values}
+        className="max-w-xs"
+        onSelectionChange={setValues}
+      >
+        {animals.map((animal) => (
+          <SelectItem key={animal.value} value={animal.value}>
+            {animal.label}
+          </SelectItem>
+        ))}
+      </Select>
             </div>
             <div className="grid grid-cols-3 gap-5">
               <div>
