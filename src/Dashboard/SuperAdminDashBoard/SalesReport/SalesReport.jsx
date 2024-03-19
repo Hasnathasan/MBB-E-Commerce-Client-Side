@@ -1,9 +1,9 @@
-import { Avatar, Button, Select, SelectItem, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
+import { Avatar, Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, useDisclosure } from "@nextui-org/react";
 import useArtists from "../../../Hooks/useArtists";
 import { useEffect, useState } from "react";
 import Loader from "../../../Components/Loader/Loader";
 import useSalesReportByArtist from "../../../Hooks/useSalesReportByArtist";
-
+import PDFGenerator from "./PDFGenerator/PDFGenerator";
 
 const SalesReport = () => {
   const [artistData, isArtistsDataLoading] = useArtists();
@@ -12,21 +12,33 @@ const SalesReport = () => {
   const [totalArtistProfit, setTotalArtistProfit] = useState(0)
   const [totalWebsiteProfit, setTotalWebsiteProfit] = useState(0)
   const [totalPrisonProfit, setTotalPrisonProfit] = useState(0)
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  
 
 // Iterate through each product
-useEffect( () => {
-    salesReport?.products?.forEach(product => {
-        // Calculate total profit for each type and multiply by quantity
-        const artistProfit = product.profit_distribution.artist_profit_details.artistTotal * product.quantity;
-        const websiteProfit = product.profit_distribution.website_profit_details.websiteProfit * product.quantity;
-        const prisonProfit = product.profit_distribution.prison_profit_details.prisonProfit * product.quantity;
-    
-        // Accumulate the totals
-        setTotalArtistProfit(artistProfit);
-        setTotalWebsiteProfit(websiteProfit)
-        setTotalPrisonProfit(prisonProfit)
-    });
-},[salesReport?.products])
+useEffect(() => {
+  let totalArtistProfit = 0;
+  let totalWebsiteProfit = 0;
+  let totalPrisonProfit = 0;
+
+  salesReport?.products?.forEach(product => {
+      // Calculate total profit for each type and multiply by quantity
+      const artistProfit = product.profit_distribution.artist_profit_details.artistTotal * product.quantity;
+      const websiteProfit = product.profit_distribution.website_profit_details.websiteProfit * product.quantity;
+      const prisonProfit = product.profit_distribution.prison_profit_details.prisonProfit * product.quantity;
+
+      // Accumulate the totals
+      totalArtistProfit += artistProfit;
+      totalWebsiteProfit += websiteProfit;
+      totalPrisonProfit += prisonProfit;
+  });
+
+  // Set the total profits after iterating through all products
+  setTotalArtistProfit(totalArtistProfit);
+  setTotalWebsiteProfit(totalWebsiteProfit);
+  setTotalPrisonProfit(totalPrisonProfit);
+}, [salesReport, isSalesReportLoading]);
   if(isArtistsDataLoading){
     return <Loader></Loader>
   }
@@ -84,7 +96,7 @@ h
       <TableHeader>
         <TableColumn>Id</TableColumn>
         <TableColumn>Seller</TableColumn>
-        <TableColumn>Commision</TableColumn>
+        <TableColumn className="text-center">Commision</TableColumn>
         <TableColumn>Status</TableColumn>
         <TableColumn>Action</TableColumn>
       </TableHeader>
@@ -97,31 +109,57 @@ h
             </TableCell>
             <TableCell>{salesReport?.artistEmail}</TableCell>
             <TableCell>
-              <div className="flex justify-center gap-2 items-center">
-                <div>
-                    <p>Artist</p>
-                    <p>${totalArtistProfit}</p>
+              <div className="flex justify-center gap-3 items-center">
+                <div className="p-2 border-r-2">
+                    <p className="underline">Artist</p>
+                    <p className="font-semibold">${totalArtistProfit}</p>
                 </div>
-                <span>|</span>
-                <div>
-                    <p>Website</p>
-                    <p>${totalWebsiteProfit}</p></div>
-                <span>|</span>
-                <div>
-                    <p>Prison</p>
-                    <p>${totalPrisonProfit}</p></div>
+                <div className="p-2 border-r-2">
+                    <p className="underline">Website</p>
+                    <p className="font-semibold">${totalWebsiteProfit}</p></div>
+                
+                <div className="p-2">
+                    <p className="underline">Prison</p>
+                    <p className="font-semibold">${totalPrisonProfit}</p></div>
               </div>
             </TableCell>
-            <TableCell>{salesReport?.rating}</TableCell>
+            <TableCell>{salesReport?.status}</TableCell>
             <TableCell>
-              <Button color="success" radius="lg" className="text-white">
-                View Details
+              <Button onPress={onOpen} color="success" radius="lg" className="text-white">
+                Download report
               </Button>
             </TableCell>
           </TableRow>
       </TableBody>
     </Table>
             </div>
+
+            <Modal
+      scrollBehavior="outside"
+      size="5xl"
+      backdrop="opaque"
+      className="!z-50"
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
+    >
+      <ModalContent>
+        {(onClose) => (
+          <>
+            <ModalHeader className="flex flex-col gap-1">
+              Add a New Product
+            </ModalHeader>
+            <ModalBody>
+              <PDFGenerator salesReport={salesReport}></PDFGenerator>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="danger" variant="light" onPress={onClose}>
+                Close
+              </Button>
+            </ModalFooter>
+          </>
+        )}
+      </ModalContent>
+    </Modal>
         </div>
     );
 };
