@@ -7,11 +7,13 @@ import PDFGenerator from "./PDFGenerator/PDFGenerator";
 import useAllSalesReport from "../../../Hooks/useAllSalesReport";
 
 import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
 
 const SalesReport = () => {
   const [artistData, isArtistsDataLoading] = useArtists();
   const [artist, setArtist] = useState();
-  const [allSalesReport, isAllSalesReportLoading] = useAllSalesReport();
+  const [allSalesReport, isAllSalesReportLoading, refetch] = useAllSalesReport();
+  const [reportToDownload, setReportToDownload] = useState(null);
   const [isArtistAvailable, setIsArtistAvailable] = useState(false)
   const [salesReport, isSalesReportLoading] = useSalesReportByArtist({artistEmail: artist});
   const [totalArtistProfit, setTotalArtistProfit] = useState(0)
@@ -66,9 +68,40 @@ const handleReportGenerate = e => {
 console.log("Total Artist Profit:", totalArtistProfit);
 console.log("Total Website Profit:", totalWebsiteProfit);
 console.log("Total Prison Profit:", totalPrisonProfit);
+
+
+const handleDownloadReport = report => {
+    setReportToDownload(report)
+    onOpen()
+    axios.patch(`http://localhost:8000/sales-report-update/${report?._id}`)
+    .then(res => console.log(res.data))
+    .catch(err => console.log(err))
+}
+
+const processSalesReport = (salesReport) => {
+  let totalArtistProfit = 0;
+  let totalWebsiteProfit = 0;
+  let totalPrisonProfit = 0;
+
+  salesReport?.products?.forEach(product => {
+      // Calculate total profit for each type and multiply by quantity
+      const artistProfit = product.profit_distribution.artist_profit_details.artistTotal * product.quantity;
+      const websiteProfit = product.profit_distribution.website_profit_details.websiteProfit * product.quantity;
+      const prisonProfit = product.profit_distribution.prison_profit_details.prisonProfit * product.quantity;
+
+      // Accumulate the totals
+      totalArtistProfit += artistProfit;
+      totalWebsiteProfit += websiteProfit;
+      totalPrisonProfit += prisonProfit;
+  });
+  return {totalArtistProfit, totalWebsiteProfit, totalPrisonProfit}
+
+};
+
+console.log(allSalesReport);
     return (
         <div className="w-[95%]">
-            <div className="flex justify-between mb-5">
+            <div className="flex justify-between mt-10 mb-5">
                 <form onSubmit={handleReportGenerate} className="flex justify-start gap-4 items-end">
                 <Select
                 items={artistData}
@@ -76,7 +109,17 @@ console.log("Total Prison Profit:", totalPrisonProfit);
                 placeholder="Select an Artist"
                 labelPlacement="outside"
                 className="w-60"
-                onChange={(e) => setArtist(e.target.value)}
+                onClose={() => setIsArtistAvailable(false)}
+                onChange={(e) => {
+                  refetch()
+                  toast(
+                    "Click on the Generate Report Button to see result",
+                    {
+                      duration: 1500,
+                    }
+                  );
+                  setArtist(e.target.value)
+                }}
               >
                 {(artist) => (
                   <SelectItem
@@ -104,7 +147,7 @@ console.log("Total Prison Profit:", totalPrisonProfit);
               <Button type="submit" color="success" className="text-white">Generate Report</Button>
                 </form>
                 <div>
-h
+
                 </div>
             </div>
 
@@ -143,11 +186,13 @@ h
             </TableCell>
             <TableCell>{salesReport?.status}</TableCell>
             <TableCell>
-              <Button onPress={onOpen} color="success" radius="lg" className="text-white">
+              <Button onClick={() => handleDownloadReport(salesReport)} color="success" radius="lg" className="text-white">
                 Download report
               </Button>
             </TableCell>
-          </TableRow> : allSalesReport?.map(report => <TableRow key={report?._id}>
+          </TableRow> 
+          : 
+          allSalesReport?.map(report => <TableRow key={report?._id}>
             <TableCell>
               <div className="flex justify-start items-center gap-3">
                 <h3>{report?._id}</h3>
@@ -158,20 +203,25 @@ h
               <div className="flex justify-center gap-3 items-center">
                 <div className="p-2 border-r-2">
                     <p className="underline">Artist</p>
-                    <p className="font-semibold">${totalArtistProfit}</p>
+                    <p className="font-semibold">${processSalesReport(report)?.totalArtistProfit}</p>
                 </div>
                 <div className="p-2 border-r-2">
                     <p className="underline">Website</p>
-                    <p className="font-semibold">${totalWebsiteProfit}</p></div>
+                    <p className="font-semibold">${processSalesReport(report)?.totalWebsiteProfit}</p></div>
                 
                 <div className="p-2">
                     <p className="underline">Prison</p>
-                    <p className="font-semibold">${totalPrisonProfit}</p></div>
+                    <p className="font-semibold">${processSalesReport(report)?.totalPrisonProfit}</p></div>
               </div>
             </TableCell>
             <TableCell>{report?.status}</TableCell>
             <TableCell>
-              <Button onPress={onOpen} color="success" radius="lg" className="text-white">
+              <Button 
+          onClick={() => {
+              setReportToDownload(report)
+              onOpen()
+          }}
+              color="success" radius="lg" className="text-white">
                 Download report
               </Button>
             </TableCell>
@@ -196,7 +246,7 @@ h
               Add a New Product
             </ModalHeader>
             <ModalBody>
-              <PDFGenerator salesReport={salesReport}></PDFGenerator>
+              <PDFGenerator salesReport={reportToDownload}></PDFGenerator>
             </ModalBody>
             <ModalFooter>
               <Button color="danger" variant="light" onPress={onClose}>

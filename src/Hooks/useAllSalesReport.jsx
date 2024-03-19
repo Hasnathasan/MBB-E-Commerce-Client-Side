@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "./useAxiosSecure";
+import axios from "axios";
 
 
 const useAllSalesReport = () => {
@@ -11,7 +12,7 @@ const useAllSalesReport = () => {
     } = useQuery({
       queryKey: ["sales-report-all"],
       queryFn: async () => {
-        const res = await axiosSecure.get(`/sales-report-all`);
+        const res = await axios.get(`http://localhost:8000/sales-report-all`);
         return res.data;
       },
     });
