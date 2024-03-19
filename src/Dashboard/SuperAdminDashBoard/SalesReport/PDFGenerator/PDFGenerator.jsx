@@ -9,7 +9,8 @@ const PDFGenerator = ({ salesReport }) => {
   const [totalWebsiteProfit, setTotalWebsiteProfit] = useState(0)
   const [totalPrisonProfit, setTotalPrisonProfit] = useState(0)
   const [totalCostPrice, setTotalCostPrice] = useState(0)
-
+const [artist, setArtist] = useState();
+const [prison, setPrison] = useState();
   
 
 // Iterate through each product
@@ -33,13 +34,26 @@ useEffect(() => {
       totalCostPrice += totalCost;
   });
 
-  axios.get("http://localhost:8000/")
+  axios.get(`http://localhost:8000/artist/${salesReport?.artistEmail}`)
+    .then(res => {
+        setArtist(res.data)
+        console.log(res.data);
+        axios.get(`http://localhost:8000/prison/${res.data?.billingInfo?.prison?.prison_email}`)
+        .then(res => {
+            console.log(res.data);
+            setPrison(res.data)
+        })
+        .catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
   // Set the total profits after iterating through all products
   setTotalArtistProfit(totalArtistProfit);
   setTotalWebsiteProfit(totalWebsiteProfit);
   setTotalPrisonProfit(totalPrisonProfit);
   setTotalCostPrice(totalCostPrice)
 }, [salesReport]);
+
+console.log(prison);
 
     const styles = StyleSheet.create({
         page: {
@@ -152,16 +166,16 @@ useEffect(() => {
                                 <View style={styles.optionColumn}>
                                     <Text style={styles.optionHeaderText}>Artist</Text>
                                     <Text style={styles.optionText}>Balance: ${totalArtistProfit} + ${totalCostPrice} = ${totalArtistProfit + totalCostPrice}</Text>
-                                    <Text style={styles.optionText}>Option 8</Text>
-                                    <Text style={styles.optionText}>Option 9</Text>
-                                    <Text style={styles.optionText}>Option 10</Text>
+                                    <Text style={styles.optionText}>Address: {artist?.billingInfo?.address}</Text>
+                                    <Text style={styles.optionText}>Country: {artist?.billingInfo?.country}</Text>
+                                    <Text style={styles.optionText}>State: {artist?.billingInfo?.states}</Text>
                                 </View>
                                 <View style={styles.optionColumn}>
-                                    <Text style={styles.optionHeaderText}>Prison</Text>
-                                    <Text style={styles.optionText}>Option 12</Text>
-                                    <Text style={styles.optionText}>Option 13</Text>
-                                    <Text style={styles.optionText}>Option 14</Text>
-                                    <Text style={styles.optionText}>Option 15</Text>
+                                <Text style={styles.optionHeaderText}>Prison</Text>
+                                    <Text style={styles.optionText}>Balance: ${totalPrisonProfit}</Text>
+                                    <Text style={styles.optionText}>Address: {prison?.address}</Text>
+                                    <Text style={styles.optionText}>Country: {prison?.country}</Text>
+                                    <Text style={styles.optionText}>State: {prison?.states}</Text>
                                 </View>
                             </View>
                         </View>
