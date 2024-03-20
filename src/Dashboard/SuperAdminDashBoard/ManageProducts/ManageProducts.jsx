@@ -23,13 +23,15 @@ import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
 import AddNewProductForAdmin from "../AddNewProductForAdmin/AddNewProductForAdmin";
 import { Toaster } from "react-hot-toast";
 import useProducts from "../../../Hooks/useProducts";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import Loader from "../../../Components/Loader/Loader";
 import { Link, Outlet, useLocation } from "react-router-dom";
+import ProductUpdateModal from "./ProductUpdateModal/ProductUpdateModal";
 
 const ManageProducts = () => {
   const location = useLocation();
+  const [productToShow, setProductToShow] = useState();
   const { categoryFilter, priceSlider, minRating, searchQuery, setSearchQuery } =
     useContext(AuthContext);
   const [products, isProductsLoading, refetch] = useProducts({
@@ -39,10 +41,15 @@ const ManageProducts = () => {
     searchQuery,
   });
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen: isDetailsModalOpen, onOpen: onDetailsModalOpen, onOpenChange: onDetalsModalOpenChange } = useDisclosure();
+  const handleProductToShow = product => {
+    setProductToShow(product);
+    onDetailsModalOpen()
+  }
   return (
    <>
    {
-    !location.pathname.includes("/productDetails/") ?  <div className="overflow-x-auto w-[95%] mx-auto">
+    <div className="overflow-x-auto w-[95%] mx-auto">
     <div className="flex flex-col  gap-4">
       <div className="flex justify-between p-5 bg-white rounded-xl gap-3 items-end">
         <Input
@@ -95,10 +102,9 @@ const ManageProducts = () => {
             </TableCell>
             <TableCell>{product?.rating}</TableCell>
             <TableCell>
-              <Link to={`productDetails/${product?._id}`}>
-              <Button color="success" radius="lg" className="text-white">
+              <Button onClick={() => handleProductToShow(product)} color="success" radius="lg" className="text-white">
                 View Details
-              </Button></Link>
+              </Button>
             </TableCell>
           </TableRow>
         ))}
@@ -131,9 +137,35 @@ const ManageProducts = () => {
         )}
       </ModalContent>
     </Modal>
+    <Modal
+      scrollBehavior="outside"
+      size="5xl"
+      backdrop="opaque"
+      className="!z-50"
+      isOpen={isDetailsModalOpen}
+      onOpenChange={onDetalsModalOpenChange}
+    >
+      <ModalContent>
+        {(onClose) => (
+          <>
+            <ModalHeader className="flex flex-col gap-1">
+              Add a New Product
+            </ModalHeader>
+            <ModalBody>
+            <ProductUpdateModal onClose={onClose} product={productToShow} refetchProducts={refetch}></ProductUpdateModal>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="danger" variant="light" onPress={onClose}>
+                Close
+              </Button>
+            </ModalFooter>
+          </>
+        )}
+      </ModalContent>
+    </Modal>
     
     <Toaster position="top-center" reverseOrder={false} />
-  </div> : <div className="w-full"> <Outlet></Outlet></div>
+  </div>
    }
    </>
   );

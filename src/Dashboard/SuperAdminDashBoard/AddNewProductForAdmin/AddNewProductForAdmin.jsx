@@ -438,6 +438,7 @@ const AddNewProductForAdmin = ({ refetchProducts }) => {
                 placeholder="Select an Artist"
                 labelPlacement="outside"
                 className="w-full"
+                isRequired
                 onChange={(e) => setArtist(e.target.value)}
               >
                 {(artist) => (
@@ -535,7 +536,7 @@ const AddNewProductForAdmin = ({ refetchProducts }) => {
           >
             <h2 className="text-lg font-semibold mb-4">Profit Distribution</h2>
             <h4 className="mb-3">
-              Artist(you){" "}
+              {artist && artistData?.find(user => user.email == artist)?.userName || "Unknown"} (Artist)
               <span className="relative">
                 <input
                   name="artist_percentage"
@@ -574,7 +575,7 @@ const AddNewProductForAdmin = ({ refetchProducts }) => {
               : ${websiteProfit}
             </h4>
             <h4 className="mb-3">
-              Prison{" "}
+              {prison?.prison_name || "Unknown"} (Prison)
               <span className="relative">
                 <input
                   name="prison_percentage"

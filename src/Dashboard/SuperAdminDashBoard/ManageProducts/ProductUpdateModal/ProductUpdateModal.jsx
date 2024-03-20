@@ -1,17 +1,18 @@
 import { Avatar, Button, Select, SelectItem } from "@nextui-org/react";
 import { useEffect, useRef, useState } from "react";
 import { MultiSelect } from "react-selectize";
-import "../../../../node_modules/react-selectize/themes/index.css";
-import useArtists from "../../../Hooks/useArtists";
+import "../../../../../node_modules/react-selectize/themes/index.css";
 import axios from "axios";
 import toast from "react-hot-toast";
-import usePopularCategories from "../../../Hooks/usePopularCategories";
-const ProductUpdateModal = ({ product, refetchProducts }) => {
+import usePopularCategories from "../../../../Hooks/usePopularCategories";
+import useArtists from "../../../../Hooks/useArtists";
+const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
+  console.log(product);
   const [artistData, isArtistsDataLoading] = useArtists();
   const [allCategories, isCategoriesLoading, refetch] = usePopularCategories();
-  const [values, setValues] = useState(new Set([]));
+  const [values, setValues] = useState(new Set(product?.product_categories));
   const [tags, setTags] = useState(
-    [].map((str) => ({ label: str, value: str }))
+    product?.product_tags?.map((str) => ({ label: str, value: str }))
   );
   const [categories, setCategories] = useState(
     [].map((str) => ({ label: str, value: str }))
@@ -22,10 +23,10 @@ const ProductUpdateModal = ({ product, refetchProducts }) => {
   const websitePercentRef = useRef(null);
   const prisonPercentRef = useRef(null);
   const costPriceRef = useRef(null);
-  const [regularPrice, setRegularPrice] = useState();
-  const [salePrice, setSalePrice] = useState();
-  const [costPrice, setCostPrice] = useState();
-  const [artist, setArtist] = useState(null);
+  const [regularPrice, setRegularPrice] = useState(product?.price?.regular_price);
+  const [salePrice, setSalePrice] = useState(product?.price?.sale_price);
+  const [costPrice, setCostPrice] = useState(product?.price?.cost_price);
+  const [artist, setArtist] = useState(product?.addedBy);
   const [prison, setPrison] = useState(null);
   const [artistProfit, setArtistProfit] = useState();
   const [artistPercent, setArtistPercent] = useState(
@@ -119,7 +120,7 @@ const ProductUpdateModal = ({ product, refetchProducts }) => {
     salePrice,
   ]);
   console.log(artistProfit, websiteProfit, prisonProfit);
-  const handleProductAdding = (e) => {
+  const handleUpdateProduct = async (e) => {
     e.preventDefault();
     const form = e.target;
     const product_name = form.product_name.value;
@@ -139,15 +140,18 @@ const ProductUpdateModal = ({ product, refetchProducts }) => {
     const product_tags = tags.map((tag) => tag.label);
     const new_categories = categories.map((category) => category.label);
     const existingCategories = Array.from(values);
-
     const product_categories = [...new_categories, ...existingCategories];
-
+  
     const firstFormData = new FormData();
     firstFormData.append("file", featured_photo_file);
-
-    const uploadAndInsertProduct = () => {
-      return axios
-        .post(
+  
+    try {
+      let featured_photo = null;
+      let gallery_photos = null;
+  
+      // Upload featured photo if available
+      if (featured_photo_file) {
+        const response = await axios.post(
           "https://mbb-e-commerce-server.vercel.app/uploadSingle",
           firstFormData,
           {
@@ -155,105 +159,81 @@ const ProductUpdateModal = ({ product, refetchProducts }) => {
               "Content-Type": "multipart/form-data",
             },
           }
-        )
-        .then((response) => {
-          console.log(response.data);
-          if (response.data.url) {
-            const featured_photo = response.data.url;
-            const secondFormData = new FormData();
-            multipleImages.map((file) => {
-              secondFormData.append(`files`, file);
-            });
-            return axios
-              .post(
-                "https://mbb-e-commerce-server.vercel.app/uploadMultiple",
-                secondFormData,
-                {
-                  headers: {
-                    "Content-Type": "multipart/form-data",
-                  },
-                }
-              )
-              .then((response) => {
-                if (response?.data?.imageUrls) {
-                  const gallery_photos = response.data?.imageUrls;
-                  const product = {
-                    product_name,
-                    available_quantity,
-                    featured_photo,
-                    gallery_photos,
-                    product_tags,
-                    product_categories,
-                    description,
-                    rating: 0,
-                    profit_distribution: {
-                      artist_profit_details: {
-                        artist_percentage,
-                        artistProfit,
-                        artistTotal: artistProfit + cost_price,
-                      },
-                      website_profit_details: {
-                        website_percentage,
-                        websiteProfit,
-                      },
-                      prison_profit_details: {
-                        prison_percentage,
-                        prisonProfit,
-                      },
-                    },
-                    reviews: [],
-                    price: { regular_price, sale_price, cost_price },
-                    addedBy,
-                    prison_of_artist,
-                    createdAt: new Date(),
-                  };
-                  console.log(product);
-                  return axios
-                    .post(
-                      "https://mbb-e-commerce-server.vercel.app/products",
-                      product
-                    )
-                    .then((res) => {
-                      console.log(res.data);
-                      form.reset();
-                      refetchProducts();
-                      return res.data;
-                    })
-                    .catch((error) => {
-                      console.log(error.message);
-                      toast.error(`${error?.message}`);
-                      throw error;
-                    });
-                } else {
-                  return Promise.reject(new Error("No upload responses found"));
-                }
-              })
-              .catch((error) => {
-                console.log(error.message);
-                toast.error(`${error?.message}`);
-                throw error;
-              });
-          }
-        })
-        .catch((error) => {
-          console.log(error.message);
-          () => toast.error(`${error?.message}`);
-          throw error;
+        );
+        featured_photo = response.data.url;
+      }
+  
+      // Upload gallery photos if available
+      if (multipleImages.length > 0) {
+        const secondFormData = new FormData();
+        multipleImages.forEach((file) => {
+          secondFormData.append(`files`, file);
         });
-    };
+        const response = await axios.post(
+          "https://mbb-e-commerce-server.vercel.app/uploadMultiple",
+          secondFormData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        gallery_photos = response.data?.imageUrls;
+      }
+  
+      // Update product
+      const productUpdateData = {
+        product_name,
+        available_quantity,
+        product_tags,
+        product_categories,
+        description,
+        profit_distribution: {
+          artist_profit_details: {
+            artist_percentage,
+            artistProfit,
+            artistTotal: artistProfit + cost_price,
+          },
+          website_profit_details: {
+            website_percentage,
+            websiteProfit,
+          },
+          prison_profit_details: {
+            prison_percentage,
+            prisonProfit,
+          },
+        },
+        price: { regular_price, sale_price, cost_price },
+        addedBy,
+        prison_of_artist,
+      };
 
-    const myPromise = uploadAndInsertProduct();
-
-    toast.promise(myPromise, {
-      loading: "Please wait! while uploading product...",
-      success: "Product inserted successfully",
-      error: "An Error Occoured while uploading product",
-    });
+      if(featured_photo){
+        productUpdateData.featured_photo = featured_photo
+      }
+      if(gallery_photos){
+        productUpdateData.gallery_photos = gallery_photos
+      }
+  console.log(productUpdateData);
+      const response = await axios.patch(
+        `https://mbb-e-commerce-server.vercel.app/updateProducts/${product?._id}`,
+        productUpdateData
+      );
+  
+      console.log(response.data);
+      form.reset();
+      refetchProducts();
+      onClose()
+      toast.success("Product inserted successfully");
+    } catch (error) {
+      console.log(error.message);
+      toast.error("An Error Occurred while uploading product");
+    }
   };
 
   return (
     <div className="w-[98%] mx-auto">
-      <form onSubmit={handleProductAdding} className={``}>
+      <form onSubmit={handleUpdateProduct} className={``}>
         <div className="border border-gray-300 rounded-lg mb-8">
           <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
             Product Information
@@ -283,7 +263,7 @@ const ProductUpdateModal = ({ product, refetchProducts }) => {
                   className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
                   placeholder="Available quantity"
                   required
-                  defaultValue={product?.product_name}
+                  defaultValue={product?.available_quantity}
                 />
               </div>
             </div>
@@ -348,7 +328,7 @@ const ProductUpdateModal = ({ product, refetchProducts }) => {
             </div>
             <div className="grid grid-cols-3 gap-5">
               <div>
-                <label htmlFor="featured_photo">Product Feature photo</label>
+                <label htmlFor="featured_photo">Select new Feature photo (optional)</label>
                 <input
                   type="file"
                   name="featured_photo"
@@ -358,7 +338,7 @@ const ProductUpdateModal = ({ product, refetchProducts }) => {
                 />
               </div>
               <div>
-                <label htmlFor="gallery_photos">Gallery photos</label>
+                <label htmlFor="gallery_photos">Select new gallery photos (optional)</label>
                 <input
                   type="file"
                   multiple
@@ -440,7 +420,7 @@ const ProductUpdateModal = ({ product, refetchProducts }) => {
                 labelPlacement="outside"
                 className="w-full"
                 onChange={(e) => setArtist(e.target.value)}
-                isDisabled
+                defaultSelectedKeys={[product?.addedBy]}
               >
                 {(artist) => (
                   <SelectItem
@@ -536,11 +516,11 @@ const ProductUpdateModal = ({ product, refetchProducts }) => {
             </div>
           </div>
           <div
-            className={`${regularPrice && costPrice ? "block" : "hidden"} px-5`}
+            className={`${product?.price?.regular_price && product?.price?.cost_price ? "block" : "hidden"} px-5`}
           >
             <h2 className="text-lg font-semibold mb-4">Profit Distribution</h2>
             <h4 className="mb-3">
-              Artist(you){" "}
+            {artist && artistData?.find(user => user.email == artist)?.userName || "Unknown"} (Artist)
               <span className="relative">
                 <input
                   name="artist_percentage"
@@ -579,7 +559,7 @@ const ProductUpdateModal = ({ product, refetchProducts }) => {
               : ${websiteProfit}
             </h4>
             <h4 className="mb-3">
-              Prison{" "}
+            {prison?.prison_name || "Unknown"} (Prison)
               <span className="relative">
                 <input
                   name="prison_percentage"
@@ -606,7 +586,7 @@ const ProductUpdateModal = ({ product, refetchProducts }) => {
           radius="full"
           className="text-white mb-2 px-12 bg-green-500"
         >
-          Add Product
+          Update Product
         </Button>
       </form>
     </div>
