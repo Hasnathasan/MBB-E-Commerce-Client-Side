@@ -4,6 +4,8 @@ import useWishListByUser from "../../../Hooks/useWishListByUser";
 import { RxCross2 } from "react-icons/rx";
 import { useContext } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
+import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
 
 
 const WishList = () => {
@@ -12,9 +14,19 @@ const WishList = () => {
     if(isUserWishLishLoading){
         return <Loader></Loader>
     }
+
     const handleDeleteFromWishList = id => {
         console.log(id);
+        axios.delete(`https://mbb-e-commerce-server.vercel.app/deleteWishLish/${id}`)
+        .then(res => {
+            if(res.data.deletedCount > 0){
+                refetch()
+                toast.success("Product removed from wishlist")
+            }
+        })
+        .then(err => console.log(err))
     }
+    
     const handleAddToCart = (product) => {
         const {
             _id,
@@ -32,6 +44,9 @@ const WishList = () => {
             addedBy,
             prison_of_artist,
           } = product;
+          if(available_quantity === 0){
+            return toast.error("This Product is out of stock")
+          }
         
         const cartProduct = {
           addedBy: user?.email,
@@ -53,6 +68,7 @@ const WishList = () => {
         newCart.push(cartProduct);
         localStorage.setItem("cart", JSON.stringify(newCart));
           setOpenCart(true)
+          toast.success("Product added to cart");
       };
     return (
         <div className="">
@@ -106,7 +122,7 @@ const WishList = () => {
                     Add To Cart
                   </Button>
                   <Button
-                    onClick={() => handleDeleteFromWishList(wishlist?.product?._id)}
+                    onClick={() => handleDeleteFromWishList(wishlist?._id)}
                     size="sm"
                     radius="full"
                     variant="bordered"
@@ -130,6 +146,7 @@ const WishList = () => {
       </tbody>
     </table>
   </div>
+  <Toaster></Toaster>
 </div>
     );
 };

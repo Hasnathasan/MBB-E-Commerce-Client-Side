@@ -136,7 +136,7 @@ const Details = () => {
   };
   console.log(localStorage.getItem("cart"));
   return (
-    <div className={`${location.pathname.includes("/adminDashboard") ? "mx-1" : "md:mx-8 mx-1"} py-14`}>
+    <div className={`md:mx-8 py-14`}>
       <div className="grid grid-cols-2 gap-2">
         <div className="col-span-1 flex w-full flex-col items-center">
           <div ref={sliderRef} className="keen-slider w-[380px] mb-2">

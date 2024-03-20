@@ -135,7 +135,7 @@ const CheckOutFunctionality = () => {
             console.log(confirmError.message);
             setError(confirmError.message);
           }
-          setProcessing(false);
+          
           if (paymentIntent.status === "succeeded") {
             const transactionId = paymentIntent.id;
             axios
@@ -157,6 +157,7 @@ const CheckOutFunctionality = () => {
               });
             console.log(order);
           }
+          setProcessing(false);
         }
       })
       .catch((error) => {

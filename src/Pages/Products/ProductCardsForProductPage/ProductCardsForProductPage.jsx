@@ -1,4 +1,4 @@
-import { Option, Select } from "@material-tailwind/react";
+
 import PopularProductsCard from "../../Home/PopularProducts/PopularProductsCard";
 import useProducts from "../../../Hooks/useProducts";
 import { useContext } from "react";
@@ -9,22 +9,15 @@ import Loader from "../../../Components/Loader/Loader";
 
 const ProductCardsForProductPage = () => {
     
-  const {categoryFilter, priceSlider, minRating, searchQuery} = useContext(AuthContext);
-    const [products, isProductsLoading] = useProducts({categoryFilter, priceSlider, minRating, searchQuery});
+  const {categoryFilter, priceSlider, minRating, searchQuery, sort, selectedTag} = useContext(AuthContext);
+    const [products, isProductsLoading] = useProducts({categoryFilter, priceSlider, minRating, searchQuery, sort, tag: selectedTag});
     if(isProductsLoading){
         return <Loader></Loader>
     }
     return (
         <div>
             <div className="flex flex-col sm:flex-row justify-between mb-6 gap-3 md:items-center">
-            <div className="flex justify-center gap-2 items-center">
-              <h3 className="text-nowrap text-sm text-gray-700">Sort By:</h3>
-              <Select size="sm" label="Select">
-                <Option>Newest</Option>
-                <Option>Oldest</Option>
-                <Option>A to Z</Option>
-              </Select>
-            </div>
+            
             <h3 className="text-gray-800 text-sm">
               <span className="font-medium !text-gray-900">
                 {products?.length}

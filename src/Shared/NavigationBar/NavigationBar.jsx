@@ -132,7 +132,7 @@ const subTotal = userCart?.reduce((accumulator, product) => {
             </form>
           </div>
           <div className="flex justify-center items-center gap-4">
-            <GoHeart className="w-8 h-8" />
+            <Link to={"/userDashboard/wishList"}><GoHeart className="w-8 h-8" /></Link>
             <span>|</span>
             <div
               onClick={openCartDrawer}
