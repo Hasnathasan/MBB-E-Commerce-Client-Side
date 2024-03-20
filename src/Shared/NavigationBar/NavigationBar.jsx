@@ -80,17 +80,17 @@ const subTotal = userCart?.reduce((accumulator, product) => {
   return (
     <div className="w-full relative z-[50] mx-auto">
       {/* Top Info - Company name + sign In / sign up button */}
-      <div className="flex justify-between items-center bg-[#2e2e2e] px-1 md:px-4 lg:px-8 md:mb-8 text-gray-400 text-[8px] md:text-[12px] py-2">
-        <div className="flex justify-center items-center gap-1">
+      <div className="flex justify-end items-center bg-[#2e2e2e] px-1 md:px-4 lg:px-8 md:mb-8 text-gray-400 text-[8px] md:text-[12px] py-2">
+        {/* <div className="flex justify-center items-center gap-1">
           <CiLocationOn />
           <h3>Store Location: Lincoln- 344, Illinois, Chicago, USA</h3>
-        </div>
+        </div> */}
         <div className="flex gap-3">
-          <div className="flex justify-center items-center gap-2">
+          {/* <div className="flex justify-center items-center gap-2">
             <h3>English</h3>
             <h3>USD</h3>
           </div>
-          <span>|</span>
+          <span>|</span> */}
           {
             !user ? <div className="flex justify-center gap-2 items-center">
             <Link to={"/signin"} className="cursor-pointer">

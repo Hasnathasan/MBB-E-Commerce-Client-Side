@@ -38,10 +38,7 @@ const ArtistUpdateModal = ({artist}) => {
       setPrison(selectedPrison)
     },[prisonEmail, prisons])
 
-    Certainly! Here's the updated handleArtistUpdate function with separate handling for image upload and artist update, along with promise handling for toast notifications:
 
-    javascript
-    Copy code
     const handleArtistUpdate = (e) => {
       e.preventDefault();
       const form = e.target;
@@ -80,7 +77,6 @@ const ArtistUpdateModal = ({artist}) => {
         userPhoneNumber,
       });
       let artist = {
-        email,
         userName,
         art_description,
         bio,
@@ -88,13 +84,12 @@ const ArtistUpdateModal = ({artist}) => {
         keywords,
         userPhoneNumber,
         billingInfo,
-        userRole: "artist",
       };
     
       const formData = new FormData();
       formData.append("file", selectedFile);
       console.log(selectedFile);
-    
+    console.log(artist);
       const uploadImageAndInsertArtist = async () => {
         try {
           if (selectedFile) {
@@ -110,8 +105,8 @@ const ArtistUpdateModal = ({artist}) => {
             console.log(response.data.url);
             artist.userPhoto = response.data.url;
           }
-          const res = await axios.post(
-            `https://mbb-e-commerce-server.vercel.app/artistByAdmin`,
+          const res = await axios.patch(
+            `https://mbb-e-commerce-server.vercel.app/updateArtist/${email}`,
             artist
           );
           console.log(res.data);
@@ -128,7 +123,7 @@ const ArtistUpdateModal = ({artist}) => {
     
       toast.promise(artistPromise, {
         loading: "Please wait! while uploading artist...",
-        success: "Artist uploaded successfully",
+        success: "Artist Data Updated successfully",
         error: (error) => {
           return error?.message || "An error occurred while uploading artist"; // Display server-side error if available
         },
