@@ -70,12 +70,15 @@ useEffect(() => {
     <div className="grid mx-8 mt-7 justify-start grid-cols-12 gap-10 mb-40">
       <div className=" border col-span-8 border-gray-300 rounded-lg overflow-hidden">
         <table className="overflow-auto w-full">
+          <thead>
           <tr className="border-b border-gray-300">
             <th className="bg-transparent">PRODUCT</th>
             <th className="bg-transparent">PRICE</th>
             <th className="bg-transparent">QUANTITY</th>
             <th className="bg-transparent">SUBTOTAL</th>
           </tr>
+          </thead>
+         <tbody>
          {
           userCart.length !== 0 ? userCart?.map(cartProduct =>  <tr key={cartProduct?._id} className="border-b border-gray-300">
           <td className="flex py-6 items-center gap-3">
@@ -109,6 +112,7 @@ useEffect(() => {
         </tr>) : <tr><td className="pt-10" colSpan={4}>
           <h3 className="text-center font-semibold text-3xl">No Product Available</h3></td></tr>
          }
+         </tbody>
         </table>
       </div>
       <div className="col-span-4 border border-gray-300 rounded-lg">

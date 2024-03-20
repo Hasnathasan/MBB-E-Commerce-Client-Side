@@ -34,6 +34,7 @@ import CheckOutElement from "../Pages/CheckoutPage/CheckOutElement/CheckOutEleme
 import ManageCategories from "../Dashboard/SuperAdminDashBoard/ManageCategories/ManageCategories";
 import OrderDetailsForAdmin from "../Dashboard/SuperAdminDashBoard/OrderDetailsForAdmin/OrderDetailsForAdmin";
 import SalesReport from "../Dashboard/SuperAdminDashBoard/SalesReport/SalesReport";
+import WishList from "../Dashboard/UserDashboard/WishList/WishList";
 
 
 const router = createBrowserRouter([
@@ -119,7 +120,7 @@ const router = createBrowserRouter([
           },
           {
             path: "wishlist",
-            element: <Profile></Profile>
+            element: <WishList></WishList>
           },
           {
             path: "settings",

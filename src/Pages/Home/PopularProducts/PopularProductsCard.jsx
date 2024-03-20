@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import toast, { Toaster } from "react-hot-toast";
 import { Button } from "@nextui-org/react";
+import axios from "axios";
 
 const PopularProductsCard = ({ product, isRounded }) => {
   const [hovered, setHovered] = useState(false);
@@ -30,6 +31,16 @@ const PopularProductsCard = ({ product, isRounded }) => {
   } = product;
   const handleWishList = (e) => {
     e.preventDefault();
+    const wishItem = {addedBy: user?.email, product}
+    axios.post(`https://mbb-e-commerce-server.vercel.app/wish-list`, wishItem)
+    .then(res => {
+      console.log(res.data)
+      if(res.data.insertedId){
+        toast.success("Product added to wishlist")
+      }
+    })
+    .catch(err => console.log(err))
+    
   };
   const success = () => toast.success("Product Successfully added to cart");
 
@@ -105,7 +116,7 @@ const PopularProductsCard = ({ product, isRounded }) => {
 
         {/* Hovered Buttons - Details + Wishlist */}
         <div
-          className={`absolute hidden right-3 z-50 top-3 transition-all !duration-500 ${
+          className={`absolute right-3 z-50 top-3 transition-all !duration-500 ${
             hovered ? "opacity-100" : "opacity-0"
           } flex-col justify-center items-center gap-5`}
         >
