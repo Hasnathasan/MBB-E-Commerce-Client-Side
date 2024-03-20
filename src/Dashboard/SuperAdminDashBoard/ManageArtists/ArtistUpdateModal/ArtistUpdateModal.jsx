@@ -14,8 +14,6 @@ const ArtistUpdateModal = ({artist}) => {
     const [userData] = useUser();
     const [artistsData, isArtistsDataLoading, refetch] = useArtists();
     const [selectedFile, setSelectedFile] = useState(null);
-    const [passhide, setPasshide] = useState(true);
-    const [passhide2, setPasshide2] = useState(true);
     const [prison, setPrison] = useState(null);
     const [prisonEmail, setPrisonEmail] = useState(null);
     const fileInputRef = useRef(null);
@@ -39,13 +37,16 @@ const ArtistUpdateModal = ({artist}) => {
       
       setPrison(selectedPrison)
     },[prisonEmail, prisons])
-    const addNewArtist = (e) => {
+
+    Certainly! Here's the updated handleArtistUpdate function with separate handling for image upload and artist update, along with promise handling for toast notifications:
+
+    javascript
+    Copy code
+    const handleArtistUpdate = (e) => {
       e.preventDefault();
       const form = e.target;
       const userName = form.name.value;
       const email = form.email.value;
-      const password = form.password.value;
-      const confirmPass = form.confirmPass.value;
       const bio = form.bio.value;
       const art_description = form.art_description.value;
       const bio_video_link = form.bio_video.value;
@@ -61,12 +62,9 @@ const ArtistUpdateModal = ({artist}) => {
         states,
         address,
         userPhoneNumber,
-        prison: {prison_name: prison?.prison_name, prison_email: prison?.email},
+        prison: { prison_name: prison?.prison_name, prison_email: prison?.email },
         zipCode,
       };
-      if (password !== confirmPass) {
-        return toast.error("Confirmation password didn't match");
-      }
       console.log({
         email,
         prison,
@@ -83,7 +81,6 @@ const ArtistUpdateModal = ({artist}) => {
       });
       let artist = {
         email,
-        password,
         userName,
         art_description,
         bio,
@@ -93,13 +90,15 @@ const ArtistUpdateModal = ({artist}) => {
         billingInfo,
         userRole: "artist",
       };
-      if (selectedFile) {
-        const formData = new FormData();
-        formData.append("file", selectedFile);
-        console.log(selectedFile);
-        const uploadAndInsertArtist = () => {
-          return axios
-            .post(
+    
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      console.log(selectedFile);
+    
+      const uploadImageAndInsertArtist = async () => {
+        try {
+          if (selectedFile) {
+            const response = await axios.post(
               "https://mbb-e-commerce-server.vercel.app/uploadSingle",
               formData,
               {
@@ -107,48 +106,33 @@ const ArtistUpdateModal = ({artist}) => {
                   "Content-Type": "multipart/form-data",
                 },
               }
-            )
-            .then((response) => {
-              console.log(response.data.url);
-              artist.userPhoto = response.data.url;
-              if (response.data.url) {
-                return axios
-                  .post(
-                    `https://mbb-e-commerce-server.vercel.app/artistByAdmin`,
-                    artist
-                  )
-                  .then((res) => {
-                    console.log(res.data);
-                    refetch()
-                    form.reset();
-                    return res.data; // Return data to handle success message
-                  })
-                  .catch((error) => {
-                    console.log(error.response.data); // Log server-side error
-                    throw error.response.data; // Throw server-side error
-                  });
-              } else {
-                return Promise.reject(new Error("No image URL found"));
-              }
-            })
-            .catch((error) => {
-              console.log(error);
-              throw error; // Throw error to handle error message
-            });
-        };
-  
-        const artistPromise = uploadAndInsertArtist();
-  
-        toast.promise(artistPromise, {
-          loading: "Please wait! while uploading artist...",
-          success: "Artist uploaded successfully",
-          error: (error) => {
-            return error?.message || "An error occurred while uploading artist"; // Display server-side error if available
-          },
-        });
-      } else {
-        return toast.error("Please, select an Image");
-      }
+            );
+            console.log(response.data.url);
+            artist.userPhoto = response.data.url;
+          }
+          const res = await axios.post(
+            `https://mbb-e-commerce-server.vercel.app/artistByAdmin`,
+            artist
+          );
+          console.log(res.data);
+          refetch();
+          form.reset();
+          return res.data; // Return data to handle success message
+        } catch (error) {
+          console.log(error.response.data); // Log server-side error
+          throw error.response.data; // Throw server-side error
+        }
+      };
+    
+      const artistPromise = uploadImageAndInsertArtist();
+    
+      toast.promise(artistPromise, {
+        loading: "Please wait! while uploading artist...",
+        success: "Artist uploaded successfully",
+        error: (error) => {
+          return error?.message || "An error occurred while uploading artist"; // Display server-side error if available
+        },
+      });
     };
   
   
@@ -156,87 +140,8 @@ const ArtistUpdateModal = ({artist}) => {
       return <Loader></Loader>;
     }
     return (
-        <form onSubmit={addNewArtist} className="">
-                    {/* <div className="border border-gray-300 rounded-lg mb-6">
-                      <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">
-                        Account Information
-                      </h4>
-                      <div className="grid grid-cols-2 gap-5 p-5 ">
-                        <div>
-                          <label htmlFor="name">Artist Name</label>
-                          <input
-                            type="text"
-                            name="name"
-                            id="name"
-                            className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
-                            placeholder="Your Name"
-                            defaultValue={artist?.userName}
-                            required
-                          />
-                        </div>
-                        <div>
-                          <label htmlFor="email">Artist Email</label>
-                          <input
-                            type="email"
-                            name="email"
-                            id="email"
-                            className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
-                            placeholder="Email"
-                            required
-                          />
-                        </div>
-                        <div className="relative">
-                          <label htmlFor="password">Password</label>
-                          <input
-                            type={passhide ? "password" : "text"}
-                            name="password"
-                            id="password"
-                            placeholder="Password"
-                            className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
-                            required
-                          />
-                          <span className="absolute right-4 bottom-3">
-                            {passhide ? (
-                              <IoEyeOutline
-                                className="cursor-pointer"
-                                onClick={() => setPasshide(!passhide)}
-                              />
-                            ) : (
-                              <IoEyeOffSharp
-                                className="cursor-pointer"
-                                onClick={() => setPasshide(!passhide)}
-                              />
-                            )}
-                          </span>
-                        </div>
-                        <div className="relative">
-                          <label htmlFor="confirmPass">
-                            Confirmation Password
-                          </label>
-                          <input
-                            type={passhide2 ? "password" : "text"}
-                            name="confirmPass"
-                            id="confirmPass"
-                            placeholder="Confirm Password"
-                            className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
-                            required
-                          />
-                          <span className="absolute right-4 bottom-3">
-                            {passhide2 ? (
-                              <IoEyeOutline
-                                className="cursor-pointer"
-                                onClick={() => setPasshide2(!passhide2)}
-                              />
-                            ) : (
-                              <IoEyeOffSharp
-                                className="cursor-pointer"
-                                onClick={() => setPasshide2(!passhide2)}
-                              />
-                            )}
-                          </span>
-                        </div>
-                      </div>
-                    </div> */}
+        <form onSubmit={handleArtistUpdate} className="">
+                   
                     <div
                       className={`border rounded-lg overflow-auto border-gray-300 mb-6`}
                     >
@@ -498,7 +403,7 @@ const ArtistUpdateModal = ({artist}) => {
                           type="submit"
                           className=" text-white bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl text-sm px-7 py-2.5 text-center "
                         >
-                          Add Artist
+                          Update Artist
                         </button>
                       </div>
                     </div>
