@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonGroup,
   Chip,
   Dropdown,
   DropdownItem,
@@ -21,13 +22,14 @@ import {
 } from "@nextui-org/react";
 import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
 import AddNewProductForAdmin from "../AddNewProductForAdmin/AddNewProductForAdmin";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import useProducts from "../../../Hooks/useProducts";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import Loader from "../../../Components/Loader/Loader";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import ProductUpdateModal from "./ProductUpdateModal/ProductUpdateModal";
+import axios from "axios";
 
 const ManageProducts = () => {
   const location = useLocation();
@@ -45,6 +47,33 @@ const ManageProducts = () => {
   const handleProductToShow = product => {
     setProductToShow(product);
     onDetailsModalOpen()
+  }
+  const deleteFunc = id => {
+    axios.delete(`http://localhost:8000/productDelete/${id}`)
+    .then(res => {
+      console.log(res.data)
+      if(res.data.deletedCount > 0){
+        refetch()
+        toast.success("Product Deleted")
+      }
+    })
+    .catch(err => console.log(err))
+  }
+  const handleProductDelete = id => {
+    toast((t) => (
+      <span>
+        Do You Want To Delete This Product?
+        <ButtonGroup variant="solid" radius="none" size="sm">
+        <Button  className="px-9 mt-3 float-right  text-white" color="danger" onClick={() => deleteFunc(id)}>
+          Yes
+        </Button>
+        <Button  className="px-9 mt-3 float-right  text-white" color="success" onClick={() => toast.dismiss(t.id)}>
+          No
+        </Button>
+        </ButtonGroup>
+      </span>
+    ));
+
   }
   return (
    <>
@@ -81,7 +110,7 @@ const ManageProducts = () => {
         <TableColumn>Added By</TableColumn>
         <TableColumn>Price</TableColumn>
         <TableColumn>Rating</TableColumn>
-        <TableColumn>Details</TableColumn>
+        <TableColumn>Action</TableColumn>
       </TableHeader>
       <TableBody>
         {products?.map((product) => (
@@ -102,9 +131,14 @@ const ManageProducts = () => {
             </TableCell>
             <TableCell>{product?.rating}</TableCell>
             <TableCell>
-              <Button onClick={() => handleProductToShow(product)} color="success" radius="lg" className="text-white">
+              <ButtonGroup size="sm" radius="sm">
+              <Button onClick={() => handleProductToShow(product)} color="success" className="text-white">
                 View Details
               </Button>
+              <Button onClick={() => handleProductDelete(product?._id)} color="danger" className="text-white">
+                Delete
+              </Button>
+              </ButtonGroup>
             </TableCell>
           </TableRow>
         ))}

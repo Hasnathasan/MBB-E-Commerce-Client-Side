@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonGroup,
   Chip,
   Dropdown,
   DropdownItem,
@@ -20,10 +21,12 @@ import useAllOrders from "../../../Hooks/useAllOrders";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import Loader from "../../../Components/Loader/Loader";
 import { useState } from "react";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 const ManageOrders = () => {
   const [value, setValue] = useState();
-  const [orders, isOrdersLoading] = useAllOrders({status: value});
+  const [orders, isOrdersLoading, refetch] = useAllOrders({status: value});
   const handleSelectionChange = (e) => {
     setValue(e.target.value);
   };
@@ -33,6 +36,33 @@ const ManageOrders = () => {
   //   return <Loader></Loader>;
   // }
   console.log(orders);
+  const deleteFunc = id => {
+    axios.delete(`http://localhost:8000/orderDelete/${id}`)
+    .then(res => {
+      console.log(res.data)
+      if(res.data.deletedCount > 0){
+        refetch()
+        toast.success("Order Deleted")
+      }
+    })
+    .catch(err => console.log(err))
+  }
+  const handleOrderDelete = id => {
+    toast((t) => (
+      <span>
+        Do You Want To Delete This Order?
+        <ButtonGroup variant="solid" radius="none" size="sm">
+        <Button  className="px-9 mt-3 float-right  text-white" color="danger" onClick={() => deleteFunc(id)}>
+          Yes
+        </Button>
+        <Button  className="px-9 mt-3 float-right  text-white" color="success" onClick={() => toast.dismiss(t.id)}>
+          No
+        </Button>
+        </ButtonGroup>
+      </span>
+    ));
+
+  }
   return (
     <>
       <div
@@ -107,13 +137,19 @@ const ManageOrders = () => {
                   </Chip>
                 </TableCell>
                 <TableCell>
-                  <Link
+                 
+                  <ButtonGroup size="sm" radius="sm">
+               
+                    <Button color="success" className="text-white">
+                      <Link className="w-full h-full flex justify-center items-center"
                     to={`/adminDashboard/orders/orderDetails/${order?._id}`}
-                  >
-                    <Button color="success" radius="lg" className="text-white">
-                      View Details
+                  >View Details</Link>
                     </Button>
-                  </Link>
+                  
+              <Button onClick={() => handleOrderDelete(order?._id)} color="danger" className="text-white">
+                Delete
+              </Button>
+              </ButtonGroup>
                 </TableCell>
               </TableRow>
             ))}
@@ -123,6 +159,7 @@ const ManageOrders = () => {
       <div className="w-[95%] mx-auto">
         <Outlet></Outlet>
       </div>
+      <Toaster></Toaster>
     </>
   );
 };
