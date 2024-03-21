@@ -20,48 +20,59 @@ const CustomerUpdateModal = ({userData, refetch}) => {
       fileInputRef.current.click();
     };
     const handleUserUpdate = (e) => {
-      e.preventDefault();
-      const form = e.target;
-      const updatedName = form.name.value;
-      const updatedNum = form.phoneNumber.value;
-      console.log(updatedName, updatedNum);
-      if (!selectedFile) {
-        return toast.error("Please Select an Image");
-      }
-      const formData = new FormData();
-      formData.append("file", selectedFile);
-      axios
-        .post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((res) => {
-          console.log(res.data.url);
-          if (res.data.url) {
-            axios
-              .patch(
-                `https://mbb-e-commerce-server.vercel.app/userUpdate/${userData?.email}`,
-                {
-                  updatedName,
-                  updatedNum,
-                  userphoto: res?.data?.url,
-                }
-              )
-              .then((res) => {
-                console.log(res.data);
-                refetch();
-                if (res.data.modifiedCount > 0) {
-                  return toast.success("User data updated");
-                }
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          }
-        })
-        .catch((error) => console.log(error));
-    };
+        e.preventDefault();
+        const form = e.target;
+        const updatedName = form.name.value;
+        const updatedNum = form.phoneNumber.value;
+        console.log(updatedName, updatedNum);
+      
+        if (!selectedFile) {
+          updateUser(updatedName, updatedNum); // Call updateUser function with null for userphoto
+        } else {
+          uploadAndThenUpdate(updatedName, updatedNum); // Call function to upload image and then update user
+        }
+      };
+      
+      const uploadAndThenUpdate = (updatedName, updatedNum) => {
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+      
+        axios
+          .post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then((res) => {
+            console.log(res.data.url);
+            if (res.data.url) {
+              updateUser(updatedName, updatedNum, res.data.url); // Call updateUser function with uploaded image URL
+            }
+          })
+          .catch((error) => console.log(error));
+      };
+      
+      const updateUser = (updatedName, updatedNum, userphoto) => {
+        axios
+          .patch(
+            `https://mbb-e-commerce-server.vercel.app/userUpdate/${userData?.email}`,
+            {
+              updatedName,
+              updatedNum,
+              userphoto,
+            }
+          )
+          .then((res) => {
+            console.log(res.data);
+            refetch();
+            if (res.data.modifiedCount > 0) {
+              toast.success("User data updated");
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
   
     const handleBillingUpdate = (e) => {
       e.preventDefault();
@@ -90,11 +101,8 @@ const CustomerUpdateModal = ({userData, refetch}) => {
         .then((res) => {
           console.log(res.data);
           if (res.data.modifiedCount > 0) {
-            Swal.fire(
-              "Congratulation",
-              "Successfully Updated Your Billing Info",
-              "success"
-            );
+            refetch()
+            toast.success("User Billing Info Updated")
           }
         })
         .catch((error) => {

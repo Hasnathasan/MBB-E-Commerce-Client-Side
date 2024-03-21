@@ -51,9 +51,9 @@ const ManageCustomers = () => {
             <TableRow key={user._id}>
               <TableCell>
                 <User
-                  avatarProps={{ radius: "md", src: user.photoUrl }}
+                  avatarProps={{ radius: "md", src: user.userPhoto }}
                   description={user.email || user.phoneNumber}
-                  name={user.name || "Unknown"}
+                  name={user.userName || "Unknown"}
                 ></User>
               </TableCell>
               <TableCell>{user.email || user.phoneNumber}</TableCell>
