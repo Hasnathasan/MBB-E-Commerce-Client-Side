@@ -271,7 +271,7 @@ const AddNewProductForAdmin = ({ refetchProducts }) => {
                   required
                 />
               </div>
-              
+
               <div>
                 <label htmlFor="available_quantity">Available quantity</label>
                 <input
@@ -286,7 +286,7 @@ const AddNewProductForAdmin = ({ refetchProducts }) => {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-5 mb-10">
-            <div>
+              <div>
                 <label htmlFor="category">Add New Category</label>
                 <MultiSelect
                   values={categories}
@@ -329,20 +329,20 @@ const AddNewProductForAdmin = ({ refetchProducts }) => {
                 />
               </div>
               <Select
-        label="Select Existing Category"
-        selectionMode="multiple"
-        placeholder="Select Multiple Category"
-        labelPlacement="outside"
-        selectedKeys={values}
-        className="max-w-md"
-        onSelectionChange={setValues}
-      >
-        {allCategories?.map((category) => (
-          <SelectItem key={category.category} value={category.category}>
-            {category.category}
-          </SelectItem>
-        ))}
-      </Select>
+                label="Select Existing Category"
+                selectionMode="multiple"
+                placeholder="Select Multiple Category"
+                labelPlacement="outside"
+                selectedKeys={values}
+                className="max-w-md"
+                onSelectionChange={setValues}
+              >
+                {allCategories?.map((category) => (
+                  <SelectItem key={category.category} value={category.category}>
+                    {category.category}
+                  </SelectItem>
+                ))}
+              </Select>
             </div>
             <div className="grid grid-cols-3 gap-5">
               <div>
@@ -536,7 +536,10 @@ const AddNewProductForAdmin = ({ refetchProducts }) => {
           >
             <h2 className="text-lg font-semibold mb-4">Profit Distribution</h2>
             <h4 className="mb-3">
-              {artist && artistData?.find(user => user.email == artist)?.userName || "Unknown"} (Artist)
+              {(artist &&
+                artistData?.find((user) => user.email == artist)?.userName) ||
+                "Unknown"}{" "}
+              (Artist)
               <span className="relative">
                 <input
                   name="artist_percentage"
