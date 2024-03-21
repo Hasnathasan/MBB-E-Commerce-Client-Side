@@ -23,7 +23,9 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
   const websitePercentRef = useRef(null);
   const prisonPercentRef = useRef(null);
   const costPriceRef = useRef(null);
-  const [regularPrice, setRegularPrice] = useState(product?.price?.regular_price);
+  const [regularPrice, setRegularPrice] = useState(
+    product?.price?.regular_price
+  );
   const [salePrice, setSalePrice] = useState(product?.price?.sale_price);
   const [costPrice, setCostPrice] = useState(product?.price?.cost_price);
   const [artist, setArtist] = useState(product?.addedBy);
@@ -141,14 +143,14 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
     const new_categories = categories.map((category) => category.label);
     const existingCategories = Array.from(values);
     const product_categories = [...new_categories, ...existingCategories];
-  
+
     const firstFormData = new FormData();
     firstFormData.append("file", featured_photo_file);
-  
+
     try {
       let featured_photo = null;
       let gallery_photos = null;
-  
+
       // Upload featured photo if available
       if (featured_photo_file) {
         const response = await axios.post(
@@ -162,7 +164,7 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
         );
         featured_photo = response.data.url;
       }
-  
+
       // Upload gallery photos if available
       if (multipleImages.length > 0) {
         const secondFormData = new FormData();
@@ -180,7 +182,7 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
         );
         gallery_photos = response.data?.imageUrls;
       }
-  
+
       // Update product
       const productUpdateData = {
         product_name,
@@ -208,22 +210,22 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
         prison_of_artist,
       };
 
-      if(featured_photo){
-        productUpdateData.featured_photo = featured_photo
+      if (featured_photo) {
+        productUpdateData.featured_photo = featured_photo;
       }
-      if(gallery_photos){
-        productUpdateData.gallery_photos = gallery_photos
+      if (gallery_photos) {
+        productUpdateData.gallery_photos = gallery_photos;
       }
-  console.log(productUpdateData);
+      console.log(productUpdateData);
       const response = await axios.patch(
         `https://mbb-e-commerce-server.vercel.app/updateProducts/${product?._id}`,
         productUpdateData
       );
-  
+
       console.log(response.data);
       form.reset();
       refetchProducts();
-      onClose()
+      onClose();
       toast.success("Product inserted successfully");
     } catch (error) {
       console.log(error.message);
@@ -252,7 +254,7 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
                   defaultValue={product?.product_name}
                 />
               </div>
-              
+
               <div>
                 <label htmlFor="available_quantity">Available quantity</label>
                 <input
@@ -268,7 +270,7 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-5 mb-10">
-            <div>
+              <div>
                 <label htmlFor="category">Add New Category</label>
                 <MultiSelect
                   values={categories}
@@ -311,24 +313,26 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
                 />
               </div>
               <Select
-        label="Select Existing Category"
-        selectionMode="multiple"
-        placeholder="Select Multiple Category"
-        labelPlacement="outside"
-        selectedKeys={values}
-        className="max-w-md"
-        onSelectionChange={setValues}
-      >
-        {allCategories?.map((category) => (
-          <SelectItem key={category.category} value={category.category}>
-            {category.category}
-          </SelectItem>
-        ))}
-      </Select>
+                label="Select Existing Category"
+                selectionMode="multiple"
+                placeholder="Select Multiple Category"
+                labelPlacement="outside"
+                selectedKeys={values}
+                className="max-w-md"
+                onSelectionChange={setValues}
+              >
+                {allCategories?.map((category) => (
+                  <SelectItem key={category.category} value={category.category}>
+                    {category.category}
+                  </SelectItem>
+                ))}
+              </Select>
             </div>
             <div className="grid grid-cols-3 gap-5">
               <div>
-                <label htmlFor="featured_photo">Select new Feature photo (optional)</label>
+                <label htmlFor="featured_photo">
+                  Select new Feature photo (optional)
+                </label>
                 <input
                   type="file"
                   name="featured_photo"
@@ -338,7 +342,9 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
                 />
               </div>
               <div>
-                <label htmlFor="gallery_photos">Select new gallery photos (optional)</label>
+                <label htmlFor="gallery_photos">
+                  Select new gallery photos (optional)
+                </label>
                 <input
                   type="file"
                   multiple
@@ -516,11 +522,18 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
             </div>
           </div>
           <div
-            className={`${product?.price?.regular_price && product?.price?.cost_price ? "block" : "hidden"} px-5`}
+            className={`${
+              product?.price?.regular_price && product?.price?.cost_price
+                ? "block"
+                : "hidden"
+            } px-5`}
           >
             <h2 className="text-lg font-semibold mb-4">Profit Distribution</h2>
             <h4 className="mb-3">
-            {artist && artistData?.find(user => user.email == artist)?.userName || "Unknown"} (Artist)
+              {(artist &&
+                artistData?.find((user) => user.email == artist)?.userName) ||
+                "Unknown"}{" "}
+              (Artist)
               <span className="relative">
                 <input
                   name="artist_percentage"
@@ -559,7 +572,7 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
               : ${websiteProfit}
             </h4>
             <h4 className="mb-3">
-            {prison?.prison_name || "Unknown"} (Prison)
+              {prison?.prison_name || "Unknown"} (Prison)
               <span className="relative">
                 <input
                   name="prison_percentage"
