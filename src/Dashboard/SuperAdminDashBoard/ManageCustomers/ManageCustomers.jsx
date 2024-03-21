@@ -96,7 +96,10 @@ const ManageCustomers = () => {
                 Customer Details
               </ModalHeader>
               <ModalBody>
-              <CustomerUpdateModal userData={userData} refetch={refetch}></CustomerUpdateModal>
+                <CustomerUpdateModal
+                  userData={userData}
+                  refetch={refetch}
+                ></CustomerUpdateModal>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>

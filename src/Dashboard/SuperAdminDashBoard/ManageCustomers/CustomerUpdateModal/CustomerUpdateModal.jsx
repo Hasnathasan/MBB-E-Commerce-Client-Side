@@ -4,114 +4,113 @@ import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
+const CustomerUpdateModal = ({ userData, refetch }) => {
+  const fileInputRef = useRef(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+    }
+  };
 
-const CustomerUpdateModal = ({userData, refetch}) => {
-    const fileInputRef = useRef(null);
-    const [selectedFile, setSelectedFile] = useState(null);
-    const handleFileChange = (event) => {
-      const file = event.target.files[0];
-      if (file) {
-        setSelectedFile(file);
-      }
-    };
-  
-    console.log(selectedFile);
-    const handleButtonClick = () => {
-      fileInputRef.current.click();
-    };
-    const handleUserUpdate = (e) => {
-        e.preventDefault();
-        const form = e.target;
-        const updatedName = form.name.value;
-        const updatedNum = form.phoneNumber.value;
-        console.log(updatedName, updatedNum);
-      
-        if (!selectedFile) {
-          updateUser(updatedName, updatedNum); // Call updateUser function with null for userphoto
-        } else {
-          uploadAndThenUpdate(updatedName, updatedNum); // Call function to upload image and then update user
+  console.log(selectedFile);
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
+  const handleUserUpdate = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const updatedName = form.name.value;
+    const updatedNum = form.phoneNumber.value;
+    console.log(updatedName, updatedNum);
+
+    if (!selectedFile) {
+      updateUser(updatedName, updatedNum); // Call updateUser function with null for userphoto
+    } else {
+      uploadAndThenUpdate(updatedName, updatedNum); // Call function to upload image and then update user
+    }
+  };
+
+  const uploadAndThenUpdate = (updatedName, updatedNum) => {
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    axios
+      .post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res.data.url);
+        if (res.data.url) {
+          updateUser(updatedName, updatedNum, res.data.url); // Call updateUser function with uploaded image URL
         }
-      };
-      
-      const uploadAndThenUpdate = (updatedName, updatedNum) => {
-        const formData = new FormData();
-        formData.append("file", selectedFile);
-      
-        axios
-          .post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
-          .then((res) => {
-            console.log(res.data.url);
-            if (res.data.url) {
-              updateUser(updatedName, updatedNum, res.data.url); // Call updateUser function with uploaded image URL
-            }
-          })
-          .catch((error) => console.log(error));
-      };
-      
-      const updateUser = (updatedName, updatedNum, userphoto) => {
-        axios
-          .patch(
-            `https://mbb-e-commerce-server.vercel.app/userUpdate/${userData?.email}`,
-            {
-              updatedName,
-              updatedNum,
-              userphoto,
-            }
-          )
-          .then((res) => {
-            console.log(res.data);
-            refetch();
-            if (res.data.modifiedCount > 0) {
-              toast.success("User data updated");
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      };
-  
-    const handleBillingUpdate = (e) => {
-      e.preventDefault();
-      const form = e.target;
-      const updatedName = form.name.value;
-      const companyName = form.companyName.value;
-      const country = form.country.value;
-      const states = form.states.value;
-      const updatedAddress = form.address.value;
-      const zipCode = form.zipCode.value;
-      const updatedNum = form.phoneNumber.value;
-      const billingInfo = {
-        updatedName,
-        companyName,
-        country,
-        states,
-        updatedAddress,
-        zipCode,
-        updatedNum,
-      };
-      axios
-        .patch(
-          `https://mbb-e-commerce-server.vercel.app/userBillingInfoUpdate/${userData?.email}`,
-          billingInfo
-        )
-        .then((res) => {
-          console.log(res.data);
-          if (res.data.modifiedCount > 0) {
-            refetch()
-            toast.success("User Billing Info Updated")
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const updateUser = (updatedName, updatedNum, userphoto) => {
+    axios
+      .patch(
+        `https://mbb-e-commerce-server.vercel.app/userUpdate/${userData?.email}`,
+        {
+          updatedName,
+          updatedNum,
+          userphoto,
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        refetch();
+        if (res.data.modifiedCount > 0) {
+          toast.success("User data updated");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleBillingUpdate = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const updatedName = form.name.value;
+    const companyName = form.companyName.value;
+    const country = form.country.value;
+    const states = form.states.value;
+    const updatedAddress = form.address.value;
+    const zipCode = form.zipCode.value;
+    const updatedNum = form.phoneNumber.value;
+    const billingInfo = {
+      updatedName,
+      companyName,
+      country,
+      states,
+      updatedAddress,
+      zipCode,
+      updatedNum,
     };
-  
-    return (
-        <div>
+    axios
+      .patch(
+        `https://mbb-e-commerce-server.vercel.app/userBillingInfoUpdate/${userData?.email}`,
+        billingInfo
+      )
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.modifiedCount > 0) {
+          refetch();
+          toast.success("User Billing Info Updated");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  return (
+    <div>
       {/* Account Information */}
       <div className={`border rounded-lg overflow-auto border-gray-300 mb-6`}>
         <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">
@@ -304,9 +303,8 @@ const CustomerUpdateModal = ({userData, refetch}) => {
           </button>
         </form>
       </div>
-      
     </div>
-    );
+  );
 };
 
 export default CustomerUpdateModal;
