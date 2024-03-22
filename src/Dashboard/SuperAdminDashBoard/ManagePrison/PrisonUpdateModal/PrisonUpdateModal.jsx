@@ -2,7 +2,7 @@ import { Button } from "@nextui-org/react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const PrisonUpdateModal = ({prison, refetch}) => {
+const PrisonUpdateModal = ({ prison, refetch }) => {
   const handlePrisonUpdate = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -22,11 +22,14 @@ const PrisonUpdateModal = ({prison, refetch}) => {
     };
     console.log(prison);
     axios
-      .patch(`https://mbb-e-commerce-server.vercel.app/prisonUpdate/${prison?.email}`, prisonToUpdate)
+      .patch(
+        `https://mbb-e-commerce-server.vercel.app/prisonUpdate/${prison?.email}`,
+        prisonToUpdate
+      )
       .then((res) => {
         console.log(res.data);
         if (res.data.modifiedCount > 0) {
-          refetch()
+          refetch();
           return toast.success("Successfully Updated Prison");
         }
       })
@@ -35,7 +38,7 @@ const PrisonUpdateModal = ({prison, refetch}) => {
           error?.response?.data?.message || "An Unknown Error Occurred"
         );
       });
-  }
+  };
   return (
     <form onSubmit={handlePrisonUpdate} className="p-5">
       <div className="grid grid-cols-2 gap-5">

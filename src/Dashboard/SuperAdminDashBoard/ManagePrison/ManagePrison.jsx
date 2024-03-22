@@ -30,12 +30,16 @@ import PrisonUpdateModal from "./PrisonUpdateModal/PrisonUpdateModal";
 const ManagePrison = () => {
   const [prisons, , refetch] = usePrisons();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { isOpen: isPrisonUpdateOpen, onOpen: onPriosonUpdateOpen, onOpenChange: onPrisonUpdateChange } = useDisclosure();
+  const {
+    isOpen: isPrisonUpdateOpen,
+    onOpen: onPriosonUpdateOpen,
+    onOpenChange: onPrisonUpdateChange,
+  } = useDisclosure();
   const [prisonToShow, setPrisonToShow] = useState();
   const handlePrisonUpdate = (prison) => {
     setPrisonToShow(prison);
-    onPriosonUpdateOpen()
-  }
+    onPriosonUpdateOpen();
+  };
   const handlePrisonAdding = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -70,33 +74,41 @@ const ManagePrison = () => {
         );
       });
   };
-  const deleteFunc = id => {
-    axios.delete(`http://localhost:8000/prisonDelete/${id}`)
-    .then(res => {
-      console.log(res.data)
-      if(res.data.deletedCount > 0){
-        refetch()
-        toast.success("Prison Deleted");
-      }
-    })
-    .catch(err => console.log(err))
-  }
-  const handlePrisonDelete = id => {
+  const deleteFunc = (id) => {
+    axios
+      .delete(`http://localhost:8000/prisonDelete/${id}`)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.deletedCount > 0) {
+          refetch();
+          toast.success("Prison Deleted");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+  const handlePrisonDelete = (id) => {
     toast((t) => (
       <span>
         Do You Want To Delete This Prison?
         <ButtonGroup variant="solid" radius="none" size="sm">
-        <Button  className="px-9 mt-3 float-right  text-white" color="danger" onClick={() => deleteFunc(id)}>
-          Yes
-        </Button>
-        <Button  className="px-9 mt-3 float-right  text-white" color="success" onClick={() => toast.dismiss(t.id)}>
-          No
-        </Button>
+          <Button
+            className="px-9 mt-3 float-right  text-white"
+            color="danger"
+            onClick={() => deleteFunc(id)}
+          >
+            Yes
+          </Button>
+          <Button
+            className="px-9 mt-3 float-right  text-white"
+            color="success"
+            onClick={() => toast.dismiss(t.id)}
+          >
+            No
+          </Button>
         </ButtonGroup>
       </span>
     ));
-
-  }
+  };
   return (
     <div className="overflow-x-auto w-full md:w-[95%]">
       <div className="flex flex-col  gap-4">
@@ -182,18 +194,22 @@ const ManagePrison = () => {
               <TableCell>{prison?.zipCode}</TableCell>
               <TableCell>
                 <ButtonGroup size="sm">
-                <Button
-                        onClick={() => handlePrisonUpdate(prison)}
-                        color="success"
-                        className="text-white"
-                      >
-                        Details
-                      </Button>
-                      <Button onClick={() => handlePrisonDelete(prison?._id)} color="danger" className="text-white">
-                Delete
-              </Button>
+                  <Button
+                    onClick={() => handlePrisonUpdate(prison)}
+                    color="success"
+                    className="text-white"
+                  >
+                    Details
+                  </Button>
+                  <Button
+                    onClick={() => handlePrisonDelete(prison?._id)}
+                    color="danger"
+                    className="text-white"
+                  >
+                    Delete
+                  </Button>
                 </ButtonGroup>
-                      </TableCell>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -331,7 +347,10 @@ const ManagePrison = () => {
                 Add Prison
               </ModalHeader>
               <ModalBody>
-                <PrisonUpdateModal prison={prisonToShow} refetch={refetch}></PrisonUpdateModal>
+                <PrisonUpdateModal
+                  prison={prisonToShow}
+                  refetch={refetch}
+                ></PrisonUpdateModal>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>

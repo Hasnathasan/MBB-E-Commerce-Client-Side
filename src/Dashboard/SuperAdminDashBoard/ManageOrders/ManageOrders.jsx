@@ -26,7 +26,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 const ManageOrders = () => {
   const [value, setValue] = useState();
-  const [orders, isOrdersLoading, refetch] = useAllOrders({status: value});
+  const [orders, isOrdersLoading, refetch] = useAllOrders({ status: value });
   const handleSelectionChange = (e) => {
     setValue(e.target.value);
   };
@@ -36,33 +36,41 @@ const ManageOrders = () => {
   //   return <Loader></Loader>;
   // }
   console.log(orders);
-  const deleteFunc = id => {
-    axios.delete(`http://localhost:8000/orderDelete/${id}`)
-    .then(res => {
-      console.log(res.data)
-      if(res.data.deletedCount > 0){
-        refetch()
-        toast.success("Order Deleted")
-      }
-    })
-    .catch(err => console.log(err))
-  }
-  const handleOrderDelete = id => {
+  const deleteFunc = (id) => {
+    axios
+      .delete(`http://localhost:8000/orderDelete/${id}`)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.deletedCount > 0) {
+          refetch();
+          toast.success("Order Deleted");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+  const handleOrderDelete = (id) => {
     toast((t) => (
       <span>
         Do You Want To Delete This Order?
         <ButtonGroup variant="solid" radius="none" size="sm">
-        <Button  className="px-9 mt-3 float-right  text-white" color="danger" onClick={() => deleteFunc(id)}>
-          Yes
-        </Button>
-        <Button  className="px-9 mt-3 float-right  text-white" color="success" onClick={() => toast.dismiss(t.id)}>
-          No
-        </Button>
+          <Button
+            className="px-9 mt-3 float-right  text-white"
+            color="danger"
+            onClick={() => deleteFunc(id)}
+          >
+            Yes
+          </Button>
+          <Button
+            className="px-9 mt-3 float-right  text-white"
+            color="success"
+            onClick={() => toast.dismiss(t.id)}
+          >
+            No
+          </Button>
         </ButtonGroup>
       </span>
     ));
-
-  }
+  };
   return (
     <>
       <div
@@ -74,34 +82,32 @@ const ManageOrders = () => {
       >
         <div className="flex flex-col  gap-4">
           <div className="flex justify-end p-5 bg-white rounded-xl gap-3 items-end">
-            
             <div className="flex gap-3">
-                <Select
-      placeholder="Filter By Status"
-      className="w-40 text-nowrap"
-      disableSelectorIconRotation
-      onChange={handleSelectionChange}
-    >
-        <SelectItem key={"all"} value={"all"}>
-          Filter By Status
-        </SelectItem>
-        <SelectItem key={"pending"} value={"pending"}>
-          Pending
-        </SelectItem>
-        <SelectItem key={"processing"} value={"processing"}>
-          Processing
-        </SelectItem>
-        <SelectItem key={"shipped"} value={"shipped"}>
-          Shipped
-        </SelectItem>
-        <SelectItem key={"delevered"} value={"delevered"}>
-          Delevered
-        </SelectItem>
-        <SelectItem key={"canceled"} value={"canceled"}>
-          Canceled
-        </SelectItem>
-    </Select>
-    
+              <Select
+                placeholder="Filter By Status"
+                className="w-40 text-nowrap"
+                disableSelectorIconRotation
+                onChange={handleSelectionChange}
+              >
+                <SelectItem key={"all"} value={"all"}>
+                  Filter By Status
+                </SelectItem>
+                <SelectItem key={"pending"} value={"pending"}>
+                  Pending
+                </SelectItem>
+                <SelectItem key={"processing"} value={"processing"}>
+                  Processing
+                </SelectItem>
+                <SelectItem key={"shipped"} value={"shipped"}>
+                  Shipped
+                </SelectItem>
+                <SelectItem key={"delevered"} value={"delevered"}>
+                  Delevered
+                </SelectItem>
+                <SelectItem key={"canceled"} value={"canceled"}>
+                  Canceled
+                </SelectItem>
+              </Select>
             </div>
           </div>
           <span className="text-gray-600 mb-2">
@@ -137,19 +143,24 @@ const ManageOrders = () => {
                   </Chip>
                 </TableCell>
                 <TableCell>
-                 
                   <ButtonGroup size="sm" radius="sm">
-               
                     <Button color="success" className="text-white">
-                      <Link className="w-full h-full flex justify-center items-center"
-                    to={`/adminDashboard/orders/orderDetails/${order?._id}`}
-                  >View Details</Link>
+                      <Link
+                        className="w-full h-full flex justify-center items-center"
+                        to={`/adminDashboard/orders/orderDetails/${order?._id}`}
+                      >
+                        View Details
+                      </Link>
                     </Button>
-                  
-              <Button onClick={() => handleOrderDelete(order?._id)} color="danger" className="text-white">
-                Delete
-              </Button>
-              </ButtonGroup>
+
+                    <Button
+                      onClick={() => handleOrderDelete(order?._id)}
+                      color="danger"
+                      className="text-white"
+                    >
+                      Delete
+                    </Button>
+                  </ButtonGroup>
                 </TableCell>
               </TableRow>
             ))}

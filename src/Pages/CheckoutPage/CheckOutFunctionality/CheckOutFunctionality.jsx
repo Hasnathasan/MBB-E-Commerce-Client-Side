@@ -137,7 +137,7 @@ const CheckOutFunctionality = () => {
             console.log(confirmError.message);
             setError(confirmError.message);
           }
-          
+
           if (paymentIntent.status === "succeeded") {
             const transactionId = paymentIntent.id;
             axios
@@ -150,7 +150,7 @@ const CheckOutFunctionality = () => {
                 setTransactionId(transactionId);
                 localStorage.removeItem("cart");
                 setIsProductAdded((prevCount) => prevCount + 1);
-                navigate(`/thanks-for-purchasing/${transactionId}`)
+                navigate(`/thanks-for-purchasing/${transactionId}`);
               })
               .catch((error) => {
                 return toast.error(error.message);
@@ -400,10 +400,12 @@ const CheckOutFunctionality = () => {
                     }
                   >
                     {!stripe ||
-                      !clientSecret ||
-                      processing ||
-                      userCart.length === 0 ||
-                      !user ? "Processing" : "Place Order"}
+                    !clientSecret ||
+                    processing ||
+                    userCart.length === 0 ||
+                    !user
+                      ? "Processing"
+                      : "Place Order"}
                   </Button>
                 </div>
               </div>
