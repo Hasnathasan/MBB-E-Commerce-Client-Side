@@ -1,6 +1,44 @@
-const PrisonUpdateModal = () => {
+import { Button } from "@nextui-org/react";
+import axios from "axios";
+import toast from "react-hot-toast";
+
+const PrisonUpdateModal = ({prison}) => {
+  const handlePrisonUpdate = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const prison_name = form.prison_name.value;
+    const country = form.country.value;
+    const states = form.states.value;
+    const address = form.address.value;
+    const zipCode = form.zipCode.value;
+    const email = form.email.value;
+    const number = form.phoneNumber.value;
+    const prison = {
+      prison_name,
+      country,
+      states,
+      address,
+      zipCode,
+      email,
+      number,
+    };
+    console.log(prison);
+    axios
+      .patch(`https://mbb-e-commerce-server.vercel.app/updatePrison`, prison)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.insertedId) {
+          return toast.success("Successfully Updated Prison");
+        }
+      })
+      .catch((error) => {
+        return toast.error(
+          error?.response?.data?.message || "An Unknown Error Occurred"
+        );
+      });
+  }
   return (
-    <form onSubmit={handlePrisonAdding} className="p-5">
+    <form onSubmit={handlePrisonUpdate} className="p-5">
       <div className="grid grid-cols-2 gap-5">
         <div>
           <label htmlFor="prison_name">Prison Name</label>
@@ -10,6 +48,7 @@ const PrisonUpdateModal = () => {
             id="prison_name"
             className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
             placeholder="Prison Name"
+            defaultValue={prison?.prison_name}
             required
           />
         </div>
@@ -21,6 +60,7 @@ const PrisonUpdateModal = () => {
             id="address"
             className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
             placeholder="Street Address"
+            defaultValue={prison?.address}
             required
           />
         </div>
@@ -35,6 +75,7 @@ const PrisonUpdateModal = () => {
             id="country"
             className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
             placeholder="Country"
+            defaultValue={prison?.country}
             required
           />
         </div>
@@ -46,6 +87,7 @@ const PrisonUpdateModal = () => {
             id="states"
             className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
             placeholder="States Name"
+            defaultValue={prison?.states}
             required
           />
         </div>
@@ -57,6 +99,7 @@ const PrisonUpdateModal = () => {
             id="zipCode"
             className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
             placeholder="Zip Code"
+            defaultValue={prison?.zipCode}
             required
           />
         </div>
@@ -70,6 +113,7 @@ const PrisonUpdateModal = () => {
             id="email"
             className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
             placeholder="Email Address"
+            defaultValue={prison?.email}
             required
           />
         </div>
@@ -82,6 +126,7 @@ const PrisonUpdateModal = () => {
             id="phoneNumber"
             className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
             placeholder="Phone Number"
+            defaultValue={prison?.number}
             required
           />
         </div>
@@ -92,7 +137,7 @@ const PrisonUpdateModal = () => {
         radius="full"
         className="text-white mb-2 px-12 bg-green-500"
       >
-        Add Prison
+        Update Prison
       </Button>
     </form>
   );
