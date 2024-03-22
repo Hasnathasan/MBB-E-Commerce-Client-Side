@@ -1,17 +1,30 @@
 import Rating from "react-rating";
 import { IoStarOutline, IoStarSharp } from "react-icons/io5";
 import { BsShieldCheck } from "react-icons/bs";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../../Providers/AuthProvider";
 
-// To Do: To make the reviews dynamic
 
 const Reviews = ({ product, refetch }) => {
   const { user } = useContext(AuthContext);
-  const [ratingByUser, setRatingByUser] = useState();
+  const [isProductAvailable, setIsProductAvailable] = useState(false);
+  const [ratingByUser, setRatingByUser] = useState(1);
   console.log(product);
   const { reviews, rating } = product;
+
+
+  useEffect(() => {
+    axios.get(`http://localhost:8000/isPurchased/?email=${user?.email}&&productId=${product?._id}`)
+    .then(res => {
+      console.log(res);
+      setIsProductAvailable(res.data.available)
+    })
+    .catch(err => console.log(err))
+  },[product?._id, user?.email])
+
+
+
   const handleReviewPost = (e) => {
     e.preventDefault();
     const review = e.target.review.value;
@@ -40,6 +53,7 @@ const Reviews = ({ product, refetch }) => {
             onChange={(value) => setRatingByUser(value)}
             initialRating={ratingByUser}
             className="text-orange-400"
+            
             emptySymbol={
               <IoStarOutline className="w-6 h-6 opacity-75"></IoStarOutline>
             }
@@ -52,10 +66,11 @@ const Reviews = ({ product, refetch }) => {
             id="review"
             className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
             placeholder="Write your review about the product"
+            disabled={!isProductAvailable}
             rows={4}
             cols={50}
           />
-          <button className="py-2 px-6 block border border-[#2093ff] duration-200 text-[#2093ff] text-[15px] rounded-l-sm">
+          <button disabled={!isProductAvailable} className="py-2 px-6 block border border-[#2093ff] duration-200 text-[#2093ff] text-[15px] rounded-l-sm">
             Post Your review
           </button>
         </form>

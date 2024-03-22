@@ -35,6 +35,7 @@ import ManageCategories from "../Dashboard/SuperAdminDashBoard/ManageCategories/
 import OrderDetailsForAdmin from "../Dashboard/SuperAdminDashBoard/OrderDetailsForAdmin/OrderDetailsForAdmin";
 import SalesReport from "../Dashboard/SuperAdminDashBoard/SalesReport/SalesReport";
 import WishList from "../Dashboard/UserDashboard/WishList/WishList";
+import PaymentSuccessFullPage from "../Components/PaymentSuccessfullPage/PaymentSuccessFullPage";
 
 
 const router = createBrowserRouter([
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: "/about-us",
         element: <AboutUs></AboutUs>
+      },
+      {
+        path: "/thanks-for-purchasing/:id",
+        element: <PaymentSuccessFullPage></PaymentSuccessFullPage>
       },
       {
         path: "/artists",

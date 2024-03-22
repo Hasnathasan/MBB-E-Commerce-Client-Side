@@ -6,12 +6,14 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { useNavigate } from "react-router-dom";
 
 const CheckOutFunctionality = () => {
   const stripe = useStripe();
   const elements = useElements();
   const [axiosSecure] = useAxiosSecure();
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const [clientSecret, setClientSecret] = useState("");
   const [processing, setProcessing] = useState(false);
@@ -145,12 +147,10 @@ const CheckOutFunctionality = () => {
               )
               .then((result) => {
                 console.log(result);
-                const paymentSuccessToast = () =>
-                  toast.success(`Payment successfully completed`);
-                paymentSuccessToast();
                 setTransactionId(transactionId);
                 localStorage.removeItem("cart");
                 setIsProductAdded((prevCount) => prevCount + 1);
+                navigate(`/thanks-for-purchasing/${transactionId}`)
               })
               .catch((error) => {
                 return toast.error(error.message);
@@ -399,7 +399,11 @@ const CheckOutFunctionality = () => {
                       !user
                     }
                   >
-                    Place Order
+                    {!stripe ||
+                      !clientSecret ||
+                      processing ||
+                      userCart.length === 0 ||
+                      !user ? "Processing" : "Place Order"}
                   </Button>
                 </div>
               </div>
