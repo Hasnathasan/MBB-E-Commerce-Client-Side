@@ -26,6 +26,7 @@ const PrisonUpdateModal = ({prison, refetch}) => {
       .then((res) => {
         console.log(res.data);
         if (res.data.modifiedCount > 0) {
+          refetch()
           return toast.success("Successfully Updated Prison");
         }
       })

@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonGroup,
   Dropdown,
   DropdownItem,
   DropdownMenu,
@@ -69,6 +70,33 @@ const ManagePrison = () => {
         );
       });
   };
+  const deleteFunc = id => {
+    axios.delete(`http://localhost:8000/prisonDelete/${id}`)
+    .then(res => {
+      console.log(res.data)
+      if(res.data.deletedCount > 0){
+        refetch()
+        toast.success("Prison Deleted");
+      }
+    })
+    .catch(err => console.log(err))
+  }
+  const handlePrisonDelete = id => {
+    toast((t) => (
+      <span>
+        Do You Want To Delete This Prison?
+        <ButtonGroup variant="solid" radius="none" size="sm">
+        <Button  className="px-9 mt-3 float-right  text-white" color="danger" onClick={() => deleteFunc(id)}>
+          Yes
+        </Button>
+        <Button  className="px-9 mt-3 float-right  text-white" color="success" onClick={() => toast.dismiss(t.id)}>
+          No
+        </Button>
+        </ButtonGroup>
+      </span>
+    ));
+
+  }
   return (
     <div className="overflow-x-auto w-full md:w-[95%]">
       <div className="flex flex-col  gap-4">
@@ -152,13 +180,20 @@ const ManagePrison = () => {
               <TableCell>{prison?.country}</TableCell>
               <TableCell>{prison?.states}</TableCell>
               <TableCell>{prison?.zipCode}</TableCell>
-              <TableCell><Button
+              <TableCell>
+                <ButtonGroup size="sm">
+                <Button
                         onClick={() => handlePrisonUpdate(prison)}
                         color="success"
                         className="text-white"
                       >
                         Details
-                      </Button></TableCell>
+                      </Button>
+                      <Button onClick={() => handlePrisonDelete(prison?._id)} color="danger" className="text-white">
+                Delete
+              </Button>
+                </ButtonGroup>
+                      </TableCell>
             </TableRow>
           ))}
         </TableBody>
