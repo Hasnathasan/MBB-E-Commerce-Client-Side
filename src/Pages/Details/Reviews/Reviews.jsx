@@ -4,41 +4,46 @@ import { BsShieldCheck } from "react-icons/bs";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../../Providers/AuthProvider";
-
+import useUser from "../../../Hooks/useUser";
 
 const Reviews = ({ product, refetch }) => {
-  const { user } = useContext(AuthContext);
+  const [userData, isUserDataLoading] = useUser();
   const [isProductAvailable, setIsProductAvailable] = useState(false);
-  const [ratingByUser, setRatingByUser] = useState(1);
+  const [ratingByUser, setRatingByUser] = useState(0);
   console.log(product);
   const { reviews, rating } = product;
 
-
   useEffect(() => {
-    axios.get(`http://localhost:8000/isPurchased/?email=${user?.email}&&productId=${product?._id}`)
-    .then(res => {
-      console.log(res);
-      setIsProductAvailable(res.data.available)
-    })
-    .catch(err => console.log(err))
-  },[product?._id, user?.email])
-
-
+    axios
+      .get(
+        `http://localhost:8000/isPurchased/?email=${userData?.email}&&productId=${product?._id}`
+      )
+      .then((res) => {
+        console.log(res);
+        setIsProductAvailable(res.data.available);
+      })
+      .catch((err) => console.log(err));
+  }, [product?._id, userData?.email]);
 
   const handleReviewPost = (e) => {
     e.preventDefault();
     const review = e.target.review.value;
     const reviewByUser = {
       review,
-      reviewBy: user?.email,
+      reviewBy: userData?.userName,
+      userEmail: userData?.email,
       rating: ratingByUser,
       createdAt: new Date(),
     };
+    console.log(reviewByUser);
     axios
-      .patch(`https://mbb-e-commerce-server.vercel.app/reviews/${product?._id}`, reviewByUser)
+      .patch(
+        `https://mbb-e-commerce-server.vercel.app/reviews/${product?._id}`,
+        reviewByUser
+      )
       .then((result) => {
         console.log(result.data);
-        setRatingByUser(0);
+        setRatingByUser(1);
         e.target.reset();
         refetch();
       })
@@ -53,7 +58,6 @@ const Reviews = ({ product, refetch }) => {
             onChange={(value) => setRatingByUser(value)}
             initialRating={ratingByUser}
             className="text-orange-400"
-            
             emptySymbol={
               <IoStarOutline className="w-6 h-6 opacity-75"></IoStarOutline>
             }
@@ -70,7 +74,10 @@ const Reviews = ({ product, refetch }) => {
             rows={4}
             cols={50}
           />
-          <button disabled={!isProductAvailable} className="py-2 px-6 block border border-[#2093ff] duration-200 text-[#2093ff] text-[15px] rounded-l-sm">
+          <button
+            disabled={!isProductAvailable}
+            className="py-2 px-6 block border border-[#2093ff] duration-200 text-[#2093ff] text-[15px] rounded-l-sm"
+          >
             Post Your review
           </button>
         </form>
