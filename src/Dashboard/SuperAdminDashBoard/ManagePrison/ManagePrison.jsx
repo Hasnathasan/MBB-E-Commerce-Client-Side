@@ -23,10 +23,18 @@ import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
 import axios from "axios";
 import usePrisons from "../../../Hooks/usePrisons";
 import toast, { Toaster } from "react-hot-toast";
+import { useState } from "react";
+import PrisonUpdateModal from "./PrisonUpdateModal/PrisonUpdateModal";
 
 const ManagePrison = () => {
-  const [prisons] = usePrisons();
+  const [prisons, , refetch] = usePrisons();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen: isPrisonUpdateOpen, onOpen: onPriosonUpdateOpen, onOpenChange: onPrisonUpdateChange } = useDisclosure();
+  const [prisonToShow, setPrisonToShow] = useState();
+  const handlePrisonUpdate = (prison) => {
+    setPrisonToShow(prison);
+    onPriosonUpdateOpen()
+  }
   const handlePrisonAdding = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -128,6 +136,7 @@ const ManagePrison = () => {
           <TableColumn>Country</TableColumn>
           <TableColumn>State</TableColumn>
           <TableColumn>Zip code</TableColumn>
+          <TableColumn>Details</TableColumn>
         </TableHeader>
         <TableBody>
           {prisons?.map((prison) => (
@@ -143,6 +152,13 @@ const ManagePrison = () => {
               <TableCell>{prison?.country}</TableCell>
               <TableCell>{prison?.states}</TableCell>
               <TableCell>{prison?.zipCode}</TableCell>
+              <TableCell><Button
+                        onClick={() => handlePrisonUpdate(prison)}
+                        color="success"
+                        className="text-white"
+                      >
+                        Details
+                      </Button></TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -256,6 +272,31 @@ const ManagePrison = () => {
                     Add Prison
                   </Button>
                 </form>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+      <Modal
+        size="2xl"
+        backdrop="opaque"
+        className="!z-50"
+        isOpen={isPrisonUpdateOpen}
+        onOpenChange={onPrisonUpdateChange}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Add Prison
+              </ModalHeader>
+              <ModalBody>
+                <PrisonUpdateModal prison={prisonToShow} refetch={refetch}></PrisonUpdateModal>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>

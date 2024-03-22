@@ -2,7 +2,7 @@ import { Button } from "@nextui-org/react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const PrisonUpdateModal = ({prison}) => {
+const PrisonUpdateModal = ({prison, refetch}) => {
   const handlePrisonUpdate = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -11,23 +11,21 @@ const PrisonUpdateModal = ({prison}) => {
     const states = form.states.value;
     const address = form.address.value;
     const zipCode = form.zipCode.value;
-    const email = form.email.value;
     const number = form.phoneNumber.value;
-    const prison = {
+    const prisonToUpdate = {
       prison_name,
       country,
       states,
       address,
       zipCode,
-      email,
       number,
     };
     console.log(prison);
     axios
-      .patch(`https://mbb-e-commerce-server.vercel.app/updatePrison`, prison)
+      .patch(`https://mbb-e-commerce-server.vercel.app/prisonUpdate/${prison?.email}`, prisonToUpdate)
       .then((res) => {
         console.log(res.data);
-        if (res.data.insertedId) {
+        if (res.data.modifiedCount > 0) {
           return toast.success("Successfully Updated Prison");
         }
       })
@@ -114,6 +112,7 @@ const PrisonUpdateModal = ({prison}) => {
             className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
             placeholder="Email Address"
             defaultValue={prison?.email}
+            disabled
             required
           />
         </div>
