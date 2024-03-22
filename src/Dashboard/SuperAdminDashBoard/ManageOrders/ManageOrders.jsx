@@ -159,7 +159,6 @@ const ManageOrders = () => {
       <div className="w-[95%] mx-auto">
         <Outlet></Outlet>
       </div>
-      <Toaster></Toaster>
     </>
   );
 };

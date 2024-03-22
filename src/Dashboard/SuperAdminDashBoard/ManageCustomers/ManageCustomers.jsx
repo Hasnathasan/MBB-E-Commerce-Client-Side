@@ -1,6 +1,7 @@
 import {
   Avatar,
   Button,
+  ButtonGroup,
   Chip,
   Modal,
   ModalBody,
@@ -17,7 +18,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import useCustomers from "../../../Hooks/useCustomers";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import CustomerUpdateModal from "./CustomerUpdateModal/CustomerUpdateModal";
@@ -30,6 +31,35 @@ const ManageCustomers = () => {
     setUserData(user);
     onOpen();
   };
+  const deleteFunc = email => {
+    axios.delete(`http://localhost:8000/customerDelete/${email}`)
+    .then(res => {
+      console.log(res.data);
+      if(res.data.deletedCount > 0){
+        refetch();
+        toast.success("User Deleted")
+      }
+    })
+    .catch(err => {
+      toast.error(err.message)
+    })
+  }
+  const handleCustomerDelete = email => {
+    toast((t) => (
+      <span>
+        Do You Want To Delete This Customer?
+        <ButtonGroup variant="solid" radius="none" size="sm">
+        <Button  className="px-9 mt-3 float-right  text-white" color="danger" onClick={() => deleteFunc(email)}>
+          Yes
+        </Button>
+        <Button  className="px-9 mt-3 float-right  text-white" color="success" onClick={() => toast.dismiss(t.id)}>
+          No
+        </Button>
+        </ButtonGroup>
+      </span>
+    ));
+
+  }
   return (
     <div className="overflow-x-auto w-[95%] mx-auto">
       <div className="flex flex-col  gap-4">
@@ -68,14 +98,18 @@ const ManageCustomers = () => {
                 </Chip>
               </TableCell>
               <TableCell>
+                <ButtonGroup size="sm">
                 <Button
                   onClick={() => handleCustomerDetailsModal(user)}
                   color="success"
-                  radius="lg"
                   className="text-white"
                 >
                   View Details
                 </Button>
+                <Button onClick={() => handleCustomerDelete(user?.email)} color="danger" className="text-white">
+                Delete
+              </Button>
+                </ButtonGroup>
               </TableCell>
             </TableRow>
           ))}
@@ -110,7 +144,6 @@ const ManageCustomers = () => {
           )}
         </ModalContent>
       </Modal>
-      <Toaster />
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import {
   Avatar,
   Button,
+  ButtonGroup,
   Chip,
   Modal,
   ModalBody,
@@ -189,6 +190,36 @@ const ManageArtists = () => {
   if (isPrisonsDataLoading || isArtistsDataLoading) {
     return <Loader></Loader>;
   }
+
+  const deleteFunc = email => {
+    axios.delete(`http://localhost:8000/artistDelete/${email}`)
+    .then(res => {
+      console.log(res.data);
+      if(res.data.deletedCount > 0){
+        refetch();
+        toast.success("User Deleted")
+      }
+    })
+    .catch(err => {
+      toast.error(err.message)
+    })
+  }
+  const handleArtistDelete = email => {
+    toast((t) => (
+      <span>
+        Do You Want To Delete This Artist?
+        <ButtonGroup variant="solid" radius="none" size="sm">
+        <Button  className="px-9 mt-3 float-right  text-white" color="danger" onClick={() => deleteFunc(email)}>
+          Yes
+        </Button>
+        <Button  className="px-9 mt-3 float-right  text-white" color="success" onClick={() => toast.dismiss(t.id)}>
+          No
+        </Button>
+        </ButtonGroup>
+      </span>
+    ));
+
+  }
   return (
     <>
       {
@@ -240,14 +271,18 @@ const ManageArtists = () => {
                     </Chip>
                   </TableCell>
                   <TableCell>
+                    <ButtonGroup size="sm">
                     <Button
                       onClick={() => handleArtistUpdateModal(user)}
                       color="success"
-                      radius="lg"
                       className="text-white"
                     >
                       View Details
                     </Button>
+                    <Button onClick={() => handleArtistDelete(user?.email)} color="danger" className="text-white">
+                Delete
+              </Button>
+                    </ButtonGroup>
                   </TableCell>
                 </TableRow>
               ))}
@@ -629,7 +664,6 @@ const ManageArtists = () => {
               )}
             </ModalContent>
           </Modal>
-          <Toaster></Toaster>
         </div>
       }
     </>

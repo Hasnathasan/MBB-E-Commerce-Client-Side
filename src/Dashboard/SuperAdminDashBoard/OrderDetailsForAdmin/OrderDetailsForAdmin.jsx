@@ -79,8 +79,8 @@ const OrderDetailsForAdmin = () => {
             <SelectItem key={"shipped"} value={"shipped"}>
               Shipped
             </SelectItem>
-            <SelectItem key={"delevered"} value={"delevered"}>
-              Delevered
+            <SelectItem key={"delivered"} value={"delivered"}>
+              Delievered
             </SelectItem>
             <SelectItem key={"canceled"} value={"canceled"}>
               Canceled
@@ -206,7 +206,6 @@ const OrderDetailsForAdmin = () => {
           </tr>
         ))}
       </table>
-      <Toaster />
     </div>
   );
 };

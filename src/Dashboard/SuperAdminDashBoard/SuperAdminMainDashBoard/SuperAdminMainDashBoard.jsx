@@ -9,6 +9,7 @@ import {
 import { NavLink, Outlet } from "react-router-dom";
 import logo from "../../../assets/logo.png";
 import "./SuperAdminMainDashBoard.css";
+import { Toaster } from "react-hot-toast";
 const SuperAdminMainDashBoard = () => {
   const mainLinks = (
     <>
@@ -107,6 +108,7 @@ const SuperAdminMainDashBoard = () => {
           </li>
         </ul>
       </div>
+      <Toaster />
     </div>
   );
 };

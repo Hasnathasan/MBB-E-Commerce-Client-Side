@@ -231,7 +231,6 @@ const ManageProducts = () => {
             </ModalContent>
           </Modal>
 
-          <Toaster position="top-center" reverseOrder={false} />
         </div>
       }
     </>

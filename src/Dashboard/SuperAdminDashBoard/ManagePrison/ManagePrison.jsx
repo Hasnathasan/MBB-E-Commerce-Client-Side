@@ -342,7 +342,6 @@ const ManagePrison = () => {
           )}
         </ModalContent>
       </Modal>
-      <Toaster></Toaster>
     </div>
   );
 };

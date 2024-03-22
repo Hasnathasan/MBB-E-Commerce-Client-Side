@@ -319,7 +319,6 @@ const ManageCategories = () => {
           )}
         </ModalContent>
       </Modal>
-      <Toaster></Toaster>
     </div>
   );
 };

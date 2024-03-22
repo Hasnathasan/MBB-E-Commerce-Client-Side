@@ -286,7 +286,6 @@ console.log(salesReport);
         )}
       </ModalContent>
     </Modal>
-    <Toaster />
         </div>
     );
 };

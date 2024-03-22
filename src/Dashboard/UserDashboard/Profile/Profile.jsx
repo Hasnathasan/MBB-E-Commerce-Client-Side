@@ -1,5 +1,6 @@
 import { Avatar } from "@nextui-org/react";
 import useUser from "../../../Hooks/useUser";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const [userData] = useUser();
@@ -12,9 +13,9 @@ const Profile = () => {
             {userData?.userName || "Unknown"}
           </h2>
           <h3 className="text-gray-600">Customer</h3>
-          <h2 className="text-lg cursor-pointer text-[#00B207] font-medium">
+          <Link to={"/userDashboard/settings"}> <h2 className="text-lg cursor-pointer text-[#00B207] font-medium">
             Edit Profile
-          </h2>
+          </h2></Link>
         </div>
         <div className="border col-span-3 p-7 space-y-3 border-gray-300 rounded-lg">
           <h2 className=" text-gray-600 mb-5 font-medium">Billing Address</h2>
@@ -28,9 +29,10 @@ const Profile = () => {
           <h3 className="text-gray-900 font-medium">
             {userData?.userPhoneNumber}
           </h3>
+          <Link to={"/userDashboard/settings"}>
           <h2 className="text-lg cursor-pointer text-[#00B207] font-medium">
             Edit Address
-          </h2>
+          </h2></Link>
         </div>
       </div>
     </div>
