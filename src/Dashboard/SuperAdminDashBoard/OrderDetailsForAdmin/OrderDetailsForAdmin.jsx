@@ -1,4 +1,3 @@
-
 import "./OrderDetailsForAdmin.css";
 import { useParams } from "react-router-dom";
 import useSingleOrderById from "../../../Hooks/useSingleOrderById";
@@ -13,8 +12,8 @@ const OrderDetailsForAdmin = () => {
   const [order, isOrderLoading] = useSingleOrderById({ id });
   const [value, setValue] = useState();
   useEffect(() => {
-    setValue(order?.status)
-  },[order?.status])
+    setValue(order?.status);
+  }, [order?.status]);
   if (isOrderLoading) {
     return <Loader></Loader>;
   }
@@ -35,56 +34,66 @@ const OrderDetailsForAdmin = () => {
   };
   const handleStatusUpdate = () => {
     console.log(value);
-    axios.patch(`https://mbb-e-commerce-server.vercel.app/orderStatusUpdate/${order?._id}?status=${value.toLowerCase()}`)
-    .then(res => {
-      if(res.status === 200){
-        toast.success("Order Status Updated")
-      }
-    })
-    .catch(err => toast.error("An Unknown Error Occoured"))
-  }
+    axios
+      .patch(
+        `https://mbb-e-commerce-server.vercel.app/orderStatusUpdate/${
+          order?._id
+        }?status=${value.toLowerCase()}`
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success("Order Status Updated");
+        }
+      })
+      .catch((err) => toast.error("An Unknown Error Occoured"));
+  };
   return (
     <div className="border border-gray-300 rounded-lg">
       <div className="flex justify-between items-center border-b border-gray-300 p-5">
-      <div className="flex justify-between items-center">
-        <div className="flex justify-center items-center gap-4">
-          <h1 className="text-xl font-semibold">Order Details</h1>
-          <h4 className="text-sm text-gray-800">
-            {order?.createdAt.slice(0, 10)}
-          </h4>
-          <h4 className="text-sm text-gray-800">
-            {order?.products?.length} Products
-          </h4>
+        <div className="flex justify-between items-center">
+          <div className="flex justify-center items-center gap-4">
+            <h1 className="text-xl font-semibold">Order Details</h1>
+            <h4 className="text-sm text-gray-800">
+              {order?.createdAt.slice(0, 10)}
+            </h4>
+            <h4 className="text-sm text-gray-800">
+              {order?.products?.length} Products
+            </h4>
+          </div>
         </div>
-      </div>
-      <div className="min-w-64 flex justify-between items-center gap-3">
-      <Select
-      placeholder="Change Status"
-      labelPlacement="outside-left"
-      className="max-w-xl text-nowrap"
-      disableSelectorIconRotation
-     
-      selectedKeys={[value]}
-      onChange={handleSelectionChange}
-    >
-        <SelectItem key={"pending"} value={"pending"}>
-          Pending
-        </SelectItem>
-        <SelectItem key={"processing"} value={"processing"}>
-          Processing
-        </SelectItem>
-        <SelectItem key={"shipped"} value={"shipped"}>
-          Shipped
-        </SelectItem>
-        <SelectItem key={"delevered"} value={"delevered"}>
-          Delevered
-        </SelectItem>
-        <SelectItem key={"canceled"} value={"canceled"}>
-          Canceled
-        </SelectItem>
-    </Select>
-    <Button onClick={handleStatusUpdate} color="success" className="text-white">Update</Button>
-      </div>
+        <div className="min-w-64 flex justify-between items-center gap-3">
+          <Select
+            placeholder="Change Status"
+            labelPlacement="outside-left"
+            className="max-w-xl text-nowrap"
+            disableSelectorIconRotation
+            selectedKeys={[value]}
+            onChange={handleSelectionChange}
+          >
+            <SelectItem key={"pending"} value={"pending"}>
+              Pending
+            </SelectItem>
+            <SelectItem key={"processing"} value={"processing"}>
+              Processing
+            </SelectItem>
+            <SelectItem key={"shipped"} value={"shipped"}>
+              Shipped
+            </SelectItem>
+            <SelectItem key={"delevered"} value={"delevered"}>
+              Delevered
+            </SelectItem>
+            <SelectItem key={"canceled"} value={"canceled"}>
+              Canceled
+            </SelectItem>
+          </Select>
+          <Button
+            onClick={handleStatusUpdate}
+            color="success"
+            className="text-white"
+          >
+            Update
+          </Button>
+        </div>
       </div>
       <div className="p-6">
         <div className="grid grid-cols-6 gap-7">
