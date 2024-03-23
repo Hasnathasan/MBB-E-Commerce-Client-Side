@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "./useAxiosSecure";
-import axios from "axios";
 
 
 const useAllSalesReport = ({status}) => {
@@ -12,7 +11,7 @@ const useAllSalesReport = ({status}) => {
     } = useQuery({
       queryKey: ["sales-report-all", status],
       queryFn: async () => {
-        const res = await axios.get(`https://mbb-e-commerce-server.vercel.app/sales-report-all/${status ? `?status=${status}` : ""}`);
+        const res = await axiosSecure.get(`/sales-report-all/${status ? `?status=${status}` : ""}`);
         return res.data;
       },
     });

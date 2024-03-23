@@ -36,6 +36,7 @@ import OrderDetailsForAdmin from "../Dashboard/SuperAdminDashBoard/OrderDetailsF
 import SalesReport from "../Dashboard/SuperAdminDashBoard/SalesReport/SalesReport";
 import WishList from "../Dashboard/UserDashboard/WishList/WishList";
 import PaymentSuccessFullPage from "../Components/PaymentSuccessfullPage/PaymentSuccessFullPage";
+import ManageBanners from "../Dashboard/SuperAdminDashBoard/ManageBanners/ManageBanners";
 
 
 const router = createBrowserRouter([
@@ -192,6 +193,10 @@ const router = createBrowserRouter([
     {
       path: "sales-report",
       element: <SalesReport></SalesReport>
+    },
+    {
+      path: "banners",
+      element: <ManageBanners></ManageBanners>
     },
     {
       path: "settings",

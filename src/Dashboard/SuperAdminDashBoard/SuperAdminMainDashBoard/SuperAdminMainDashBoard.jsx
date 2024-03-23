@@ -58,7 +58,7 @@ const SuperAdminMainDashBoard = () => {
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
         {/* Sidebar content here */}
         <div className="w-80"></div>
-        <ul className="menu flex-nowrap top-0 fixed px-8 h-screen bg-gray-200 py-10 w-80 space-y-2">
+        <ul className="menu flex-nowrap top-0 fixed px-8 h-screen overflow-y-auto bg-gray-200 py-10 w-80 space-y-2">
           <img className="w-64 h-24" src={logo} alt="" />
           <li>
             <NavLink className="p-3 text-base" to="overview">
@@ -99,6 +99,11 @@ const SuperAdminMainDashBoard = () => {
           <li>
             <NavLink className="p-3 text-base" to="sales-report">
               <FaBookmark></FaBookmark> Sales Report
+            </NavLink>
+          </li>
+          <li>
+            <NavLink className="p-3 text-base" to="banners">
+              <FaBookmark></FaBookmark> Banners
             </NavLink>
           </li>
           <li>
