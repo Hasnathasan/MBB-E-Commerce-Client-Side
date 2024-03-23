@@ -129,7 +129,6 @@ const AccountSettings = () => {
                 className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full md:w-[80%] p-2.5 "
                 placeholder="Name"
                 defaultValue={userData?.userName}
-                required
               />
               <label htmlFor="email">Email Address</label>
               <input
@@ -150,7 +149,6 @@ const AccountSettings = () => {
                 className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full md:w-[80%] p-2.5 "
                 placeholder="Your Phone Number"
                 defaultValue={userData?.userPhoneNumber}
-                required
               />
               <button
                 type="submit"
@@ -200,7 +198,6 @@ const AccountSettings = () => {
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                 placeholder="Name"
                 defaultValue={userData?.userName}
-                required
               />
             </div>
             <div>
@@ -214,7 +211,6 @@ const AccountSettings = () => {
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                 placeholder="companyName"
                 defaultValue={userData?.billingInfo?.companyName}
-                required
               />
             </div>
           </div>
@@ -227,7 +223,6 @@ const AccountSettings = () => {
               className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
               placeholder="Street Address"
               defaultValue={userData?.billingInfo?.address}
-              required
             />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -240,7 +235,6 @@ const AccountSettings = () => {
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                 placeholder="Country"
                 defaultValue={userData?.billingInfo?.country}
-                required
               />
             </div>
             <div>
@@ -252,7 +246,6 @@ const AccountSettings = () => {
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                 placeholder="States Name"
                 defaultValue={userData?.billingInfo?.states}
-                required
               />
             </div>
             <div>
@@ -264,7 +257,6 @@ const AccountSettings = () => {
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                 placeholder="Zip Code"
                 defaultValue={userData?.billingInfo?.zipCode}
-                required
               />
             </div>
           </div>
@@ -292,7 +284,6 @@ const AccountSettings = () => {
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                 placeholder="Phone Number"
                 defaultValue={userData?.userPhoneNumber}
-                required
               />
             </div>
           </div>

@@ -51,7 +51,7 @@ const Reviews = ({ product, refetch }) => {
   };
   return (
     <div>
-      <div className="flex flex-col-reverse md:flex-row gap-y-4 justify-between items-start mt-5">
+      <div className="flex flex-col-reverse px-5 gap-10 md:flex-row gap-y-4 justify-between items-start mt-5">
         <form onSubmit={handleReviewPost} className="space-y-2">
           <h4 className="text-gray-700 text-lg">Rate this product</h4>
           <Rating
@@ -81,7 +81,7 @@ const Reviews = ({ product, refetch }) => {
             Post Your review
           </button>
         </form>
-        <div className="flex items-end gap-8">
+        <div className="flex items-end mb-10 md:mb-0 gap-8">
           <div className=" space-y-1">
             <h2 className="text-5xl text-gray-800">{rating}</h2>
             <Rating

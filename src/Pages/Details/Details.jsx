@@ -137,8 +137,8 @@ const Details = () => {
   console.log(localStorage.getItem("cart"));
   return (
     <div className={`md:mx-8 py-14`}>
-      <div className="grid grid-cols-2 gap-2">
-        <div className="col-span-1 flex w-full flex-col items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-2">
+        <div className="col-span-1 flex w-full flex-col items-center order-2 md:order-1">
           <div ref={sliderRef} className="keen-slider w-[380px] mb-2">
             {[featured_photo, ...gallery_photos]?.map((img, index) => (
               <div
@@ -162,9 +162,9 @@ const Details = () => {
             ))}
           </div>
         </div>
-        <div className="space-y-4">
+        <div className="space-y-4 mx-5 md:mx-0 order-1 md:order-2">
           <div className="flex items-start gap-2">
-            <h2 className="text-3xl font-semibold">{product_name}</h2>
+            <h2 className="md:text-3xl text-2xl font-semibold">{product_name}</h2>
             {available_quantity > 0 ? (
               <Chip color="success" variant="flat" radius="sm">
                 In Stock
@@ -313,7 +313,7 @@ const Details = () => {
               </div>
             }
           >
-            <p>{description}</p>
+            <p className="px-3">{description}</p>
           </Tab>
           <Tab
             key="videos"
@@ -331,7 +331,7 @@ const Details = () => {
         <h2 className="text-3xl font-semibold mb-5 text-center">
           Related Products
         </h2>
-        <div className={`grid grid-cols-2 px-14 sm:grid-cols-2 ${location.pathname.includes("/adminDashboard") ? "xl:grid-cols-3 2xl:grid-cols-4" : "xl:grid-cols-4 2xl:grid-cols-5"} gap-6 justify-center items-center md:grid-cols-3`}>
+        <div className={`grid grid-cols-1 md:grid-cols-2 px-2 md:px-14 sm:grid-cols-2 ${location.pathname.includes("/adminDashboard") ? "xl:grid-cols-3 2xl:grid-cols-4" : "xl:grid-cols-4 2xl:grid-cols-5"} gap-6 justify-center items-center md:grid-cols-3`}>
           {relatedProducts?.map((product) => (
             <PopularProductsCard
               key={product?.name}

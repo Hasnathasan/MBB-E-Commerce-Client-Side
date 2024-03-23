@@ -55,7 +55,7 @@ const Bannar = () => {
         {bannerImages[0]?.images?.map((img, index) => (
           <div className="w-full" key={index}>
             <img
-              className="h-full rounded-[10px] md:rounded-none p-[5px] md:p-0 md:h-[500px] w-full"
+              className=" rounded-[10px] md:rounded-none p-[5px] md:p-0 h-[180px] md:h-[500px] w-full"
               src={img}
             />
           </div>
