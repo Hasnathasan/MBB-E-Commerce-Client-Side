@@ -32,7 +32,7 @@ const ManageCustomers = () => {
     onOpen();
   };
   const deleteFunc = email => {
-    axios.delete(`http://localhost:8000/customerDelete/${email}`)
+    axios.delete(`https://mbb-e-commerce-server.vercel.app/customerDelete/${email}`)
     .then(res => {
       console.log(res.data);
       if(res.data.deletedCount > 0){
@@ -76,8 +76,8 @@ const ManageCustomers = () => {
             <h5 className="text-center">Details</h5>
           </TableColumn>
         </TableHeader>
-        <TableBody>
-          {customersData?.map((user) => (
+        <TableBody emptyContent={"No Customer Available"}>
+          {customersData?.length > 0 ? customersData?.map((user) => (
             <TableRow key={user._id}>
               <TableCell>
                 <User
@@ -112,7 +112,7 @@ const ManageCustomers = () => {
                 </ButtonGroup>
               </TableCell>
             </TableRow>
-          ))}
+          )) : []}
         </TableBody>
       </Table>
       <Modal

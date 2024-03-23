@@ -6,7 +6,7 @@ import useArtists from "../../../Hooks/useArtists";
 import axios from "axios";
 import toast from "react-hot-toast";
 import usePopularCategories from "../../../Hooks/usePopularCategories";
-const AddNewProductForAdmin = ({ refetchProducts }) => {
+const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
   const [artistData, isArtistsDataLoading] = useArtists();
   const [allCategories, isCategoriesLoading, refetch] = usePopularCategories();
   const [values, setValues] = useState(new Set([]));
@@ -215,6 +215,7 @@ const AddNewProductForAdmin = ({ refetchProducts }) => {
                     )
                     .then((res) => {
                       console.log(res.data);
+                      onClose()
                       form.reset();
                       refetchProducts();
                       return res.data;

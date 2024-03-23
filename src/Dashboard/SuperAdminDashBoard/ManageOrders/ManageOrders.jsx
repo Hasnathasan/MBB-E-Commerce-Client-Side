@@ -38,7 +38,7 @@ const ManageOrders = () => {
   console.log(orders);
   const deleteFunc = (id) => {
     axios
-      .delete(`http://localhost:8000/orderDelete/${id}`)
+      .delete(`https://mbb-e-commerce-server.vercel.app/orderDelete/${id}`)
       .then((res) => {
         console.log(res.data);
         if (res.data.deletedCount > 0) {
@@ -124,8 +124,8 @@ const ManageOrders = () => {
               <h5 className="text-center">Details</h5>
             </TableColumn>
           </TableHeader>
-          <TableBody>
-            {orders?.map((order) => (
+          <TableBody  emptyContent={"No Order Available"}>
+            {orders?.length > 0 ? orders?.map((order) => (
               <TableRow key={order._id}>
                 <TableCell>{order?.transactionId}</TableCell>
                 <TableCell>{order?.createdAt.slice(0, 10)}</TableCell>
@@ -163,7 +163,7 @@ const ManageOrders = () => {
                   </ButtonGroup>
                 </TableCell>
               </TableRow>
-            ))}
+            )) : []}
           </TableBody>
         </Table>
       </div>

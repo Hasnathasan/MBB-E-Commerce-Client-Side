@@ -8,7 +8,7 @@ import useUser from "../../../../Hooks/useUser";
 import { Avatar, Button, Select, SelectItem } from "@nextui-org/react";
 import { MultiSelect } from "react-selectize";
 
-const ArtistUpdateModal = ({ artist }) => {
+const ArtistUpdateModal = ({ artist, onClose }) => {
   const [prisons, isPrisonsDataLoading] = usePrisons();
   const [userData] = useUser();
   const [artistsData, isArtistsDataLoading, refetch] = useArtists();
@@ -110,6 +110,7 @@ const ArtistUpdateModal = ({ artist }) => {
           artist
         );
         console.log(res.data);
+        onClose()
         refetch();
         form.reset();
         return res.data; // Return data to handle success message

@@ -59,7 +59,7 @@ const ManageProducts = () => {
   };
   const deleteFunc = (id) => {
     axios
-      .delete(`http://localhost:8000/productDelete/${id}`)
+      .delete(`https://mbb-e-commerce-server.vercel.app/productDelete/${id}`)
       .then((res) => {
         console.log(res.data);
         if (res.data.deletedCount > 0) {
@@ -129,8 +129,8 @@ const ManageProducts = () => {
               <TableColumn>Rating</TableColumn>
               <TableColumn>Action</TableColumn>
             </TableHeader>
-            <TableBody>
-              {products?.map((product) => (
+            <TableBody emptyContent={"No Product Available"}>
+              { products?.length > 0 ? products?.map((product) => (
                 <TableRow key={product.name}>
                   <TableCell>
                     <div className="flex justify-start items-center gap-3">
@@ -167,8 +167,8 @@ const ManageProducts = () => {
                       </Button>
                     </ButtonGroup>
                   </TableCell>
-                </TableRow>
-              ))}
+                </TableRow> 
+              )): []}
             </TableBody>
           </Table>
 
@@ -188,6 +188,7 @@ const ManageProducts = () => {
                   </ModalHeader>
                   <ModalBody>
                     <AddNewProductForAdmin
+                    onClose={onClose}
                       refetchProducts={refetch}
                     ></AddNewProductForAdmin>
                   </ModalBody>

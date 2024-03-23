@@ -65,6 +65,7 @@ const ManagePrison = () => {
       .then((res) => {
         console.log(res.data);
         if (res.data.insertedId) {
+          refetch()
           return toast.success("Successfully added Prison");
         }
       })
@@ -76,7 +77,7 @@ const ManagePrison = () => {
   };
   const deleteFunc = (id) => {
     axios
-      .delete(`http://localhost:8000/prisonDelete/${id}`)
+      .delete(`https://mbb-e-commerce-server.vercel.app/prisonDelete/${id}`)
       .then((res) => {
         console.log(res.data);
         if (res.data.deletedCount > 0) {
@@ -178,8 +179,8 @@ const ManagePrison = () => {
           <TableColumn>Zip code</TableColumn>
           <TableColumn>Details</TableColumn>
         </TableHeader>
-        <TableBody>
-          {prisons?.map((prison) => (
+        <TableBody emptyContent={"No Prison Available"}>
+           {prisons?.length > 0 ? prisons?.map((prison) => (
             <TableRow key={prison?._id}>
               <TableCell>
                 <User
@@ -211,7 +212,7 @@ const ManagePrison = () => {
                 </ButtonGroup>
               </TableCell>
             </TableRow>
-          ))}
+          )): []}
         </TableBody>
       </Table>
       <Modal
@@ -348,6 +349,7 @@ const ManagePrison = () => {
               </ModalHeader>
               <ModalBody>
                 <PrisonUpdateModal
+                onClose={onClose}
                   prison={prisonToShow}
                   refetch={refetch}
                 ></PrisonUpdateModal>

@@ -2,7 +2,7 @@ import { Button } from "@nextui-org/react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const PrisonUpdateModal = ({ prison, refetch }) => {
+const PrisonUpdateModal = ({ prison, refetch, onClose }) => {
   const handlePrisonUpdate = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -30,6 +30,7 @@ const PrisonUpdateModal = ({ prison, refetch }) => {
         console.log(res.data);
         if (res.data.modifiedCount > 0) {
           refetch();
+          onClose()
           return toast.success("Successfully Updated Prison");
         }
       })

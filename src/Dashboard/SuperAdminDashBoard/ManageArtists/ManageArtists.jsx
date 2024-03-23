@@ -192,7 +192,7 @@ const ManageArtists = () => {
   }
 
   const deleteFunc = email => {
-    axios.delete(`http://localhost:8000/artistDelete/${email}`)
+    axios.delete(`https://mbb-e-commerce-server.vercel.app/artistDelete/${email}`)
     .then(res => {
       console.log(res.data);
       if(res.data.deletedCount > 0){
@@ -249,8 +249,8 @@ const ManageArtists = () => {
                 <h5 className="text-center">Details</h5>
               </TableColumn>
             </TableHeader>
-            <TableBody>
-              {artistsData?.map((user) => (
+            <TableBody emptyContent={"No Artist Available"}>
+              {artistsData?.length > 0 ? artistsData?.map((user) => (
                 <TableRow key={user._id}>
                   <TableCell>
                     <User
@@ -285,7 +285,7 @@ const ManageArtists = () => {
                     </ButtonGroup>
                   </TableCell>
                 </TableRow>
-              ))}
+              )) : []}
             </TableBody>
           </Table>
 
@@ -652,6 +652,8 @@ const ManageArtists = () => {
                   </ModalHeader>
                   <ModalBody>
                     <ArtistUpdateModal
+                    onClose={onClose}
+                    refetch={refetch}
                       artist={artistToShowOnModal}
                     ></ArtistUpdateModal>
                   </ModalBody>

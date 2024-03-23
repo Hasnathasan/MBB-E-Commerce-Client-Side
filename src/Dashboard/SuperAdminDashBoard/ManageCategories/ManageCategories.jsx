@@ -180,8 +180,8 @@ const ManageCategories = () => {
           <TableColumn>Total Product's found</TableColumn>
           <TableColumn className="text-center">Action's</TableColumn>
         </TableHeader>
-        <TableBody>
-          {categories?.map((category) => (
+        <TableBody emptyContent={"No Category Available"}>
+          {categories?.length > 0 ? categories?.map((category) => (
             <TableRow key={category?.category}>
               <TableCell>
                 <img src={category.image} className="w-16 h-16" alt="" />
@@ -201,7 +201,7 @@ const ManageCategories = () => {
                 </ButtonGroup>
               </TableCell>
             </TableRow>
-          ))}
+          )) : []}
         </TableBody>
       </Table>
       <Modal

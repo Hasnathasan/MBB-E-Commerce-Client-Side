@@ -9,14 +9,14 @@ import useUser from "../../../Hooks/useUser";
 const Reviews = ({ product, refetch }) => {
   const [userData, isUserDataLoading] = useUser();
   const [isProductAvailable, setIsProductAvailable] = useState(false);
-  const [ratingByUser, setRatingByUser] = useState(0);
+  const [ratingByUser, setRatingByUser] = useState(1);
   console.log(product);
   const { reviews, rating } = product;
 
   useEffect(() => {
     axios
       .get(
-        `http://localhost:8000/isPurchased/?email=${userData?.email}&&productId=${product?._id}`
+        `https://mbb-e-commerce-server.vercel.app/isPurchased/?email=${userData?.email}&&productId=${product?._id}`
       )
       .then((res) => {
         console.log(res);
