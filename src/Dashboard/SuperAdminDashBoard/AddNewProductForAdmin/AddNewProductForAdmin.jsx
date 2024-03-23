@@ -215,7 +215,7 @@ const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
                     )
                     .then((res) => {
                       console.log(res.data);
-                      onClose()
+                      onClose();
                       form.reset();
                       refetchProducts();
                       return res.data;

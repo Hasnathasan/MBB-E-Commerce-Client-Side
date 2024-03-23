@@ -65,7 +65,7 @@ const ManagePrison = () => {
       .then((res) => {
         console.log(res.data);
         if (res.data.insertedId) {
-          refetch()
+          refetch();
           return toast.success("Successfully added Prison");
         }
       })
@@ -95,7 +95,10 @@ const ManagePrison = () => {
           <Button
             className="px-9 mt-3 float-right  text-white"
             color="danger"
-            onClick={() => {deleteFunc(id);toast.dismiss(t.id)}}
+            onClick={() => {
+              deleteFunc(id);
+              toast.dismiss(t.id);
+            }}
           >
             Yes
           </Button>
@@ -180,39 +183,41 @@ const ManagePrison = () => {
           <TableColumn>Details</TableColumn>
         </TableHeader>
         <TableBody emptyContent={"No Prison Available"}>
-           {prisons?.length > 0 ? prisons?.map((prison) => (
-            <TableRow key={prison?._id}>
-              <TableCell>
-                <User
-                  avatarProps={{ radius: "md", src: prison?.photoUrl }}
-                  description={prison?.email}
-                  name={prison?.prison_name || "Unknown"}
-                ></User>
-              </TableCell>
-              <TableCell>{prison?.number}</TableCell>
-              <TableCell>{prison?.country}</TableCell>
-              <TableCell>{prison?.states}</TableCell>
-              <TableCell>{prison?.zipCode}</TableCell>
-              <TableCell>
-                <ButtonGroup size="sm">
-                  <Button
-                    onClick={() => handlePrisonUpdate(prison)}
-                    color="success"
-                    className="text-white"
-                  >
-                    Details
-                  </Button>
-                  <Button
-                    onClick={() => handlePrisonDelete(prison?._id)}
-                    color="danger"
-                    className="text-white"
-                  >
-                    Delete
-                  </Button>
-                </ButtonGroup>
-              </TableCell>
-            </TableRow>
-          )): []}
+          {prisons?.length > 0
+            ? prisons?.map((prison) => (
+                <TableRow key={prison?._id}>
+                  <TableCell>
+                    <User
+                      avatarProps={{ radius: "md", src: prison?.photoUrl }}
+                      description={prison?.email}
+                      name={prison?.prison_name || "Unknown"}
+                    ></User>
+                  </TableCell>
+                  <TableCell>{prison?.number}</TableCell>
+                  <TableCell>{prison?.country}</TableCell>
+                  <TableCell>{prison?.states}</TableCell>
+                  <TableCell>{prison?.zipCode}</TableCell>
+                  <TableCell>
+                    <ButtonGroup size="sm">
+                      <Button
+                        onClick={() => handlePrisonUpdate(prison)}
+                        color="success"
+                        className="text-white"
+                      >
+                        Details
+                      </Button>
+                      <Button
+                        onClick={() => handlePrisonDelete(prison?._id)}
+                        color="danger"
+                        className="text-white"
+                      >
+                        Delete
+                      </Button>
+                    </ButtonGroup>
+                  </TableCell>
+                </TableRow>
+              ))
+            : []}
         </TableBody>
       </Table>
       <Modal
@@ -349,7 +354,7 @@ const ManagePrison = () => {
               </ModalHeader>
               <ModalBody>
                 <PrisonUpdateModal
-                onClose={onClose}
+                  onClose={onClose}
                   prison={prisonToShow}
                   refetch={refetch}
                 ></PrisonUpdateModal>

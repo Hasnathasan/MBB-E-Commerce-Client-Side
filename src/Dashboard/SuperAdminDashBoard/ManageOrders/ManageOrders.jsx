@@ -56,7 +56,10 @@ const ManageOrders = () => {
           <Button
             className="px-9 mt-3 float-right  text-white"
             color="danger"
-            onClick={() => {deleteFunc(id);toast.dismiss(t.id)}}
+            onClick={() => {
+              deleteFunc(id);
+              toast.dismiss(t.id);
+            }}
           >
             Yes
           </Button>
@@ -124,46 +127,50 @@ const ManageOrders = () => {
               <h5 className="text-center">Details</h5>
             </TableColumn>
           </TableHeader>
-          <TableBody  emptyContent={"No Order Available"}>
-            {orders?.length > 0 ? orders?.map((order) => (
-              <TableRow key={order._id}>
-                <TableCell>{order?.transactionId}</TableCell>
-                <TableCell>{order?.createdAt.slice(0, 10)}</TableCell>
-                <TableCell>
-                  {order?.total_price} ({order?.products.length} products)
-                </TableCell>
-                <TableCell>
-                  <Chip
-                    className="capitalize"
-                    color={order?.status == "completed" ? "success" : "danger"}
-                    size="sm"
-                    variant="flat"
-                  >
-                    {order?.status}
-                  </Chip>
-                </TableCell>
-                <TableCell>
-                  <ButtonGroup size="sm" radius="sm">
-                    <Button color="success" className="text-white">
-                      <Link
-                        className="w-full h-full flex justify-center items-center"
-                        to={`/adminDashboard/orders/orderDetails/${order?._id}`}
+          <TableBody emptyContent={"No Order Available"}>
+            {orders?.length > 0
+              ? orders?.map((order) => (
+                  <TableRow key={order._id}>
+                    <TableCell>{order?.transactionId}</TableCell>
+                    <TableCell>{order?.createdAt.slice(0, 10)}</TableCell>
+                    <TableCell>
+                      {order?.total_price} ({order?.products.length} products)
+                    </TableCell>
+                    <TableCell>
+                      <Chip
+                        className="capitalize"
+                        color={
+                          order?.status == "completed" ? "success" : "danger"
+                        }
+                        size="sm"
+                        variant="flat"
                       >
-                        View Details
-                      </Link>
-                    </Button>
+                        {order?.status}
+                      </Chip>
+                    </TableCell>
+                    <TableCell>
+                      <ButtonGroup size="sm" radius="sm">
+                        <Button color="success" className="text-white">
+                          <Link
+                            className="w-full h-full flex justify-center items-center"
+                            to={`/adminDashboard/orders/orderDetails/${order?._id}`}
+                          >
+                            View Details
+                          </Link>
+                        </Button>
 
-                    <Button
-                      onClick={() => handleOrderDelete(order?._id)}
-                      color="danger"
-                      className="text-white"
-                    >
-                      Delete
-                    </Button>
-                  </ButtonGroup>
-                </TableCell>
-              </TableRow>
-            )) : []}
+                        <Button
+                          onClick={() => handleOrderDelete(order?._id)}
+                          color="danger"
+                          className="text-white"
+                        >
+                          Delete
+                        </Button>
+                      </ButtonGroup>
+                    </TableCell>
+                  </TableRow>
+                ))
+              : []}
           </TableBody>
         </Table>
       </div>

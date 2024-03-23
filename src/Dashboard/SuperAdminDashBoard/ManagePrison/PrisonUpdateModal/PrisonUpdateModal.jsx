@@ -30,7 +30,7 @@ const PrisonUpdateModal = ({ prison, refetch, onClose }) => {
         console.log(res.data);
         if (res.data.modifiedCount > 0) {
           refetch();
-          onClose()
+          onClose();
           return toast.success("Successfully Updated Prison");
         }
       })

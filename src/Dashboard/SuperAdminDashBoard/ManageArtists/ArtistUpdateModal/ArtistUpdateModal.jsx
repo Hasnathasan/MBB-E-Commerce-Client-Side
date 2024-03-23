@@ -110,7 +110,7 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
           artist
         );
         console.log(res.data);
-        onClose()
+        onClose();
         refetch();
         form.reset();
         return res.data; // Return data to handle success message
