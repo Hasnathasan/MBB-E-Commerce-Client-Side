@@ -141,7 +141,7 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
           Artist&apos;s personal Info
         </h4>
         <div className="p-5 grid grid-cols-12 gap-5 items-center justify-center">
-          <div className="col-span-9">
+          <div className="lg:col-span-9 col-span-12">
             {/* <h3 className="text-base text-red-600">{error}</h3> */}
             <div className="mb-3">
               <label htmlFor="name">Artist Name</label>
@@ -149,7 +149,7 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
                 type="text"
                 name="name"
                 id="name"
-                className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
+                className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block w-full lg:w-[80%] p-2.5 "
                 placeholder="Your Name"
                 defaultValue={artist?.userName}
                 required
@@ -161,7 +161,7 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
                 type="email"
                 name="email"
                 id="email"
-                className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block  w-[80%] p-2.5 "
+                className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block  w-full lg:w-[80%] p-2.5 "
                 placeholder="Email"
                 disabled
                 defaultValue={artist?.email}
@@ -172,7 +172,7 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
             <textarea
               name="bio"
               id="bio"
-              className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
+              className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full lg:w-[80%] p-2.5 "
               placeholder="Artist Bio"
               defaultValue={artist?.bio}
               required
@@ -181,12 +181,12 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
             <textarea
               name="art_description"
               id="art_description"
-              className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
+              className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full lg:w-[80%] p-2.5 "
               placeholder="Art Description"
               defaultValue={artist?.art_description}
               required
             />
-            <div className="grid grid-cols-2">
+            <div className="grid grid-cols-1 md:grid-cols-2">
               <div>
                 <label htmlFor="keywords">Key Words</label>
                 <MultiSelect
@@ -246,7 +246,7 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
               </div>
             </div>
           </div>
-          <div className="flex justify-center col-span-2 items-center gap-5 flex-col">
+          <div className="flex justify-center col-span-12 lg:col-span-2 items-center gap-5 flex-col">
             <Avatar src={artist?.userPhoto} className="w-48 h-48 text-large" />
             {/* <img src={`data:image/png;base64,${binaryCode}`} alt="Decoded Image" /> */}
             <input
@@ -271,7 +271,7 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
           Payment information
         </h4>
         <div className="p-5">
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <Select
                 items={prisons}
@@ -324,7 +324,7 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <label htmlFor="country">Country / Region</label>
               <input
@@ -350,7 +350,7 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
               />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <label htmlFor="zipCode">Zip Code</label>
               <input

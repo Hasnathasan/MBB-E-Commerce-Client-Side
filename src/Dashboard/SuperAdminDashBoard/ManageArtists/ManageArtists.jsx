@@ -517,7 +517,7 @@ const ManageArtists = () => {
                           Payment information
                         </h4>
                         <div className="p-5">
-                          <div className="grid grid-cols-2 gap-5">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
                               <Select
                                 items={prisons}
@@ -566,7 +566,7 @@ const ManageArtists = () => {
                             </div>
                           </div>
 
-                          <div className="grid grid-cols-2 gap-5">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
                               <label htmlFor="country">Country / Region</label>
                               <input
@@ -590,7 +590,7 @@ const ManageArtists = () => {
                               />
                             </div>
                           </div>
-                          <div className="grid grid-cols-2 gap-5">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
                               <label htmlFor="zipCode">Zip Code</label>
                               <input

@@ -117,7 +117,7 @@ const CustomerUpdateModal = ({ userData, refetch }) => {
           Account Settings
         </h4>
         <div className="p-5 grid grid-cols-5 gap-5 items-center justify-center">
-          <div className="col-span-3">
+          <div className=" col-span-5 lg:col-span-3 order-2 lg:order-1">
             <form onSubmit={handleUserUpdate} className="">
               {/* <h3 className="text-base text-red-600">{error}</h3> */}
               <label htmlFor="name">Your Name</label>
@@ -125,7 +125,7 @@ const CustomerUpdateModal = ({ userData, refetch }) => {
                 type="text"
                 name="name"
                 id="name"
-                className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
+                className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full lg:w-[80%] p-2.5 "
                 placeholder="Name"
                 defaultValue={userData?.userName}
                 required
@@ -135,7 +135,7 @@ const CustomerUpdateModal = ({ userData, refetch }) => {
                 type="email"
                 name="email"
                 id="email"
-                className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
+                className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full lg:w-[80%] p-2.5 "
                 placeholder="Email Address"
                 defaultValue={userData?.email}
                 disabled
@@ -146,7 +146,7 @@ const CustomerUpdateModal = ({ userData, refetch }) => {
                 type="tel"
                 name="phoneNumber"
                 id="phoneNumber"
-                className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
+                className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full lg:w-[80%] p-2.5 "
                 placeholder="Your Phone Number"
                 defaultValue={userData?.userPhoneNumber}
                 required
@@ -159,7 +159,7 @@ const CustomerUpdateModal = ({ userData, refetch }) => {
               </button>
             </form>
           </div>
-          <div className="flex justify-center col-span-2 items-center gap-5 flex-col">
+          <div className="flex justify-center lg:col-span-2 col-span-5  order-1 lg:order-2 items-center gap-5 flex-col">
             <Avatar
               src={userData?.userPhoto}
               className="w-48 h-48 text-large"
@@ -189,7 +189,7 @@ const CustomerUpdateModal = ({ userData, refetch }) => {
           Billing Address
         </h4>
         <form onSubmit={handleBillingUpdate} className="p-5">
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <label htmlFor="name">Your Name</label>
               <input
@@ -229,7 +229,7 @@ const CustomerUpdateModal = ({ userData, refetch }) => {
               required
             />
           </div>
-          <div className="grid grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div>
               <label htmlFor="country">Country / Region</label>
               <input
@@ -267,7 +267,7 @@ const CustomerUpdateModal = ({ userData, refetch }) => {
               />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <label htmlFor="email">Email Address</label>
               <input
