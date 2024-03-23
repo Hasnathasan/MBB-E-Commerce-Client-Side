@@ -101,8 +101,8 @@ const ManageOrders = () => {
                 <SelectItem key={"shipped"} value={"shipped"}>
                   Shipped
                 </SelectItem>
-                <SelectItem key={"delevered"} value={"delevered"}>
-                  Delevered
+                <SelectItem key={"delivered"} value={"delivered"}>
+                  Delivered
                 </SelectItem>
                 <SelectItem key={"canceled"} value={"canceled"}>
                   Canceled

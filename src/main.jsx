@@ -12,7 +12,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <QueryClientProvider client={queryClient}>
       <NextUIProvider>
         <AuthProvider>
-          <div className="bg-[#fcfcfc] max-w-[1920px] mx-auto">
+          <div className="bg-[#fcfcfc] max-w-[1920px] overflow-hidden mx-auto">
             <RouterProvider router={router} />
           </div>
         </AuthProvider>

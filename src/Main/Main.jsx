@@ -22,7 +22,9 @@ const Main = () => {
     return (
         <div>
             <NavigationBar></NavigationBar>
+            <div className="w-full">
             <Outlet></Outlet>
+            </div>
             <Footer></Footer>
         </div>
     );

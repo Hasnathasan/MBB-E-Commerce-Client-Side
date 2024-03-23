@@ -3,7 +3,7 @@ import Main from "../Main/Main";
 import SignUp from "../Pages/Authentication/SignUp/SignUp";
 import SignIn from "../Pages/Authentication/SignIn/SignIn";
 import Home from "../Pages/Home/Home/Home";
-import UserDashboard from "../Dashboard/MainDashBoard/UserDashboard";
+import UserDashboard from "../Dashboard/UserDashboard/MainDashBoard/UserDashboard";
 import Profile from "../Dashboard/UserDashboard/Profile/Profile";
 import OrderHistory from "../Dashboard/UserDashboard/OrderHistory/OrderHistory";
 import OrderDetails from "../Dashboard/UserDashboard/OrderDetails/OrderDetails";
@@ -37,6 +37,7 @@ import SalesReport from "../Dashboard/SuperAdminDashBoard/SalesReport/SalesRepor
 import WishList from "../Dashboard/UserDashboard/WishList/WishList";
 import PaymentSuccessFullPage from "../Components/PaymentSuccessfullPage/PaymentSuccessFullPage";
 import ManageBanners from "../Dashboard/SuperAdminDashBoard/ManageBanners/ManageBanners";
+import AdminSettings from "../Dashboard/SuperAdminDashBoard/AdminSettings/AdminSettings";
 
 
 const router = createBrowserRouter([
@@ -200,7 +201,7 @@ const router = createBrowserRouter([
     },
     {
       path: "settings",
-      element: <IAmWorkingOnIt></IAmWorkingOnIt>
+      element: <AdminSettings></AdminSettings>
     },
     {
       path: "managePrison",

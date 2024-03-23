@@ -36,9 +36,22 @@ const Products = () => {
   return (
     <>
       <div className="grid grid-cols-12 mx-2 lg:mx-8 mt-8 mb-24">
-        <div className="col-span-12 lg:hidden">
-        <Button onClick={openFilterDrawer} className="text-white bg-green-500" radius="full">
+        <div className="col-span-12 flex justify-start items-center gap-3 lg:hidden">
+        <Button size="sm" onClick={openFilterDrawer} className="text-white bg-green-500" radius="full">
             Filter <LuSettings2 className="w-5 h-5" />
+          </Button>
+          <Button
+          size="sm"
+          onClick={() => {
+            setCategoryFilter(null);
+            setPriceSlider([0,1000])
+            setMinRating(null)
+            setSort(null)
+            setSearchQuery(null)
+            setSelectedTag(null)
+          }} 
+          className="text-white bg-green-500" radius="full">
+            Reset Filter <LuSettings2 className="w-5 h-5" />
           </Button>
         </div>
         <div className="col-span-3 mr-5 hidden py-4 lg:inline">
@@ -195,81 +208,6 @@ const Products = () => {
               {tags?.map(tag => <Button onClick={() => setSelectedTag(tag)} key={tag} className="text-white bg-[#00B207]" radius="full">
                   {tag}
                 </Button>)}
-                {/* <Button className="text-white bg-[#00B207]" radius="full">
-                  Healthy
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Low fat
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Vegetarian
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Kids food
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Vitamin
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Bread
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Meat
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Snacks
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Tiffin
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Lunch
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Dinner
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Breakfast
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Fruits
-                </Button> */}
               </div>
             </AccordionItem>
           </Accordion>
@@ -305,7 +243,7 @@ const Products = () => {
         onClose={closeFilterDrawer}
         className="p-4 h-full flex flex-col shadow-large overflow-y-auto"
       >
-        <div className="py-4">
+        <div className="mr-5 py-4">
           <Accordion
             itemClasses={{ title: "font-bold text-xl" }}
             selectionMode="multiple"
@@ -317,23 +255,20 @@ const Products = () => {
               title="All Categories"
             >
               <RadioGroup
-                // value={filter}
-                // onValueChange={setFilter}
+                value={categoryFilter}
+                onValueChange={setCategoryFilter}
                 color="success"
                 className="!mb-5"
               >
-                <Radio className="mb-[1px]" value="priceHighToLow">
-                  <Typography variant="small">Price High to Low</Typography>
+                <Radio value={null}>
+                  <Typography className="capitalize" variant="small">All Products</Typography>
                 </Radio>
-                <Radio className="mb-[1px]" value="priceLowToHigh">
-                  <Typography variant="small">Price Low to High</Typography>
-                </Radio>
-                <Radio className="mb-[1px]" value="ratingHighToLow">
-                  <Typography variant="small">Rating High to Low</Typography>
-                </Radio>
-                <Radio value="ratingLowToHigh">
-                  <Typography variant="small">Rating Low to High</Typography>
-                </Radio>
+                {
+                  allCategories?.map(category => <Radio key={category} value={category}>
+                  <Typography className="capitalize" variant="small">{category}</Typography>
+                </Radio>)
+                }
+                
               </RadioGroup>
             </AccordionItem>
             <AccordionItem key="2" aria-label="Accordion 2" title="Price">
@@ -358,7 +293,7 @@ const Products = () => {
               </div>
             </AccordionItem>
             <AccordionItem key="3" aria-label="Accordion 3" title="Rating">
-              <RadioGroup  value={minRating} onValueChange={setMinRating} color="success" className="!mb-5">
+              <RadioGroup value={minRating} onValueChange={setMinRating} color="success" className="!mb-5">
                 <Radio className="mb-[1px]" value="rating5">
                   <div className=" flex items-start gap-2">
                     <Rating
@@ -442,83 +377,9 @@ const Products = () => {
               title="Popular Tags"
             >
               <div className="flex overflow-hidden h-max flex-wrap items-center gap-2">
-
-                {tags?.map(tag => <Button key={tag} className="text-white bg-[#00B207]" radius="full">
+              {tags?.map(tag => <Button onClick={() => setSelectedTag(tag)} key={tag} className="text-white bg-[#00B207]" radius="full">
                   {tag}
                 </Button>)}
-                
-                {/* <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Low fat
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Vegetarian
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Kids food
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Vitamin
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Bread
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Meat
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Snacks
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Tiffin
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Lunch
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Dinner
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Breakfast
-                </Button>
-                <Button
-                  className="hover:bg-[#02a108] hover:text-white"
-                  radius="full"
-                >
-                  Fruits
-                </Button> */}
               </div>
             </AccordionItem>
           </Accordion>

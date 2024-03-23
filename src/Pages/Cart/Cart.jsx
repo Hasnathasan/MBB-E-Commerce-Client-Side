@@ -67,12 +67,12 @@ useEffect(() => {
 
   
   return (
-    <div className="grid mx-8 mt-7 justify-start grid-cols-12 gap-10 mb-40">
-      <div className=" border col-span-8 border-gray-300 rounded-lg overflow-hidden">
-        <table className="overflow-auto w-full">
+    <div className="grid mx-2 md:mx-8 mt-7 justify-start grid-cols-12 gap-6 lg:gap-10 mb-40">
+      <div className="border overflow-x-auto col-span-12 lg:col-span-8 border-gray-300 rounded-lg">
+        <table className="w-full">
           <thead>
           <tr className="border-b border-gray-300">
-            <th className="bg-transparent">PRODUCT</th>
+            <th className="bg-transparent !text-sm">PRODUCT</th>
             <th className="bg-transparent">PRICE</th>
             <th className="bg-transparent">QUANTITY</th>
             <th className="bg-transparent">SUBTOTAL</th>
@@ -81,8 +81,8 @@ useEffect(() => {
          <tbody>
          {
           userCart.length !== 0 ? userCart?.map(cartProduct =>  <tr key={cartProduct?._id} className="border-b border-gray-300">
-          <td className="flex py-6 items-center gap-3">
-            <img className="w-20" src={cartProduct?.featured_photo} alt="" />
+          <td className="flex w-60 py-6 items-center gap-3">
+            <img className="w-12 md:w-20" src={cartProduct?.featured_photo} alt="" />
             <h3 className="font-semibold">{cartProduct?.product_name}</h3>
           </td>
           <td className="font-semibold">${cartProduct?.price?.sale_price || cartProduct?.price?.regular_price}</td>
@@ -110,12 +110,12 @@ useEffect(() => {
             </div>
           </td>
         </tr>) : <tr><td className="pt-10" colSpan={4}>
-          <h3 className="text-center font-semibold text-3xl">No Product Available</h3></td></tr>
+          <h3 className="text-center font-semibold mb-10 md:text-3xl">No Product Available</h3></td></tr>
          }
          </tbody>
         </table>
       </div>
-      <div className="col-span-4 border border-gray-300 rounded-lg">
+      <div className="col-span-12 lg:col-span-4 border border-gray-300 rounded-lg">
         <h2 className="text-lg font-medium p-5">Cart Total</h2>
 
         <div className="px-5 pb-5">

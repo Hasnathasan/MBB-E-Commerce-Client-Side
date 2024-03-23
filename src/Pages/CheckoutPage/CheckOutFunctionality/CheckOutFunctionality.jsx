@@ -168,13 +168,13 @@ const CheckOutFunctionality = () => {
     <div>
       <form
         onSubmit={handleSubmit}
-        className="grid grid-cols-12 items-start py-10 mx-8 gap-6"
+        className="grid grid-cols-12 items-start py-10 mx-2 lg:mx-8 gap-6"
       >
-        <div className="col-span-8">
-          <div className={`border-b border-gray-300 pb-5`}>
+        <div className="col-span-12 p-5 lg:col-span-8">
+          <div className={`border-b border-gray-300  pb-5`}>
             <h4 className="mb-5 text-2xl font-semibold">Billing Information</h4>
             <div className="">
-              <div className="grid grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                   <label htmlFor="userName">Your Name</label>
                   <input
@@ -214,7 +214,7 @@ const CheckOutFunctionality = () => {
                   required
                 />
               </div>
-              <div className="grid grid-cols-3 gap-5">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 <div>
                   <label htmlFor="country">Country / Region</label>
                   <input
@@ -252,7 +252,7 @@ const CheckOutFunctionality = () => {
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                   <label htmlFor="email">Email Address</label>
                   <input
@@ -296,7 +296,7 @@ const CheckOutFunctionality = () => {
             </div>
           </div>
         </div>
-        <div className="col-span-4 border border-gray-300 rounded-lg">
+        <div className="col-span-12 lg:col-span-4 border border-gray-300 rounded-lg">
           <h3 className=" text-2xl font-semibold p-5">Order Summery</h3>
           <div className="px-5">
             <div className="max-h-60 overflow-y-auto">

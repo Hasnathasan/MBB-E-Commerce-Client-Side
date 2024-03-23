@@ -3,12 +3,12 @@ import { NavLink, Outlet } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
 import "./UserDashboard.css";
 import { GoHeart } from "react-icons/go";
-import orderHistory from "../../assets/orderhistory.png";
+import orderHistory from "../../../assets/orderhistory.png";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { TbLogout } from "react-icons/tb";
 import { IoSettingsOutline } from "react-icons/io5";
-import useUser from "../../Hooks/useUser";
-import { AuthContext } from "../../Providers/AuthProvider";
+import { AuthContext } from "../../../Providers/AuthProvider";
+import useUser from "../../../Hooks/useUser";
 const UserDashboard = () => {
   const { logOut } = useContext(AuthContext);
   const [userData, isUserDataLoading] = useUser();

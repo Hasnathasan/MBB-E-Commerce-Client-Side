@@ -137,7 +137,7 @@ const WishList = () => {
         ) : (
           <tr>
             <td className="pt-10" colSpan={4}>
-              <h3 className="text-center font-semibold text-3xl">
+              <h3 className="text-center font-semibold mb-10 lg:text-3xl">
                 No Product Available
               </h3>
             </td>

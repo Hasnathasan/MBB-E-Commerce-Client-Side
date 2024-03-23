@@ -118,7 +118,7 @@ const AccountSettings = () => {
           Account Settings
         </h4>
         <div className="p-5 grid grid-cols-5 gap-5 items-center justify-center">
-          <div className="col-span-3">
+          <div className="md:col-span-3 col-span-5  order-2 md:order-1">
             <form onSubmit={handleUserUpdate} className="">
               {/* <h3 className="text-base text-red-600">{error}</h3> */}
               <label htmlFor="name">Your Name</label>
@@ -126,7 +126,7 @@ const AccountSettings = () => {
                 type="text"
                 name="name"
                 id="name"
-                className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
+                className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full md:w-[80%] p-2.5 "
                 placeholder="Name"
                 defaultValue={userData?.userName}
                 required
@@ -136,7 +136,7 @@ const AccountSettings = () => {
                 type="email"
                 name="email"
                 id="email"
-                className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
+                className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full md:w-[80%] p-2.5 "
                 placeholder="Email Address"
                 defaultValue={userData?.email}
                 disabled
@@ -147,7 +147,7 @@ const AccountSettings = () => {
                 type="tel"
                 name="phoneNumber"
                 id="phoneNumber"
-                className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
+                className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full md:w-[80%] p-2.5 "
                 placeholder="Your Phone Number"
                 defaultValue={userData?.userPhoneNumber}
                 required
@@ -160,7 +160,7 @@ const AccountSettings = () => {
               </button>
             </form>
           </div>
-          <div className="flex justify-center col-span-2 items-center gap-5 flex-col">
+          <div className="flex justify-center md:col-span-2 col-span-5 order-1 md:order-2 items-center gap-5 flex-col">
             <Avatar
               src={userData?.userPhoto}
               className="w-48 h-48 text-large"
@@ -190,7 +190,7 @@ const AccountSettings = () => {
           Billing Address
         </h4>
         <form onSubmit={handleBillingUpdate} className="p-5">
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <label htmlFor="name">Your Name</label>
               <input
@@ -230,7 +230,7 @@ const AccountSettings = () => {
               required
             />
           </div>
-          <div className="grid grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div>
               <label htmlFor="country">Country / Region</label>
               <input
@@ -268,7 +268,7 @@ const AccountSettings = () => {
               />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <label htmlFor="email">Email Address</label>
               <input
