@@ -3,8 +3,6 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import useBannerImages from "../../../Hooks/useBannerImages";
 import Loader from "../../../Components/Loader/Loader";
-import image1 from '../../../assets/Bannar.png'
-import image2 from '../../../assets/products6.png'
 
 const Bannar = () => {
     const [bannerImages, isBannerImagesLoading, refetch] = useBannerImages();

@@ -308,7 +308,7 @@ const ManageArtists = () => {
                         <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">
                           Account Information
                         </h4>
-                        <div className="grid grid-cols-2 gap-5 p-5 ">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-5 ">
                           <div>
                             <label htmlFor="name">Artist Name</label>
                             <input
@@ -390,7 +390,7 @@ const ManageArtists = () => {
                           Artist&apos;s personal Info
                         </h4>
                         <div className="p-5 grid grid-cols-12 gap-5 items-center justify-center">
-                          <div className="col-span-9">
+                          <div className="lg:col-span-9 col-span-12">
                             {/* <h3 className="text-base text-red-600">{error}</h3> */}
 
                             <label htmlFor="bio">Artist Bio</label>
@@ -411,7 +411,7 @@ const ManageArtists = () => {
                               placeholder="Art Description"
                               required
                             />
-                            <div className="grid grid-cols-2">
+                            <div className="grid grid-cols-1 md:grid-cols-2">
                               <div>
                                 <label htmlFor="keywords">Key Words</label>
                                 <MultiSelect
@@ -487,7 +487,7 @@ const ManageArtists = () => {
                               </div>
                             </div>
                           </div>
-                          <div className="flex justify-center col-span-2 items-center gap-5 flex-col">
+                          <div className="flex justify-center col-span-12 md:col-span-2 items-center gap-5 flex-col">
                             <Avatar
                               src={"userData?.userPhoto"}
                               className="w-48 h-48 text-large"

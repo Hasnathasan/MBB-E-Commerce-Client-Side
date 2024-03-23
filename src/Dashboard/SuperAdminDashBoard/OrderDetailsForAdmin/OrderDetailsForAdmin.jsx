@@ -49,10 +49,10 @@ const OrderDetailsForAdmin = () => {
   };
   return (
     <div className="border border-gray-300 rounded-lg">
-      <div className="flex justify-between items-center border-b border-gray-300 p-5">
+      <div className="flex justify-between flex-col md:flex-row items-center border-b border-gray-300 p-2 gap-4 md:p-5">
         <div className="flex justify-between items-center">
           <div className="flex justify-center items-center gap-4">
-            <h1 className="text-xl font-semibold">Order Details</h1>
+            <h1 className="text-xl font-semibold text-nowrap">Order Details</h1>
             <h4 className="text-sm text-gray-800">
               {order?.createdAt.slice(0, 10)}
             </h4>
@@ -95,15 +95,15 @@ const OrderDetailsForAdmin = () => {
           </Button>
         </div>
       </div>
-      <div className="p-6">
+      <div className="md:p-6 p-3">
         <div className="grid grid-cols-6 gap-7">
-          <div className="col-span-4 h-[300px] grid grid-cols-2 border border-gray-300 rounded-lg">
+          <div className="md:col-span-4 col-span-6 md:h-[300px] grid md:grid-cols-2 grid-cols-1 border border-gray-300 rounded-lg">
             {/* 1st column */}
             <div className="border-r border-gray-300">
               <h2 className=" text-gray-500 border-b border-gray-300 px-4 py-3 font-medium">
                 Billing Address
               </h2>
-              <div className="p-4">
+              <div className="md:p-4 p-3">
                 <div className="mb-4">
                   <h2 className="text-xl font-medium">
                     {userName || "Unknown"}
@@ -146,7 +146,7 @@ const OrderDetailsForAdmin = () => {
           </div>
 
           {/* 3rd column */}
-          <div className="col-span-2 border border-gray-300 rounded-lg">
+          <div className="md:col-span-2 col-span-6 border border-gray-300 rounded-lg">
             <div className=" border-b border-gray-300 items-center gap-7 p-4">
               <h3 className=" text-gray-500 mb-3 text-sm font-medium">
                 Transaction ID:{" "}
@@ -181,7 +181,8 @@ const OrderDetailsForAdmin = () => {
         </div>
       </div>
 
-      <table className="overflow-auto w-full">
+      <div className="overflow-x-auto mt-5 md:mt-1">
+      <table className=" w-full">
         <tr>
           <th>PRODUCT</th>
           <th>PRICE</th>
@@ -190,9 +191,9 @@ const OrderDetailsForAdmin = () => {
         </tr>
         {order?.products?.map((product) => (
           <tr key={product?.product_id}>
-            <td className="flex items-center gap-2">
+            <td className="flex items-center gap-2 w-56">
               <img className="w-16" src={product?.featured_photo} alt="" />
-              <h3 className="font-semibold">{product?.product_name}</h3>
+              <h3 className="font-semibold text-nowrap">{product?.product_name}</h3>
             </td>
             <td>
               ${product?.price?.sale_price || product?.price?.regular_price}
@@ -206,6 +207,7 @@ const OrderDetailsForAdmin = () => {
           </tr>
         ))}
       </table>
+      </div>
     </div>
   );
 };
