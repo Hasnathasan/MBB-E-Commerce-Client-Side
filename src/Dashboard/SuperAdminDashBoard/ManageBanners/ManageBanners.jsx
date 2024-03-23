@@ -56,7 +56,7 @@ const ManageBanners = () => {
           <span>
             Do You Want To Delete This Image?
             <ButtonGroup variant="solid" radius="none" size="sm">
-            <Button  className="px-9 mt-3 float-right  text-white" color="danger" onClick={() => deleteFunc(img)}>
+            <Button  className="px-9 mt-3 float-right  text-white" color="danger" onClick={() => {deleteFunc(img);toast.dismiss(t.id)}}>
               Yes
             </Button>
             <Button  className="px-9 mt-3 float-right  text-white" color="success" onClick={() => toast.dismiss(t.id)}>
@@ -78,12 +78,13 @@ const ManageBanners = () => {
         }
         const multipleImages = [...selectedFiles];
         const formData = new FormData();
+        console.log(multipleImages);
         multipleImages?.map((file) => {
             formData.append(`files`, file);
         });
         axios
               .post(
-                "https://mbb-e-commerce-server.vercel.app/uploadMultiple",
+                "http://localhost:8000/uploadMultiple",
                 formData,
                 {
                   headers: {
@@ -95,6 +96,15 @@ const ManageBanners = () => {
                 console.log(res.data);
                 if (res?.data?.imageUrls) {
                     console.log(res.data.imageUrls);
+                    
+                    axios.post("http://localhost:8000/bannerImage", {newImages: res.data.imageUrls})
+                    .then(res => {
+                        if(res.data.modifiedCount > 0){
+                            refetch()
+                            toast.success("Images added")
+                        }
+                    })
+                    .catch(err => console.log(err))
                 }
               })
               .catch(err => console.log(err))
@@ -148,7 +158,7 @@ const ManageBanners = () => {
           {bannerImages[0]?.images?.map((image) => (
             <TableRow key={image}>
               <TableCell>
-                <img className="w-40" src={image} alt="" />
+                <img className="w-40 h-20" src={image} alt="" />
               </TableCell>
               <TableCell>
                 {image?.slice(0,100)}

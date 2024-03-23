@@ -56,7 +56,7 @@ const ManageOrders = () => {
           <Button
             className="px-9 mt-3 float-right  text-white"
             color="danger"
-            onClick={() => deleteFunc(id)}
+            onClick={() => {deleteFunc(id);toast.dismiss(t.id)}}
           >
             Yes
           </Button>

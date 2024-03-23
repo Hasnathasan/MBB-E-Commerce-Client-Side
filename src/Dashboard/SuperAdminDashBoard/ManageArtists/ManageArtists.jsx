@@ -209,7 +209,7 @@ const ManageArtists = () => {
       <span>
         Do You Want To Delete This Artist?
         <ButtonGroup variant="solid" radius="none" size="sm">
-        <Button  className="px-9 mt-3 float-right  text-white" color="danger" onClick={() => deleteFunc(email)}>
+        <Button  className="px-9 mt-3 float-right  text-white" color="danger" onClick={() =>{ deleteFunc(email);toast.dismiss(t.id)}}>
           Yes
         </Button>
         <Button  className="px-9 mt-3 float-right  text-white" color="success" onClick={() => toast.dismiss(t.id)}>
