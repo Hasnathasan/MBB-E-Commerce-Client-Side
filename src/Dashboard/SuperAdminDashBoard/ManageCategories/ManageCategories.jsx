@@ -36,7 +36,9 @@ const ManageCategories = () => {
   };
   const handleCategoryDelete = (category) => {
     axios
-      .delete(`https://mbb-e-commerce-server.vercel.app/deleteCategory/${category}`)
+      .delete(
+        `https://mbb-e-commerce-server.vercel.app/deleteCategory/${category}`
+      )
       .then((res) => {
         if (res.data.deletedCategory.deletedCount > 0) {
           refetch();
@@ -97,7 +99,10 @@ const ManageCategories = () => {
         previous_category: categoryToUpdate?.category,
       };
       axios
-        .patch("https://mbb-e-commerce-server.vercel.app/updateCategories", updatedCategoryData)
+        .patch(
+          "https://mbb-e-commerce-server.vercel.app/updateCategories",
+          updatedCategoryData
+        )
         .then((res) => {
           if (res.data.updatedCategory?.modifiedCount > 0) {
             refetch();
@@ -181,27 +186,31 @@ const ManageCategories = () => {
           <TableColumn className="text-center">Action's</TableColumn>
         </TableHeader>
         <TableBody emptyContent={"No Category Available"}>
-          {categories?.length > 0 ? categories?.map((category) => (
-            <TableRow key={category?.category}>
-              <TableCell>
-                <img src={category.image} className="w-16 h-16" alt="" />
-              </TableCell>
-              <TableCell className="capitalize">{category?.category}</TableCell>
-              <TableCell>{category?.count} product's found</TableCell>
-              <TableCell className="text-center">
-                <ButtonGroup size="sm">
-                  <Button onClick={() => handleModalOpen(category)}>
-                    Update
-                  </Button>
-                  <Button
-                    onClick={() => handleCategoryDelete(category?.category)}
-                  >
-                    Delete
-                  </Button>
-                </ButtonGroup>
-              </TableCell>
-            </TableRow>
-          )) : []}
+          {categories?.length > 0
+            ? categories?.map((category) => (
+                <TableRow key={category?.category}>
+                  <TableCell>
+                    <img src={category.image} className="w-16 h-16" alt="" />
+                  </TableCell>
+                  <TableCell className="capitalize">
+                    {category?.category}
+                  </TableCell>
+                  <TableCell>{category?.count} product's found</TableCell>
+                  <TableCell className="text-center">
+                    <ButtonGroup size="sm">
+                      <Button onClick={() => handleModalOpen(category)}>
+                        Update
+                      </Button>
+                      <Button
+                        onClick={() => handleCategoryDelete(category?.category)}
+                      >
+                        Delete
+                      </Button>
+                    </ButtonGroup>
+                  </TableCell>
+                </TableRow>
+              ))
+            : []}
         </TableBody>
       </Table>
       <Modal
