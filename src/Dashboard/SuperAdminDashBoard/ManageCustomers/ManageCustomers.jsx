@@ -31,35 +31,48 @@ const ManageCustomers = () => {
     setUserData(user);
     onOpen();
   };
-  const deleteFunc = email => {
-    axios.delete(`https://mbb-e-commerce-server.vercel.app/customerDelete/${email}`)
-    .then(res => {
-      console.log(res.data);
-      if(res.data.deletedCount > 0){
-        refetch();
-        toast.success("User Deleted")
-      }
-    })
-    .catch(err => {
-      toast.error(err.message)
-    })
-  }
-  const handleCustomerDelete = email => {
+  const deleteFunc = (email) => {
+    axios
+      .delete(
+        `https://mbb-e-commerce-server.vercel.app/customerDelete/${email}`
+      )
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.deletedCount > 0) {
+          refetch();
+          toast.success("User Deleted");
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
+  const handleCustomerDelete = (email) => {
     toast((t) => (
       <span>
         Do You Want To Delete This Customer?
         <ButtonGroup variant="solid" radius="none" size="sm">
-        <Button  className="px-9 mt-3 float-right  text-white" color="danger" onClick={() => {deleteFunc(email);toast.dismiss(t.id)}}>
-          Yes
-        </Button>
-        <Button  className="px-9 mt-3 float-right  text-white" color="success" onClick={() => toast.dismiss(t.id)}>
-          No
-        </Button>
+          <Button
+            className="px-9 mt-3 float-right  text-white"
+            color="danger"
+            onClick={() => {
+              deleteFunc(email);
+              toast.dismiss(t.id);
+            }}
+          >
+            Yes
+          </Button>
+          <Button
+            className="px-9 mt-3 float-right  text-white"
+            color="success"
+            onClick={() => toast.dismiss(t.id)}
+          >
+            No
+          </Button>
         </ButtonGroup>
       </span>
     ));
-
-  }
+  };
   return (
     <div className="overflow-x-auto w-[95%] mx-auto">
       <div className="flex flex-col  gap-4">
@@ -77,42 +90,48 @@ const ManageCustomers = () => {
           </TableColumn>
         </TableHeader>
         <TableBody emptyContent={"No Customer Available"}>
-          {customersData?.length > 0 ? customersData?.map((user) => (
-            <TableRow key={user._id}>
-              <TableCell>
-                <User
-                  avatarProps={{ radius: "md", src: user.userPhoto }}
-                  description={user.email || user.phoneNumber}
-                  name={user.userName || "Unknown"}
-                ></User>
-              </TableCell>
-              <TableCell>{user.email || user.phoneNumber}</TableCell>
-              <TableCell>
-                <Chip
-                  className="capitalize"
-                  color={user.userRole == "mbbAdmin" ? "danger" : "success"}
-                  size="sm"
-                  variant="flat"
-                >
-                  {user.userRole}
-                </Chip>
-              </TableCell>
-              <TableCell>
-                <ButtonGroup size="sm">
-                <Button
-                  onClick={() => handleCustomerDetailsModal(user)}
-                  color="success"
-                  className="text-white"
-                >
-                  View Details
-                </Button>
-                <Button onClick={() => handleCustomerDelete(user?.email)} color="danger" className="text-white">
-                Delete
-              </Button>
-                </ButtonGroup>
-              </TableCell>
-            </TableRow>
-          )) : []}
+          {customersData?.length > 0
+            ? customersData?.map((user) => (
+                <TableRow key={user._id}>
+                  <TableCell>
+                    <User
+                      avatarProps={{ radius: "md", src: user.userPhoto }}
+                      description={user.email || user.phoneNumber}
+                      name={user.userName || "Unknown"}
+                    ></User>
+                  </TableCell>
+                  <TableCell>{user.email || user.phoneNumber}</TableCell>
+                  <TableCell>
+                    <Chip
+                      className="capitalize"
+                      color={user.userRole == "mbbAdmin" ? "danger" : "success"}
+                      size="sm"
+                      variant="flat"
+                    >
+                      {user.userRole}
+                    </Chip>
+                  </TableCell>
+                  <TableCell>
+                    <ButtonGroup size="sm">
+                      <Button
+                        onClick={() => handleCustomerDetailsModal(user)}
+                        color="success"
+                        className="text-white"
+                      >
+                        View Details
+                      </Button>
+                      <Button
+                        onClick={() => handleCustomerDelete(user?.email)}
+                        color="danger"
+                        className="text-white"
+                      >
+                        Delete
+                      </Button>
+                    </ButtonGroup>
+                  </TableCell>
+                </TableRow>
+              ))
+            : []}
         </TableBody>
       </Table>
       <Modal
