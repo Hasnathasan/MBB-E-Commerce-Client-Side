@@ -16,26 +16,119 @@ import {
   } from "@nextui-org/react";
 import { FaPlus } from "react-icons/fa";
 import useBannerImages from "../../../Hooks/useBannerImages";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import toast from "react-hot-toast";
+import axios from "axios";
+import Loader from "../../../Components/Loader/Loader";
 
 const ManageBanners = () => {
     const [bannerImages, isBannerImagesLoading, refetch] = useBannerImages();
     const [imageToShow, setImageToShow] = useState();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const [selectedFiles, setSelectedFiles] = useState(null);
+    const fileInputRef = useRef(null);
+    const handleFileChange = (event) => {
+      const files = event.target.files;
+      if (files) {
+        setSelectedFiles(files);
+      }
+    };
+  
+    const handleButtonClick = () => {
+      fileInputRef.current.click();
+    };
 
-    const handleImageDelete = img => {
-        console.log(img);
-    }
+    const deleteFunc = img => {
+        axios.patch(`https://mbb-e-commerce-server.vercel.app/banner-image-delete`, {img})
+        .then(res => {
+          console.log(res.data);
+          if(res.data.modifiedCount > 0){
+            refetch();
+            toast.success("Image Deleted")
+          }
+        })
+        .catch(err => {
+          toast.error(err.message)
+        })
+      }
+      const handleImageDelete = img => {
+        toast((t) => (
+          <span>
+            Do You Want To Delete This Image?
+            <ButtonGroup variant="solid" radius="none" size="sm">
+            <Button  className="px-9 mt-3 float-right  text-white" color="danger" onClick={() => deleteFunc(img)}>
+              Yes
+            </Button>
+            <Button  className="px-9 mt-3 float-right  text-white" color="success" onClick={() => toast.dismiss(t.id)}>
+              No
+            </Button>
+            </ButtonGroup>
+          </span>
+        ));
     
+      }
+    if(isBannerImagesLoading){
+        return <Loader></Loader>
+    }
+
+    const handleImageUpload = () => {
+        console.log(selectedFiles);
+        if(!(selectedFiles?.length > 0)){
+           return toast.error("Select Images")
+        }
+        const multipleImages = [...selectedFiles];
+        const formData = new FormData();
+        multipleImages?.map((file) => {
+            formData.append(`files`, file);
+        });
+        axios
+              .post(
+                "https://mbb-e-commerce-server.vercel.app/uploadMultiple",
+                formData,
+                {
+                  headers: {
+                    "Content-Type": "multipart/form-data",
+                  },
+                }
+              )
+              .then(res => {
+                console.log(res.data);
+                if (res?.data?.imageUrls) {
+                    console.log(res.data.imageUrls);
+                }
+              })
+              .catch(err => console.log(err))
+                
+
+
+    }
     return (
         <div className="overflow-x-auto w-full md:w-[95%]">
       <div className="flex flex-col  gap-4">
-        <div className="flex justify-between p-5 bg-white rounded-xl gap-3 items-end">
+        <div className="flex justify-end p-5 bg-white rounded-xl gap-3 items-end">
           
           <div className="flex gap-3">
             
-            <Button color="primary" endContent={<FaPlus></FaPlus>}>
-              Add Images
+          <input
+              type="file"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+              multiple
+            />
+            <Button
+              onClick={handleButtonClick}
+              color="primary"
+              className="text-white text-sm"
+            >
+              Add New Images <FaPlus></FaPlus>
+            </Button>
+            <Button
+              onClick={handleImageUpload}
+              color="success"
+              className="text-white text-sm mb-2"
+            >
+              Upload
             </Button>
           </div>
         </div>
@@ -61,11 +154,11 @@ const ManageBanners = () => {
                 {image?.slice(0,100)}
               </TableCell>
               <TableCell>
-                <ButtonGroup>
+                <ButtonGroup size="sm">
                 <Button onClick={ () => {
                     setImageToShow(image)
                     onOpen()
-                }} color="success" radius="lg" className="text-white">
+                }} color="success" className="text-white">
                   Preview
                 </Button>
                 <Button onClick={() => handleImageDelete(image)} color="danger" className="text-white">
