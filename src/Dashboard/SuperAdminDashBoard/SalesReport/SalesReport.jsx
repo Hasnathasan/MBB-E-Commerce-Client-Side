@@ -113,7 +113,7 @@ const processSalesReport = (salesReport) => {
 console.log(salesReport);
     return (
         <div className="w-[95%]">
-            <div className="flex justify-between mt-10 mb-5">
+            <div className="flex justify-between flex-col md:flex-row mt-10 mb-5">
                 <form onSubmit={handleReportGenerate} className="flex justify-start gap-4 items-end">
                 <Select
                 items={artistData}
@@ -158,7 +158,7 @@ console.log(salesReport);
               </Select>
               <Button type="submit" color="success" className="text-white">Generate Report</Button>
                 </form>
-                <div>
+                <div className="">
                 <Select
       placeholder="Filter By Status"
       className="w-40 text-nowrap"

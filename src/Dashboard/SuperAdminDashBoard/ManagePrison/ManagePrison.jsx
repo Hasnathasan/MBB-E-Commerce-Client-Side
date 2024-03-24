@@ -226,6 +226,7 @@ const ManagePrison = () => {
         className="!z-50"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
+        scrollBehavior="outside"
       >
         <ModalContent>
           {(onClose) => (
@@ -234,8 +235,8 @@ const ManagePrison = () => {
                 Add Prison
               </ModalHeader>
               <ModalBody>
-                <form onSubmit={handlePrisonAdding} className="p-5">
-                  <div className="grid grid-cols-2 gap-5">
+                <form onSubmit={handlePrisonAdding} className="md:p-5 p-3">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-5">
                     <div>
                       <label htmlFor="prison_name">Prison Name</label>
                       <input
@@ -260,7 +261,7 @@ const ManagePrison = () => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-5">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-5">
                     <div>
                       <label htmlFor="country">Country / Region</label>
                       <input
@@ -295,7 +296,7 @@ const ManagePrison = () => {
                       />
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 gap-5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-5">
                     <div>
                       <label htmlFor="email">Email Address</label>
                       <input
@@ -342,6 +343,7 @@ const ManagePrison = () => {
       <Modal
         size="2xl"
         backdrop="opaque"
+        scrollBehavior="outside"
         className="!z-50"
         isOpen={isPrisonUpdateOpen}
         onOpenChange={onPrisonUpdateChange}

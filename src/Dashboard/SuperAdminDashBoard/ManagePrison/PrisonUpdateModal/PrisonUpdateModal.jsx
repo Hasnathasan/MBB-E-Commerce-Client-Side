@@ -41,8 +41,8 @@ const PrisonUpdateModal = ({ prison, refetch, onClose }) => {
       });
   };
   return (
-    <form onSubmit={handlePrisonUpdate} className="p-5">
-      <div className="grid grid-cols-2 gap-5">
+    <form onSubmit={handlePrisonUpdate} className="md:p-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-5 gap-2">
         <div>
           <label htmlFor="prison_name">Prison Name</label>
           <input
@@ -69,7 +69,7 @@ const PrisonUpdateModal = ({ prison, refetch, onClose }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 md:gap-5 gap-2">
         <div>
           <label htmlFor="country">Country / Region</label>
           <input
@@ -107,7 +107,7 @@ const PrisonUpdateModal = ({ prison, refetch, onClose }) => {
           />
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-5 gap-2">
         <div>
           <label htmlFor="email">Email Address</label>
           <input

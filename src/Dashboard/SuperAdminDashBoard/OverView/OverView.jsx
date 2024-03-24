@@ -90,51 +90,51 @@ const OverView = () => {
   ];
   return (
     <div className="w-[97%] mx-auto">
-      <div className="grid grid-cols-2 xl:grid-cols-4 w-full gap-5 justify-center">
-        <div className="w-full p-1 md:p-4 xl:p-5 rounded-xl shadow-sm flex justify-center items-center gap-4 bg-[#008ffb] !text-white">
-          <img className="w-5 md:w-8 xl:w-8" src={cubes} alt="" />
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 w-full gap-5 justify-center">
+        <div className="w-full p-3 md:p-4 xl:p-5 rounded-xl shadow-sm flex justify-center items-center gap-4 bg-[#008ffb] !text-white">
+          <img className="w-8" src={cubes} alt="" />
           <div>
-            <h2 className="text-white text-nowrap text-[10px] md:text-base font-bold ">
+            <h2 className="text-white text-nowrap md:text-base font-bold ">
               Total Products: {productsLength?.length}
             </h2>
             <Link
               to={"/adminDashboard/products"}
-              className="text-white font-bold text-[8px] md:text-sm"
+              className="text-white font-bold  md:text-sm"
             >
               View Details
             </Link>
           </div>
         </div>
         <div className="w-full p-3 md:p-4 xl:p-5 rounded-xl shadow-sm flex justify-center items-center gap-4  bg-[#2dcf99]">
-          <img className="w-3 md:w-8 xl:w-8" src={packages} alt="" />
+          <img className="w-8" src={packages} alt="" />
           <div>
             <h2 className="text-white text-nowrap font-bold">
               Total Orders: {ordersLength?.length}
             </h2>
             <Link
               to={"/adminDashboard/orders"}
-              className="text-white font-bold  text-[10px] md:text-sm"
+              className="text-white font-bold  md:text-sm"
             >
               View Details
             </Link>
           </div>
         </div>
         <div className="w-full shadow-sm lg:col-span-1 p-3 md:p-4 xl:p-5 flex justify-center items-center gap-4 rounded-xl bg-[#ff4560]">
-          <img className="w-3 md:w-8 xl:w-8" src={team} alt="" />
+          <img className="w-8" src={team} alt="" />
           <div>
             <h2 className="text-white text-nowrap font-bold">
               Total Customers: {usersByRole?.user}
             </h2>
             <Link
               to={"/adminDashboard/customers"}
-              className="text-white font-bold  text-[10px] md:text-sm"
+              className="text-white font-bold   md:text-sm"
             >
               View Details
             </Link>
           </div>
         </div>
         <div className="w-full shadow-sm lg:col-span-1 p-3 md:p-4 xl:p-5 flex justify-center items-center gap-4 rounded-xl bg-[#ff4560]">
-          <img className="w-3 md:w-8 xl:w-8" src={team} alt="" />
+          <img className="w-8" src={team} alt="" />
           <div>
             <h2 className="text-white text-nowrap font-bold">
               Total Artists: {usersByRole?.artist}
@@ -149,7 +149,7 @@ const OverView = () => {
         </div>
       </div>
       <div className="my-8 grid grid-cols-12">
-        <div className="bg-white col-span-4 max-w-80 p-4 flex flex-col justify-center relative w-full h-full items-center rounded-md shadow-md">
+        <div className="bg-white lg:col-span-4 pt-12 md:pt-0 col-span-12 max-w-80 p-4 flex flex-col justify-center relative w-full h-full items-center rounded-md shadow-md">
           <h2 className="text-xl absolute top-4 text-center font-semibold">
             User's in Chart
           </h2>
@@ -160,7 +160,7 @@ const OverView = () => {
             width="120%"
           />
         </div>
-        <div className="bg-white p-3 col-span-8 rounded-md shadow-md">
+        <div className="bg-white p-3 lg:col-span-8 col-span-12 rounded-md shadow-md">
           <h3 className="font-semibold p-2 text-gray-800">
             Product Selling Update
           </h3>

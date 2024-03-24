@@ -241,7 +241,7 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
             Product Information
           </h4>
           <div className="p-5">
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
                 <label htmlFor="product_name">Product Name</label>
                 <input
@@ -269,7 +269,7 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
                 />
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-5 mb-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
               <div>
                 <label htmlFor="category">Add New Category</label>
                 <MultiSelect
@@ -328,7 +328,7 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
                 ))}
               </Select>
             </div>
-            <div className="grid grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               <div>
                 <label htmlFor="featured_photo">
                   Select new Feature photo (optional)
@@ -418,7 +418,7 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
             <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
               Seller Information
             </h4>
-            <div className="grid grid-cols-2 w-full gap-10 justify-center items-center p-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10 justify-center items-center p-5">
               <Select
                 items={artistData}
                 label="Select An Artist"
@@ -471,7 +471,7 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
           <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
             Pricing Section
           </h4>
-          <div className="grid grid-cols-3 gap-5 p-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 p-5">
             <div>
               <label htmlFor="regular_price">Regular Price</label>
               <input
