@@ -4,10 +4,14 @@ import "./OrderDetails.css";
 import { useParams } from "react-router-dom";
 import useSingleOrderById from "../../../Hooks/useSingleOrderById";
 import Loader from "../../../Components/Loader/Loader";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
+import AddNewProductForAdmin from "../../SuperAdminDashBoard/AddNewProductForAdmin/AddNewProductForAdmin";
+import OrderDetailsPdf from "./OrderDetailsPdf/OrderDetailsPdf";
 
 const OrderDetails = () => {
   const { id } = useParams();
   const { user } = useContext(AuthContext);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [order, isOrderLoading, refetch] = useSingleOrderById({ id });
   if (isOrderLoading) {
     return <Loader></Loader>;
@@ -26,9 +30,9 @@ const OrderDetails = () => {
   console.log(id, order, email);
   return (
     <div className="border border-gray-300 rounded-lg">
-      <div className="flex border-b border-gray-300 p-5 justify-between items-center">
+      <div className="flex border-b border-gray-300 p-3 lg:p-5 justify-between items-center">
         <div className="flex justify-center items-center gap-4">
-          <h1 className="text-xl font-semibold">Order Details</h1>
+          <h1 className="lg:text-xl font-semibold">Order Details</h1>
           <h4 className="text-sm text-gray-800">
             {order?.createdAt.slice(0, 10)}
           </h4>
@@ -36,10 +40,11 @@ const OrderDetails = () => {
             {order?.products?.length} Products
           </h4>
         </div>
+        <Button color="success" onPress={onOpen} className="bg-green-500 text-white">Download Invoice</Button>
       </div>
       <div className="p-6">
         <div className="grid grid-cols-6 gap-7">
-          <div className="col-span-4 h-[300px] grid grid-cols-2 border border-gray-300 rounded-lg">
+          <div className="lg:col-span-4 col-span-6 lg:h-[300px] grid grid-cols-1 lg:grid-cols-2 border gap-5 lg:gap-0 border-gray-300 rounded-lg">
             {/* 1st column */}
             <div className="border-r border-gray-300">
               <h2 className=" text-gray-500 border-b border-gray-300 px-4 py-3 font-medium">
@@ -88,7 +93,7 @@ const OrderDetails = () => {
           </div>
 
           {/* 3rd column */}
-          <div className="col-span-2 border border-gray-300 rounded-lg">
+          <div className="lg:col-span-2 col-span-6 border border-gray-300 rounded-lg">
             <div className=" border-b border-gray-300 items-center gap-7 p-4">
               <h3 className=" text-gray-500 mb-3 text-sm font-medium">
                 Transaction ID:{" "}
@@ -123,7 +128,8 @@ const OrderDetails = () => {
         </div>
       </div>
 
-      <table className="overflow-auto w-full">
+<div className="overflow-x-auto">
+<table className=" w-full">
         <tr>
           <th>PRODUCT</th>
           <th>PRICE</th>
@@ -148,6 +154,35 @@ const OrderDetails = () => {
           </tr>
         ))}
       </table>
+</div>
+<Modal
+            scrollBehavior="outside"
+            size="5xl"
+            backdrop="opaque"
+            className="!z-50"
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+          >
+            <ModalContent>
+              {(onClose) => (
+                <>
+                  <ModalHeader className="flex flex-col gap-1">
+                    Add a New Product
+                  </ModalHeader>
+                  <ModalBody>
+                    <div className="h-screen">
+                    <OrderDetailsPdf order={order}></OrderDetailsPdf>
+                    </div>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="danger" variant="light" onPress={onClose}>
+                      Close
+                    </Button>
+                  </ModalFooter>
+                </>
+              )}
+            </ModalContent>
+          </Modal>
     </div>
   );
 };

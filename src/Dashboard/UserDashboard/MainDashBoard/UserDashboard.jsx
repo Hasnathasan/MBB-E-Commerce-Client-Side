@@ -28,7 +28,7 @@ const UserDashboard = () => {
   <Outlet></Outlet>
   </div>
   </div> 
-  <div className="drawer-side z-[1000]">
+  <div className="drawer-side !z-50">
     <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label> 
     <ul className="menu p-4 w-80 min-h-full bg-white border border-gray-300 rounded-lg">
         <h2 className="text-xl font-semibold ps-5">Navigation</h2>
