@@ -17,7 +17,7 @@ const CheckOutFunctionality = () => {
 
   const [clientSecret, setClientSecret] = useState("");
   const [processing, setProcessing] = useState(false);
-  const [isSelected, setIsSelected] = useState(false);
+  const [isSelected, setIsSelected] = useState(true);
   const [transactionId, setTransactionId] = useState();
   const { setIsProductAdded, user } = useContext(AuthContext);
   const [userData] = useUser();
