@@ -1,4 +1,4 @@
-import { Button, Radio, RadioGroup } from "@nextui-org/react";
+import { Button, Checkbox, Radio, RadioGroup } from "@nextui-org/react";
 import useUser from "../../../Hooks/useUser";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
@@ -17,6 +17,7 @@ const CheckOutFunctionality = () => {
 
   const [clientSecret, setClientSecret] = useState("");
   const [processing, setProcessing] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
   const [transactionId, setTransactionId] = useState();
   const { setIsProductAdded, user } = useContext(AuthContext);
   const [userData] = useUser();
@@ -52,6 +53,7 @@ const CheckOutFunctionality = () => {
       });
     }
   }, [axiosSecure, subTotal]);
+  console.log(isSelected);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -65,6 +67,16 @@ const CheckOutFunctionality = () => {
     const zipCode = form.zipCode.value;
     const userPhoneNumber = form.phoneNumber.value;
     const additional_info = form.additional_info.value;
+    const user_details =  {
+      email: userData?.email,
+      userName: userData?.userName,
+      companyName: userData?.billingInfo?.companyName,
+      country: userData?.billingInfo?.country,
+      address: userData?.billingInfo?.address,
+      states: userData?.billingInfo?.states,
+      zipCode: userData?.billingInfo?.zipCode,
+      userPhoneNumber: userData?.billingInfo?.userPhoneNumber,
+    };
     const data = {
       email,
       additional_info,
@@ -101,13 +113,16 @@ const CheckOutFunctionality = () => {
     }
 
     setProcessing(true);
-    const order = {
-      userDetails: data,
+    let order = {
+      userDetails: user_details,
       products: userCart,
       status: "pending",
       createdAt: new Date(),
       total_price: subTotal,
     };
+    if(isSelected){
+      order.shipping_address = data;
+    }
     const orderProductsId = userCart?.map((product) => {
       return { product_id: product?.product_id, quantity: product?.quantity };
     });
@@ -172,7 +187,10 @@ const CheckOutFunctionality = () => {
       >
         <div className="col-span-12 p-5 lg:col-span-8">
           <div className={`border-b border-gray-300  pb-5`}>
+            <div className="flex justify-between items-center">
             <h4 className="mb-5 text-2xl font-semibold">Billing Information</h4>
+            <Checkbox isSelected={isSelected} onValueChange={setIsSelected}>Add a Different Shipping Address</Checkbox>
+            </div>
             <div className="">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
@@ -184,7 +202,7 @@ const CheckOutFunctionality = () => {
                     className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                     placeholder="Name"
                     defaultValue={userData?.userName}
-                    required
+                    required={isSelected}
                   />
                 </div>
                 <div>
@@ -211,7 +229,7 @@ const CheckOutFunctionality = () => {
                   className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                   placeholder="Street Address"
                   defaultValue={userData?.billingInfo?.address}
-                  required
+                  required={isSelected}
                 />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -224,7 +242,7 @@ const CheckOutFunctionality = () => {
                     className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                     placeholder="Country"
                     defaultValue={userData?.billingInfo?.country}
-                    required
+                    required={isSelected}
                   />
                 </div>
                 <div>
@@ -236,7 +254,7 @@ const CheckOutFunctionality = () => {
                     className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                     placeholder="States Name"
                     defaultValue={userData?.billingInfo?.states}
-                    required
+                    required={isSelected}
                   />
                 </div>
                 <div>
@@ -248,7 +266,7 @@ const CheckOutFunctionality = () => {
                     className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                     placeholder="Zip Code"
                     defaultValue={userData?.billingInfo?.zipCode}
-                    required
+                    required={isSelected}
                   />
                 </div>
               </div>
@@ -262,7 +280,7 @@ const CheckOutFunctionality = () => {
                     className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                     placeholder="Email Address"
                     defaultValue={userData?.email}
-                    required
+                    required={isSelected}
                   />
                 </div>
 
@@ -275,7 +293,7 @@ const CheckOutFunctionality = () => {
                     className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                     placeholder="Phone Number"
                     defaultValue={userData?.userPhoneNumber}
-                    required
+                    required={isSelected}
                   />
                 </div>
               </div>

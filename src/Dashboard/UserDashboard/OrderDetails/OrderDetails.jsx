@@ -55,14 +55,14 @@ const OrderDetails = () => {
                   <h2 className="text-xl font-medium">
                     {userName || "Unknown"}
                   </h2>
-                  <h3 className="text-gray-600 text-sm">{address}</h3>
+                  <h3 className="text-gray-600 text-sm">{address || "Unknown"}</h3>
                 </div>
                 <div>
                   <h3 className="text-gray-600 text-sm">Email</h3>
-                  <h3 className="text-gray-900 mb-2 font-medium">{email}</h3>
+                  <h3 className="text-gray-900 mb-2 font-medium">{email || "Unknown"}</h3>
                   <h3 className="text-gray-600 text-sm">Phone</h3>
                   <h3 className="text-gray-900 font-medium">
-                    {userPhoneNumber}
+                    {userPhoneNumber || "Unknown"}
                   </h3>
                 </div>
               </div>
@@ -76,16 +76,16 @@ const OrderDetails = () => {
               <div className="p-4">
                 <div className="mb-4">
                   <h2 className="text-xl font-medium">
-                    {userName || "Unknown"}
+                    {order?.shipping_address?.userName || userName || "Unknown"}
                   </h2>
-                  <h3 className="text-gray-600 text-sm">{address}</h3>
+                  <h3 className="text-gray-600 text-sm">{order?.shipping_address?.address ||address || "Unknown"}</h3>
                 </div>
                 <div>
                   <h3 className="text-gray-600 text-sm">Email</h3>
-                  <h3 className="text-gray-900 mb-2 font-medium">{email}</h3>
+                  <h3 className="text-gray-900 mb-2 font-medium">{order?.shipping_address?.email ||email || "Unknown"}</h3>
                   <h3 className="text-gray-600 text-sm">Phone</h3>
                   <h3 className="text-gray-900 font-medium">
-                    {userPhoneNumber}
+                    {order?.shipping_address?.userPhoneNumber ||userPhoneNumber || "Unknown"}
                   </h3>
                 </div>
               </div>

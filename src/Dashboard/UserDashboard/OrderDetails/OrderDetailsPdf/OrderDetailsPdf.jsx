@@ -51,29 +51,21 @@ const OrderDetailsPdf = ({ order }) => {
         tableCell: {
             flex: 1,
             padding: 4,
-            fontSize: 10,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 20
-        },
-        modal: {
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-        },
-        modalContent: {
-            backgroundColor: '#fff',
-            padding: 20,
-            borderRadius: 8,
-        },
+            fontSize: 10
+        }
     });
+
+    const {
+        email,
+        additional_info,
+        userName,
+        companyName,
+        country,
+        address,
+        states,
+        zipCode,
+        userPhoneNumber,
+      } = order.userDetails;
 
     return (
         <PDFViewer width="100%" height="100%">
@@ -90,17 +82,17 @@ const OrderDetailsPdf = ({ order }) => {
                             <View style={styles.row}>
                                 <View>
                                     <Text style={styles.subtitle}>Billing Address</Text>
-                                    <Text style={styles.text}>Name: {order?.userName || "Unknown"}</Text>
-                                    <Text style={styles.text}>Address: {order?.address}</Text>
-                                    <Text style={styles.text}>Email: {order?.email}</Text>
-                                    <Text style={styles.text}>Phone: {order?.userPhoneNumber}</Text>
+                                    <Text style={styles.text}>Name: {userName || "Unknown"}</Text>
+                                    <Text style={styles.text}>Address: {address || "Unknown"}</Text>
+                                    <Text style={styles.text}>Email: {email || "Unknown"}</Text>
+                                    <Text style={styles.text}>Phone: {userPhoneNumber || "Unknown"}</Text>
                                 </View>
                                 <View>
                                     <Text style={styles.subtitle}>Shipping Address</Text>
-                                    <Text style={styles.text}>Name: {order?.userName || "Unknown"}</Text>
-                                    <Text style={styles.text}>Address: {order?.address}</Text>
-                                    <Text style={styles.text}>Email: {order?.email}</Text>
-                                    <Text style={styles.text}>Phone: {order?.userPhoneNumber}</Text>
+                                    <Text style={styles.text}>Name: {order?.shipping_address?.userName ||userName || "Unknown"}</Text>
+                                    <Text style={styles.text}>Address: {order?.shipping_address?.address ||address || "Unknown"}</Text>
+                                    <Text style={styles.text}>Email: {order?.shipping_address?.email ||email || "Unknown"}</Text>
+                                    <Text style={styles.text}>Phone: {order?.shipping_address?.userPhoneNumber ||userPhoneNumber || "Unknown"}</Text>
                                 </View>
                             </View>
                             <View style={styles.row}>
@@ -122,7 +114,7 @@ const OrderDetailsPdf = ({ order }) => {
                             </View>
                             {order?.products?.map((product, index) => (
                                 <View key={index} style={styles.tableRow}>
-                                    <Text style={styles.tableCell}><Image src={product?.featured_photo} style={{ width: 35, height: 20 }} />{product?.product_name}</Text>
+                                    <Text style={styles.tableCell}>{product?.product_name}</Text>
                                     <Text style={styles.tableCell}>${product?.price?.sale_price || product?.price?.regular_price}</Text>
                                     <Text style={styles.tableCell}>x{product?.quantity}</Text>
                                     <Text style={styles.tableCell}>
