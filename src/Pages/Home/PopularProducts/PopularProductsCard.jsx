@@ -31,31 +31,33 @@ const PopularProductsCard = ({ product, isRounded }) => {
   } = product;
   const handleWishList = (e) => {
     e.preventDefault();
-    const wishItem = {addedBy: user?.email, product}
-    axios.post(`https://mbb-e-commerce-server.vercel.app/wish-list`, wishItem)
-    .then(res => {
-      console.log(res.data)
-      if(res.data.insertedId){
-        toast.success("Product added to wishlist")
-      }
-    })
-    .catch(err => console.log(err))
-    
+    const wishItem = { addedBy: user?.email, product };
+    axios
+      .post(`https://mbb-e-commerce-server.vercel.app/wish-list`, wishItem)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.insertedId) {
+          toast.success("Product added to wishlist");
+        }
+      })
+      .catch((err) => console.log(err));
   };
   const success = () => toast.success("Product Successfully added to cart");
 
   const handleAddToCart = (e) => {
     e.preventDefault();
-    if(available_quantity === 0){
-      return toast.error("This Product is out of stock")
+    if (available_quantity === 0) {
+      return toast.error("This Product is out of stock");
     }
     const cartProduct = {
       addedBy: user?.email,
-      artist_details: {artist: addedBy, prison_of_artist},
+      artist_details: { artist: addedBy, prison_of_artist },
       quantity: 1,
       product_id: _id,
       product_name,
-      total: (price?.sale_price ? (price?.sale_price * 1): (price?.regular_price * 1)),
+      total: price?.sale_price
+        ? price?.sale_price * 1
+        : price?.regular_price * 1,
       price,
       profit_distribution,
       featured_photo,
@@ -68,7 +70,7 @@ const PopularProductsCard = ({ product, isRounded }) => {
     setIsProductAdded((prevCount) => prevCount + 1);
     newCart.push(cartProduct);
     localStorage.setItem("cart", JSON.stringify(newCart));
-      setOpenCart(true)
+    setOpenCart(true);
     success();
   };
 
@@ -106,7 +108,9 @@ const PopularProductsCard = ({ product, isRounded }) => {
               readonly
             />
           </div>
-          <Button radius="full" isIconOnly 
+          <Button
+            radius="full"
+            isIconOnly
             onClick={handleAddToCart}
             className={`bg-[#ebebeb] absolute bottom-3 right-3 z-10 rounded-full cursor-pointer  flex justify-center items-center w-10 h-10`}
           >
