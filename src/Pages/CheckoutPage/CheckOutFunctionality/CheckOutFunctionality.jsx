@@ -67,7 +67,7 @@ const CheckOutFunctionality = () => {
     const zipCode = form.zipCode.value;
     const userPhoneNumber = form.phoneNumber.value;
     const additional_info = form.additional_info.value;
-    const user_details =  {
+    const user_details = {
       email: userData?.email,
       userName: userData?.userName,
       companyName: userData?.billingInfo?.companyName,
@@ -120,7 +120,7 @@ const CheckOutFunctionality = () => {
       createdAt: new Date(),
       total_price: subTotal,
     };
-    if(isSelected){
+    if (isSelected) {
       order.shipping_address = data;
     }
     const orderProductsId = userCart?.map((product) => {
@@ -188,8 +188,12 @@ const CheckOutFunctionality = () => {
         <div className="col-span-12 p-5 lg:col-span-8">
           <div className={`border-b border-gray-300  pb-5`}>
             <div className="flex justify-between items-center">
-            <h4 className="mb-5 text-2xl font-semibold">Billing Information</h4>
-            <Checkbox isSelected={isSelected} onValueChange={setIsSelected}>Add a Different Shipping Address</Checkbox>
+              <h4 className="mb-5 text-2xl font-semibold">
+                Billing Information
+              </h4>
+              <Checkbox isSelected={isSelected} onValueChange={setIsSelected}>
+                Add a Different Shipping Address
+              </Checkbox>
             </div>
             <div className="">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
