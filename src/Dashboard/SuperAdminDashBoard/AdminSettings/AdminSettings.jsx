@@ -41,7 +41,7 @@ const AdminSettings = () => {
       data.logo = logo;
     }
 
-    axios.patch("http://localhost:8000/system-setting", data)
+    axios.patch("https://mbb-e-commerce-server.vercel.app/system-setting", data)
     .then(res => console.log(res.data))
     .catch(err => console.log(err))
   }

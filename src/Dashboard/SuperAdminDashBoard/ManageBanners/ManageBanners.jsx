@@ -96,18 +96,22 @@ const ManageBanners = () => {
       formData.append(`files`, file);
     });
     axios
-      .post("http://localhost:8000/uploadMultiple", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      .post(
+        "https://mbb-e-commerce-server.vercel.app/uploadMultiple",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
       .then((res) => {
         console.log(res.data);
         if (res?.data?.imageUrls) {
           console.log(res.data.imageUrls);
 
           axios
-            .post("http://localhost:8000/bannerImage", {
+            .post("https://mbb-e-commerce-server.vercel.app/bannerImage", {
               newImages: res.data.imageUrls,
             })
             .then((res) => {

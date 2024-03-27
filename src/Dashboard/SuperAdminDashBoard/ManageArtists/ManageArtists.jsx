@@ -191,35 +191,46 @@ const ManageArtists = () => {
     return <Loader></Loader>;
   }
 
-  const deleteFunc = email => {
-    axios.delete(`https://mbb-e-commerce-server.vercel.app/artistDelete/${email}`)
-    .then(res => {
-      console.log(res.data);
-      if(res.data.deletedCount > 0){
-        refetch();
-        toast.success("User Deleted")
-      }
-    })
-    .catch(err => {
-      toast.error(err.message)
-    })
-  }
-  const handleArtistDelete = email => {
+  const deleteFunc = (email) => {
+    axios
+      .delete(`https://mbb-e-commerce-server.vercel.app/artistDelete/${email}`)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.deletedCount > 0) {
+          refetch();
+          toast.success("User Deleted");
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
+  const handleArtistDelete = (email) => {
     toast((t) => (
       <span>
         Do You Want To Delete This Artist?
         <ButtonGroup variant="solid" radius="none" size="sm">
-        <Button  className="px-9 mt-3 float-right  text-white" color="danger" onClick={() =>{ deleteFunc(email);toast.dismiss(t.id)}}>
-          Yes
-        </Button>
-        <Button  className="px-9 mt-3 float-right  text-white" color="success" onClick={() => toast.dismiss(t.id)}>
-          No
-        </Button>
+          <Button
+            className="px-9 mt-3 float-right  text-white"
+            color="danger"
+            onClick={() => {
+              deleteFunc(email);
+              toast.dismiss(t.id);
+            }}
+          >
+            Yes
+          </Button>
+          <Button
+            className="px-9 mt-3 float-right  text-white"
+            color="success"
+            onClick={() => toast.dismiss(t.id)}
+          >
+            No
+          </Button>
         </ButtonGroup>
       </span>
     ));
-
-  }
+  };
   return (
     <>
       {
@@ -250,42 +261,50 @@ const ManageArtists = () => {
               </TableColumn>
             </TableHeader>
             <TableBody emptyContent={"No Artist Available"}>
-              {artistsData?.length > 0 ? artistsData?.map((user) => (
-                <TableRow key={user._id}>
-                  <TableCell>
-                    <User
-                      avatarProps={{ radius: "md", src: user.userPhoto }}
-                      description={user.email || user.phoneNumber}
-                      name={user.userName || "Unknown"}
-                    ></User>
-                  </TableCell>
-                  <TableCell>{user.email || user.phoneNumber}</TableCell>
-                  <TableCell>
-                    <Chip
-                      className="capitalize"
-                      color={user.userRole == "mbbAdmin" ? "danger" : "success"}
-                      size="sm"
-                      variant="flat"
-                    >
-                      {user.userRole}
-                    </Chip>
-                  </TableCell>
-                  <TableCell>
-                    <ButtonGroup size="sm">
-                    <Button
-                      onClick={() => handleArtistUpdateModal(user)}
-                      color="success"
-                      className="text-white"
-                    >
-                      View Details
-                    </Button>
-                    <Button onClick={() => handleArtistDelete(user?.email)} color="danger" className="text-white">
-                Delete
-              </Button>
-                    </ButtonGroup>
-                  </TableCell>
-                </TableRow>
-              )) : []}
+              {artistsData?.length > 0
+                ? artistsData?.map((user) => (
+                    <TableRow key={user._id}>
+                      <TableCell>
+                        <User
+                          avatarProps={{ radius: "md", src: user.userPhoto }}
+                          description={user.email || user.phoneNumber}
+                          name={user.userName || "Unknown"}
+                        ></User>
+                      </TableCell>
+                      <TableCell>{user.email || user.phoneNumber}</TableCell>
+                      <TableCell>
+                        <Chip
+                          className="capitalize"
+                          color={
+                            user.userRole == "mbbAdmin" ? "danger" : "success"
+                          }
+                          size="sm"
+                          variant="flat"
+                        >
+                          {user.userRole}
+                        </Chip>
+                      </TableCell>
+                      <TableCell>
+                        <ButtonGroup size="sm">
+                          <Button
+                            onClick={() => handleArtistUpdateModal(user)}
+                            color="success"
+                            className="text-white"
+                          >
+                            View Details
+                          </Button>
+                          <Button
+                            onClick={() => handleArtistDelete(user?.email)}
+                            color="danger"
+                            className="text-white"
+                          >
+                            Delete
+                          </Button>
+                        </ButtonGroup>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                : []}
             </TableBody>
           </Table>
 
@@ -652,8 +671,8 @@ const ManageArtists = () => {
                   </ModalHeader>
                   <ModalBody>
                     <ArtistUpdateModal
-                    onClose={onClose}
-                    refetch={refetch}
+                      onClose={onClose}
+                      refetch={refetch}
                       artist={artistToShowOnModal}
                     ></ArtistUpdateModal>
                   </ModalBody>
