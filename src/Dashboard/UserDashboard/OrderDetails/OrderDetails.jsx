@@ -4,7 +4,15 @@ import "./OrderDetails.css";
 import { useParams } from "react-router-dom";
 import useSingleOrderById from "../../../Hooks/useSingleOrderById";
 import Loader from "../../../Components/Loader/Loader";
-import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from "@nextui-org/react";
 import AddNewProductForAdmin from "../../SuperAdminDashBoard/AddNewProductForAdmin/AddNewProductForAdmin";
 import OrderDetailsPdf from "./OrderDetailsPdf/OrderDetailsPdf";
 
@@ -40,7 +48,13 @@ const OrderDetails = () => {
             {order?.products?.length} Products
           </h4>
         </div>
-        <Button color="success" onPress={onOpen} className="bg-green-500 text-white">Download Invoice</Button>
+        <Button
+          color="success"
+          onPress={onOpen}
+          className="bg-green-500 text-white"
+        >
+          Download Invoice
+        </Button>
       </div>
       <div className="p-6">
         <div className="grid grid-cols-6 gap-7">
@@ -55,11 +69,15 @@ const OrderDetails = () => {
                   <h2 className="text-xl font-medium">
                     {userName || "Unknown"}
                   </h2>
-                  <h3 className="text-gray-600 text-sm">{address || "Unknown"}</h3>
+                  <h3 className="text-gray-600 text-sm">
+                    {address || "Unknown"}
+                  </h3>
                 </div>
                 <div>
                   <h3 className="text-gray-600 text-sm">Email</h3>
-                  <h3 className="text-gray-900 mb-2 font-medium">{email || "Unknown"}</h3>
+                  <h3 className="text-gray-900 mb-2 font-medium">
+                    {email || "Unknown"}
+                  </h3>
                   <h3 className="text-gray-600 text-sm">Phone</h3>
                   <h3 className="text-gray-900 font-medium">
                     {userPhoneNumber || "Unknown"}
@@ -78,14 +96,20 @@ const OrderDetails = () => {
                   <h2 className="text-xl font-medium">
                     {order?.shipping_address?.userName || userName || "Unknown"}
                   </h2>
-                  <h3 className="text-gray-600 text-sm">{order?.shipping_address?.address ||address || "Unknown"}</h3>
+                  <h3 className="text-gray-600 text-sm">
+                    {order?.shipping_address?.address || address || "Unknown"}
+                  </h3>
                 </div>
                 <div>
                   <h3 className="text-gray-600 text-sm">Email</h3>
-                  <h3 className="text-gray-900 mb-2 font-medium">{order?.shipping_address?.email ||email || "Unknown"}</h3>
+                  <h3 className="text-gray-900 mb-2 font-medium">
+                    {order?.shipping_address?.email || email || "Unknown"}
+                  </h3>
                   <h3 className="text-gray-600 text-sm">Phone</h3>
                   <h3 className="text-gray-900 font-medium">
-                    {order?.shipping_address?.userPhoneNumber ||userPhoneNumber || "Unknown"}
+                    {order?.shipping_address?.userPhoneNumber ||
+                      userPhoneNumber ||
+                      "Unknown"}
                   </h3>
                 </div>
               </div>
@@ -128,61 +152,61 @@ const OrderDetails = () => {
         </div>
       </div>
 
-<div className="overflow-x-auto">
-<table className=" w-full">
-        <tr>
-          <th>PRODUCT</th>
-          <th>PRICE</th>
-          <th>QUANTITY</th>
-          <th>SUBTOTAL</th>
-        </tr>
-        {order?.products?.map((product) => (
-          <tr key={product?.product_id}>
-            <td className="flex items-center gap-2">
-              <img className="w-16" src={product?.featured_photo} alt="" />
-              <h3 className="font-semibold">{product?.product_name}</h3>
-            </td>
-            <td>
-              ${product?.price?.sale_price || product?.price?.regular_price}
-            </td>
-            <td>x{product?.quantity}</td>
-            <td>
-              $
-              {product?.price?.sale_price * product?.quantity ||
-                product?.price?.regular_price * product?.quantity}
-            </td>
+      <div className="overflow-x-auto">
+        <table className=" w-full">
+          <tr>
+            <th>PRODUCT</th>
+            <th>PRICE</th>
+            <th>QUANTITY</th>
+            <th>SUBTOTAL</th>
           </tr>
-        ))}
-      </table>
-</div>
-<Modal
-            scrollBehavior="outside"
-            size="5xl"
-            backdrop="opaque"
-            className="!z-50"
-            isOpen={isOpen}
-            onOpenChange={onOpenChange}
-          >
-            <ModalContent>
-              {(onClose) => (
-                <>
-                  <ModalHeader className="flex flex-col gap-1">
-                    Add a New Product
-                  </ModalHeader>
-                  <ModalBody>
-                    <div className="h-screen">
-                    <OrderDetailsPdf order={order}></OrderDetailsPdf>
-                    </div>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color="danger" variant="light" onPress={onClose}>
-                      Close
-                    </Button>
-                  </ModalFooter>
-                </>
-              )}
-            </ModalContent>
-          </Modal>
+          {order?.products?.map((product) => (
+            <tr key={product?.product_id}>
+              <td className="flex items-center gap-2">
+                <img className="w-16" src={product?.featured_photo} alt="" />
+                <h3 className="font-semibold">{product?.product_name}</h3>
+              </td>
+              <td>
+                ${product?.price?.sale_price || product?.price?.regular_price}
+              </td>
+              <td>x{product?.quantity}</td>
+              <td>
+                $
+                {product?.price?.sale_price * product?.quantity ||
+                  product?.price?.regular_price * product?.quantity}
+              </td>
+            </tr>
+          ))}
+        </table>
+      </div>
+      <Modal
+        scrollBehavior="outside"
+        size="5xl"
+        backdrop="opaque"
+        className="!z-50"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Add a New Product
+              </ModalHeader>
+              <ModalBody>
+                <div className="h-screen">
+                  <OrderDetailsPdf order={order}></OrderDetailsPdf>
+                </div>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </div>
   );
 };

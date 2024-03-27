@@ -14,16 +14,19 @@ const OverView = () => {
   const [ordersLength, isOrdersLengthLoading] = useOrdersLength();
   const [usersByRole, isUsersByRoleDataLoading] = useUsersByRole();
   const [ordersByMonth, isOrdersByMonthLoading] = useOrdersCountByMonth();
-  const [soldProductByMonth, isSoldProductByMonthLoading] = useProductCountFormOrderByMonth();
+  const [soldProductByMonth, isSoldProductByMonthLoading] =
+    useProductCountFormOrderByMonth();
   if (
     isProductsLengthLoading ||
-    isUsersByRoleDataLoading || isOrdersByMonthLoading || isSoldProductByMonthLoading ||
+    isUsersByRoleDataLoading ||
+    isOrdersByMonthLoading ||
+    isSoldProductByMonthLoading ||
     isOrdersLengthLoading
   ) {
     return <Loader></Loader>;
   }
   console.log(ordersByMonth);
-  
+
   var options = {
     chart: {
       height: 200,
@@ -37,7 +40,7 @@ const OverView = () => {
     },
     xaxis: {
       type: "month",
-      categories:  Object.keys(ordersByMonth),
+      categories: Object.keys(ordersByMonth),
     },
     tooltip: {
       x: {
