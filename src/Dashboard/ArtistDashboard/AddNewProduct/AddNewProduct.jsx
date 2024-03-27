@@ -25,177 +25,186 @@ const AddNewProduct = () => {
   console.log(tags, categories, regularPrice);
   return (
     <div className="w-full">
-      
       <form className={``}>
         <div className="border border-gray-300 rounded-lg mb-8">
-      <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
-        Add a New Product
-      </h4>
-        <div className="p-5">
-        <div className="grid grid-cols-2 gap-5">
-          <div>
-            <label htmlFor="productName">Product Name</label>
-            <input
-              type="text"
-              name="productName"
-              id="productName"
-              className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-              placeholder="Product Name"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="category">Product Category</label>
-            <MultiSelect
-              values={categories}
-              delimiters={[188]}
-              valuesFromPaste={(options, values, pastedText) => {
-                return pastedText
-                  .split(",")
-                  .filter(
-                    (text) => !values.some((item) => item.label === text.trim())
-                  )
-                  .map((text) => ({ label: text.trim(), value: text.trim() }));
-              }}
-              restoreOnBackspace={(item) => item.label}
-              onValuesChange={(categories) => setCategories(categories)}
-              createFromSearch={(options, values, search) => {
-                const labels = values.map((value) => value.label);
-                if (
-                  search.trim().length === 0 ||
-                  labels.includes(search.trim())
-                )
-                  return null;
-                return { label: search.trim(), value: search.trim() };
-              }}
-              renderNoResultsFound={(values, search) => (
-                <div className="no-results-found">
-                  {(() => {
-                    if (search.trim().length === 0)
-                      return "Type a few characters to create a Category";
-                    else if (
-                      values.some((item) => item.label === search.trim())
+          <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
+            Add a New Product
+          </h4>
+          <div className="p-5">
+            <div className="grid grid-cols-2 gap-5">
+              <div>
+                <label htmlFor="productName">Product Name</label>
+                <input
+                  type="text"
+                  name="productName"
+                  id="productName"
+                  className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                  placeholder="Product Name"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="category">Product Category</label>
+                <MultiSelect
+                  values={categories}
+                  delimiters={[188]}
+                  valuesFromPaste={(options, values, pastedText) => {
+                    return pastedText
+                      .split(",")
+                      .filter(
+                        (text) =>
+                          !values.some((item) => item.label === text.trim())
+                      )
+                      .map((text) => ({
+                        label: text.trim(),
+                        value: text.trim(),
+                      }));
+                  }}
+                  restoreOnBackspace={(item) => item.label}
+                  onValuesChange={(categories) => setCategories(categories)}
+                  createFromSearch={(options, values, search) => {
+                    const labels = values.map((value) => value.label);
+                    if (
+                      search.trim().length === 0 ||
+                      labels.includes(search.trim())
                     )
-                      return "Tag already exists";
-                  })()}
-                </div>
-              )}
-            />
-          </div>
-        </div>
-        <div className="grid grid-cols-3 gap-5">
-          <div>
-            <label htmlFor="productsPhoto">Product Feature photo</label>
-            <input
-              type="file"
-              name="productsPhoto"
-              id="productsPhoto"
-              className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
-              placeholder="Feature photo of your product"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="productsPhoto">Product&apos;s other photos</label>
-            <input
-              type="file"
-              multiple
-              name="productsPhoto"
-              id="productsPhoto"
-              className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
-              placeholder="Product Photos"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="productPrice">Tags</label>
-            <MultiSelect
-              values={tags}
-              delimiters={[188]}
-              valuesFromPaste={(options, values, pastedText) => {
-                return pastedText
-                  .split(",")
-                  .filter(
-                    (text) => !values.some((item) => item.label === text.trim())
-                  )
-                  .map((text) => ({ label: text.trim(), value: text.trim() }));
-              }}
-              restoreOnBackspace={(item) => item.label}
-              onValuesChange={(tags) => setTags(tags)}
-              createFromSearch={(options, values, search) => {
-                const labels = values.map((value) => value.label);
-                if (
-                  search.trim().length === 0 ||
-                  labels.includes(search.trim())
-                )
-                  return null;
-                return { label: search.trim(), value: search.trim() };
-              }}
-              renderNoResultsFound={(values, search) => (
-                <div className="no-results-found">
-                  {(() => {
-                    if (search.trim().length === 0)
-                      return "Type a few characters to create a tag";
-                    else if (
-                      values.some((item) => item.label === search.trim())
+                      return null;
+                    return { label: search.trim(), value: search.trim() };
+                  }}
+                  renderNoResultsFound={(values, search) => (
+                    <div className="no-results-found">
+                      {(() => {
+                        if (search.trim().length === 0)
+                          return "Type a few characters to create a Category";
+                        else if (
+                          values.some((item) => item.label === search.trim())
+                        )
+                          return "Tag already exists";
+                      })()}
+                    </div>
+                  )}
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-3 gap-5">
+              <div>
+                <label htmlFor="productsPhoto">Product Feature photo</label>
+                <input
+                  type="file"
+                  name="productsPhoto"
+                  id="productsPhoto"
+                  className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
+                  placeholder="Feature photo of your product"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="productsPhoto">
+                  Product&apos;s other photos
+                </label>
+                <input
+                  type="file"
+                  multiple
+                  name="productsPhoto"
+                  id="productsPhoto"
+                  className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
+                  placeholder="Product Photos"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="productPrice">Tags</label>
+                <MultiSelect
+                  values={tags}
+                  delimiters={[188]}
+                  valuesFromPaste={(options, values, pastedText) => {
+                    return pastedText
+                      .split(",")
+                      .filter(
+                        (text) =>
+                          !values.some((item) => item.label === text.trim())
+                      )
+                      .map((text) => ({
+                        label: text.trim(),
+                        value: text.trim(),
+                      }));
+                  }}
+                  restoreOnBackspace={(item) => item.label}
+                  onValuesChange={(tags) => setTags(tags)}
+                  createFromSearch={(options, values, search) => {
+                    const labels = values.map((value) => value.label);
+                    if (
+                      search.trim().length === 0 ||
+                      labels.includes(search.trim())
                     )
-                      return "Tag already exists";
-                  })()}
-                </div>
-              )}
-            />
+                      return null;
+                    return { label: search.trim(), value: search.trim() };
+                  }}
+                  renderNoResultsFound={(values, search) => (
+                    <div className="no-results-found">
+                      {(() => {
+                        if (search.trim().length === 0)
+                          return "Type a few characters to create a tag";
+                        else if (
+                          values.some((item) => item.label === search.trim())
+                        )
+                          return "Tag already exists";
+                      })()}
+                    </div>
+                  )}
+                />
+              </div>
+            </div>
+            <div>
+              <label htmlFor="name">Description</label>
+              <textarea
+                type="text"
+                name="description"
+                id="description"
+                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                placeholder="Description of your products"
+                rows={4}
+                required
+              />
+            </div>
           </div>
         </div>
-        <div>
-          <label htmlFor="name">Description</label>
-          <textarea
-            type="text"
-            name="description"
-            id="description"
-            className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-            placeholder="Description of your products"
-            rows={4}
-            required
-          />
-        </div>
-        </div>
-        
-
-        </div>
-       <div className="border border-gray-300 mb-8 rounded-lg">
-       <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
-        Pricing Section
-      </h4>
-        <div className="grid grid-cols-3 gap-5 p-5">
-          <div>
-            <label htmlFor="regularPrice">Regular Price</label>
-            <input
-              ref={regularPriceRef}
-              onChange={() => setRegularPrice(regularPriceRef?.current?.value)}
-              type="number"
-              name="productPrice"
-              min={0}
-              id="productPrice"
-              className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-              placeholder="Product Price"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="salePrice">Sale Price</label>
-            <input
-              ref={salePriceRef}
-              onChange={() => setSalePrice(salePriceRef?.current?.value)}
-              type="number"
-              name="productPrice"
-              min={0}
-              id="productPrice"
-              className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-              placeholder="Product Price"
-              required
-            />
-          </div>
-          {/* <div>
+        <div className="border border-gray-300 mb-8 rounded-lg">
+          <h4 className="p-4 text-xl border-b border-gray-300 font-semibold">
+            Pricing Section
+          </h4>
+          <div className="grid grid-cols-3 gap-5 p-5">
+            <div>
+              <label htmlFor="regularPrice">Regular Price</label>
+              <input
+                ref={regularPriceRef}
+                onChange={() =>
+                  setRegularPrice(regularPriceRef?.current?.value)
+                }
+                type="number"
+                name="productPrice"
+                min={0}
+                id="productPrice"
+                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                placeholder="Product Price"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="salePrice">Sale Price</label>
+              <input
+                ref={salePriceRef}
+                onChange={() => setSalePrice(salePriceRef?.current?.value)}
+                type="number"
+                name="productPrice"
+                min={0}
+                id="productPrice"
+                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                placeholder="Product Price"
+                required
+              />
+            </div>
+            {/* <div>
             <label htmlFor="availableQuantity">Available quantity</label>
             <input
               type="number"
@@ -207,74 +216,90 @@ const AddNewProduct = () => {
               required
             />
           </div> */}
-          <div>
-            <label htmlFor="costOfProduct">Cost of Product</label>
-            <input
-              ref={costPriceRef}
-              onChange={() => setCostPrice(costPriceRef?.current?.value)}
-              type="number"
-              min={0}
-              name="costOfProduct"
-              id="costOfProduct"
-              className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
-              placeholder="Cost of your Product"
-              required
-            />
+            <div>
+              <label htmlFor="costOfProduct">Cost of Product</label>
+              <input
+                ref={costPriceRef}
+                onChange={() => setCostPrice(costPriceRef?.current?.value)}
+                type="number"
+                min={0}
+                name="costOfProduct"
+                id="costOfProduct"
+                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
+                placeholder="Cost of your Product"
+                required
+              />
+            </div>
+          </div>
+          <div
+            className={`${regularPrice && costPrice ? "block" : "hidden"} px-5`}
+          >
+            <h2 className="text-lg font-semibold mb-4">Profit Distribution</h2>
+            <h4 className="mb-3">
+              Artist(you){" "}
+              <span className="relative">
+                <input
+                  defaultValue={70}
+                  className="max-w-16 text-right pr-5 bg-gray-300 outline-none rounded-sm p-1 text-sm"
+                  disabled
+                  type="number"
+                />
+                <span className="absolute top-1/2 right-0 transform -translate-x-1/2 -translate-y-1/2">
+                  %
+                </span>
+              </span>
+              : $
+              {regularPrice && costPrice
+                ? (((salePrice || regularPrice) - costPrice) * 0.7).toFixed(2)
+                : 0.0}{" "}
+              + ${costPrice || 0.0} (cost) = $
+              {regularPrice && costPrice
+                ? Number(
+                    ((Number(salePrice) || Number(regularPrice)) -
+                      Number(costPrice)) *
+                      0.7 +
+                      Number(costPrice)
+                  ).toFixed(2)
+                : "0.00"}
+            </h4>
+            <h4 className="mb-3">
+              MBB{" "}
+              <span className="relative">
+                <input
+                  defaultValue={15}
+                  className="max-w-16 text-right pr-5 bg-gray-300 outline-none rounded-sm p-1 text-sm"
+                  disabled
+                  type="number"
+                />
+                <span className="absolute top-1/2 right-0 transform -translate-x-1/2 -translate-y-1/2">
+                  %
+                </span>
+              </span>
+              : $
+              {regularPrice && costPrice
+                ? (((salePrice || regularPrice) - costPrice) * 0.15).toFixed(2)
+                : 0.0}
+            </h4>
+            <h4 className="mb-3">
+              Prison{" "}
+              <span className="relative">
+                <input
+                  defaultValue={15}
+                  className="max-w-16 text-right pr-5 bg-gray-300 outline-none rounded-sm p-1 text-sm"
+                  disabled
+                  type="number"
+                />
+                <span className="absolute top-1/2 right-0 transform -translate-x-1/2 -translate-y-1/2">
+                  %
+                </span>
+              </span>
+              : $
+              {regularPrice && costPrice
+                ? (((salePrice || regularPrice) - costPrice) * 0.15).toFixed(2)
+                : 0.0}
+            </h4>
           </div>
         </div>
-        <div className={`${regularPrice && costPrice ? "block" : "hidden"} px-5`}>
-          <h2 className="text-lg font-semibold mb-4">Profit Distribution</h2>
-          <h4 className="mb-3">
-            Artist(you){" "}
-            <span className="relative">
-              <input
-                defaultValue={70}
-                className="max-w-16 text-right pr-5 bg-gray-300 outline-none rounded-sm p-1 text-sm"
-                disabled
-                type="number"
-              />
-              <span className="absolute top-1/2 right-0 transform -translate-x-1/2 -translate-y-1/2">
-                %
-              </span>
-            </span>
-            : ${ regularPrice && costPrice ? ((((salePrice || regularPrice) - costPrice) * 0.7).toFixed(2)) : 0.00} + ${costPrice || 0.00} (cost) = ${ (regularPrice && costPrice) ? Number((((Number(salePrice) || Number(regularPrice)) - Number(costPrice)) * 0.7) + Number(costPrice)).toFixed(2) : '0.00'}
-          </h4>
-          <h4 className="mb-3">
-            MBB{" "}
-            <span className="relative">
-              <input
-                defaultValue={15}
-                className="max-w-16 text-right pr-5 bg-gray-300 outline-none rounded-sm p-1 text-sm"
-                disabled
-                type="number"
-              />
-              <span className="absolute top-1/2 right-0 transform -translate-x-1/2 -translate-y-1/2">
-                %
-              </span>
-            </span>
-            : ${regularPrice && costPrice ?((((salePrice || regularPrice) - costPrice) * 0.15).toFixed(2)) : 0.00}
-          </h4>
-          <h4 className="mb-3">
-            Prison{" "}
-            <span className="relative">
-              <input
-                defaultValue={15}
-                className="max-w-16 text-right pr-5 bg-gray-300 outline-none rounded-sm p-1 text-sm"
-                disabled
-                type="number"
-              />
-              <span className="absolute top-1/2 right-0 transform -translate-x-1/2 -translate-y-1/2">
-                %
-              </span>
-            </span>
-            : ${regularPrice && costPrice ?((((salePrice || regularPrice) - costPrice) * 0.15).toFixed(2)): 0.00}
-          </h4>
-        </div>
-       </div>
-
-        
-
-        
 
         <Button
           onSubmit={handleAddNewProduct}
@@ -293,14 +318,12 @@ const AddNewProduct = () => {
 
 export default AddNewProduct;
 
-
-
-// Online classes and offline classes are two types of learning, both of which have advantages and disadvantages. 
+// Online classes and offline classes are two types of learning, both of which have advantages and disadvantages.
 // Online classes give students the flexibility to attend classes from their home or office, while offline classes require students to physically attend classes in
-//  a classroom. 
+//  a classroom.
 // Online classes allow students to access course material at any time, from anywhere. This is a huge advantage for those who have busy
-//  schedules and need to work while studying. Online classes also allow students to learn at their own pace. 
+//  schedules and need to work while studying. Online classes also allow students to learn at their own pace.
 
-// Offline classes, on the other hand, provide students with the opportunity to build relationships with their professors and peers. 
+// Offline classes, on the other hand, provide students with the opportunity to build relationships with their professors and peers.
 // This can often help students to develop a better understanding of the material being taught.
 // Thus there are some merits and demerits in both the online class and offline class
