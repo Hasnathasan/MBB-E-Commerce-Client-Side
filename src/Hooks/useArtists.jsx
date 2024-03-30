@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "./useAxiosSecure";
 
 const useArtists = () => {
-    const [axiosSecure] = useAxiosSecure();
+  const [axiosSecure] = useAxiosSecure();
   const {
     data: artistsData,
     isLoading: isArtistsDataLoading,
@@ -15,7 +15,6 @@ const useArtists = () => {
     },
   });
   return [artistsData, isArtistsDataLoading, refetch];
-
 };
 
 export default useArtists;
