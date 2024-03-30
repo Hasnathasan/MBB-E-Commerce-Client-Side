@@ -2,15 +2,17 @@ import "./OrderDetailsForAdmin.css";
 import { useParams } from "react-router-dom";
 import useSingleOrderById from "../../../Hooks/useSingleOrderById";
 import Loader from "../../../Components/Loader/Loader";
-import { Button, Select, SelectItem } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, useDisclosure } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
+import OrderDetailsPdf from "../../UserDashboard/OrderDetails/OrderDetailsPdf/OrderDetailsPdf";
 
 const OrderDetailsForAdmin = () => {
   const { id } = useParams();
   const [order, isOrderLoading] = useSingleOrderById({ id });
   const [value, setValue] = useState();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   useEffect(() => {
     setValue(order?.status);
   }, [order?.status]);
@@ -61,12 +63,23 @@ const OrderDetailsForAdmin = () => {
             </h4>
           </div>
         </div>
-        <div className="min-w-64 flex justify-between items-center gap-3">
+
+        <div className="min-w-[500px] flex justify-end items-center gap-3">
+        <Button
+          color="success"
+          size="sm"
+          onPress={onOpen}
+          className="bg-green-500 text-white"
+        >
+          Download Invoice
+        </Button>
+          <div className="flex justify-between items-center gap-3">
           <Select
             placeholder="Change Status"
             labelPlacement="outside-left"
-            className="max-w-xl text-nowrap"
+            className="min-w-[200px] text-nowrap"
             disableSelectorIconRotation
+            size="sm"
             selectedKeys={[value]}
             onChange={handleSelectionChange}
           >
@@ -89,10 +102,12 @@ const OrderDetailsForAdmin = () => {
           <Button
             onClick={handleStatusUpdate}
             color="success"
+            size="sm"
             className="text-white"
           >
             Update
           </Button>
+          </div>
         </div>
       </div>
       <div className="md:p-6 p-3">
@@ -208,6 +223,34 @@ const OrderDetailsForAdmin = () => {
         ))}
       </table>
       </div>
+      <Modal
+        scrollBehavior="outside"
+        size="5xl"
+        backdrop="opaque"
+        className="!z-50"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Add a New Product
+              </ModalHeader>
+              <ModalBody>
+                <div className="h-screen">
+                  <OrderDetailsPdf order={order}></OrderDetailsPdf>
+                </div>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </div>
   );
 };

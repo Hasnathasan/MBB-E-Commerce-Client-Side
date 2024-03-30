@@ -40,7 +40,7 @@ const ManagePrison = () => {
     setPrisonToShow(prison);
     onPriosonUpdateOpen();
   };
-  const handlePrisonAdding = (e) => {
+  const handlePrisonAdding = (e, onClose) => {
     e.preventDefault();
     const form = e.target;
     const prison_name = form.prison_name.value;
@@ -66,6 +66,7 @@ const ManagePrison = () => {
         console.log(res.data);
         if (res.data.insertedId) {
           refetch();
+          onClose()
           return toast.success("Successfully added Prison");
         }
       })
@@ -235,7 +236,7 @@ const ManagePrison = () => {
                 Add Prison
               </ModalHeader>
               <ModalBody>
-                <form onSubmit={handlePrisonAdding} className="md:p-5 p-3">
+                <form onSubmit={ (e) => handlePrisonAdding(e,onClose)} className="md:p-5 p-3">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-5">
                     <div>
                       <label htmlFor="prison_name">Prison Name</label>
@@ -352,7 +353,7 @@ const ManagePrison = () => {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Add Prison
+                Update Prison
               </ModalHeader>
               <ModalBody>
                 <PrisonUpdateModal

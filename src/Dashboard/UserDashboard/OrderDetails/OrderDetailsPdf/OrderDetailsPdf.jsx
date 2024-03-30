@@ -5,8 +5,6 @@ import logo from '../../../../assets/logo.png';
 const OrderDetailsPdf = ({ order }) => {
     const styles = StyleSheet.create({
         container: {
-            border: '1px solid #ccc',
-            borderRadius: 8,
             margin: 20,
             padding: 20,
         },
@@ -26,14 +24,14 @@ const OrderDetailsPdf = ({ order }) => {
         row: {
             flexDirection: 'row',
             justifyContent: 'space-between',
-            marginBottom: 10,
+            marginBottom: 30,
         },
         label: {
             fontWeight: 'bold',
             marginRight: 5,
         },
         tableContainer: {
-            marginTop: 50,
+            // marginTop: 50,
         },
         tableHeader: {
             flexDirection: 'row',
@@ -72,11 +70,11 @@ const OrderDetailsPdf = ({ order }) => {
             <Document>
                 <Page size="A4">
                     <View style={styles.container}>
-                        <Image src={logo} style={{ width: 150, height: 60 }} />
+                        <Image src={logo} style={{ width: 150, height: 60, marginBottom: 35 }} />
                         <View style={styles.row}>
                             <Text style={styles.title}>Order Details</Text>
-                            <Text style={styles.text}>{order?.createdAt.slice(0, 10)}</Text>
-                            <Text style={styles.text}>{order?.products?.length} Products</Text>
+                            <Text style={styles.text}>Date: {order?.createdAt.slice(0, 10)}</Text>
+                            <Text style={styles.text}>Total {order?.products?.length} Products</Text>
                         </View>
                         <View style={styles.tableContainer}>
                             <View style={styles.row}>

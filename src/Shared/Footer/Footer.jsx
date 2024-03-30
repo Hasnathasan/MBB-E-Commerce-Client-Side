@@ -24,28 +24,48 @@ const Footer = () => {
         <div className="grid grid-cols-1 justify-between gap-4 md:grid-cols-2">
           <img className=" w-72" src={logo} alt="" />
           <div className="grid grid-cols-3 justify-between gap-4">
-            {LINKS.map(({ title, items }) => (
-              <ul key={title}>
+              <ul>
                 <Typography
                   variant="small"
                   className="mb-3 font-medium text-white"
                 >
-                  {title}
+                  Important Links
                 </Typography>
-                {items.map((link) => (
-                  <li key={link}>
+                  <li >
                     <Typography
                       as="a"
                       href="#"
                       color="gray"
                       className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
                     >
-                      {link}
+                      Contact us
+                    </Typography>
+                    <Typography
+                      as="a"
+                      href="#"
+                      color="gray"
+                      className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
+                    >
+                      privacy policy
+                    </Typography>
+                    <Typography
+                      as="a"
+                      href="#"
+                      color="gray"
+                      className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
+                    >
+                      Refund policy
+                    </Typography>
+                    <Typography
+                      as="a"
+                      href="#"
+                      color="gray"
+                      className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
+                    >
+                      Terms and conditions
                     </Typography>
                   </li>
-                ))}
               </ul>
-            ))}
           </div>
         </div>
         <div className="mt-12 flex w-full flex-col items-center justify-center border-t border-blue-gray-50 py-4 md:flex-row md:justify-between">

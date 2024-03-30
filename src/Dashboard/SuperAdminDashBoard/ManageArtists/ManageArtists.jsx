@@ -75,7 +75,7 @@ const ManageArtists = () => {
     setPrison(selectedPrison);
   }, [prisonEmail, prisons]);
   console.log("Prison", prison);
-  const addNewArtist = (e) => {
+  const addNewArtist = (e, onClose) => {
     e.preventDefault();
     const form = e.target;
     const userName = form.name.value;
@@ -157,6 +157,7 @@ const ManageArtists = () => {
                   console.log(res.data);
                   refetch();
                   form.reset();
+                  onClose()
                   return res.data; // Return data to handle success message
                 })
                 .catch((error) => {
@@ -322,7 +323,7 @@ const ManageArtists = () => {
                     Add a New Artist
                   </ModalHeader>
                   <ModalBody>
-                    <form onSubmit={addNewArtist} className="">
+                    <form onSubmit={(e) => addNewArtist(e, onClose)} className="">
                       <div className="border border-gray-300 rounded-lg mb-6">
                         <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">
                           Account Information

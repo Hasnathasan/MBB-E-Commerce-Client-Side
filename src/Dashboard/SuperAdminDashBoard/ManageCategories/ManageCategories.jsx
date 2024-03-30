@@ -113,7 +113,8 @@ const ManageCategories = () => {
         .catch((error) => console.log(error));
     }
   };
-  const hangleCategoryAdding = (e) => {
+
+  const handleCategoryAdding = (e, onClose) => {
     e.preventDefault();
     const form = e.target;
     const category = form.category.value;
@@ -121,39 +122,90 @@ const ManageCategories = () => {
     const formData = new FormData();
     formData.append("file", imageFile);
     const category_details = {
-      category,
+        category,
     };
     console.log(category_details);
-    axios
-      .post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.url) {
-          category_details.image = res.data.url;
-          axios
-            .post(
-              "https://mbb-e-commerce-server.vercel.app/categories",
-              category_details
-            )
-            .then((res) => {
-              console.log(res.data);
-              if (res.data.insertedId) {
-                toast.success("Product Category Added");
-              }
+
+    const uploadAndAddCategory = () => {
+        return axios.post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
             })
-            .catch((error) => console.log(error));
-        }
-      })
-      .catch((error) => {
-        return toast.error(
-          error?.response?.data?.message || "An Unknown Error Occurred"
-        );
-      });
-  };
+            .then((res) => {
+                console.log(res.data);
+                if (res.data.url) {
+                    category_details.image = res.data.url;
+                    return axios.post("https://mbb-e-commerce-server.vercel.app/categories", category_details)
+                        .then((res) => {
+                            console.log(res.data);
+                            if (res.data.insertedId) {
+                              refetch()
+                              onClose()
+                                return res.data;
+                            }
+                        })
+                        .catch((error) => {
+                            throw error;
+                        });
+                }
+            })
+            .catch((error) => {
+                throw error;
+            });
+    };
+
+    const categoryPromise = uploadAndAddCategory();
+
+    toast.promise(categoryPromise, {
+        loading: 'Adding category, please wait...',
+        success: 'Product Category Added',
+        error: (error) => {
+            return error?.response?.data?.message || "An Unknown Error Occurred";
+        },
+    });
+};
+  // const hangleCategoryAdding = (e) => {
+  //   e.preventDefault();
+  //   const form = e.target;
+  //   const category = form.category.value;
+  //   const imageFile = form.image.files[0];
+  //   const formData = new FormData();
+  //   formData.append("file", imageFile);
+  //   const category_details = {
+  //     category,
+  //   };
+  //   console.log(category_details);
+  //   axios
+  //     .post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //     })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       if (res.data.url) {
+  //         category_details.image = res.data.url;
+  //         axios
+  //           .post(
+  //             "https://mbb-e-commerce-server.vercel.app/categories",
+  //             category_details
+  //           )
+  //           .then((res) => {
+  //             console.log(res.data);
+  //             if (res.data.insertedId) {
+  //               toast.success("Product Category Added");
+  //             }
+  //           })
+  //           .catch((error) => console.log(error));
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       return toast.error(
+  //         error?.response?.data?.message || "An Unknown Error Occurred"
+  //       );
+  //     });
+  // };
   return (
     <div className="overflow-x-auto w-full md:w-[95%]">
       <div className="flex flex-col  gap-4">
@@ -195,7 +247,7 @@ const ManageCategories = () => {
                   <TableCell className="capitalize">
                     {category?.category}
                   </TableCell>
-                  <TableCell>{category?.count} product's found</TableCell>
+                  <TableCell>{category?.count || 0} product's found</TableCell>
                   <TableCell className="text-center">
                     <ButtonGroup size="sm">
                       <Button onClick={() => handleModalOpen(category)}>
@@ -227,7 +279,7 @@ const ManageCategories = () => {
                 Add Category
               </ModalHeader>
               <ModalBody>
-                <form onSubmit={hangleCategoryAdding} className="p-5">
+                <form onSubmit={(e) => handleCategoryAdding(e, onClose)} className="p-5">
                   <div>
                     <label htmlFor="image">Category Image</label>
                     <input

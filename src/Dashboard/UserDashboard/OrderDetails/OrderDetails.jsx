@@ -51,6 +51,7 @@ const OrderDetails = () => {
         <Button
           color="success"
           onPress={onOpen}
+          size="sm"
           className="bg-green-500 text-white"
         >
           Download Invoice
