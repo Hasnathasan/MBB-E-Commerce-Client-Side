@@ -1,9 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "./useAxiosSecure";
 
-
-const useArtist = ({email}) => {
-    const [axiosSecure] = useAxiosSecure();
+const useArtist = ({ email }) => {
+  const [axiosSecure] = useAxiosSecure();
   const {
     data: artistData,
     isLoading: isArtistDataLoading,
