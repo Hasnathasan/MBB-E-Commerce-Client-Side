@@ -44,7 +44,7 @@ const ManageBanners = () => {
     // fileInputRef.current.click();
   };
 
-  const handleBannerUpload = (e) => {
+  const handleBannerUpload = (e, onClose) => {
     e.preventDefault();
     const form = e.target;
     const link = form.link.value;
@@ -66,6 +66,14 @@ const ManageBanners = () => {
         .then((res) => {
           if (res.data.url) {
             console.log(res.data.url);
+            const banner = {img: res.data.url, link};
+            axios.post("https://mbb-e-commerce-server.vercel.app/bannerImages", banner)
+            .then(res => {
+              if(res.data.insertedId){
+                onClose()
+              }
+            })
+            .catch(err => console.log(err))
           }
 
         })
@@ -188,7 +196,7 @@ const ManageBanners = () => {
           </div>
         </div>
         <span className="text-gray-600 mb-2">
-          Total {bannerImages[0]?.images?.length} Images
+          Total {bannerImages?.length || 0} Images
         </span>
       </div>
       <Table aria-label="Example table with custom cells">
@@ -200,17 +208,17 @@ const ManageBanners = () => {
           </TableColumn>
         </TableHeader>
         <TableBody>
-          {bannerImages[0]?.images?.map((image) => (
-            <TableRow key={image}>
+          {bannerImages?.map((banner) => (
+            <TableRow key={banner?.img}>
               <TableCell>
-                <img className="w-40 h-20" src={image} alt="" />
+                <img className="w-40 h-20" src={banner?.img} alt="" />
               </TableCell>
-              <TableCell>{image?.slice(0, 100)}</TableCell>
+              <TableCell>{banner?.link}</TableCell>
               <TableCell>
                 <ButtonGroup size="sm">
                   <Button
                     onClick={() => {
-                      setImageToShow(image);
+                      setImageToShow(banner?.img);
                       onOpen();
                     }}
                     color="success"
@@ -219,7 +227,7 @@ const ManageBanners = () => {
                     Preview
                   </Button>
                   <Button
-                    onClick={() => handleImageDelete(image)}
+                    onClick={() => handleImageDelete(banner?.img)}
                     color="danger"
                     className="text-white"
                   >
@@ -246,7 +254,7 @@ const ManageBanners = () => {
                 Add New Banner
               </ModalHeader>
               <ModalBody>
-                <form onSubmit={handleBannerUpload} className="p-5">
+                <form onSubmit={(e) => handleBannerUpload(e, onClose)} className="p-5">
                   <div>
                     <label htmlFor="image">Banner Image</label>
                     <input
