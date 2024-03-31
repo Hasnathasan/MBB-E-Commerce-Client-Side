@@ -25,6 +25,11 @@ const ManageBanners = () => {
   const [bannerImages, isBannerImagesLoading, refetch] = useBannerImages();
   const [imageToShow, setImageToShow] = useState();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const {
+    isOpen: isUpdateOpen,
+    onOpen: onUpdateOpen,
+    onOpenChange: onUpdateOpenChange,
+  } = useDisclosure();
   const [selectedFiles, setSelectedFiles] = useState(null);
   const fileInputRef = useRef(null);
   const handleFileChange = (event) => {
@@ -35,8 +40,37 @@ const ManageBanners = () => {
   };
 
   const handleButtonClick = () => {
-    fileInputRef.current.click();
+    onUpdateOpen()
+    // fileInputRef.current.click();
   };
+
+  const handleBannerUpload = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const link = form.link.value;
+    const imageFile = form.image.files[0];
+    console.log(imageFile);
+    if (imageFile) {
+      const formData = new FormData();
+      formData.append("file", imageFile);
+      axios
+        .post(
+          "https://mbb-e-commerce-server.vercel.app/uploadSingle",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((res) => {
+          if (res.data.url) {
+            console.log(res.data.url);
+          }
+
+        })
+        .catch(err => console.log(err))
+  }}
 
   const deleteFunc = (img) => {
     axios
@@ -142,7 +176,7 @@ const ManageBanners = () => {
               color="primary"
               className="text-white text-sm"
             >
-              Add New Images <FaPlus></FaPlus>
+              Add New Banner <FaPlus></FaPlus>
             </Button>
             <Button
               onClick={handleImageUpload}
@@ -197,6 +231,63 @@ const ManageBanners = () => {
           ))}
         </TableBody>
       </Table>
+      <Modal
+        scrollBehavior="outside"
+        size="2xl"
+        backdrop="opaque"
+        className="!z-50"
+        isOpen={isUpdateOpen}
+        onOpenChange={onUpdateOpenChange}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Add New Banner
+              </ModalHeader>
+              <ModalBody>
+                <form onSubmit={handleBannerUpload} className="p-5">
+                  <div>
+                    <label htmlFor="image">Banner Image</label>
+                    <input
+                      type="file"
+                      name="image"
+                      id="image"
+                      className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                      placeholder="Banner Image Image"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="link">Link</label>
+                    <input
+                      type="text"
+                      name="link"
+                      id="link"
+                      className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                      placeholder="link"
+                      required
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    color="success"
+                    radius="full"
+                    className="text-white mb-2 px-12 bg-green-500"
+                  >
+                    Add Banner
+                  </Button>
+                </form>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
       <Modal
         scrollBehavior="outside"
         size="5xl"
