@@ -52,43 +52,57 @@ const ManageBanners = () => {
     const imageFile = form.image.files[0];
     console.log(imageFile);
     if (imageFile) {
-      const formData = new FormData();
-      formData.append("file", imageFile);
-      axios
-        .post(
-          "https://mbb-e-commerce-server.vercel.app/uploadSingle",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
+        const formData = new FormData();
+        formData.append("file", imageFile);
+
+        const uploadAndAddBanner = () => {
+            return axios.post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                })
+                .then((res) => {
+                    if (res.data.url) {
+                        console.log(res.data.url);
+                        const banner = {
+                            img: res.data.url,
+                            link
+                        };
+                        return axios.post("https://mbb-e-commerce-server.vercel.app/bannerImages", banner)
+                            .then(res => {
+                                if (res.data.insertedId) {
+                                    onClose();
+                                    return res.data;
+                                }
+                            })
+                            .catch(err => {
+                                throw err;
+                            })
+                    }
+                })
+                .catch(err => {
+                    throw err;
+                });
+        };
+
+        const bannerPromise = uploadAndAddBanner();
+
+        toast.promise(bannerPromise, {
+            loading: 'Uploading banner, please wait...',
+            success: 'Banner uploaded successfully',
+            error: (error) => {
+                return error?.response?.data?.message || "An Unknown Error Occurred";
             },
-          }
-        )
-        .then((res) => {
-          if (res.data.url) {
-            console.log(res.data.url);
-            const banner = {img: res.data.url, link};
-            axios.post("https://mbb-e-commerce-server.vercel.app/bannerImages", banner)
-            .then(res => {
-              if(res.data.insertedId){
-                onClose()
-              }
-            })
-            .catch(err => console.log(err))
-          }
+        });
+    }
+};
 
-        })
-        .catch(err => console.log(err))
-  }}
-
-  const deleteFunc = (img) => {
+  const deleteFunc = (id) => {
     axios
-      .patch(`https://mbb-e-commerce-server.vercel.app/banner-image-delete`, {
-        img,
-      })
+      .delete(`https://mbb-e-commerce-server.vercel.app/banner-image-delete/${id}`)
       .then((res) => {
         console.log(res.data);
-        if (res.data.modifiedCount > 0) {
+        if (res.data.deletedCount > 0) {
           refetch();
           toast.success("Image Deleted");
         }
@@ -97,7 +111,7 @@ const ManageBanners = () => {
         toast.error(err.message);
       });
   };
-  const handleImageDelete = (img) => {
+  const handleImageDelete = (id) => {
     toast((t) => (
       <span>
         Do You Want To Delete This Image?
@@ -106,7 +120,7 @@ const ManageBanners = () => {
             className="px-9 mt-3 float-right  text-white"
             color="danger"
             onClick={() => {
-              deleteFunc(img);
+              deleteFunc(id);
               toast.dismiss(t.id);
             }}
           >
@@ -236,7 +250,7 @@ const ManageBanners = () => {
                     Preview
                   </Button>
                   <Button
-                    onClick={() => handleImageDelete(banner?.img)}
+                    onClick={() => handleImageDelete(banner?._id)}
                     color="danger"
                     className="text-white"
                   >
