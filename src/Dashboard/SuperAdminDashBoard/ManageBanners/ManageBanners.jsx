@@ -20,6 +20,7 @@ import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import Loader from "../../../Components/Loader/Loader";
+import { Typography } from "@material-tailwind/react";
 
 const ManageBanners = () => {
   const [bannerImages, isBannerImagesLoading, refetch] = useBannerImages();
@@ -213,7 +214,15 @@ const ManageBanners = () => {
               <TableCell>
                 <img className="w-40 h-20" src={banner?.img} alt="" />
               </TableCell>
-              <TableCell>{banner?.link}</TableCell>
+              <TableCell><Typography
+                      as="a"
+                      href={banner?.link}
+                      target="_blank"
+                      color="gray"
+                      className="py-1.5 font-normal transition-colors text-blue-gray-500 hover:text-blue-gray-900"
+                    >
+                      {banner?.link?.slice(0,35)}...
+                    </Typography></TableCell>
               <TableCell>
                 <ButtonGroup size="sm">
                   <Button

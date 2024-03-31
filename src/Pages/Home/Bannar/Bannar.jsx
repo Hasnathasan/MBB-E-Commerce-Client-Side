@@ -3,6 +3,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import useBannerImages from "../../../Hooks/useBannerImages";
 import Loader from "../../../Components/Loader/Loader";
+import { Link } from "react-router-dom";
 
 const Bannar = () => {
     const [bannerImages, isBannerImagesLoading, refetch] = useBannerImages();
@@ -50,12 +51,13 @@ const Bannar = () => {
     return (
         <div className="w-full mt-4 mb-10 mx-auto">
             <Slider {...settings} className="">
-        {bannerImages[0]?.images?.map((img, index) => (
+        {bannerImages?.map((banner, index) => (
           <div className="w-full" key={index}>
+            <Link target="_blank" className="w-full h-full" to={banner?.link}>
             <img
               className=" rounded-[10px] md:rounded-none p-[5px] md:p-0 h-[180px] md:h-[500px] w-full"
-              src={img}
-            />
+              src={banner?.img}
+            /></Link>
           </div>
         ))}
       </Slider>
