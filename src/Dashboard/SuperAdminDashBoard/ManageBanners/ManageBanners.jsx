@@ -71,6 +71,7 @@ const ManageBanners = () => {
                         return axios.post("https://mbb-e-commerce-server.vercel.app/bannerImages", banner)
                             .then(res => {
                                 if (res.data.insertedId) {
+                                  refetch()
                                     onClose();
                                     return res.data;
                                 }

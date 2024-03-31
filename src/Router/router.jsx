@@ -38,6 +38,7 @@ import WishList from "../Dashboard/UserDashboard/WishList/WishList";
 import PaymentSuccessFullPage from "../Components/PaymentSuccessfullPage/PaymentSuccessFullPage";
 import ManageBanners from "../Dashboard/SuperAdminDashBoard/ManageBanners/ManageBanners";
 import AdminSettings from "../Dashboard/SuperAdminDashBoard/AdminSettings/AdminSettings";
+import PrivacyPolicy from "../Components/PrivacyPolicy/PrivacyPolicy";
 
 
 const router = createBrowserRouter([
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
       {
         path: "/details/:id",
         element: <Details></Details>
+      },
+      {
+        path: "/privacy-policy",
+        element: <PrivacyPolicy></PrivacyPolicy>
       },
       {
         path: "/signin",

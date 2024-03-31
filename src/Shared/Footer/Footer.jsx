@@ -1,5 +1,6 @@
 import { Typography } from "@material-tailwind/react";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/image.png";
+import { Link } from "react-router-dom";
 
 const currentYear = new Date().getFullYear();
 
@@ -26,14 +27,12 @@ const Footer = () => {
                     >
                       Contact us
                     </Typography>
-                    <Typography
-                      as="a"
-                      href="#"
-                      color="gray"
+                    <Link
+                      to={"/privacy-policy"}
                       className="py-1.5 font-normal transition-colors text-blue-gray-500 hover:text-blue-gray-900"
                     >
                       privacy policy
-                    </Typography>
+                    </Link>
                     <Typography
                       as="a"
                       href="#"
