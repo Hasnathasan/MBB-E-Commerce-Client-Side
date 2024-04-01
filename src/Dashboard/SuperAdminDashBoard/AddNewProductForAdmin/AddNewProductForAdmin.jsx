@@ -6,11 +6,17 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import usePopularCategories from "../../../Hooks/usePopularCategories";
 import CreatableSelect from 'react-select/creatable';
+import usePopularTags from "../../../Hooks/usePopularTags";
 const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
   const [artistData, isArtistsDataLoading] = useArtists();
   const [allCategories, isCategoriesLoading, refetch] = usePopularCategories();
+  const [tags, isTagsLoading] = usePopularTags();
   const existingCategories = allCategories?.map(category => {
     const option = {value: category?.category, label: category.category};
+    return option
+  });
+  const existingTags = tags?.map(tag => {
+    const option = {value: tag, label: tag};
     return option
   });
   
@@ -158,7 +164,7 @@ const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
     const prison_percentage = parseFloat(form.prison_percentage.value);
     const addedBy = artist;
     const prison_of_artist = prison?.prison_email;
-    const product_tags = tags.map((tag) => tag.label);
+    const product_tags = selectedTags.map((option) => option.value);
 
     const product_categories = selectedCategories?.map(option => option.value);
 
@@ -307,6 +313,8 @@ const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
+              <div>
+                <label htmlFor="product_categories">Product Categories</label>
               <CreatableSelect
       value={selectedCategories}
       onChange={handleCategoryChange}
@@ -315,6 +323,9 @@ const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
       isClearable
       onCreateOption={handleCreateOption} // Handle creation of new options
     />
+              </div>
+              <div>
+                <label htmlFor="product_tags">Product Tags</label>
               <CreatableSelect
       value={selectedTags}
       onChange={handleTagsChange}
@@ -323,6 +334,7 @@ const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
       isClearable
       onCreateOption={handleCreateOptionForTags} // Handle creation of new options
     />
+              </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
