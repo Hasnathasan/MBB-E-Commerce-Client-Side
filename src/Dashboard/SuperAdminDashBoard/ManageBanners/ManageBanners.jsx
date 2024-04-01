@@ -142,47 +142,7 @@ const ManageBanners = () => {
     return <Loader></Loader>;
   }
 
-  const handleImageUpload = () => {
-    console.log(selectedFiles);
-    if (!(selectedFiles?.length > 0)) {
-      return toast.error("Select Images");
-    }
-    const multipleImages = [...selectedFiles];
-    const formData = new FormData();
-    console.log(multipleImages);
-    multipleImages?.map((file) => {
-      formData.append(`files`, file);
-    });
-    axios
-      .post(
-        "https://mbb-e-commerce-server.vercel.app/uploadMultiple",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res.data);
-        if (res?.data?.imageUrls) {
-          console.log(res.data.imageUrls);
-
-          axios
-            .post("https://mbb-e-commerce-server.vercel.app/bannerImage", {
-              newImages: res.data.imageUrls,
-            })
-            .then((res) => {
-              if (res.data.modifiedCount > 0) {
-                refetch();
-                toast.success("Images added");
-              }
-            })
-            .catch((err) => console.log(err));
-        }
-      })
-      .catch((err) => console.log(err));
-  };
+ 
   return (
     <div className="overflow-x-auto w-full md:w-[95%]">
       <div className="flex flex-col  gap-4">
@@ -201,13 +161,6 @@ const ManageBanners = () => {
               className="text-white text-sm"
             >
               Add New Banner <FaPlus></FaPlus>
-            </Button>
-            <Button
-              onClick={handleImageUpload}
-              color="success"
-              className="text-white text-sm mb-2"
-            >
-              Upload
             </Button>
           </div>
         </div>

@@ -1,11 +1,14 @@
 import { Button, Radio, RadioGroup } from "@nextui-org/react";
 import axios from "axios";
 import { useState } from "react";
+import useSystemInfo from "../../../Hooks/useSystemInfo";
+import Loader from "../../../Components/Loader/Loader";
 
 
 const AdminSettings = () => {
   const [shippingMethod, setShippingMethod] = useState();
   const [logo, setLogo] = useState();
+  const [systemInfo, isSystemInfo, refetch] = useSystemInfo();
   console.log(shippingMethod);
   const handleSystemSetting = e => {
     e.preventDefault();
@@ -41,10 +44,14 @@ const AdminSettings = () => {
       data.logo = logo;
     }
 
-    axios.patch("https://mbb-e-commerce-server.vercel.app/system-setting", data)
+    axios.patch(`https://mbb-e-commerce-server.vercel.app/system-setting/${systemInfo[0]?._id}`, data)
     .then(res => console.log(res.data))
     .catch(err => console.log(err))
   }
+  if(isSystemInfo){
+    return <Loader></Loader>
+  }
+  console.log(systemInfo);
     return (
         <div className="w-[95%] mx-auto">
             <h3 className="text-2xl font-semibold">SYSTEM SETTINGS</h3>
@@ -58,7 +65,7 @@ const AdminSettings = () => {
                   id="system_name"
                   className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                   placeholder="System Name"
-                  required
+                  defaultValue={systemInfo[0]?.system_name || "Unknown"}
                 />
               </div>
                 <div>
@@ -69,7 +76,7 @@ const AdminSettings = () => {
                   id="email"
                   className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                   placeholder="Email"
-                  required
+                  defaultValue={systemInfo[0]?.email || "Unknown"}
                 />
               </div>
                 <div>
@@ -80,7 +87,7 @@ const AdminSettings = () => {
                   id="phone_number"
                   className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                   placeholder="Phone Number"
-                  required
+                  defaultValue={systemInfo[0]?.phone_number || "Unknown"}
                 />
               </div>
                 <div>
@@ -91,7 +98,6 @@ const AdminSettings = () => {
                   id="website_logo"
                   className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                   
-                  required
                 />
               </div>
               <Button type="submit" color="success" radius="full" className="px-5 text-white bg-green-500">Save Changes</Button>

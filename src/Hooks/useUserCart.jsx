@@ -12,7 +12,7 @@ const useUserCart = () => {
   } = useQuery({
     queryKey: [`cartOf-${userData?.email}`, userData],
     queryFn: async () => {
-      const res = await axiosSecure.get(`userCart/${userData?.email}`);
+      const res = await axiosSecure.get(`/userCart/${userData?.email}`);
       return res.data;
     },
   });
