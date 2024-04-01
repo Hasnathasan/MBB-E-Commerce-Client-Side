@@ -1,21 +1,43 @@
 import { Avatar, Button, Select, SelectItem } from "@nextui-org/react";
 import { useEffect, useRef, useState } from "react";
-import { MultiSelect } from "react-selectize";
 import "../../../../node_modules/react-selectize/themes/index.css";
 import useArtists from "../../../Hooks/useArtists";
 import axios from "axios";
 import toast from "react-hot-toast";
 import usePopularCategories from "../../../Hooks/usePopularCategories";
+import CreatableSelect from 'react-select/creatable';
 const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
   const [artistData, isArtistsDataLoading] = useArtists();
   const [allCategories, isCategoriesLoading, refetch] = usePopularCategories();
-  const [values, setValues] = useState(new Set([]));
-  const [tags, setTags] = useState(
-    [].map((str) => ({ label: str, value: str }))
-  );
-  const [categories, setCategories] = useState(
-    [].map((str) => ({ label: str, value: str }))
-  );
+  const existingCategories = allCategories?.map(category => {
+    const option = {value: category?.category, label: category.category};
+    return option
+  });
+  
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
+  console.log(selectedCategories);
+ 
+  
+  const handleCategoryChange = (selectedOptions) => {
+    setSelectedCategories(selectedOptions);
+  };
+  const handleTagsChange = (selectedOptions) => {
+    setSelectedTags(selectedOptions);
+  };
+
+  // Custom function to handle new option creation
+  const handleCreateOption = (inputValue) => {
+    const newValue = { value: inputValue.toLowerCase(), label: inputValue };
+    setSelectedCategories([...selectedCategories, newValue]);
+    return newValue; // Return the new option
+  };
+  const handleCreateOptionForTags = (inputValue) => {
+    const newValue = { value: inputValue.toLowerCase(), label: inputValue };
+    setSelectedTags([...selectedTags, newValue]);
+    return newValue; // Return the new option
+  };
+
   const salePriceRef = useRef(null);
   const regularPriceRef = useRef(null);
   const artistPercentRef = useRef(null);
@@ -137,10 +159,8 @@ const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
     const addedBy = artist;
     const prison_of_artist = prison?.prison_email;
     const product_tags = tags.map((tag) => tag.label);
-    const new_categories = categories.map((category) => category.label);
-    const existingCategories = Array.from(values);
 
-    const product_categories = [...new_categories, ...existingCategories];
+    const product_categories = selectedCategories?.map(option => option.value);
 
     const firstFormData = new FormData();
     firstFormData.append("file", featured_photo_file);
@@ -287,65 +307,24 @@ const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
-              <div>
-                <label htmlFor="category">Add New Category</label>
-                <MultiSelect
-                  values={categories}
-                  delimiters={[188]}
-                  valuesFromPaste={(options, values, pastedText) => {
-                    return pastedText
-                      .split(",")
-                      .filter(
-                        (text) =>
-                          !values.some((item) => item.label === text.trim())
-                      )
-                      .map((text) => ({
-                        label: text.trim(),
-                        value: text.trim(),
-                      }));
-                  }}
-                  restoreOnBackspace={(item) => item.label}
-                  onValuesChange={(categories) => setCategories(categories)}
-                  createFromSearch={(options, values, search) => {
-                    const labels = values.map((value) => value.label);
-                    if (
-                      search.trim().length === 0 ||
-                      labels.includes(search.trim())
-                    )
-                      return null;
-                    return { label: search.trim(), value: search.trim() };
-                  }}
-                  renderNoResultsFound={(values, search) => (
-                    <div className="no-results-found">
-                      {(() => {
-                        if (search.trim().length === 0)
-                          return "Type a few characters to create a Category";
-                        else if (
-                          values.some((item) => item.label === search.trim())
-                        )
-                          return "Tag already exists";
-                      })()}
-                    </div>
-                  )}
-                />
-              </div>
-              <Select
-                label="Select Existing Category"
-                selectionMode="multiple"
-                placeholder="Select Multiple Category"
-                labelPlacement="outside"
-                selectedKeys={values}
-                className="max-w-md"
-                onSelectionChange={setValues}
-              >
-                {allCategories?.map((category) => (
-                  <SelectItem key={category.category} value={category.category}>
-                    {category.category}
-                  </SelectItem>
-                ))}
-              </Select>
+              <CreatableSelect
+      value={selectedCategories}
+      onChange={handleCategoryChange}
+      options={existingCategories}
+      isMulti
+      isClearable
+      onCreateOption={handleCreateOption} // Handle creation of new options
+    />
+              <CreatableSelect
+      value={selectedTags}
+      onChange={handleTagsChange}
+      options={existingTags}
+      isMulti
+      isClearable
+      onCreateOption={handleCreateOptionForTags} // Handle creation of new options
+    />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
                 <label htmlFor="featured_photo">Product Feature photo</label>
                 <input
@@ -367,48 +346,6 @@ const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
                   className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2 "
                   placeholder="Product Photos"
                   required
-                />
-              </div>
-              <div>
-                <label htmlFor="product_tags">Tags</label>
-                <MultiSelect
-                  values={tags}
-                  delimiters={[188]}
-                  valuesFromPaste={(options, values, pastedText) => {
-                    return pastedText
-                      .split(",")
-                      .filter(
-                        (text) =>
-                          !values.some((item) => item.label === text.trim())
-                      )
-                      .map((text) => ({
-                        label: text.trim(),
-                        value: text.trim(),
-                      }));
-                  }}
-                  restoreOnBackspace={(item) => item.label}
-                  onValuesChange={(tags) => setTags(tags)}
-                  createFromSearch={(options, values, search) => {
-                    const labels = values.map((value) => value.label);
-                    if (
-                      search.trim().length === 0 ||
-                      labels.includes(search.trim())
-                    )
-                      return null;
-                    return { label: search.trim(), value: search.trim() };
-                  }}
-                  renderNoResultsFound={(values, search) => (
-                    <div className="no-results-found">
-                      {(() => {
-                        if (search.trim().length === 0)
-                          return "Type a few characters to create a tag";
-                        else if (
-                          values.some((item) => item.label === search.trim())
-                        )
-                          return "Tag already exists";
-                      })()}
-                    </div>
-                  )}
                 />
               </div>
             </div>

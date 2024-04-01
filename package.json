@@ -32,6 +32,7 @@
     "react-player": "^2.15.1",
     "react-rating": "^2.0.5",
     "react-router-dom": "^6.21.3",
+    "react-select": "^5.8.0",
     "react-selectize": "^3.0.1",
     "react-slick": "^0.30.2",
     "react-spinners": "^0.13.8",
