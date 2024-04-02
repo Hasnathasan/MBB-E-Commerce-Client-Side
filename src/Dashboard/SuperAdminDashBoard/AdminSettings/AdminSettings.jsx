@@ -4,6 +4,7 @@ import { useState } from "react";
 import useSystemInfo from "../../../Hooks/useSystemInfo";
 import Loader from "../../../Components/Loader/Loader";
 
+import toast from "react-hot-toast";
 const AdminSettings = () => {
   const [shippingMethod, setShippingMethod] = useState();
   const [logo, setLogo] = useState();
@@ -17,40 +18,71 @@ const AdminSettings = () => {
     const phone_number = form.phone_number.value;
     const website_logo = form.website_logo.files[0];
     console.log(system_name, email, phone_number, website_logo);
-    if (website_logo) {
-      const formData = new FormData();
-      formData.append("file", website_logo);
-      axios
-        .post(
-          "https://mbb-e-commerce-server.vercel.app/uploadSingle",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
-        .then((response) => {
-          console.log(response.data);
-          if (response.data.url) {
-            setLogo(response.data.url);
-          }
-        })
-        .catch((err) => console.log(err));
-    }
-    const data = { system_name, email, phone_number };
-    if (logo) {
-      data.logo = logo;
-    }
 
-    axios
-      .patch(
-        `http://localhost:8000/system-setting-update/${systemInfo[0]?._id}`,
-        data
-      )
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
-  };
+    // Function to upload logo
+    const uploadLogo = () => {
+        if (website_logo) {
+            const formData = new FormData();
+            formData.append("file", website_logo);
+            return axios.post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                })
+                .then((response) => {
+                    console.log(response.data);
+                    if (response.data.url) {
+                        return response.data.url;
+                    }
+                })
+                .catch((err) => {
+                    throw err;
+                });
+        } else {
+            return Promise.resolve(null); // No logo to upload, resolve with null
+        }
+    };
+
+    // Call uploadLogo function
+    return uploadLogo()
+        .then((logoUrl) => {
+            // Construct data object for system setting update
+            const data = {
+                system_name,
+                email,
+                phone_number,
+            };
+            // If logoUrl is available, add it to data object
+            if (logoUrl) {
+                data.logo = logoUrl;
+            }
+
+            // Patch system setting
+            return axios.patch(`http://localhost:8000/system-setting-update/${systemInfo[0]?._id}`, data);
+        })
+        .then((res) => {
+            console.log(res.data);
+            if (res.data.modifiedCount > 0) {
+                return res.data; // Return data to handle success message
+            } else {
+                throw new Error("System Info not updated");
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+            throw err; // Throw error to handle error message
+        });
+};
+
+// Call the function when desired, for example:
+const handleSystemSettingClick = () => {
+    const promise = handleSystemSetting(event);
+    toast.promise(promise, {
+        loading: 'Updating system settings...',
+        success: 'System Info Updated',
+        error: 'An error occurred while updating system settings'
+    });
+};
   if (isSystemInfo) {
     return <Loader></Loader>;
   }
@@ -60,7 +92,7 @@ const AdminSettings = () => {
       <h3 className="text-2xl font-semibold">SYSTEM SETTINGS</h3>
       <div className="grid grid-cols-2 gap-10 mt-8">
         <form
-          onSubmit={handleSystemSetting}
+          onSubmit={handleSystemSettingClick}
           className=" border border-gray-300 p-5"
         >
           <div>
