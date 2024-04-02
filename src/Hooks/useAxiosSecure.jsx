@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const axiosSecure = axios.create({
-  baseURL: "https://mbb-e-commerce-server.vercel.app/", // Replace with your base URL https://mbb-e-commerce-server.vercel.app/
+  baseURL: "https://mbb-e-commerce-server.vercel.app", // Replace with your base URL https://mbb-e-commerce-server.vercel.app/
 });
 const useAxiosSecure = () => {
   const navigate = useNavigate();

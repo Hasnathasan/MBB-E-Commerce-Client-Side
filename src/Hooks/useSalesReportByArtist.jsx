@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "./useAxiosSecure";
-import axios from "axios";
 
 
 const useSalesReportByArtist = ({artistEmail}) => {
@@ -12,7 +11,7 @@ const useSalesReportByArtist = ({artistEmail}) => {
     } = useQuery({
       queryKey: ["sales-report", artistEmail],
       queryFn: async () => {
-        const res = await axios.get(`https://mbb-e-commerce-server.vercel.app/sales-report/${artistEmail ? `?artistEmail=${artistEmail}` : ""}`);
+        const res = await axiosSecure.get(`/sales-report/${artistEmail ? `?artistEmail=${artistEmail}` : ""}`);
         return res.data;
       },
     });

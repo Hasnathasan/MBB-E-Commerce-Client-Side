@@ -10,7 +10,7 @@ const useArtist = ({ email }) => {
   } = useQuery({
     queryKey: [`artist-${email}`, email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`artist/${email}`);
+      const res = await axiosSecure.get(`/artist/${email}`);
       return res.data;
     },
   });

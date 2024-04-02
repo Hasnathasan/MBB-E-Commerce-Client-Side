@@ -16,6 +16,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { AuthContext } from "../../Providers/AuthProvider";
 import Reviews from "./Reviews/Reviews";
 import useSingleProduct from "../../Hooks/useSingleProduct";
+import Loader from "../../Components/Loader/Loader";
 
 function ThumbnailPlugin(mainRef) {
   return (slider) => {
@@ -87,7 +88,7 @@ const Details = () => {
       .catch((error) => console.log(error.message));
   }, [id, product?.product_categories]);
   if (!product || !relatedProducts || isUserDataLoading || isProductLoading) {
-    return;
+    return <Loader></Loader>
   }
   console.log(relatedProducts);
   const {
@@ -138,7 +139,7 @@ const Details = () => {
   return (
     <div className={`md:mx-8 py-14`}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-2">
-        <div className="col-span-1 flex w-full flex-col items-center order-2 md:order-1">
+        <div className="col-span-1 flex w-full flex-col items-center">
           <div ref={sliderRef} className="keen-slider w-[380px] mb-2">
             {[featured_photo, ...gallery_photos]?.map((img, index) => (
               <div
@@ -162,7 +163,7 @@ const Details = () => {
             ))}
           </div>
         </div>
-        <div className="space-y-4 mx-5 md:mx-0 order-1 md:order-2">
+        <div className="space-y-4 mx-5 md:mx-0">
           <div className="flex items-start gap-2">
             <h2 className="md:text-3xl text-2xl font-semibold">
               {product_name}
@@ -355,3 +356,5 @@ const Details = () => {
 };
 
 export default Details;
+
+

@@ -58,7 +58,7 @@ const AdminSettings = () => {
             }
 
             // Patch system setting
-            return axios.patch(`http://localhost:8000/system-setting-update/${systemInfo[0]?._id}`, data);
+            return axios.patch(`https://mbb-e-commerce-server.vercel.app/system-setting-update/${systemInfo[0]?._id}`, data);
         })
         .then((res) => {
             console.log(res.data);
