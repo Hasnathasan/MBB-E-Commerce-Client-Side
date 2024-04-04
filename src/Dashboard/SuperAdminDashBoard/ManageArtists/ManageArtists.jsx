@@ -494,7 +494,7 @@ const ManageArtists = () => {
                               </div>
                               <div>
                                 <label htmlFor="bio_video">
-                                  Your Bio Video Link{" "}
+                                  Bio Video Link{" "}
                                 </label>
                                 <input
                                   type="url"
@@ -502,7 +502,7 @@ const ManageArtists = () => {
                                   id="bio_video"
                                   className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
                                   placeholder="Your Bio Video"
-                                  required
+                                  
                                 />
                               </div>
                             </div>

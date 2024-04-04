@@ -8,17 +8,11 @@ const Footer = () => {
   return (
     <footer className="relative w-full bg-[#1A1A1A] pt-9">
       <div className="mx-auto w-full max-w-7xl px-8">
-        <div className="grid grid-cols-1 justify-between gap-4 md:grid-cols-2">
+        <div className="flex justify-center items-center flex-col gap-4">
           <img className=" w-72" src={logo} alt="" />
           <div className="flex justify-end gap-4">
               <ul>
-                <Typography
-                  variant="small"
-                  className="mb-3 font-medium text-white"
-                >
-                  Important Links
-                </Typography>
-                  <li >
+                  <li  className="flex justify-center flex-col md:flex-row items-center gap-4 md:gap-9">
                     <Typography
                       as="a"
                       href="#"
@@ -53,7 +47,7 @@ const Footer = () => {
               </ul>
           </div>
         </div>
-        <div className="mt-12 flex w-full flex-col items-center justify-center border-t border-blue-gray-50 py-4 md:flex-row">
+        <div className="mt-12 flex w-full flex-col items-center justify-center  py-4 md:flex-row">
           <Typography
             variant="small"
             className="mb-4 text-center font-normal text-gray-100 md:mb-0"

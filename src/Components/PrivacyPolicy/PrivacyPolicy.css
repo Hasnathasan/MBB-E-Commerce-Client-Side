@@ -1,26 +1,26 @@
-h1,
-h2,
-h3,
-h4 {
+.privacy_policy > h1,
+.privacy_policy >h2,
+.privacy_policy >h3,
+.privacy_policy >h4 {
   margin-top: 20px;
 }
-h1 {
+.privacy_policy >h1 {
   font-size: 36px;
 }
-h2 {
+.privacy_policy >h2 {
   font-size: 24px;
 }
-h3 {
+.privacy_policy >h3 {
   font-size: 20px;
 }
-h4 {
+.privacy_policy >h4 {
   font-size: 18px;
 }
-p {
+.privacy_policy >p {
   margin: 10px 0;
 }
-ul,
-ol {
+.privacy_policy >ul,
+.privacy_policy >ol {
   margin: 10px 0;
   padding-left: 20px;
 }

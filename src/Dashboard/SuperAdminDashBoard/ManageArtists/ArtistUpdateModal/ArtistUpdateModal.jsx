@@ -233,7 +233,7 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
                 />
               </div>
               <div>
-                <label htmlFor="bio_video">Your Bio Video Link </label>
+                <label htmlFor="bio_video">Bio Video Link </label>
                 <input
                   type="url"
                   name="bio_video"
@@ -241,7 +241,7 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
                   className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
                   placeholder="Your Bio Video"
                   defaultValue={artist?.bio_video_link}
-                  required
+                  
                 />
               </div>
             </div>

@@ -15,6 +15,7 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
+  User,
 } from "@nextui-org/react";
 import { FaArrowDown, FaPlus } from "react-icons/fa";
 import useAllOrders from "../../../Hooks/useAllOrders";
@@ -119,6 +120,7 @@ const ManageOrders = () => {
         </div>
         <Table aria-label="Example table with custom cells">
           <TableHeader>
+            <TableColumn>Customer</TableColumn>
             <TableColumn>Transaction Id</TableColumn>
             <TableColumn>Date</TableColumn>
             <TableColumn>Price</TableColumn>
@@ -131,6 +133,19 @@ const ManageOrders = () => {
             {orders?.length > 0
               ? orders?.map((order) => (
                   <TableRow key={order._id}>
+                    <TableCell>
+                      <User
+                        avatarProps={{
+                          radius: "md",
+                          src: order?.userDetails?.userPhoto,
+                        }}
+                        description={
+                          order?.userDetails?.email ||
+                          order?.userDetails?.phoneNumber
+                        }
+                        name={order?.userDetails?.userName || "Unknown"}
+                      ></User>
+                    </TableCell>
                     <TableCell>{order?.transactionId}</TableCell>
                     <TableCell>{order?.createdAt.slice(0, 10)}</TableCell>
                     <TableCell>
