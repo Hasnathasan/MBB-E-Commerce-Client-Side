@@ -66,18 +66,16 @@ const CheckOutFunctionality = () => {
     const address = form.address.value;
     const zipCode = form.zipCode.value;
     const userPhoneNumber = form.phoneNumber.value;
+    const emailForShipping = form.emailForShipping.value;
+    const userNameForShipping = form.userNameForShipping.value;
+    const companyNameForShipping = form.companyNameForShipping.value;
+    const countryForShipping = form.countryForShipping.value;
+    const statesForShipping = form.statesForShipping.value;
+    const addressForShipping = form.addressForShipping.value;
+    const zipCodeForShipping = form.zipCodeForShipping.value;
+    const userPhoneNumberForShipping = form.phoneNumberForShipping.value;
     const additional_info = form.additional_info.value;
     const user_details = {
-      email: userData?.email,
-      userName: userData?.userName,
-      companyName: userData?.billingInfo?.companyName,
-      country: userData?.billingInfo?.country,
-      address: userData?.billingInfo?.address,
-      states: userData?.billingInfo?.states,
-      zipCode: userData?.billingInfo?.zipCode,
-      userPhoneNumber: userData?.billingInfo?.userPhoneNumber,
-    };
-    const data = {
       email,
       additional_info,
       userName,
@@ -87,6 +85,16 @@ const CheckOutFunctionality = () => {
       states,
       zipCode,
       userPhoneNumber,
+    };
+    const shipping_data = {
+      email: emailForShipping,
+      userName: userNameForShipping,
+      companyName: companyNameForShipping,
+      countryL: countryForShipping,
+      address: addressForShipping,
+      states: statesForShipping,
+      zipCode: zipCodeForShipping,
+      userPhoneNumber: userPhoneNumberForShipping,
     };
 
     if (!stripe || !elements) {
@@ -121,7 +129,7 @@ const CheckOutFunctionality = () => {
       total_price: subTotal,
     };
     if (isSelected) {
-      order.shipping_address = data;
+      order.shipping_address = shipping_data;
     }
     const orderProductsId = userCart?.map((product) => {
       return { product_id: product?.product_id, quantity: product?.quantity };
@@ -319,6 +327,113 @@ const CheckOutFunctionality = () => {
                 Add a Different Shipping Address
               </Checkbox>
           </div>
+          <div className={`border-b border-gray-300 ${isSelected ? "block" : "hidden"} pb-5`}>
+            
+            <div className={``}>
+              <div className="flex justify-between items-center">
+              <h4 className="mb-5 text-2xl font-semibold">
+                Shipping Information
+              </h4>
+            </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label htmlFor="userNameForShipping">Your Name</label>
+                  <input
+                    type="text"
+                    name="userNameForShipping"
+                    id="userNameForShipping"
+                    className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                    placeholder="Name"
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="companyNameForShipping">
+                    Company Name{" "}
+                    <span className=" text-gray-700">(optional)</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="companyNameForShipping"
+                    id="companyNameForShipping"
+                    className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                    placeholder="companyName"
+                  />
+                </div>
+              </div>
+              <div>
+                <label htmlFor="addressForShipping">Street Address</label>
+                <input
+                  type="text"
+                  name="addressForShipping"
+                  id="addressForShipping"
+                  className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                  placeholder="Street Address"
+                  required
+                />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div>
+                  <label htmlFor="countryForShipping">Country / Region</label>
+                  <input
+                    type="text"
+                    name="countryForShipping"
+                    id="countryForShipping"
+                    className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                    placeholder="Country"
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="statesForShipping">States</label>
+                  <input
+                    type="text"
+                    name="statesForShipping"
+                    id="statesForShipping"
+                    className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                    placeholder="States Name"
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="zipCodeForShipping">Zip Code</label>
+                  <input
+                    type="number"
+                    name="zipCodeForShipping"
+                    id="zipCodeForShipping"
+                    className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                    placeholder="Zip Code"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label htmlFor="emailForShipping">Email Address</label>
+                  <input
+                    type="email"
+                    name="emailForShipping"
+                    id="emailForShipping"
+                    className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                    placeholder="Email Address"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="phoneNumberForShipping">Phone Number</label>
+                  <input
+                    type="tel"
+                    name="phoneNumberForShipping"
+                    id="phoneNumberForShipping"
+                    className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                    placeholder="Phone Number"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="col-span-12 lg:col-span-4 border border-gray-300 rounded-lg">
           <h3 className=" text-2xl font-semibold p-5">Order Summery</h3>
@@ -423,11 +538,8 @@ const CheckOutFunctionality = () => {
                       !user
                     }
                   >
-                    {!stripe ||
-                    !clientSecret ||
-                    processing ||
-                    userCart.length === 0 ||
-                    !user
+                    {
+                    processing
                       ? "Processing"
                       : "Place Order"}
                   </Button>
