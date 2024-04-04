@@ -43,6 +43,7 @@ const ManageArtists = () => {
   const [userData] = useUser();
   const [artistsData, isArtistsDataLoading, refetch] = useArtists();
   const [selectedFile, setSelectedFile] = useState(null);
+  const [instantImg, setInstantImg] = useState(null)
   const [passhide, setPasshide] = useState(true);
   const [passhide2, setPasshide2] = useState(true);
   const [prison, setPrison] = useState(null);
@@ -52,7 +53,12 @@ const ManageArtists = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setSelectedFile(file);
+      setSelectedFile(file)
+      const reader = new FileReader();
+      reader.onload = () => {
+        setInstantImg(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
   const handleArtistUpdateModal = (user) => {
@@ -154,6 +160,7 @@ const ManageArtists = () => {
                   artist
                 )
                 .then((res) => {
+                  setInstantImg(null)
                   console.log(res.data);
                   refetch();
                   form.reset();
@@ -314,7 +321,10 @@ const ManageArtists = () => {
             size="5xl"
             backdrop="opaque"
             isOpen={isOpen}
-            onOpenChange={onOpenChange}
+            onOpenChange={() => {
+              setInstantImg(null)
+              onOpenChange()
+            }}
           >
             <ModalContent>
               {(onClose) => (
@@ -509,7 +519,7 @@ const ManageArtists = () => {
                           </div>
                           <div className="flex justify-center col-span-12 md:col-span-2 items-center gap-5 flex-col">
                             <Avatar
-                              src={"userData?.userPhoto"}
+                              src={instantImg}
                               className="w-48 h-48 text-large"
                             />
                             {/* <img src={`data:image/png;base64,${binaryCode}`} alt="Decoded Image" /> */}
@@ -645,7 +655,10 @@ const ManageArtists = () => {
                     </form>
                   </ModalBody>
                   <ModalFooter>
-                    <Button color="danger" variant="light" onPress={onClose}>
+                    <Button color="danger" variant="light" onPress={() => {
+                      setInstantImg(null)
+                      onClose()
+                    }}>
                       Close
                     </Button>
                   </ModalFooter>

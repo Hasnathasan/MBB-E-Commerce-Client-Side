@@ -13,6 +13,7 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
   const [userData] = useUser();
   const [artistsData, isArtistsDataLoading, refetch] = useArtists();
   const [selectedFile, setSelectedFile] = useState(null);
+  const [instantImg, setInstantImg] = useState(null)
   const [prison, setPrison] = useState(null);
   const [prisonEmail, setPrisonEmail] = useState(null);
   const fileInputRef = useRef(null);
@@ -20,7 +21,12 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setSelectedFile(file);
+      setSelectedFile(file)
+      const reader = new FileReader();
+      reader.onload = () => {
+        setInstantImg(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -110,6 +116,7 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
           artist
         );
         console.log(res.data);
+        setInstantImg(null)
         onClose();
         refetch();
         form.reset();
@@ -247,7 +254,7 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
             </div>
           </div>
           <div className="flex justify-center col-span-12 lg:col-span-2 items-center gap-5 flex-col">
-            <Avatar src={artist?.userPhoto} className="w-48 h-48 text-large" />
+            <Avatar src={instantImg || artist?.userPhoto} className="w-48 h-48 text-large" />
             {/* <img src={`data:image/png;base64,${binaryCode}`} alt="Decoded Image" /> */}
             <input
               type="file"

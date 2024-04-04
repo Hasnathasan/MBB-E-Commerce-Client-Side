@@ -2,15 +2,20 @@ import { Avatar, Button } from "@nextui-org/react";
 import axios from "axios";
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
-import Swal from "sweetalert2";
 
 const CustomerUpdateModal = ({ userData, refetch }) => {
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [instantImg, setInstantImg] = useState(null);
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setSelectedFile(file);
+      setSelectedFile(file)
+      const reader = new FileReader();
+      reader.onload = () => {
+        setInstantImg(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -161,7 +166,7 @@ const CustomerUpdateModal = ({ userData, refetch }) => {
           </div>
           <div className="flex justify-center lg:col-span-2 col-span-5  order-1 lg:order-2 items-center gap-5 flex-col">
             <Avatar
-              src={userData?.userPhoto}
+              src={instantImg || userData?.userPhoto}
               className="w-48 h-48 text-large"
             />
             {/* <img src={`data:image/png;base64,${binaryCode}`} alt="Decoded Image" /> */}
