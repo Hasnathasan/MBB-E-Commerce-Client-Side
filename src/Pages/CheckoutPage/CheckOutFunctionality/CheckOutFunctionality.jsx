@@ -17,7 +17,7 @@ const CheckOutFunctionality = () => {
 
   const [clientSecret, setClientSecret] = useState("");
   const [processing, setProcessing] = useState(false);
-  const [isSelected, setIsSelected] = useState(true);
+  const [isSelected, setIsSelected] = useState(false);
   const [transactionId, setTransactionId] = useState();
   const { setIsProductAdded, user } = useContext(AuthContext);
   const [userData] = useUser();
@@ -191,9 +191,6 @@ const CheckOutFunctionality = () => {
               <h4 className="mb-5 text-2xl font-semibold">
                 Billing Information
               </h4>
-              <Checkbox isSelected={isSelected} onValueChange={setIsSelected}>
-                Add a Different Shipping Address
-              </Checkbox>
             </div>
             <div className="">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -316,6 +313,11 @@ const CheckOutFunctionality = () => {
                 rows={4}
               />
             </div>
+          </div>
+          <div className="flex justify-end">
+          <Checkbox isSelected={isSelected} onValueChange={setIsSelected}>
+                Add a Different Shipping Address
+              </Checkbox>
           </div>
         </div>
         <div className="col-span-12 lg:col-span-4 border border-gray-300 rounded-lg">

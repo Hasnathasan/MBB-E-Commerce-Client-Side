@@ -11,6 +11,7 @@ import { updateProfile } from "firebase/auth";
 const SignUp = () => {
   const { signUpWithEmail, logOut } = useContext(AuthContext);
   const { register, handleSubmit, reset } = useForm();
+  const [isLoading, setIsLoading] = useState(false);
   const [passhide, setPasshide] = useState(true);
   const [passhide2, setPasshide2] = useState(true);
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const SignUp = () => {
     if (password !== confirmPass) {
       return toast.error("Confirmation password didn't match");
     }
+    setIsLoading(true)
     const newUser = {
       email,
       userRole: "user",
@@ -39,21 +41,27 @@ const SignUp = () => {
               .post("https://mbb-e-commerce-server.vercel.app/users", newUser)
               .then((data) => {
                 if (data.data.insertedId) {
+                  setIsLoading(false)
                   logOut();
                   reset();
-                  const success = () => toast.success("Successfuly signed up");
-                  success();
+                  Swal.fire(
+                    "Account created successfully!",
+                    "Please sign in",
+                    "success"
+                  );
                   navigate("/signin");
                 }
               });
           })
           .catch((error) => {
+            setIsLoading(false)
             toast.error(`${error.message}`);
           });
 
         // navigate(from, { replace: true });
       })
       .catch((error) => {
+        setIsLoading(false)
         toast.error(`${error.message}`);
         console.log(error.message);
         // setErrorMessage(error.message);
@@ -151,17 +159,18 @@ const SignUp = () => {
               />
             </div>
             <div className="ml-3 text-xs">
-              <label htmlFor="remember" className="text-gray-600 ">
+              <Link to={"/terms&conditions"}><label htmlFor="remember" className="text-gray-600 cursor-pointer">
                 Accept all terms & Conditions
-              </label>
+              </label></Link>
             </div>
           </div>
 
           <button
             type="submit"
+            disabled={isLoading}
             className="w-full text-white bg-green-500 hover:bg-green-600 focus:outline-none font-medium rounded-3xl text-sm px-5 py-2.5 text-center "
           >
-            Create Account
+            {isLoading ? "Creating..." : "Create Account"}
           </button>
           <p className="text-sm font-light flex justify-center items-center gap-1 text-gray-600 ">
             Already have account?{" "}
