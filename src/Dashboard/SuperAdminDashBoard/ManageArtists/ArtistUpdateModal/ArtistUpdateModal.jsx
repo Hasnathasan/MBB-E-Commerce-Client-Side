@@ -1,16 +1,20 @@
 import toast from "react-hot-toast";
 import Loader from "../../../../Components/Loader/Loader";
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import usePrisons from "../../../../Hooks/usePrisons";
 import useArtists from "../../../../Hooks/useArtists";
 import useUser from "../../../../Hooks/useUser";
 import { Avatar, Button, Select, SelectItem } from "@nextui-org/react";
 import { MultiSelect } from "react-selectize";
+import { AuthContext } from "../../../../Providers/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const ArtistUpdateModal = ({ artist, onClose }) => {
+  const {setArtistToAddProduct, onProductAddingModalOpen} = useContext(AuthContext);
   const [prisons, isPrisonsDataLoading] = usePrisons();
   const [userData] = useUser();
+  const navigate = useNavigate();
   const [artistsData, isArtistsDataLoading, refetch] = useArtists();
   const [selectedFile, setSelectedFile] = useState(null);
   const [instantImg, setInstantImg] = useState(null)
@@ -137,6 +141,13 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
       },
     });
   };
+  const handleAddProductForArtist = () => {
+    setArtistToAddProduct(artist?.email);
+    onClose()
+    navigate("/adminDashboard/products")
+    onProductAddingModalOpen()
+
+  }
 
   if (isPrisonsDataLoading || isArtistsDataLoading) {
     return <Loader></Loader>;
@@ -144,9 +155,19 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
   return (
     <form onSubmit={handleArtistUpdate} className="">
       <div className={`border rounded-lg overflow-auto border-gray-300 mb-6`}>
-        <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">
+        <div className="flex justify-between items-center border-b border-gray-300 p-4 ">
+        <h4 className="text-lg font-semibold">
           Artist&apos;s personal Info
         </h4>
+        <Button
+              onClick={handleAddProductForArtist}
+              color="success"
+              size="sm"
+              className="text-white text-sm mb-2 bg-green-500"
+            >
+              Add Product
+            </Button>
+        </div>
         <div className="p-5 grid grid-cols-12 gap-5 items-center justify-center">
           <div className="lg:col-span-9 col-span-12">
             {/* <h3 className="text-base text-red-600">{error}</h3> */}

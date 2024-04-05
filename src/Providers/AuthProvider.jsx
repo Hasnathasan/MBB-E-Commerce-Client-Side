@@ -10,12 +10,15 @@ import {
 } from "firebase/auth";
 import axios from "axios";
 import app from "../Firebase/Firebase.config";
+import { useDisclosure } from "@nextui-org/react";
 
 export const AuthContext = createContext(null);
 // eslint-disable-next-line react/prop-types
 const AuthProvider = ({ children }) => {
   const auth = getAuth(app);
   const googleProvider = new GoogleAuthProvider();
+  
+  const { isOpen: isProductAddingModalOpen, onOpen: onProductAddingModalOpen, onOpenChange: onProductAddingModalOpenChange } = useDisclosure();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [categoryFilter, setCategoryFilter] = useState(null)
@@ -26,6 +29,7 @@ const AuthProvider = ({ children }) => {
   const [isProductAdded, setIsProductAdded] = useState(1);
   const [selectedTag, setSelectedTag] = useState();
   const [sort, setSort] = useState();
+  const [artistToAddProduct, setArtistToAddProduct] = useState(null)
 console.log(minRating);
 console.log(user);
   const loginWithEmail = (email, password) => {
@@ -65,7 +69,7 @@ console.log(user);
     openCart,
     setOpenCart,
     sort,
-    setSort,selectedTag, setSelectedTag
+    setSort,selectedTag, setSelectedTag,artistToAddProduct, setArtistToAddProduct, isProductAddingModalOpen, onProductAddingModalOpen, onProductAddingModalOpenChange
   };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (loggedUser) => {

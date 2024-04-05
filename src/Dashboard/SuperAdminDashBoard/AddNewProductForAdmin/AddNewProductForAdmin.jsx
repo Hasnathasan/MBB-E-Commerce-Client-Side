@@ -1,5 +1,5 @@
 import { Avatar, Button, Select, SelectItem } from "@nextui-org/react";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import "../../../../node_modules/react-selectize/themes/index.css";
 import useArtists from "../../../Hooks/useArtists";
 import axios from "axios";
@@ -7,8 +7,10 @@ import toast from "react-hot-toast";
 import usePopularCategories from "../../../Hooks/usePopularCategories";
 import CreatableSelect from 'react-select/creatable';
 import usePopularTags from "../../../Hooks/usePopularTags";
+import { AuthContext } from "../../../Providers/AuthProvider";
 const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
   const [artistData, isArtistsDataLoading] = useArtists();
+  const {artistToAddProduct} = useContext(AuthContext);
   const [allCategories, isCategoriesLoading, refetch] = usePopularCategories();
   const [tags, isTagsLoading] = usePopularTags();
   const existingCategories = allCategories?.map(category => {
@@ -23,6 +25,10 @@ const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   console.log(artistData);
+
+  useEffect(() => {
+    setArtist(artistToAddProduct)
+  },[artistToAddProduct])
  
   
   const handleCategoryChange = (selectedOptions) => {
@@ -67,7 +73,7 @@ const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
   const [prisonPercent, setPrisonPercent] = useState(
     prisonPercentRef?.current?.value
   );
-  console.log("artist", artist);
+  console.log("artist", artist, "prison", prison);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   function calculateArtistProfit(salePrice, regularPrice, costPrice) {
     const sale = Number(salePrice) || 0.0;
@@ -391,6 +397,7 @@ const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
                 className="w-full"
                 isRequired
                 onChange={(e) => setArtist(e.target.value)}
+                defaultSelectedKeys={[artist ? artist : artistToAddProduct]}
               >
                 {(artist) => (
                   <SelectItem

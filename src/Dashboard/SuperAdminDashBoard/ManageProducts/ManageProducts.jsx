@@ -39,7 +39,7 @@ const ManageProducts = () => {
     priceSlider,
     minRating,
     searchQuery,
-    setSearchQuery,
+    setSearchQuery, setArtistToAddProduct, isProductAddingModalOpen, onProductAddingModalOpen, onProductAddingModalOpenChange
   } = useContext(AuthContext);
   const [products, isProductsLoading, refetch] = useProducts({
     categoryFilter,
@@ -47,7 +47,6 @@ const ManageProducts = () => {
     minRating,
     searchQuery,
   });
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const {
     isOpen: isDetailsModalOpen,
     onOpen: onDetailsModalOpen,
@@ -109,7 +108,7 @@ const ManageProducts = () => {
               />
               <div className="flex gap-3">
                 <Button
-                  onPress={onOpen}
+                  onPress={onProductAddingModalOpen}
                   color="primary"
                   endContent={<FaPlus></FaPlus>}
                 >
@@ -177,8 +176,11 @@ const ManageProducts = () => {
             size="5xl"
             backdrop="opaque"
             className="!z-50"
-            isOpen={isOpen}
-            onOpenChange={onOpenChange}
+            isOpen={isProductAddingModalOpen}
+            onOpenChange={() => {
+              setArtistToAddProduct(null);
+              onProductAddingModalOpenChange()
+            }}
           >
             <ModalContent>
               {(onClose) => (

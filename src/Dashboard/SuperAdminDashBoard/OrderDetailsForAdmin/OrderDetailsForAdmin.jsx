@@ -38,7 +38,7 @@ const OrderDetailsForAdmin = () => {
     console.log(value);
     axios
       .patch(
-        `https://mbb-e-commerce-server.vercel.app/orderStatusUpdate/${
+        `http://localhost:8000/orderStatusUpdate/${
           order?._id
         }?status=${value.toLowerCase()}`
       )
@@ -93,7 +93,7 @@ const OrderDetailsForAdmin = () => {
               Shipped
             </SelectItem>
             <SelectItem key={"delivered"} value={"delivered"}>
-              Delievered
+              Delivered
             </SelectItem>
             <SelectItem key={"canceled"} value={"canceled"}>
               Canceled
