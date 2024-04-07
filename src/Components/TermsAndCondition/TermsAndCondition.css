@@ -1,0 +1,26 @@
+.terms_and_condition > h1,
+.terms_and_condition >h2,
+.terms_and_condition >h3,
+.terms_and_condition >h4 {
+  margin-top: 20px;
+}
+.terms_and_condition >h1 {
+  font-size: 36px;
+}
+.terms_and_condition >h2 {
+  font-size: 24px;
+}
+.terms_and_condition >h3 {
+  font-size: 20px;
+}
+.terms_and_condition >h4 {
+  font-size: 18px;
+}
+.terms_and_condition >p {
+  margin: 10px 0;
+}
+.terms_and_condition >ul,
+.terms_and_condition >ol {
+  margin: 10px 0;
+  padding-left: 20px;
+}

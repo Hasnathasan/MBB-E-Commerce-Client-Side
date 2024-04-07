@@ -1,8 +1,8 @@
-
+import './TermsAndCondition.css'
 
 const TermsAndCondition = () => {
     return (
-        <div>
+        <div className="terms_and_condition mx-2 md:mx-8">
             <h2><strong>Terms and Conditions</strong></h2>
 
 <p>Welcome to Made Behind Bars!</p>
