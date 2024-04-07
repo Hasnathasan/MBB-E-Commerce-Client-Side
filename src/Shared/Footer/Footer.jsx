@@ -35,14 +35,12 @@ const Footer = () => {
                     >
                       Refund policy
                     </Typography>
-                    <Typography
-                      as="a"
-                      href="#"
-                      color="gray"
+                    <Link
+                      to={"/terms&condition"}
                       className="py-1.5 font-normal transition-colors text-blue-gray-500 hover:text-blue-gray-900"
                     >
                       Terms and conditions
-                    </Typography>
+                    </Link>
                   </li>
               </ul>
           </div>

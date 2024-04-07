@@ -39,6 +39,7 @@ import PaymentSuccessFullPage from "../Components/PaymentSuccessfullPage/Payment
 import ManageBanners from "../Dashboard/SuperAdminDashBoard/ManageBanners/ManageBanners";
 import AdminSettings from "../Dashboard/SuperAdminDashBoard/AdminSettings/AdminSettings";
 import PrivacyPolicy from "../Components/PrivacyPolicy/PrivacyPolicy";
+import TermsAndCondition from "../Components/TermsAndCondition/TermsAndCondition";
 
 
 const router = createBrowserRouter([
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: "/privacy-policy",
         element: <PrivacyPolicy></PrivacyPolicy>
+      },
+      {
+        path: "/terms&condition",
+        element: <TermsAndCondition></TermsAndCondition>
       },
       {
         path: "/signin",
