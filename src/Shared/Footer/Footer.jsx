@@ -13,28 +13,24 @@ const Footer = () => {
           <div className="flex justify-end gap-4">
               <ul>
                   <li  className="flex justify-center flex-col md:flex-row items-center gap-4 md:gap-9">
-                    <Typography
-                      as="a"
-                      href="#"
-                      color="gray"
+                    <Link
+                      to={"/contact-us"}
                       className="py-1.5 font-normal transition-colors text-blue-gray-500 hover:text-blue-gray-900"
                     >
                       Contact us
-                    </Typography>
+                    </Link>
                     <Link
                       to={"/privacy-policy"}
                       className="py-1.5 font-normal transition-colors text-blue-gray-500 hover:text-blue-gray-900"
                     >
                       privacy policy
                     </Link>
-                    <Typography
-                      as="a"
-                      href="#"
-                      color="gray"
+                    <Link
+                      to={"/refundPolicy"}
                       className="py-1.5 font-normal transition-colors text-blue-gray-500 hover:text-blue-gray-900"
                     >
                       Refund policy
-                    </Typography>
+                    </Link>
                     <Link
                       to={"/terms&condition"}
                       className="py-1.5 font-normal transition-colors text-blue-gray-500 hover:text-blue-gray-900"

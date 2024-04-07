@@ -1,0 +1,21 @@
+.refund_policy > h1,
+.refund_policy >h2,
+.refund_policy >h3,
+.refund_policy >h4 {
+  margin-top: 20px;
+}
+.refund_policy >h1 {
+  font-size: 36px;
+}
+.refund_policy >h2 {
+  font-size: 24px;
+}
+.refund_policy >h3 {
+  font-size: 20px;
+}
+.refund_policy >h4 {
+  font-size: 18px;
+}
+.refund_policy >p {
+  margin: 10px 0;
+}

@@ -40,6 +40,7 @@ import ManageBanners from "../Dashboard/SuperAdminDashBoard/ManageBanners/Manage
 import AdminSettings from "../Dashboard/SuperAdminDashBoard/AdminSettings/AdminSettings";
 import PrivacyPolicy from "../Components/PrivacyPolicy/PrivacyPolicy";
 import TermsAndCondition from "../Components/TermsAndCondition/TermsAndCondition";
+import RefundPolicy from "../Components/RefundPolicy/RefundPolicy";
 
 
 const router = createBrowserRouter([
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
       {
         path: "/terms&condition",
         element: <TermsAndCondition></TermsAndCondition>
+      },
+      {
+        path: "/refundPolicy",
+        element: <RefundPolicy></RefundPolicy>
       },
       {
         path: "/signin",
