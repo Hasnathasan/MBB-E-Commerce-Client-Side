@@ -51,31 +51,38 @@ const ManagePrison = () => {
     const email = form.email.value;
     const number = form.phoneNumber.value;
     const prison = {
-      prison_name,
-      country,
-      states,
-      address,
-      zipCode,
-      email,
-      number,
+        prison_name,
+        country,
+        states,
+        address,
+        zipCode,
+        email,
+        number,
     };
     console.log(prison);
-    axios
-      .post(`https://mbb-e-commerce-server.vercel.app/prisons`, prison)
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.insertedId) {
-          refetch();
-          onClose()
-          return toast.success("Successfully added Prison");
-        }
-      })
-      .catch((error) => {
-        return toast.error(
-          error?.response?.data?.message || "An Unknown Error Occurred"
-        );
-      });
-  };
+
+    const promise = axios
+        .post(`https://mbb-e-commerce-server.vercel.app/prisons`, prison)
+        .then((res) => {
+            console.log(res.data);
+            if (res.data.insertedId) {
+                refetch();
+                onClose();
+                return res.data;
+            } else {
+                throw new Error("Failed to add Prison");
+            }
+        })
+        .catch((error) => {
+            throw error;
+        });
+
+    toast.promise(promise, {
+        loading: 'Adding prison...',
+        success: 'Successfully added Prison',
+        error: 'An Unknown Error Occurred'
+    });
+};
   const deleteFunc = (id) => {
     axios
       .delete(`https://mbb-e-commerce-server.vercel.app/prisonDelete/${id}`)
