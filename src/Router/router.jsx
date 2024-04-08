@@ -41,6 +41,7 @@ import AdminSettings from "../Dashboard/SuperAdminDashBoard/AdminSettings/AdminS
 import PrivacyPolicy from "../Components/PrivacyPolicy/PrivacyPolicy";
 import TermsAndCondition from "../Components/TermsAndCondition/TermsAndCondition";
 import RefundPolicy from "../Components/RefundPolicy/RefundPolicy";
+import AdminOnlyRoute from "../Components/AdminOnlyRoute/AdminOnlyRoute";
 
 
 const router = createBrowserRouter([
@@ -162,7 +163,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/adminDashboard",
-    element: <PrivateRoute><SuperAdminMainDashBoard></SuperAdminMainDashBoard></PrivateRoute>,
+    element: <PrivateRoute><AdminOnlyRoute><SuperAdminMainDashBoard></SuperAdminMainDashBoard></AdminOnlyRoute></PrivateRoute>,
     children: [
     {
       path: "overview",

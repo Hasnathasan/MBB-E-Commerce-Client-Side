@@ -5,7 +5,7 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-  Input,
+  Pagination,
   Modal,
   ModalBody,
   ModalContent,
@@ -24,17 +24,27 @@ import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
 import axios from "axios";
 import usePrisons from "../../../Hooks/usePrisons";
 import toast, { Toaster } from "react-hot-toast";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import PrisonUpdateModal from "./PrisonUpdateModal/PrisonUpdateModal";
 
 const ManagePrison = () => {
-  const [prisons, , refetch] = usePrisons();
+  const [prisonsData, , refetch] = usePrisons();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const {
     isOpen: isPrisonUpdateOpen,
     onOpen: onPriosonUpdateOpen,
     onOpenChange: onPrisonUpdateChange,
   } = useDisclosure();
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 4;
+  const pages = Math.ceil(prisonsData?.length / rowsPerPage);
+  
+  const prisons = useMemo(() => {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    return prisonsData?.slice(start, end);
+  }, [page, prisonsData]);
   const [prisonToShow, setPrisonToShow] = useState();
   const handlePrisonUpdate = (prison) => {
     setPrisonToShow(prison);
@@ -124,50 +134,7 @@ const ManagePrison = () => {
   return (
     <div className="overflow-x-auto w-full md:w-[95%]">
       <div className="flex flex-col  gap-4">
-        <div className="flex justify-between p-5 bg-white rounded-xl gap-3 items-end">
-          <Input
-            isClearable
-            className="w-full sm:max-w-[44%]"
-            placeholder="Search by name..."
-            startContent={<FaSearch></FaSearch>}
-          />
-          <div className="flex gap-3">
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<FaArrowDown></FaArrowDown>} variant="flat">
-                  Status
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={["data"]}
-                selectionMode="multiple"
-              >
-                <DropdownItem key={"data"} className="capitalize">
-                  Data
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<FaArrowDown></FaArrowDown>} variant="flat">
-                  Columns
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={["hi"]}
-                selectionMode="multiple"
-              >
-                <DropdownItem key={"hi"} className="capitalize">
-                  Hi
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+        <div className="flex w-full justify-end p-5 bg-white rounded-xl gap-3 items-end">
             <Button
               onPress={onOpen}
               color="primary"
@@ -175,13 +142,27 @@ const ManagePrison = () => {
             >
               Add New
             </Button>
-          </div>
         </div>
         <span className="text-gray-600 mb-2">
           Total {prisons?.length} users
         </span>
       </div>
-      <Table aria-label="Example table with custom cells">
+      <Table 
+      aria-label="Example table with custom cells"
+      bottomContent={
+        <div className="flex w-full justify-center">
+          <Pagination
+            isCompact
+            showControls
+            showShadow
+            color="secondary"
+            page={page}
+            total={pages}
+            onChange={(page) => setPage(page)}
+          />
+        </div>
+      }
+      >
         <TableHeader>
           <TableColumn>Prison Name</TableColumn>
           <TableColumn>Number</TableColumn>

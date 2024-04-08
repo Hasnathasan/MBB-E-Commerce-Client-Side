@@ -6,7 +6,7 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-  Input,
+  Pagination,
   Select,
   SelectItem,
   Table,
@@ -21,16 +21,27 @@ import { FaArrowDown, FaPlus } from "react-icons/fa";
 import useAllOrders from "../../../Hooks/useAllOrders";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import Loader from "../../../Components/Loader/Loader";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
 const ManageOrders = () => {
+  
+  
   const [value, setValue] = useState();
-  const [orders, isOrdersLoading, refetch] = useAllOrders({ status: value });
+  const [ordersData, isOrdersLoading, refetch] = useAllOrders({ status: value });
   const handleSelectionChange = (e) => {
     setValue(e.target.value);
   };
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 4;
+  const pages = Math.ceil(ordersData?.length / rowsPerPage);
+  const orders = useMemo(() => {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    return ordersData?.slice(start, end);
+  }, [page, ordersData]);
 
   const location = useLocation();
   // if (isOrdersLoading) {
@@ -118,7 +129,22 @@ const ManageOrders = () => {
             Total {orders?.length} Orders
           </span>
         </div>
-        <Table aria-label="Example table with custom cells">
+        <Table 
+        aria-label="Example table with custom cells"
+        bottomContent={
+          <div className="flex w-full justify-center">
+            <Pagination
+              isCompact
+              showControls
+              showShadow
+              color="secondary"
+              page={page}
+              total={pages}
+              onChange={(page) => setPage(page)}
+            />
+          </div>
+        }
+        >
           <TableHeader>
             <TableColumn>Customer</TableColumn>
             <TableColumn>Transaction Id</TableColumn>
