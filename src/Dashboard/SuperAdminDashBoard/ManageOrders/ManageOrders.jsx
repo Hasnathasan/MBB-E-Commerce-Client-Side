@@ -34,7 +34,7 @@ const ManageOrders = () => {
     setValue(e.target.value);
   };
   const [page, setPage] = useState(1);
-  const rowsPerPage = 4;
+  const rowsPerPage = 20;
   const pages = Math.ceil(ordersData?.length / rowsPerPage);
   const orders = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
@@ -134,10 +134,11 @@ const ManageOrders = () => {
         bottomContent={
           <div className="flex w-full justify-center">
             <Pagination
+            loop 
               isCompact
               showControls
               showShadow
-              color="secondary"
+              color="success"
               page={page}
               total={pages}
               onChange={(page) => setPage(page)}

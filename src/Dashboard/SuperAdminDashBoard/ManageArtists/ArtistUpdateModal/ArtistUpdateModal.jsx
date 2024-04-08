@@ -11,13 +11,14 @@ import { AuthContext } from "../../../../Providers/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
 const ArtistUpdateModal = ({ artist, onClose }) => {
-  const {setArtistToAddProduct, onProductAddingModalOpen} = useContext(AuthContext);
+  const { setArtistToAddProduct, onProductAddingModalOpen } =
+    useContext(AuthContext);
   const [prisons, isPrisonsDataLoading] = usePrisons();
   const [userData] = useUser();
   const navigate = useNavigate();
   const [artistsData, isArtistsDataLoading, refetch] = useArtists();
   const [selectedFile, setSelectedFile] = useState(null);
-  const [instantImg, setInstantImg] = useState(null)
+  const [instantImg, setInstantImg] = useState(null);
   const [prison, setPrison] = useState(null);
   const [prisonEmail, setPrisonEmail] = useState(null);
   const fileInputRef = useRef(null);
@@ -25,7 +26,7 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setSelectedFile(file)
+      setSelectedFile(file);
       const reader = new FileReader();
       reader.onload = () => {
         setInstantImg(reader.result);
@@ -120,7 +121,7 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
           artist
         );
         console.log(res.data);
-        setInstantImg(null)
+        setInstantImg(null);
         onClose();
         refetch();
         form.reset();
@@ -143,11 +144,10 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
   };
   const handleAddProductForArtist = () => {
     setArtistToAddProduct(artist?.email);
-    onClose()
-    navigate("/adminDashboard/products")
-    onProductAddingModalOpen()
-
-  }
+    onClose();
+    navigate("/adminDashboard/products");
+    onProductAddingModalOpen();
+  };
 
   if (isPrisonsDataLoading || isArtistsDataLoading) {
     return <Loader></Loader>;
@@ -156,17 +156,15 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
     <form onSubmit={handleArtistUpdate} className="">
       <div className={`border rounded-lg overflow-auto border-gray-300 mb-6`}>
         <div className="flex justify-between items-center border-b border-gray-300 p-4 ">
-        <h4 className="text-lg font-semibold">
-          Artist&apos;s personal Info
-        </h4>
-        <Button
-              onClick={handleAddProductForArtist}
-              color="success"
-              size="sm"
-              className="text-white text-sm mb-2 bg-green-500"
-            >
-              Add Product
-            </Button>
+          <h4 className="text-lg font-semibold">Artist&apos;s personal Info</h4>
+          <Button
+            onClick={handleAddProductForArtist}
+            color="success"
+            size="sm"
+            className="text-white text-sm mb-2 bg-green-500"
+          >
+            Add Product
+          </Button>
         </div>
         <div className="p-5 grid grid-cols-12 gap-5 items-center justify-center">
           <div className="lg:col-span-9 col-span-12">
@@ -269,13 +267,15 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
                   className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
                   placeholder="Your Bio Video"
                   defaultValue={artist?.bio_video_link}
-                  
                 />
               </div>
             </div>
           </div>
           <div className="flex justify-center col-span-12 lg:col-span-2 items-center gap-5 flex-col">
-            <Avatar src={instantImg || artist?.userPhoto} className="w-48 h-48 text-large" />
+            <Avatar
+              src={instantImg || artist?.userPhoto}
+              className="w-48 h-48 text-large"
+            />
             {/* <img src={`data:image/png;base64,${binaryCode}`} alt="Decoded Image" /> */}
             <input
               type="file"
@@ -303,7 +303,7 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
             <div>
               <Select
                 items={prisons}
-                label="Company / Organization / Prison"
+                label="Prison / Organization"
                 placeholder="Select a Prison"
                 labelPlacement="outside"
                 className="w-full"

@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Pagination,
   Button,
   ButtonGroup,
   Chip,
@@ -23,7 +24,7 @@ import { FaPlus } from "react-icons/fa";
 import useArtists from "../../../Hooks/useArtists";
 import usePrisons from "../../../Hooks/usePrisons";
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { MultiSelect } from "react-selectize";
 import useUser from "../../../Hooks/useUser";
 import { IoEyeOffSharp, IoEyeOutline } from "react-icons/io5";
@@ -43,7 +44,7 @@ const ManageArtists = () => {
   const [userData] = useUser();
   const [artistsData, isArtistsDataLoading, refetch] = useArtists();
   const [selectedFile, setSelectedFile] = useState(null);
-  const [instantImg, setInstantImg] = useState(null)
+  const [instantImg, setInstantImg] = useState(null);
   const [passhide, setPasshide] = useState(true);
   const [passhide2, setPasshide2] = useState(true);
   const [prison, setPrison] = useState(null);
@@ -53,7 +54,7 @@ const ManageArtists = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setSelectedFile(file)
+      setSelectedFile(file);
       const reader = new FileReader();
       reader.onload = () => {
         setInstantImg(reader.result);
@@ -65,6 +66,17 @@ const ManageArtists = () => {
     setArtistToShowOnModal(user);
     onArtistUpdateModalOpen();
   };
+
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 10;
+  const pages = Math.ceil(artistsData?.length / rowsPerPage);
+
+  const artists = useMemo(() => {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    return artistsData?.slice(start, end);
+  }, [page, artistsData]);
 
   console.log(selectedFile);
   const handleButtonClick = () => {
@@ -160,11 +172,11 @@ const ManageArtists = () => {
                   artist
                 )
                 .then((res) => {
-                  setInstantImg(null)
+                  setInstantImg(null);
                   console.log(res.data);
                   refetch();
                   form.reset();
-                  onClose()
+                  onClose();
                   return res.data; // Return data to handle success message
                 })
                 .catch((error) => {
@@ -259,7 +271,22 @@ const ManageArtists = () => {
               Total {artistsData?.length} users
             </span>
           </div>
-          <Table aria-label="Example table with custom cells">
+          <Table
+            aria-label="Example table with custom cells"
+            bottomContent={
+              <div className="flex w-full justify-center">
+                <Pagination
+                  isCompact
+                  showControls
+                  showShadow
+                  color="secondary"
+                  page={page}
+                  total={pages}
+                  onChange={(page) => setPage(page)}
+                />
+              </div>
+            }
+          >
             <TableHeader>
               <TableColumn>Name</TableColumn>
               <TableColumn>Email / Number</TableColumn>
@@ -269,8 +296,8 @@ const ManageArtists = () => {
               </TableColumn>
             </TableHeader>
             <TableBody emptyContent={"No Artist Available"}>
-              {artistsData?.length > 0
-                ? artistsData?.map((user) => (
+              {artists?.length > 0
+                ? artists?.map((user) => (
                     <TableRow key={user._id}>
                       <TableCell>
                         <User
@@ -322,8 +349,8 @@ const ManageArtists = () => {
             backdrop="opaque"
             isOpen={isOpen}
             onOpenChange={() => {
-              setInstantImg(null)
-              onOpenChange()
+              setInstantImg(null);
+              onOpenChange();
             }}
           >
             <ModalContent>
@@ -333,7 +360,10 @@ const ManageArtists = () => {
                     Add a New Artist
                   </ModalHeader>
                   <ModalBody>
-                    <form onSubmit={(e) => addNewArtist(e, onClose)} className="">
+                    <form
+                      onSubmit={(e) => addNewArtist(e, onClose)}
+                      className=""
+                    >
                       <div className="border border-gray-300 rounded-lg mb-6">
                         <h4 className="p-4 text-lg border-b border-gray-300 font-semibold">
                           Account Information
@@ -512,7 +542,6 @@ const ManageArtists = () => {
                                   id="bio_video"
                                   className=" border border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-[80%] p-2.5 "
                                   placeholder="Your Bio Video"
-                                  
                                 />
                               </div>
                             </div>
@@ -551,7 +580,7 @@ const ManageArtists = () => {
                             <div>
                               <Select
                                 items={prisons}
-                                label="Company / Organization / Prison"
+                                label="Prison / Organization"
                                 placeholder="Select a Prison"
                                 labelPlacement="outside"
                                 className="w-full"
@@ -655,10 +684,14 @@ const ManageArtists = () => {
                     </form>
                   </ModalBody>
                   <ModalFooter>
-                    <Button color="danger" variant="light" onPress={() => {
-                      setInstantImg(null)
-                      onClose()
-                    }}>
+                    <Button
+                      color="danger"
+                      variant="light"
+                      onPress={() => {
+                        setInstantImg(null);
+                        onClose();
+                      }}
+                    >
                       Close
                     </Button>
                   </ModalFooter>

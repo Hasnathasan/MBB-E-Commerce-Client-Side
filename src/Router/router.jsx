@@ -163,7 +163,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/adminDashboard",
-    element: <PrivateRoute><AdminOnlyRoute><SuperAdminMainDashBoard></SuperAdminMainDashBoard></AdminOnlyRoute></PrivateRoute>,
+    element: <PrivateRoute><SuperAdminMainDashBoard></SuperAdminMainDashBoard></PrivateRoute>,
     children: [
     {
       path: "overview",
