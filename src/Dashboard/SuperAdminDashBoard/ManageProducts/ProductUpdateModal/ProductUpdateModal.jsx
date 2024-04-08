@@ -1,6 +1,5 @@
 import { Avatar, Button, Select, SelectItem } from "@nextui-org/react";
 import { useEffect, useRef, useState } from "react";
-import { MultiSelect } from "react-selectize";
 import "../../../../../node_modules/react-selectize/themes/index.css";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -8,7 +7,9 @@ import usePopularCategories from "../../../../Hooks/usePopularCategories";
 import useArtists from "../../../../Hooks/useArtists";
 import CreatableSelect from 'react-select/creatable';
 import usePopularTags from "../../../../Hooks/usePopularTags";
+import useSystemInfo from "../../../../Hooks/useSystemInfo";
 const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
+  const [systemInfo] = useSystemInfo();
   console.log(product);
   const [artistData, isArtistsDataLoading] = useArtists();
   const [allCategories, isCategoriesLoading, refetch] = usePopularCategories();
@@ -514,7 +515,7 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
               {artistProfit + parseFloat(costPrice)}
             </h4>
             <h4 className="mb-3">
-              MBB{" "}
+              {systemInfo?.[0]?.system_name}{" "}
               <span className="relative">
                 <input
                   name="website_percentage"

@@ -2,7 +2,9 @@ import { Button } from "@nextui-org/react";
 import { useRef, useState } from "react";
 import { MultiSelect } from "react-selectize";
 import "../../../../node_modules/react-selectize/themes/index.css";
+import useSystemInfo from "../../../Hooks/useSystemInfo";
 const AddNewProduct = () => {
+  const [systemInfo ] = useSystemInfo();
   const [tags, setTags] = useState(
     [].map((str) => ({ label: str, value: str }))
   );
@@ -263,7 +265,7 @@ const AddNewProduct = () => {
                 : "0.00"}
             </h4>
             <h4 className="mb-3">
-              MBB{" "}
+              {system?.[0]?.system_name}{" "}
               <span className="relative">
                 <input
                   defaultValue={15}

@@ -2,29 +2,15 @@ import { Button } from "@nextui-org/react";
 import { BsFillPeopleFill, BsPersonCircle } from "react-icons/bs";
 import {
   FaBookmark,
-  FaHome,
   FaProductHunt,
-  FaShoppingCart,
 } from "react-icons/fa";
-import { NavLink, Outlet } from "react-router-dom";
-import logo from "../../../assets/logo.png";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import "./SuperAdminMainDashBoard.css";
 import { Toaster } from "react-hot-toast";
+import useSystemInfo from "../../../Hooks/useSystemInfo";
 const SuperAdminMainDashBoard = () => {
-  const mainLinks = (
-    <>
-      <li>
-        <NavLink className="p-3 text-base" to="/">
-          <FaHome></FaHome> Home
-        </NavLink>
-      </li>
-      <li>
-        <NavLink className="p-3 text-base" to="/cart">
-          <FaShoppingCart></FaShoppingCart> Cart
-        </NavLink>
-      </li>
-    </>
-  );
+  const [systemInfo] = useSystemInfo();
+  
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -59,7 +45,9 @@ const SuperAdminMainDashBoard = () => {
         {/* Sidebar content here */}
         <div className="w-80"></div>
         <ul className="menu flex-nowrap top-0 fixed px-8 h-screen overflow-y-auto bg-gray-200 py-10 w-80 space-y-2">
-          <img className="w-64 h-24" src={logo} alt="" />
+        <Link to={"/"}>
+            <img className="w-64 h-20" src={systemInfo?.[0]?.logo} alt="" />
+          </Link>
           <li>
             <NavLink className="p-3 text-base" to="overview">
               <BsPersonCircle></BsPersonCircle> Dashboard

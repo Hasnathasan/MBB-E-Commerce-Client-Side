@@ -8,7 +8,9 @@ import usePopularCategories from "../../../Hooks/usePopularCategories";
 import CreatableSelect from 'react-select/creatable';
 import usePopularTags from "../../../Hooks/usePopularTags";
 import { AuthContext } from "../../../Providers/AuthProvider";
+import useSystemInfo from "../../../Hooks/useSystemInfo";
 const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
+  const [systemInfo, isSystemInfo] = useSystemInfo();
   const [artistData, isArtistsDataLoading] = useArtists();
   const {artistToAddProduct} = useContext(AuthContext);
   const [allCategories, isCategoriesLoading, refetch] = usePopularCategories();
@@ -508,7 +510,7 @@ const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
               {artistProfit + parseFloat(costPrice)}
             </h4>
             <h4 className="mb-3">
-              MBB{" "}
+              {systemInfo?.[0]?.system_name}{" "}
               <span className="relative">
                 <input
                   name="website_percentage"

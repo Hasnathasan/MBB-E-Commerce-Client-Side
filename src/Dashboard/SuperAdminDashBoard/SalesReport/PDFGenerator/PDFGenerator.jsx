@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Document,
   Page,
@@ -10,8 +10,10 @@ import {
 } from "@react-pdf/renderer";
 import logo from "../../../../assets/logo.png";
 import axios from "axios";
+import useSystemInfo from "../../../../Hooks/useSystemInfo";
 
 const PDFGenerator = ({ salesReport }) => {
+  const [systemInfo] = useSystemInfo();
   console.log(salesReport);
   const [totalArtistProfit, setTotalArtistProfit] = useState(0);
   const [totalWebsiteProfit, setTotalWebsiteProfit] = useState(0);
@@ -185,7 +187,7 @@ const PDFGenerator = ({ salesReport }) => {
                   <Text style={[styles.tableCell, { flex: 2 }]}>Item</Text>
                   <Text style={styles.tableCell}>Cost</Text>
                   <Text style={styles.tableCell}>Artist</Text>
-                  <Text style={styles.tableCell}>MBB</Text>
+                  <Text style={styles.tableCell}>{systemInfo?.[0]?.system_name}</Text>
                   <Text style={styles.tableCell}>Prison</Text>
                 </View>
                 {/* Table Body */}
@@ -224,7 +226,7 @@ const PDFGenerator = ({ salesReport }) => {
               </View>
               <View style={styles.optionsContainer}>
                 <View style={styles.optionColumn}>
-                  <Text style={styles.optionHeaderText}>MBB</Text>
+                  <Text style={styles.optionHeaderText}>{systemInfo?.[0]?.system_name}</Text>
                   <Text style={styles.optionText}>
                     Balance: ${totalWebsiteProfit}
                   </Text>

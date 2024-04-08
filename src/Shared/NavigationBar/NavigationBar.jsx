@@ -155,7 +155,7 @@ const subTotal = userCart?.reduce((accumulator, product) => {
             <NavLink to={"/artists"}>Artists</NavLink>
             <NavLink to={"/categories"}>Categories</NavLink>
             <NavLink to={"/shop/filter"}>Products</NavLink>
-            <NavLink to={"/about-us"}>About MBB</NavLink>
+            <NavLink to={"/about-us"}>About Us</NavLink>
             <NavLink to={"/contact-us"}>Contact Us</NavLink>
           </div>
           {/* <div className="flex justify-center items-center gap-8"> */}
