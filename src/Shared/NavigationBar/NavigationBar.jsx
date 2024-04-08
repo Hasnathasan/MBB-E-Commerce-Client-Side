@@ -11,6 +11,7 @@ import { Drawer } from "@material-tailwind/react";
 import { Button } from "@nextui-org/react";
 import { RxCross2 } from "react-icons/rx";
 import { AuthContext } from "../../Providers/AuthProvider";
+import useSystemInfo from "../../Hooks/useSystemInfo";
 // import useUser from "../../Hooks/useUser";
 const NavigationBar = () => {
   const {setSearchQuery, setCategoryFilter, setPriceSlider, setMinRating, user, isProductAdded, setIsProductAdded, openCart, setOpenCart} = useContext(AuthContext);
@@ -21,7 +22,7 @@ const NavigationBar = () => {
   const openCartDrawer = () => setOpenCart(true);
   const closeCartDrawer = () => setOpenCart(false);
   const [userCart, setUserCart] = useState([]);
-
+const [systemInfo, isSystemInfo, refetch] = useSystemInfo();
 useEffect(() => {
   // Try retrieving the cart from localStorage, with a default of an empty array if not found
   const cart = localStorage.getItem("cart") || '[]';
@@ -113,7 +114,7 @@ const subTotal = userCart?.reduce((accumulator, product) => {
         {/* Secondary Navbar - Logo + SearchBar + Cart */}
         <div className="flex md:px-4 lg:px-8 py-2 justify-between border-b border-gray-200 items-center">
           <Link to={"/"}>
-            <img className="w-64 h-20" src={logo} alt="" />
+            <img className="w-64 h-20" src={systemInfo?.[0]?.logo} alt="" />
           </Link>
 
           <div className="">
@@ -168,9 +169,9 @@ const subTotal = userCart?.reduce((accumulator, product) => {
             >
               Request to be a Site Admin
             </Button> */}
-          <div className="flex justify-center items-center gap-2">
-            <FiPhoneCall className="w-6 h-6"></FiPhoneCall>
-            <h3 className="text-sm">(219) 555-0114</h3>
+          <div>
+            
+            <a className="flex justify-center items-center gap-2" href={`tel:${systemInfo?.[0]?.phone_number}`}><FiPhoneCall className="w-6 h-6"></FiPhoneCall> {systemInfo?.[0]?.phone_number}</a>
           </div>
           {/* </div> */}
         </div>
@@ -198,7 +199,7 @@ const subTotal = userCart?.reduce((accumulator, product) => {
           </button>
         </form>
         <div className="flex justify-center items-center gap-3">
-          <GoHeart className="w-5 h-5"></GoHeart>
+          <Link to={"/userDashboard/wishList"}><GoHeart  className="w-5 h-5"></GoHeart></Link>
           <span>|</span>
           <HiOutlineShoppingBag
             onClick={openCartDrawer}

@@ -1,6 +1,8 @@
+import useSystemInfo from "../../Hooks/useSystemInfo";
 import "./RefundPolicy.css";
 
 const RefundPolicy = () => {
+  const [systemInfo, isSystemInfo, refetch] = useSystemInfo();
   return (
     <div className="refund_policy mb-9 mx-2 md:mx-8">
       <h1>RETURN POLICY</h1>
@@ -12,7 +14,7 @@ const RefundPolicy = () => {
         If you have any questions concerning our return policy, please contact
         us at
       </h3>
-      <h4>mbb@admin.com</h4>
+      <h4>{systemInfo?.[0]?.email}</h4>
     </div>
   );
 };

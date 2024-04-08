@@ -1,6 +1,8 @@
 import { Button } from "@nextui-org/react";
+import useSystemInfo from "../../Hooks/useSystemInfo";
 
 const ContactUsPage = () => {
+  const [systemInfo, isSystemInfo, refetch] = useSystemInfo();
   return (
     <div className="grid grid-cols-1 py-9 mx-8 md:grid-cols-2 gap-10">
       <div>
@@ -8,13 +10,10 @@ const ContactUsPage = () => {
         <div className="flex flex-col gap-5 justify-center">
           <h2 className="text-lg font-semibold">
             Email Us:{" "}
-            <span className="text-gray-900 underline">mbbadmin@gmail.com</span>
+            <span className="text-gray-900 underline">{systemInfo?.[0]?.email}</span>
           </h2>
           <h2 className="text-lg font-semibold">
-            Call Us: <span>(219) 555-0114</span>
-          </h2>
-          <h2 className="text-lg font-semibold">
-            Address: <span>Lincoln- 344, Illinois, Chicago, USA</span>
+            Call Us: <span>{systemInfo?.[0]?.phone_number}</span>
           </h2>
         </div>
       </div>

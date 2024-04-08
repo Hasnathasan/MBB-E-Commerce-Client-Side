@@ -159,7 +159,7 @@ const SignUp = () => {
               />
             </div>
             <div className="ml-3 text-xs">
-              <Link to={"/terms&conditions"}><label htmlFor="remember" className="text-gray-600 cursor-pointer">
+              <Link to={"/terms&condition"}><label htmlFor="remember" className="text-gray-600 cursor-pointer">
                 Accept all terms & Conditions
               </label></Link>
             </div>

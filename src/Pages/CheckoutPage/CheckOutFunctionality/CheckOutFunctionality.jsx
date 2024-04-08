@@ -211,7 +211,7 @@ const CheckOutFunctionality = () => {
                     className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                     placeholder="Name"
                     defaultValue={userData?.userName}
-                    required={isSelected}
+                    required
                   />
                 </div>
                 <div>
@@ -238,7 +238,7 @@ const CheckOutFunctionality = () => {
                   className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                   placeholder="Street Address"
                   defaultValue={userData?.billingInfo?.address}
-                  required={isSelected}
+                  required
                 />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -251,7 +251,7 @@ const CheckOutFunctionality = () => {
                     className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                     placeholder="Country"
                     defaultValue={userData?.billingInfo?.country}
-                    required={isSelected}
+                    required
                   />
                 </div>
                 <div>
@@ -263,7 +263,7 @@ const CheckOutFunctionality = () => {
                     className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                     placeholder="States Name"
                     defaultValue={userData?.billingInfo?.states}
-                    required={isSelected}
+                    required
                   />
                 </div>
                 <div>
@@ -275,7 +275,7 @@ const CheckOutFunctionality = () => {
                     className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                     placeholder="Zip Code"
                     defaultValue={userData?.billingInfo?.zipCode}
-                    required={isSelected}
+                    required
                   />
                 </div>
               </div>
@@ -289,7 +289,8 @@ const CheckOutFunctionality = () => {
                     className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                     placeholder="Email Address"
                     defaultValue={userData?.email}
-                    required={isSelected}
+                    disabled
+                    required
                   />
                 </div>
 
@@ -302,7 +303,7 @@ const CheckOutFunctionality = () => {
                     className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                     placeholder="Phone Number"
                     defaultValue={userData?.userPhoneNumber}
-                    required={isSelected}
+                    required
                   />
                 </div>
               </div>
@@ -344,7 +345,7 @@ const CheckOutFunctionality = () => {
                     id="userNameForShipping"
                     className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                     placeholder="Name"
-                    required
+                    required={isSelected}
                   />
                 </div>
                 <div>
@@ -369,7 +370,7 @@ const CheckOutFunctionality = () => {
                   id="addressForShipping"
                   className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                   placeholder="Street Address"
-                  required
+                  required={isSelected}
                 />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -381,7 +382,7 @@ const CheckOutFunctionality = () => {
                     id="countryForShipping"
                     className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                     placeholder="Country"
-                    required
+                    required={isSelected}
                   />
                 </div>
                 <div>
@@ -392,7 +393,7 @@ const CheckOutFunctionality = () => {
                     id="statesForShipping"
                     className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                     placeholder="States Name"
-                    required
+                    required={isSelected}
                   />
                 </div>
                 <div>
@@ -403,7 +404,7 @@ const CheckOutFunctionality = () => {
                     id="zipCodeForShipping"
                     className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                     placeholder="Zip Code"
-                    required
+                    required={isSelected}
                   />
                 </div>
               </div>
@@ -416,7 +417,7 @@ const CheckOutFunctionality = () => {
                     id="emailForShipping"
                     className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                     placeholder="Email Address"
-                    required
+                    required={isSelected}
                   />
                 </div>
 
@@ -428,7 +429,7 @@ const CheckOutFunctionality = () => {
                     id="phoneNumberForShipping"
                     className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                     placeholder="Phone Number"
-                    required
+                    required={isSelected}
                   />
                 </div>
               </div>

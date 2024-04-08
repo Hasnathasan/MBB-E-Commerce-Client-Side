@@ -1,6 +1,8 @@
+import useSystemInfo from "../../Hooks/useSystemInfo";
 import "./PrivacyPolicy.css";
 
 const PrivacyPolicy = () => {
+  const [systemInfo, isSystemInfo, refetch] = useSystemInfo();
   return (
     <div className="mx-3 privacy_policy p-5 md:mx-8">
       <h1>Privacy Policy</h1>
@@ -99,7 +101,7 @@ const PrivacyPolicy = () => {
         </li>
         <li>
           <p>
-            <strong>Website</strong> refers to Made Behind Bars, accessible from{" "}
+            <strong>Website</strong> refers to {systemInfo?.[0]?.system_name}, accessible from{" "}
             <a
               href="https://mbb-e-commerce.web.app/"
               target="_blank"
@@ -503,10 +505,10 @@ const PrivacyPolicy = () => {
       <h2 className="text-2xl font-bold mb-2">Contact Us</h2>
       <ul className="list-disc pl-8">
         <li>
-          <p>By email: mbbadmin@gmail.com</p>
+          <p>By email: {systemInfo?.[0]?.email}</p>
         </li>
         <li>
-          <p>By phone number: 5247379174</p>
+          <p>By phone number: {systemInfo?.[0]?.phone_number}</p>
         </li>
       </ul>
     </div>

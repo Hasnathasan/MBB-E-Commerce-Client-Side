@@ -36,19 +36,27 @@ const OrderDetailsForAdmin = () => {
   };
   const handleStatusUpdate = () => {
     console.log(value);
-    axios
-      .patch(
-        `http://localhost:8000/orderStatusUpdate/${
-          order?._id
-        }?status=${value.toLowerCase()}`
-      )
-      .then((res) => {
-        if (res.status === 200) {
-          toast.success("Order Status Updated");
-        }
-      })
-      .catch((err) => toast.error("An Unknown Error Occoured"));
-  };
+    const promise = axios
+        .patch(
+            `http://localhost:8000/orderStatusUpdate/${
+                order?._id
+            }?status=${value.toLowerCase()}`
+        )
+        .then((res) => {
+            if (res.status === 200) {
+                return res.data;
+            }
+        })
+        .catch((err) => {
+            throw err;
+        });
+
+    toast.promise(promise, {
+        loading: 'Updating order status...',
+        success: 'Order Status Updated',
+        error: 'An unknown error occurred while updating order status'
+    });
+};
   return (
     <div className="border border-gray-300 rounded-lg">
       <div className="flex justify-between flex-col md:flex-row items-center border-b border-gray-300 p-2 gap-4 md:p-5">
@@ -64,7 +72,7 @@ const OrderDetailsForAdmin = () => {
           </div>
         </div>
 
-        <div className="min-w-[500px] flex justify-end items-center gap-3">
+        <div className="min-w-[500px] flex flex-col md:flex-row justify-end items-center gap-5 md:gap-3">
         <Button
           color="success"
           size="sm"
