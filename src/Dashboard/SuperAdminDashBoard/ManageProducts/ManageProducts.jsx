@@ -5,7 +5,7 @@ import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
-  DropdownTrigger,
+  Pagination,
   Input,
   Modal,
   ModalBody,
@@ -24,7 +24,7 @@ import { FaArrowDown, FaPlus, FaSearch } from "react-icons/fa";
 import AddNewProductForAdmin from "../AddNewProductForAdmin/AddNewProductForAdmin";
 import toast, { Toaster } from "react-hot-toast";
 import useProducts from "../../../Hooks/useProducts";
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import Loader from "../../../Components/Loader/Loader";
 import { Link, Outlet, useLocation } from "react-router-dom";
@@ -41,7 +41,7 @@ const ManageProducts = () => {
     searchQuery,
     setSearchQuery, setArtistToAddProduct, isProductAddingModalOpen, onProductAddingModalOpen, onProductAddingModalOpenChange
   } = useContext(AuthContext);
-  const [products, isProductsLoading, refetch] = useProducts({
+  const [productsData, isProductsLoading, refetch] = useProducts({
     categoryFilter,
     priceSlider,
     minRating,
@@ -56,6 +56,16 @@ const ManageProducts = () => {
     setProductToShow(product);
     onDetailsModalOpen();
   };
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 10;
+  const pages = Math.ceil(productsData?.length / rowsPerPage);
+  
+  const products = useMemo(() => {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    return productsData?.slice(start, end);
+  }, [page, productsData]);
   const deleteFunc = (id) => {
     axios
       .delete(`https://mbb-e-commerce-server.vercel.app/productDelete/${id}`)
@@ -120,7 +130,21 @@ const ManageProducts = () => {
               Total {products?.length} Products
             </span>
           </div>
-          <Table aria-label="Example table with custom cells">
+          <Table aria-label="Example table with custom cells"
+           bottomContent={
+            <div className="flex w-full justify-center">
+              <Pagination
+                isCompact
+                showControls
+                showShadow
+                color="secondary"
+                page={page}
+                total={pages}
+                onChange={(page) => setPage(page)}
+              />
+            </div>
+          }
+          >
             <TableHeader>
               <TableColumn>Name</TableColumn>
               <TableColumn>Added By</TableColumn>

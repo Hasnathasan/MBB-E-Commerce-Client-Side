@@ -1,5 +1,5 @@
 import {
-  Avatar,
+  Pagination,
   Button,
   ButtonGroup,
   Chip,
@@ -18,7 +18,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import useCustomers from "../../../Hooks/useCustomers";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import CustomerUpdateModal from "./CustomerUpdateModal/CustomerUpdateModal";
@@ -27,6 +27,16 @@ const ManageCustomers = () => {
   const [customersData, isCustomerDataLoading, refetch] = useCustomers();
   const [userData, setUserData] = useState();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 10;
+  const pages = Math.ceil(customersData?.length / rowsPerPage);
+  
+  const customers = useMemo(() => {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    return customersData?.slice(start, end);
+  }, [page, customersData]);
   const handleCustomerDetailsModal = (user) => {
     setUserData(user);
     onOpen();
@@ -77,10 +87,24 @@ const ManageCustomers = () => {
     <div className="overflow-x-auto w-[95%] mx-auto">
       <div className="flex flex-col  gap-4">
         <span className="text-gray-600 mb-2">
-          Total {customersData?.length} users
+          Total {customers?.length} users
         </span>
       </div>
-      <Table aria-label="Example table with custom cells">
+      <Table aria-label="Example table with custom cells"
+      bottomContent={
+        <div className="flex w-full justify-center">
+          <Pagination
+            isCompact
+            showControls
+            showShadow
+            color="secondary"
+            page={page}
+            total={pages}
+            onChange={(page) => setPage(page)}
+          />
+        </div>
+      }
+      >
         <TableHeader>
           <TableColumn>Name</TableColumn>
           <TableColumn>Email / Number</TableColumn>
@@ -90,8 +114,8 @@ const ManageCustomers = () => {
           </TableColumn>
         </TableHeader>
         <TableBody emptyContent={"No Customer Available"}>
-          {customersData?.length > 0
-            ? customersData?.map((user) => (
+          {customers?.length > 0
+            ? customers?.map((user) => (
                 <TableRow key={user._id}>
                   <TableCell>
                     <User
