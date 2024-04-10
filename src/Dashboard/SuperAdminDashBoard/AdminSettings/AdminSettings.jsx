@@ -142,7 +142,7 @@ const handleTaxShippingMethodAdding = (e, onClose) => {
     shipping_methods.free_shipping = 0;
   }
   const data = {states, zipCode, tax_rate, shipping_methods};
-  axios.post("http://localhost:8000/taxAndShippingMethod", data)
+  axios.post("https://mbb-e-commerce-server.vercel.app/taxAndShippingMethod", data)
   .then(res => {
     if(res.data.insertedId){
       toast.success("Data Added")
@@ -153,7 +153,7 @@ const handleTaxShippingMethodAdding = (e, onClose) => {
       onClose()
     }
   })
-  .catch(err => toast.error(err?.response?.data))
+  .catch(err => toast.error(err?.response?.data || "An Unexpected Error Occoured"))
 }
   if (isSystemInfo) {
     return <Loader></Loader>;

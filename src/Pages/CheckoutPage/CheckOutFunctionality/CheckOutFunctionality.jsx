@@ -31,7 +31,7 @@ const [total, setTotal] = useState(0);
 
   console.log(state, zipCode);
   useEffect(() => {
-    axios.get(`http://localhost:8000/taxAndShippingDataByStateAndZip?state=${state}&zipCode=${zipCode}`)
+    axios.get(`https://mbb-e-commerce-server.vercel.app/taxAndShippingDataByStateAndZip?state=${state}&zipCode=${zipCode}`)
   .then(res => {
     console.log(res.data);
     setShippingMethods(res?.data?.shipping_methods)
