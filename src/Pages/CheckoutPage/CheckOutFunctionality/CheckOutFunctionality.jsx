@@ -15,8 +15,11 @@ const CheckOutFunctionality = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [clientSecret, setClientSecret] = useState("");
+  const [selectedShippingMethod, setSelectedShippingMethod] = useState();
   const [shippingMethods, setShippingMethods] = useState();
+  const [taxRate, setTaxRate] = useState();
   const [processing, setProcessing] = useState(false);
+const [total, setTotal] = useState(0);
   const [isSelected, setIsSelected] = useState(false);
   const [transactionId, setTransactionId] = useState();
   const { setIsProductAdded, user } = useContext(AuthContext);
@@ -27,17 +30,24 @@ const CheckOutFunctionality = () => {
   const [zipCode, setZipCode] = useState();
 
   console.log(state, zipCode);
-  
   useEffect(() => {
-    setState(userData?.billingInfo?.states)
-    setZipCode(userData?.billingInfo?.zipCode)
     axios.get(`http://localhost:8000/taxAndShippingDataByStateAndZip?state=${state}&zipCode=${zipCode}`)
-  .then(res => setShippingMethods(res?.data?.shipping_methods))
+  .then(res => {
+    console.log(res.data);
+    setShippingMethods(res?.data?.shipping_methods)
+    setTaxRate(res?.data?.tax_rate)
+  })
   .catch(err => {
     console.log(err)
     setShippingMethods(null)
   })
-  }, [userData?.billingInfo?.states, userData?.billingInfo?.zipCode, isSelected, state, zipCode])
+  },[state, zipCode])
+  
+  useEffect(() => {
+    setState(userData?.billingInfo?.states)
+    setZipCode(userData?.billingInfo?.zipCode)
+    
+  }, [userData?.billingInfo?.states, userData?.billingInfo?.zipCode, isSelected])
   console.log(shippingMethods);
   useEffect(() => {
     // Try retrieving the cart from localStorage, with a default of an empty array if not found
@@ -63,6 +73,15 @@ const CheckOutFunctionality = () => {
   }, 0);
   console.log(subTotal, userCart.length);
   useEffect(() => {
+      const shippingAmount = selectedShippingMethod && shippingMethods ? shippingMethods[selectedShippingMethod] : 0 || 0;
+    
+    console.log(shippingAmount);
+    const tax = subTotal * (taxRate / 100) || 0;
+    const totalAmount = subTotal + shippingAmount + tax;
+    console.log(totalAmount);
+    setTotal(totalAmount)
+  }, [selectedShippingMethod, shippingMethods, subTotal, taxRate])
+  useEffect(() => {
     if (subTotal > 0) {
       axiosSecure.post("/create-payment-intent", { subTotal }).then((res) => {
         setClientSecret(res.data.clientSecret);
@@ -73,6 +92,8 @@ const CheckOutFunctionality = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    
+    setProcessing(true);
     const form = event.target;
     const email = form.email.value;
     const userName = form.userName.value;
@@ -136,14 +157,19 @@ const CheckOutFunctionality = () => {
       setError("");
     }
 
-    setProcessing(true);
     let order = {
       userDetails: user_details,
       products: userCart,
       status: "pending",
       createdAt: new Date(),
-      total_price: subTotal,
+      subTotal: subTotal,
+      tax: subTotal * (taxRate / 100),
+      shippingMethod: {},
+      total: total
     };
+    if(selectedShippingMethod && shippingMethods){
+      order.shippingMethod[selectedShippingMethod] = shippingMethods[selectedShippingMethod]
+    }
     if (isSelected) {
       order.shipping_address = shipping_data;
     }
@@ -188,6 +214,7 @@ const CheckOutFunctionality = () => {
                 console.log(result);
                 setTransactionId(transactionId);
                 localStorage.removeItem("cart");
+                setProcessing(false);
                 setIsProductAdded((prevCount) => prevCount + 1);
                 navigate(`/thanks-for-purchasing/${transactionId}`);
               })
@@ -196,10 +223,11 @@ const CheckOutFunctionality = () => {
               });
             console.log(order);
           }
-          setProcessing(false);
+          
         }
       })
       .catch((error) => {
+        setProcessing(false)
         return toast.error(error?.response?.data?.message);
       });
   };
@@ -502,19 +530,24 @@ const CheckOutFunctionality = () => {
               </div>
               <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
                 <h3 className=" text-gray-700 text-sm font-medium">
-                  Discount:
+                  Tax:
                 </h3>
-                <h5 className="text-sm font-semibold">$0</h5>
+                <h5 className="text-sm font-semibold">${(subTotal * (taxRate / 100)).toFixed(2)}</h5>
               </div>
-              <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
-                <h3 className=" text-gray-700 text-sm font-medium">
-                  Shipping:
-                </h3>
-                <h5 className="text-sm font-semibold">Free</h5>
-              </div>
+              <RadioGroup
+      label="Select a Shipping Method"
+      value={selectedShippingMethod}
+        onValueChange={setSelectedShippingMethod}
+        isRequired
+    >
+      {shippingMethods?.standard_shipping ? <Radio value="standard_shipping">Standard Shipping: ${shippingMethods?.standard_shipping}</Radio> : ""}
+      {shippingMethods?.express_shipping ? <Radio value="express_shipping">Express Shipping: ${shippingMethods?.express_shipping}</Radio> : ""}
+      {shippingMethods?.free_shipping == 0 ? <Radio value="free_shipping">Free Shipping</Radio> : ""}
+      
+    </RadioGroup>
               <div className="flex justify-between pt-2 pb-5 items-center">
                 <h3 className=" font-semibold">Total</h3>
-                <h5 className="text-gray-900 font-bold">${subTotal}</h5>
+                <h5 className="text-gray-900 font-bold">${total}</h5>
               </div>
               <h3 className=" text-2xl font-semibold">Payment Method</h3>
               <RadioGroup
