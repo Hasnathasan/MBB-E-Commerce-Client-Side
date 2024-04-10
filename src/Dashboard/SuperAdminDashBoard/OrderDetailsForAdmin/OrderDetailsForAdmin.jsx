@@ -185,13 +185,21 @@ const OrderDetailsForAdmin = () => {
                 <h3 className=" text-gray-500 text-sm font-medium">
                   Subtotal:
                 </h3>
-                <h5 className="text-sm font-medium">${order?.total_price}</h5>
+                <h5 className="text-sm font-medium">${order?.subTotal}</h5>
               </div>
               <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
                 <h3 className=" text-gray-500 text-sm font-medium">
-                  Shipping:
+                  Tax:
                 </h3>
-                <h5 className="text-sm font-medium">Free</h5>
+                <h5 className="text-sm font-medium">${order?.tax}</h5>
+              </div>
+              <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
+                <h3 className=" text-gray-500 text-sm font-medium">
+                  Shipping Method:
+                </h3>
+                {order?.shippingMethod?.standard_shipping ? <h5  className="text-sm font-medium">Standard Shipping: ${order?.shippingMethod?.standard_shipping}</h5> : ""}
+                {order?.shippingMethod?.express_shipping ? <h5  className="text-sm font-medium">Express Shipping: ${order?.shippingMethod?.express_shipping}</h5> : ""}
+                {order?.shippingMethod?.free_shipping ? <h5  className="text-sm font-medium">Free Shipping</h5> : ""}
               </div>
               <div className="flex justify-between pt-2 pb-3 items-center">
                 <h3 className=" font-medium">Total</h3>

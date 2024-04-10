@@ -163,9 +163,9 @@ const [total, setTotal] = useState(0);
       status: "pending",
       createdAt: new Date(),
       subTotal: subTotal,
-      tax: subTotal * (taxRate / 100),
+      tax: (subTotal * (taxRate / 100)).toFixed(2),
       shippingMethod: {},
-      total: total
+      total_price: total
     };
     if(selectedShippingMethod && shippingMethods){
       order.shippingMethod[selectedShippingMethod] = shippingMethods[selectedShippingMethod]
