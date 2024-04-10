@@ -56,12 +56,13 @@ const ManageProducts = () => {
     setProductToShow(product);
     onDetailsModalOpen();
   };
-  const [page, setPage] = useState(1);
-  const rowsPerPage = 10;
+  const [page, setPage] = useState(1 || 1);
+  const rowsPerPage = 2;
   const pages = Math.ceil(productsData?.length / rowsPerPage);
+  console.log(page, pages);
   
   const products = useMemo(() => {
-    const start = (page - 1) * rowsPerPage;
+    const start = ((page - 1) * rowsPerPage) || 0;
     const end = start + rowsPerPage;
 
     return productsData?.slice(start, end);
@@ -139,8 +140,12 @@ const ManageProducts = () => {
                 showShadow
                 color="secondary"
                 page={page}
+                siblings={3}
                 total={pages}
-                onChange={(page) => setPage(page)}
+                onChange={(page) => {
+                  console.log(page);
+                  setPage(page)
+                }}
               />
             </div>
           }

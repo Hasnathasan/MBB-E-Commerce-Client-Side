@@ -1,4 +1,5 @@
 import {
+  Pagination,
   Button,
   ButtonGroup,
   Input,
@@ -19,10 +20,10 @@ import { FaPlus, FaSearch } from "react-icons/fa";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import usePopularCategories from "../../../Hooks/usePopularCategories";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 const ManageCategories = () => {
-  const [categories, , refetch] = usePopularCategories();
+  const [categoriesData, , refetch] = usePopularCategories();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [categoryToUpdate, setCategoryToUpdate] = useState(null);
   const {
@@ -30,6 +31,17 @@ const ManageCategories = () => {
     onOpen: onUpdateOpen,
     onOpenChange: onUpdateOpenChange,
   } = useDisclosure();
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 10;
+  const pages = Math.ceil((categoriesData?.length / rowsPerPage) || 1);
+console.log(page, pages);
+  const categories = useMemo(() => {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    return categoriesData?.slice(start, end);
+  }, [page, categoriesData]);
+
   const handleModalOpen = (category) => {
     setCategoryToUpdate(category);
     onUpdateOpen();
@@ -227,10 +239,24 @@ const ManageCategories = () => {
           </div>
         </div>
         <span className="text-gray-600 mb-2">
-          Total {categories?.length} Categories
+          Total {categoriesData?.length} Categories
         </span>
       </div>
-      <Table aria-label="Example table with custom cells">
+      <Table aria-label="Example table with custom cells"
+       bottomContent={
+        <div className="flex w-full justify-center">
+          <Pagination
+            isCompact
+            showControls
+            showShadow
+            color="success"
+            page={page}
+            total={pages}
+            onChange={(page) => setPage(page)}
+          />
+          </div>
+          }
+      >
         <TableHeader>
           <TableColumn>Category Image</TableColumn>
           <TableColumn>Category Name</TableColumn>

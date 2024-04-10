@@ -14,8 +14,8 @@ const CheckOutFunctionality = () => {
   const [axiosSecure] = useAxiosSecure();
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
   const [clientSecret, setClientSecret] = useState("");
+  const [shippingMethods, setShippingMethods] = useState();
   const [processing, setProcessing] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
   const [transactionId, setTransactionId] = useState();
@@ -23,6 +23,22 @@ const CheckOutFunctionality = () => {
   const [userData] = useUser();
   const [userCart, setUserCart] = useState([]);
   const { isProductAdded } = useContext(AuthContext);
+  const [state, setState] = useState();
+  const [zipCode, setZipCode] = useState();
+
+  console.log(state, zipCode);
+  
+  useEffect(() => {
+    setState(userData?.billingInfo?.states)
+    setZipCode(userData?.billingInfo?.zipCode)
+    axios.get(`http://localhost:8000/taxAndShippingDataByStateAndZip?state=${state}&zipCode=${zipCode}`)
+  .then(res => setShippingMethods(res?.data?.shipping_methods))
+  .catch(err => {
+    console.log(err)
+    setShippingMethods(null)
+  })
+  }, [userData?.billingInfo?.states, userData?.billingInfo?.zipCode, isSelected, state, zipCode])
+  console.log(shippingMethods);
   useEffect(() => {
     // Try retrieving the cart from localStorage, with a default of an empty array if not found
     const cart = localStorage.getItem("cart") || "[]";
@@ -257,6 +273,11 @@ const CheckOutFunctionality = () => {
                 <div>
                   <label htmlFor="states">States</label>
                   <input
+                  onChange={(e) => {
+                    if(!isSelected){
+                      setState(e.target.value)
+                    }
+                  }}
                     type="text"
                     name="states"
                     id="states"
@@ -269,6 +290,11 @@ const CheckOutFunctionality = () => {
                 <div>
                   <label htmlFor="zipCode">Zip Code</label>
                   <input
+                  onChange={(e) => {
+                    if(!isSelected){
+                      setZipCode(e.target.value)
+                    }
+                  }}
                     type="number"
                     name="zipCode"
                     id="zipCode"
@@ -388,6 +414,7 @@ const CheckOutFunctionality = () => {
                 <div>
                   <label htmlFor="statesForShipping">States</label>
                   <input
+                  onChange={(e) => setState(e.target.value)}
                     type="text"
                     name="statesForShipping"
                     id="statesForShipping"
@@ -399,6 +426,7 @@ const CheckOutFunctionality = () => {
                 <div>
                   <label htmlFor="zipCodeForShipping">Zip Code</label>
                   <input
+                  onChange={(e) => setZipCode(e.target.value)}
                     type="number"
                     name="zipCodeForShipping"
                     id="zipCodeForShipping"

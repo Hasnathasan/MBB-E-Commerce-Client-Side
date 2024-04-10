@@ -1,15 +1,54 @@
-import { Button, Radio, RadioGroup } from "@nextui-org/react";
+import {
+  Pagination,
+  Button,
+  ButtonGroup,
+  Chip,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Checkbox,
+  SelectItem,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+  User,
+  useDisclosure,
+} from "@nextui-org/react";
 import axios from "axios";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import useSystemInfo from "../../../Hooks/useSystemInfo";
 import Loader from "../../../Components/Loader/Loader";
 
 import toast from "react-hot-toast";
+import useTaxAndShippingData from "../../../Hooks/useTaxAndShippingData";
 const AdminSettings = () => {
-  const [shippingMethod, setShippingMethod] = useState();
-  const [logo, setLogo] = useState();
+  const [dataToUpdate, setDataToUpdate] = useState();
+  const [isStandardShippingSelected, setIsStandardShippingSelected] = useState(false);
+  const [isExpressDeliverySelected, setIsExpressDeliverySelected] = useState(false);
+  const [isFreeShippingSelected, setIsFreeShippingSelected] = useState(false);
   const [systemInfo, isSystemInfo, refetch] = useSystemInfo();
-  console.log(shippingMethod);
+  const [data, isDataLoading, refetchTaxAndShipping] = useTaxAndShippingData();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const {
+    isOpen: isUpdateOpen,
+    onOpen: onUpdateOpen,
+    onOpenChange: onUpdateOpenChange,
+  } = useDisclosure();
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 20;
+  const pages = Math.ceil(data?.length / rowsPerPage);
+console.log(data);
+  const taxAndShippingData = useMemo(() => {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    return data?.slice(start, end);
+  }, [page, data]);
   const handleSystemSetting = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -83,17 +122,132 @@ const handleSystemSettingClick = () => {
         error: 'An error occurred while updating system settings'
     });
 };
+
+const handleTaxShippingMethodAdding = (e, onClose) => {
+  e.preventDefault();
+  const form = e.target;
+  const states = form.states.value;
+  const zipCode = form.zipCode.value;
+  const tax_rate = form.tax_rate.value;
+  let shipping_methods = {};
+  if(isStandardShippingSelected){
+    const standard_shipping = form?.standard_shipping?.value;
+    shipping_methods.standard_shipping = parseFloat(standard_shipping);
+  }
+  if(isExpressDeliverySelected){
+    const express_shipping = form?.express_shipping?.value;
+    shipping_methods.express_shipping = parseFloat(express_shipping);
+  }
+  if(isFreeShippingSelected){
+    shipping_methods.free_shipping = 0;
+  }
+  const data = {states, zipCode, tax_rate, shipping_methods};
+  axios.post("http://localhost:8000/taxAndShippingMethod", data)
+  .then(res => {
+    if(res.data.insertedId){
+      toast.success("Data Added")
+      refetchTaxAndShipping()
+      setIsExpressDeliverySelected(false)
+      setIsFreeShippingSelected(false)
+      setIsStandardShippingSelected(false)
+      onClose()
+    }
+  })
+  .catch(err => toast.error(err?.response?.data))
+}
   if (isSystemInfo) {
     return <Loader></Loader>;
   }
   console.log(systemInfo);
+  const deleteFunc = (id) => {
+    axios
+      .delete(`https://mbb-e-commerce-server.vercel.app/taxAndShippingDelete/${id}`)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.deletedCount > 0) {
+          refetchTaxAndShipping();
+          toast.success("Data Deleted");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+  const handleDelete = (id) => {
+    toast((t) => (
+      <span>
+        Do You Want To Delete This Data?
+        <ButtonGroup variant="solid" radius="none" size="sm">
+          <Button
+            className="px-9 mt-3 float-right  text-white"
+            color="danger"
+            onClick={() => {
+              deleteFunc(id);
+              toast.dismiss(t.id);
+            }}
+          >
+            Yes
+          </Button>
+          <Button
+            className="px-9 mt-3 float-right  text-white"
+            color="success"
+            onClick={() => toast.dismiss(t.id)}
+          >
+            No
+          </Button>
+        </ButtonGroup>
+      </span>
+    ));
+  };
+
+  const handleUpdateModal = (data) => {
+    if(data.shipping_methods?.standard_shipping){
+      setIsStandardShippingSelected(true)
+    }
+    if(data?.shipping_methods?.express_shipping){
+      setIsExpressDeliverySelected(true)
+    }
+    if(data.shipping_methods?.free_shipping == 0){
+      setIsFreeShippingSelected(true)
+    }
+    setDataToUpdate(data);
+    onUpdateOpen();
+  };
+
+  const handleTaxShippingMethodUpdating = (e, onClose) => {
+    e.preventDefault();
+  const form = e.target;
+  const states = form.states.value;
+  const zipCode = form.zipCode.value;
+  const tax_rate = form.tax_rate.value;
+  let shipping_methods = {};
+  if(isStandardShippingSelected){
+    const standard_shipping = form?.standard_shipping?.value;
+    shipping_methods.standard_shipping = parseFloat(standard_shipping);
+  }
+  if(isExpressDeliverySelected){
+    const express_shipping = form?.express_shipping?.value;
+    shipping_methods.express_shipping = parseFloat(express_shipping);
+  }
+  if(isFreeShippingSelected){
+    shipping_methods.free_shipping = 0;
+  }
+  const data = {states, zipCode, tax_rate, shipping_methods};
+  axios.patch(`https://mbb-e-commerce-server.vercel.app/taxAndShippingMethodUpdate/${dataToUpdate?._id}`, data)
+  .then(res => {
+    if(res.data.modifiedCount > 0){
+      refetchTaxAndShipping()
+      toast.success("Data Updated")
+      onClose()
+    }
+  })
+  .catch(err => toast.error(err?.response?.data || "An Unexpected Error Occured"))
+  }
   return (
     <div className="w-[95%] mx-auto">
       <h3 className="text-2xl font-semibold">SYSTEM SETTINGS</h3>
-      <div className="grid grid-cols-2 gap-10 mt-8">
+      <div className="grid  gap-10 mt-8">
         <form
           onSubmit={handleSystemSettingClick}
-          className=" border border-gray-300 p-5"
+          className="border border-gray-300 p-5"
         >
           <div>
             <label htmlFor="product_name">System Name</label>
@@ -146,57 +300,285 @@ const handleSystemSettingClick = () => {
             Save Changes
           </Button>
         </form>
-        <div className=" border border-gray-300 p-5">
-          <form>
-            <div>
-              <label htmlFor="tax">Tax percentige</label>
+        </div>
+        <div className="col-span-3 border border-gray-300 p-5">
+          <div className="flex justify-end mb-5">
+            <Button onPress={onOpen} className=" text-white px-5" size="sm" color="primary" >Add New</Button>
+          </div>
+        <Table
+            aria-label="Example table with custom cells"
+            bottomContent={
+              <div className="flex w-full justify-center">
+                <Pagination
+                  isCompact
+                  showControls
+                  showShadow
+                  color="secondary"
+                  page={page}
+                  total={pages}
+                  onChange={(page) => setPage(page)}
+                />
+              </div>
+            }
+          >
+            <TableHeader>
+              <TableColumn>State Name</TableColumn>
+              <TableColumn>Zip Code</TableColumn>
+              <TableColumn>Tax Rate</TableColumn>
+              <TableColumn>Shipping Methods</TableColumn>
+              <TableColumn>
+                <h5 className="text-center">Action</h5>
+              </TableColumn>
+            </TableHeader>
+            <TableBody emptyContent={"No Artist Available"}>
+              {taxAndShippingData?.length > 0
+                ? taxAndShippingData?.map((eachData) => (
+                    <TableRow key={eachData._id}>
+                      <TableCell className="py-6">
+                       {eachData?.states}
+                      </TableCell>
+                      <TableCell>{eachData?.zipCode}</TableCell>
+                      <TableCell>
+                        {eachData?.tax_rate}%
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex flex-col gap-1">
+                        <div>
+                        {eachData?.shipping_methods?.free_shipping == 0 ? `Free Shipping` : ""}
+                        </div>
+                        <div>{eachData?.shipping_methods?.express_shipping ? `Express Shipping: ${eachData?.shipping_methods?.express_shipping}` : ""}</div>
+                        <div>
+                        {eachData?.shipping_methods?.standard_shipping  ? `Standard Shipping: ${eachData?.shipping_methods?.standard_shipping}` : ""}
+                        </div>
+                        
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <ButtonGroup size="sm">
+                          <Button
+                            onClick={() => handleUpdateModal(eachData)}
+                            color="success"
+                            className="text-white"
+                          >
+                            Update
+                          </Button>
+                          <Button
+                            onClick={() => handleDelete(eachData?._id)}
+                            color="danger"
+                            className="text-white"
+                          >
+                            Delete
+                          </Button>
+                        </ButtonGroup>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                : []}
+            </TableBody>
+          </Table>
+        
+      </div>
+      <Modal
+        size="2xl"
+        scrollBehavior="outside"
+        backdrop="opaque"
+        className="!z-50"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Add Data
+              </ModalHeader>
+              <ModalBody>
+                <form onSubmit={(e) => handleTaxShippingMethodAdding(e, onClose)} className="p-5">
+                <div>
+              <label htmlFor="states">States</label>
               <input
-                type="number"
-                name="tax"
-                id="tax"
+                type="text"
+                name="states"
+                id="states"
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                placeholder="Tax Percentige per order"
+                placeholder="States Name"
                 required
               />
             </div>
-            <div>
-              <h3 className=" text-2xl font-semibold">Shipping Amount</h3>
-              <RadioGroup
-                defaultValue="stripe"
-                color="success"
-                size="sm"
-                className="my-4"
-                onChange={(e) => setShippingMethod(e.target.value)}
-              >
-                <Radio value="free">Free</Radio>
-                <Radio value="with_a_amount">With a amount</Radio>
-              </RadioGroup>
+                  <div>
+              <label htmlFor="zipCode">Zip Code</label>
+              <input
+                type="number"
+                name="zipCode"
+                id="zipCode"
+                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                placeholder="Zip Code"
+                required
+              />
             </div>
-            {shippingMethod == "with_a_amount" ? (
-              <div>
-                <label htmlFor="shipping_amount">Shipping Amount</label>
-                <input
-                  type="number"
-                  name="shipping_amount"
-                  id="shipping_amount"
-                  className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                  placeholder="Set a Shipping Amount"
-                  required
-                />
-              </div>
-            ) : (
-              ""
-            )}
-            <Button
-              color="success"
-              radius="full"
-              className="px-5 text-white bg-green-500"
-            >
-              Save Changes
-            </Button>
-          </form>
-        </div>
-      </div>
+                  <div>
+              <label htmlFor="tax_rate">Tax Rate</label>
+              <input
+                type="number"
+                name="tax_rate"
+                id="tax_rate"
+                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                placeholder="Type Tax Rate"
+                required
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+            <label className="text-lg mb-1 font-semibold">Select Shipping Methods:</label>
+            <div>
+            <Checkbox isSelected={isStandardShippingSelected} onValueChange={setIsStandardShippingSelected} color="success">Standard Shipping</Checkbox>
+            <input
+                type="number"
+                name="standard_shipping"
+                id="standard_shipping"
+                className={` border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 ${isStandardShippingSelected ? "block" : "hidden"} p-2.5 `}
+                placeholder="Enter Amount"
+              />
+            </div>
+            <div>
+            <Checkbox isSelected={isExpressDeliverySelected} onValueChange={setIsExpressDeliverySelected} color="success">Express Delivery</Checkbox>
+            <input
+                type="number"
+                name="express_shipping"
+                id="express_shipping"
+                className={` border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 ${isExpressDeliverySelected ? "block" : "hidden"} p-2.5 `}
+                placeholder="Enter Amount"
+              />
+            </div>
+            <div>
+            <Checkbox isSelected={isFreeShippingSelected} onValueChange={setIsFreeShippingSelected} color="success">Free Shipping</Checkbox>
+            </div>
+            </div>
+
+                  <Button
+                    type="submit"
+                    color="success"
+                    radius="full"
+                    className="text-white mt-3 px-12 bg-green-500"
+                  >
+                    Add
+                  </Button>
+                </form>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+      <Modal
+        scrollBehavior="outside"
+        size="2xl"
+        backdrop="opaque"
+        className="!z-50"
+        isOpen={isUpdateOpen}
+        onOpenChange={() => {
+          setIsExpressDeliverySelected(false)
+          setIsStandardShippingSelected(false)
+          setIsFreeShippingSelected(false)
+          setDataToUpdate(null)
+          onUpdateOpenChange()
+        }}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Update Data
+              </ModalHeader>
+              <ModalBody>
+                <form onSubmit={(e) => handleTaxShippingMethodUpdating(e, onClose)} className="p-5">
+                <div>
+              <label htmlFor="states">States</label>
+              <input
+                type="text"
+                name="states"
+                id="states"
+                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                placeholder="States Name"
+                defaultValue={dataToUpdate?.states}
+                required
+              />
+            </div>
+                  <div>
+              <label htmlFor="zipCode">Zip Code</label>
+              <input
+                type="number"
+                name="zipCode"
+                id="zipCode"
+                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                placeholder="Zip Code"
+                defaultValue={dataToUpdate?.zipCode}
+                required
+              />
+            </div>
+                  <div>
+              <label htmlFor="tax_rate">Tax Rate</label>
+              <input
+                type="number"
+                name="tax_rate"
+                id="tax_rate"
+                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                placeholder="Type Tax Rate"
+                defaultValue={dataToUpdate?.tax_rate}
+                required
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+            <label className="text-lg mb-1 font-semibold">Select Shipping Methods:</label>
+            <div>
+            <Checkbox isSelected={isStandardShippingSelected} onValueChange={setIsStandardShippingSelected} color="success">Standard Shipping</Checkbox>
+            <input
+                type="number"
+                name="standard_shipping"
+                id="standard_shipping"
+                className={` border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 ${isStandardShippingSelected ? "block" : "hidden"} p-2.5 `}
+                placeholder="Enter Amount"
+                defaultValue={dataToUpdate?.shipping_methods?.standard_shipping}
+              />
+            </div>
+            <div>
+            <Checkbox isSelected={isExpressDeliverySelected} onValueChange={setIsExpressDeliverySelected} color="success">Express Delivery</Checkbox>
+            <input
+                type="number"
+                name="express_shipping"
+                id="express_shipping"
+                className={` border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 ${isExpressDeliverySelected ? "block" : "hidden"} p-2.5 `}
+                placeholder="Enter Amount"
+                defaultValue={dataToUpdate?.shipping_methods?.express_shipping}
+              />
+            </div>
+            <div>
+            <Checkbox isSelected={isFreeShippingSelected} onValueChange={setIsFreeShippingSelected} color="success">Free Shipping</Checkbox>
+            </div>
+            </div>
+
+                  <Button
+                    type="submit"
+                    color="success"
+                    radius="full"
+                    className="text-white mt-3 px-12 bg-green-500"
+                  >
+                    Add
+                  </Button>
+                </form>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </div>
   );
 };
