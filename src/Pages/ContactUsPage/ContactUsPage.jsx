@@ -10,7 +10,9 @@ const ContactUsPage = () => {
         <div className="flex flex-col gap-5 justify-center">
           <h2 className="text-lg font-semibold">
             Email Us:{" "}
-            <span className="text-gray-900 underline">{systemInfo?.[0]?.email}</span>
+            <span className="text-gray-900 underline">
+              {systemInfo?.[0]?.email}
+            </span>
           </h2>
           <h2 className="text-lg font-semibold">
             Call Us: <span>{systemInfo?.[0]?.phone_number}</span>

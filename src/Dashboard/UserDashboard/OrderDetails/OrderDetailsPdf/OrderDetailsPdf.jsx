@@ -95,12 +95,10 @@ const OrderDetailsPdf = ({ order }) => {
                 <View>
                   <Text style={styles.subtitle}>Billing Address</Text>
                   <Text style={styles.text}> {userName || "Unknown"}</Text>
-                  <Text style={styles.text}>
-                     {address || "Unknown"}
-                  </Text>
+                  <Text style={styles.text}>{address || "Unknown"}</Text>
                   <Text style={styles.text}> {email || "Unknown"}</Text>
                   <Text style={styles.text}>
-                     {userPhoneNumber || "Unknown"}
+                    {userPhoneNumber || "Unknown"}
                   </Text>
                 </View>
                 <View>
@@ -137,18 +135,22 @@ const OrderDetailsPdf = ({ order }) => {
                 </View>
                 <View>
                   <Text style={styles.subtitle}>Order Summary</Text>
+                  <Text style={styles.text}>Subtotal: ${order?.subTotal}</Text>
+                  <Text style={styles.text}>Tax: ${order?.tax}</Text>
                   <Text style={styles.text}>
-                    Subtotal: ${order?.subTotal}
+                    {order?.shippingMethod?.standard_shipping
+                      ? `Standard Shipping: $${order?.shippingMethod?.standard_shipping}`
+                      : ""}
+                    {order?.shippingMethod?.express_shipping
+                      ? `Express Shipping: $${order?.shippingMethod?.express_shipping}`
+                      : ""}
+                    {order?.shippingMethod?.free_shipping == 0
+                      ? `Free Shipping`
+                      : ""}
                   </Text>
-                  <Text style={styles.text}>
-                    Tax: ${order?.tax}
+                  <Text style={styles.subtitle}>
+                    Total: ${order?.total_price}
                   </Text>
-                  <Text style={styles.text}>
-                  {order?.shippingMethod?.standard_shipping ? `Standard Shipping: $${order?.shippingMethod?.standard_shipping}` : ""}
-                  {order?.shippingMethod?.express_shipping ? `Express Shipping: $${order?.shippingMethod?.express_shipping}` : ""}
-                  {order?.shippingMethod?.free_shipping == 0 ? `Free Shipping` : ""}
-                  </Text>
-                  <Text style={styles.subtitle}>Total: ${order?.total_price}</Text>
                 </View>
               </View>
               <View style={styles.tableHeader}>

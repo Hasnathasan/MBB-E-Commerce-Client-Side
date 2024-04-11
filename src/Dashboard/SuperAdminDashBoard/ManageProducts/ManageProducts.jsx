@@ -39,7 +39,11 @@ const ManageProducts = () => {
     priceSlider,
     minRating,
     searchQuery,
-    setSearchQuery, setArtistToAddProduct, isProductAddingModalOpen, onProductAddingModalOpen, onProductAddingModalOpenChange
+    setSearchQuery,
+    setArtistToAddProduct,
+    isProductAddingModalOpen,
+    onProductAddingModalOpen,
+    onProductAddingModalOpenChange,
   } = useContext(AuthContext);
   const [productsData, isProductsLoading, refetch] = useProducts({
     categoryFilter,
@@ -60,9 +64,9 @@ const ManageProducts = () => {
   const rowsPerPage = 2;
   const pages = Math.ceil(productsData?.length / rowsPerPage);
   console.log(page, pages);
-  
+
   const products = useMemo(() => {
-    const start = ((page - 1) * rowsPerPage) || 0;
+    const start = (page - 1) * rowsPerPage || 0;
     const end = start + rowsPerPage;
 
     return productsData?.slice(start, end);
@@ -87,7 +91,10 @@ const ManageProducts = () => {
           <Button
             className="px-9 mt-3 float-right  text-white"
             color="danger"
-            onClick={() => {deleteFunc(id);toast.dismiss(t.id)}}
+            onClick={() => {
+              deleteFunc(id);
+              toast.dismiss(t.id);
+            }}
           >
             Yes
           </Button>
@@ -131,24 +138,25 @@ const ManageProducts = () => {
               Total {products?.length} Products
             </span>
           </div>
-          <Table aria-label="Example table with custom cells"
-           bottomContent={
-            <div className="flex w-full justify-center">
-              <Pagination
-                isCompact
-                showControls
-                showShadow
-                color="secondary"
-                page={page}
-                siblings={3}
-                total={pages}
-                onChange={(page) => {
-                  console.log(page);
-                  setPage(page)
-                }}
-              />
-            </div>
-          }
+          <Table
+            aria-label="Example table with custom cells"
+            bottomContent={
+              <div className="flex w-full justify-center">
+                <Pagination
+                  isCompact
+                  showControls
+                  showShadow
+                  color="secondary"
+                  page={page}
+                  siblings={3}
+                  total={pages}
+                  onChange={(page) => {
+                    console.log(page);
+                    setPage(page);
+                  }}
+                />
+              </div>
+            }
           >
             <TableHeader>
               <TableColumn>Name</TableColumn>
@@ -158,45 +166,47 @@ const ManageProducts = () => {
               <TableColumn>Action</TableColumn>
             </TableHeader>
             <TableBody emptyContent={"No Product Available"}>
-              { products?.length > 0 ? products?.map((product) => (
-                <TableRow key={product.name}>
-                  <TableCell>
-                    <div className="flex justify-start items-center gap-3">
-                      <img
-                        src={product?.featured_photo}
-                        className="w-12 h-12"
-                        alt=""
-                      />
-                      <h3>{product?.product_name}</h3>
-                    </div>
-                  </TableCell>
-                  <TableCell>{product?.addedBy}</TableCell>
-                  <TableCell>
-                    $
-                    {product?.price?.sale_price ||
-                      product?.price?.regular_price}
-                  </TableCell>
-                  <TableCell>{product?.rating}</TableCell>
-                  <TableCell>
-                    <ButtonGroup size="sm" radius="sm">
-                      <Button
-                        onClick={() => handleProductToShow(product)}
-                        color="success"
-                        className="text-white"
-                      >
-                        View Details
-                      </Button>
-                      <Button
-                        onClick={() => handleProductDelete(product?._id)}
-                        color="danger"
-                        className="text-white"
-                      >
-                        Delete
-                      </Button>
-                    </ButtonGroup>
-                  </TableCell>
-                </TableRow> 
-              )): []}
+              {products?.length > 0
+                ? products?.map((product) => (
+                    <TableRow key={product.name}>
+                      <TableCell>
+                        <div className="flex justify-start items-center gap-3">
+                          <img
+                            src={product?.featured_photo}
+                            className="w-12 h-12"
+                            alt=""
+                          />
+                          <h3>{product?.product_name}</h3>
+                        </div>
+                      </TableCell>
+                      <TableCell>{product?.addedBy}</TableCell>
+                      <TableCell>
+                        $
+                        {product?.price?.sale_price ||
+                          product?.price?.regular_price}
+                      </TableCell>
+                      <TableCell>{product?.rating}</TableCell>
+                      <TableCell>
+                        <ButtonGroup size="sm" radius="sm">
+                          <Button
+                            onClick={() => handleProductToShow(product)}
+                            color="success"
+                            className="text-white"
+                          >
+                            View Details
+                          </Button>
+                          <Button
+                            onClick={() => handleProductDelete(product?._id)}
+                            color="danger"
+                            className="text-white"
+                          >
+                            Delete
+                          </Button>
+                        </ButtonGroup>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                : []}
             </TableBody>
           </Table>
 
@@ -208,7 +218,7 @@ const ManageProducts = () => {
             isOpen={isProductAddingModalOpen}
             onOpenChange={() => {
               setArtistToAddProduct(null);
-              onProductAddingModalOpenChange()
+              onProductAddingModalOpenChange();
             }}
           >
             <ModalContent>
@@ -219,7 +229,7 @@ const ManageProducts = () => {
                   </ModalHeader>
                   <ModalBody>
                     <AddNewProductForAdmin
-                    onClose={onClose}
+                      onClose={onClose}
                       refetchProducts={refetch}
                     ></AddNewProductForAdmin>
                   </ModalBody>
@@ -262,7 +272,6 @@ const ManageProducts = () => {
               )}
             </ModalContent>
           </Modal>
-
         </div>
       }
     </>

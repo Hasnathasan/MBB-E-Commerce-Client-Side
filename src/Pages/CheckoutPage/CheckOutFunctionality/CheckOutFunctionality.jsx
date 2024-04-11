@@ -19,7 +19,7 @@ const CheckOutFunctionality = () => {
   const [shippingMethods, setShippingMethods] = useState();
   const [taxRate, setTaxRate] = useState();
   const [processing, setProcessing] = useState(false);
-const [total, setTotal] = useState(0);
+  const [total, setTotal] = useState(0);
   const [isSelected, setIsSelected] = useState(false);
   const [transactionId, setTransactionId] = useState();
   const { setIsProductAdded, user } = useContext(AuthContext);
@@ -31,23 +31,29 @@ const [total, setTotal] = useState(0);
 
   console.log(state, zipCode);
   useEffect(() => {
-    axios.get(`https://mbb-e-commerce-server.vercel.app/taxAndShippingDataByStateAndZip?state=${state}&zipCode=${zipCode}`)
-  .then(res => {
-    console.log(res.data);
-    setShippingMethods(res?.data?.shipping_methods)
-    setTaxRate(res?.data?.tax_rate)
-  })
-  .catch(err => {
-    console.log(err)
-    setShippingMethods(null)
-  })
-  },[state, zipCode])
-  
+    axios
+      .get(
+        `https://mbb-e-commerce-server.vercel.app/taxAndShippingDataByStateAndZip?state=${state}&zipCode=${zipCode}`
+      )
+      .then((res) => {
+        console.log(res.data);
+        setShippingMethods(res?.data?.shipping_methods);
+        setTaxRate(res?.data?.tax_rate);
+      })
+      .catch((err) => {
+        console.log(err);
+        setShippingMethods(null);
+      });
+  }, [state, zipCode]);
+
   useEffect(() => {
-    setState(userData?.billingInfo?.states)
-    setZipCode(userData?.billingInfo?.zipCode)
-    
-  }, [userData?.billingInfo?.states, userData?.billingInfo?.zipCode, isSelected])
+    setState(userData?.billingInfo?.states);
+    setZipCode(userData?.billingInfo?.zipCode);
+  }, [
+    userData?.billingInfo?.states,
+    userData?.billingInfo?.zipCode,
+    isSelected,
+  ]);
   console.log(shippingMethods);
   useEffect(() => {
     // Try retrieving the cart from localStorage, with a default of an empty array if not found
@@ -73,14 +79,17 @@ const [total, setTotal] = useState(0);
   }, 0);
   console.log(subTotal, userCart.length);
   useEffect(() => {
-      const shippingAmount = selectedShippingMethod && shippingMethods ? shippingMethods[selectedShippingMethod] : 0 || 0;
-    
+    const shippingAmount =
+      selectedShippingMethod && shippingMethods
+        ? shippingMethods[selectedShippingMethod]
+        : 0 || 0;
+
     console.log(shippingAmount);
     const tax = subTotal * (taxRate / 100) || 0;
     const totalAmount = subTotal + shippingAmount + tax;
     console.log(totalAmount);
-    setTotal(totalAmount)
-  }, [selectedShippingMethod, shippingMethods, subTotal, taxRate])
+    setTotal(totalAmount);
+  }, [selectedShippingMethod, shippingMethods, subTotal, taxRate]);
   useEffect(() => {
     if (subTotal > 0) {
       axiosSecure.post("/create-payment-intent", { subTotal }).then((res) => {
@@ -92,7 +101,7 @@ const [total, setTotal] = useState(0);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+
     setProcessing(true);
     const form = event.target;
     const email = form.email.value;
@@ -165,10 +174,11 @@ const [total, setTotal] = useState(0);
       subTotal: subTotal,
       tax: (subTotal * (taxRate / 100)).toFixed(2),
       shippingMethod: {},
-      total_price: total
+      total_price: total,
     };
-    if(selectedShippingMethod && shippingMethods){
-      order.shippingMethod[selectedShippingMethod] = shippingMethods[selectedShippingMethod]
+    if (selectedShippingMethod && shippingMethods) {
+      order.shippingMethod[selectedShippingMethod] =
+        shippingMethods[selectedShippingMethod];
     }
     if (isSelected) {
       order.shipping_address = shipping_data;
@@ -223,11 +233,10 @@ const [total, setTotal] = useState(0);
               });
             console.log(order);
           }
-          
         }
       })
       .catch((error) => {
-        setProcessing(false)
+        setProcessing(false);
         return toast.error(error?.response?.data?.message);
       });
   };
@@ -301,11 +310,11 @@ const [total, setTotal] = useState(0);
                 <div>
                   <label htmlFor="states">States</label>
                   <input
-                  onChange={(e) => {
-                    if(!isSelected){
-                      setState(e.target.value)
-                    }
-                  }}
+                    onChange={(e) => {
+                      if (!isSelected) {
+                        setState(e.target.value);
+                      }
+                    }}
                     type="text"
                     name="states"
                     id="states"
@@ -318,11 +327,11 @@ const [total, setTotal] = useState(0);
                 <div>
                   <label htmlFor="zipCode">Zip Code</label>
                   <input
-                  onChange={(e) => {
-                    if(!isSelected){
-                      setZipCode(e.target.value)
-                    }
-                  }}
+                    onChange={(e) => {
+                      if (!isSelected) {
+                        setZipCode(e.target.value);
+                      }
+                    }}
                     type="number"
                     name="zipCode"
                     id="zipCode"
@@ -378,18 +387,21 @@ const [total, setTotal] = useState(0);
             </div>
           </div>
           <div className="flex justify-end">
-          <Checkbox isSelected={isSelected} onValueChange={setIsSelected}>
-                Add a Different Shipping Address
-              </Checkbox>
+            <Checkbox isSelected={isSelected} onValueChange={setIsSelected}>
+              Add a Different Shipping Address
+            </Checkbox>
           </div>
-          <div className={`border-b border-gray-300 ${isSelected ? "block" : "hidden"} pb-5`}>
-            
+          <div
+            className={`border-b border-gray-300 ${
+              isSelected ? "block" : "hidden"
+            } pb-5`}
+          >
             <div className={``}>
               <div className="flex justify-between items-center">
-              <h4 className="mb-5 text-2xl font-semibold">
-                Shipping Information
-              </h4>
-            </div>
+                <h4 className="mb-5 text-2xl font-semibold">
+                  Shipping Information
+                </h4>
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                   <label htmlFor="userNameForShipping">Your Name</label>
@@ -442,7 +454,7 @@ const [total, setTotal] = useState(0);
                 <div>
                   <label htmlFor="statesForShipping">States</label>
                   <input
-                  onChange={(e) => setState(e.target.value)}
+                    onChange={(e) => setState(e.target.value)}
                     type="text"
                     name="statesForShipping"
                     id="statesForShipping"
@@ -454,7 +466,7 @@ const [total, setTotal] = useState(0);
                 <div>
                   <label htmlFor="zipCodeForShipping">Zip Code</label>
                   <input
-                  onChange={(e) => setZipCode(e.target.value)}
+                    onChange={(e) => setZipCode(e.target.value)}
                     type="number"
                     name="zipCodeForShipping"
                     id="zipCodeForShipping"
@@ -529,22 +541,37 @@ const [total, setTotal] = useState(0);
                 <h5 className="text-sm font-semibold">${subTotal}</h5>
               </div>
               <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
-                <h3 className=" text-gray-700 text-sm font-medium">
-                  Tax:
-                </h3>
-                <h5 className="text-sm font-semibold">${(subTotal * (taxRate / 100)).toFixed(2)}</h5>
+                <h3 className=" text-gray-700 text-sm font-medium">Tax:</h3>
+                <h5 className="text-sm font-semibold">
+                  ${(subTotal * (taxRate / 100)).toFixed(2)}
+                </h5>
               </div>
               <RadioGroup
-      label="Select a Shipping Method"
-      value={selectedShippingMethod}
-        onValueChange={setSelectedShippingMethod}
-        isRequired
-    >
-      {shippingMethods?.standard_shipping ? <Radio value="standard_shipping">Standard Shipping: ${shippingMethods?.standard_shipping}</Radio> : ""}
-      {shippingMethods?.express_shipping ? <Radio value="express_shipping">Express Shipping: ${shippingMethods?.express_shipping}</Radio> : ""}
-      {shippingMethods?.free_shipping == 0 ? <Radio value="free_shipping">Free Shipping</Radio> : ""}
-      
-    </RadioGroup>
+                label="Select a Shipping Method"
+                value={selectedShippingMethod}
+                onValueChange={setSelectedShippingMethod}
+                isRequired
+              >
+                {shippingMethods?.standard_shipping ? (
+                  <Radio value="standard_shipping">
+                    Standard Shipping: ${shippingMethods?.standard_shipping}
+                  </Radio>
+                ) : (
+                  ""
+                )}
+                {shippingMethods?.express_shipping ? (
+                  <Radio value="express_shipping">
+                    Express Shipping: ${shippingMethods?.express_shipping}
+                  </Radio>
+                ) : (
+                  ""
+                )}
+                {shippingMethods?.free_shipping == 0 ? (
+                  <Radio value="free_shipping">Free Shipping</Radio>
+                ) : (
+                  ""
+                )}
+              </RadioGroup>
               <div className="flex justify-between pt-2 pb-5 items-center">
                 <h3 className=" font-semibold">Total</h3>
                 <h5 className="text-gray-900 font-bold">${total}</h5>
@@ -600,10 +627,7 @@ const [total, setTotal] = useState(0);
                       !user
                     }
                   >
-                    {
-                    processing
-                      ? "Processing"
-                      : "Place Order"}
+                    {processing ? "Processing" : "Place Order"}
                   </Button>
                 </div>
               </div>
