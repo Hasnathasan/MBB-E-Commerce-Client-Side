@@ -127,7 +127,7 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
   // Example usage:
   useEffect(() => {
     const selectedArtist =
-      artistData?.filter((eachArtist) => eachArtist.email === artist) || [];
+      artistData?.filter((eachArtist) => eachArtist._id === artist) || [];
     console.log("object", selectedArtist[0]?.billingInfo?.prison?.prison_name);
     setPrison(selectedArtist[0]?.billingInfo?.prison);
     const artistProfit = calculateArtistProfit(
@@ -393,9 +393,9 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
               >
                 {(artist) => (
                   <SelectItem
-                    key={artist.email}
+                    key={artist._id}
                     variant="bordered"
-                    textValue={artist?.email}
+                    textValue={artist?.userName}
                   >
                     <div className="flex gap-2 items-center">
                       <Avatar

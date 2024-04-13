@@ -37,7 +37,7 @@ const SalesReport = () => {
   const [reportToDownload, setReportToDownload] = useState(null);
   const [isArtistAvailable, setIsArtistAvailable] = useState(false);
   const [salesReport, isSalesReportLoading] = useSalesReportByArtist({
-    artistEmail: artist,
+    artistId: artist,
   });
   const [totalArtistProfit, setTotalArtistProfit] = useState(0);
   const [totalWebsiteProfit, setTotalWebsiteProfit] = useState(0);
@@ -45,7 +45,7 @@ const SalesReport = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [dummyStatus, setDummyStatus] = useState("unpaid");
 
-  console.log(artist);
+  console.log(salesReport);
   // Iterate through each product
   useEffect(() => {
     let totalArtistProfit = 0;
@@ -165,19 +165,19 @@ const SalesReport = () => {
           >
             {(artist) => (
               <SelectItem
-                key={artist.email}
+                key={artist._id}
                 variant="bordered"
-                textValue={artist?.email}
+                textValue={artist?.userName}
               >
                 <div className="flex gap-2 items-center">
                   <Avatar
-                    alt={artist?.prison_name}
+                    alt={artist?.userName}
                     className="flex-shrink-0"
                     size="sm"
-                    src={artist?.avatar}
+                    src={artist?.userPhoto}
                   />
                   <div className="flex flex-col">
-                    <span className="text-small">{artist?.name}</span>
+                    <span className="text-small">{artist?.userName}</span>
                     <span className="text-tiny text-default-400">
                       {artist?.email}
                     </span>

@@ -32,7 +32,6 @@ import ProductUpdateModal from "./ProductUpdateModal/ProductUpdateModal";
 import axios from "axios";
 
 const ManageProducts = () => {
-  const location = useLocation();
   const [productToShow, setProductToShow] = useState();
   const {
     categoryFilter,
@@ -61,7 +60,7 @@ const ManageProducts = () => {
     onDetailsModalOpen();
   };
   const [page, setPage] = useState(1 || 1);
-  const rowsPerPage = 2;
+  const rowsPerPage = 20;
   const pages = Math.ceil(productsData?.length / rowsPerPage);
   console.log(page, pages);
 

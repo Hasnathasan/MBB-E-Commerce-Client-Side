@@ -32,7 +32,7 @@ const ManageCategories = () => {
     onOpenChange: onUpdateOpenChange,
   } = useDisclosure();
   const [page, setPage] = useState(1);
-  const rowsPerPage = 10;
+  const rowsPerPage = 20;
   const pages = Math.ceil((categoriesData?.length / rowsPerPage) || 1);
 console.log(page, pages);
   const categories = useMemo(() => {

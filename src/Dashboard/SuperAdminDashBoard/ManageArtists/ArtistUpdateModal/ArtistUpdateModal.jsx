@@ -148,7 +148,7 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
     });
   };
   const handleAddProductForArtist = () => {
-    setArtistToAddProduct(artist?.email);
+    setArtistToAddProduct(artist?._id);
     onClose();
     navigate("/adminDashboard/products");
     onProductAddingModalOpen();
@@ -169,6 +169,8 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
     const promise = axios.patch(`https://mbb-e-commerce-server.vercel.app/createLogin/${artist?._id}`, credentials)
         .then(res => {
             console.log(res.data);
+            refetch();
+            onClose();
             return res.data;
         })
         .catch(err => {
@@ -482,6 +484,7 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
                               id="email"
                               className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
                               placeholder="Email"
+                              defaultValue={artist?.email}
                               required
                             />
                           </div>
@@ -492,7 +495,6 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
                               name="password"
                               id="password"
                               placeholder="Password"
-                              defaultValue={artist?.email}
                               className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
                               required
                             />

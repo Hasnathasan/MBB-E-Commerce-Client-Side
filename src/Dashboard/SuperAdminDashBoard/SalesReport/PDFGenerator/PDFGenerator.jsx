@@ -51,7 +51,7 @@ const PDFGenerator = ({ salesReport }) => {
 
     axios
       .get(
-        `https://mbb-e-commerce-server.vercel.app/artist/${salesReport?.artistEmail}`
+        `https://mbb-e-commerce-server.vercel.app/artist/${salesReport?.artistId}`
       )
       .then((res) => {
         setArtist(res.data);

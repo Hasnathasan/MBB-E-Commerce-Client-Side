@@ -17,13 +17,11 @@ import {
   TableRow,
   User,
 } from "@nextui-org/react";
-import { FaArrowDown, FaPlus } from "react-icons/fa";
 import useAllOrders from "../../../Hooks/useAllOrders";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import Loader from "../../../Components/Loader/Loader";
 import { useMemo, useState } from "react";
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 const ManageOrders = () => {
   

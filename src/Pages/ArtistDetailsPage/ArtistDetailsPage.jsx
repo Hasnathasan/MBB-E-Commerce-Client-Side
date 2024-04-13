@@ -3,12 +3,13 @@ import PopularProductsCard from "../Home/PopularProducts/PopularProductsCard";
 import useArtist from "../../Hooks/useArtist";
 import { useLocation, useParams } from "react-router-dom";
 import ReactPlayer from "react-player";
-import useArtistProductsByEmail from "../../Hooks/useArtistProductsByEmail";
 import Loader from "../../Components/Loader/Loader";
+import useArtistProductsByID from "../../Hooks/useArtistProductsByID";
 const ArtistDetailsPage = () => {
-  const { email } = useParams();
-  const [artistData, isArtistDataLoading] = useArtist({ email });
-  const [products, isProductsLoading] = useArtistProductsByEmail({ email });
+  const  {id} = useParams();
+  console.log(id);
+  const [artistData, isArtistDataLoading] = useArtist({ id });
+  const [products, isProductsLoading] = useArtistProductsByID({ id });
   const location = useLocation();
   if (isArtistDataLoading || isProductsLoading) {
     return <Loader></Loader>;

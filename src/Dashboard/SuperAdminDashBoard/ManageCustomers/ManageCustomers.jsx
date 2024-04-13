@@ -20,7 +20,7 @@ import {
 import useCustomers from "../../../Hooks/useCustomers";
 import { useMemo, useState } from "react";
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import CustomerUpdateModal from "./CustomerUpdateModal/CustomerUpdateModal";
 
 const ManageCustomers = () => {
@@ -28,7 +28,7 @@ const ManageCustomers = () => {
   const [userData, setUserData] = useState();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [page, setPage] = useState(1);
-  const rowsPerPage = 10;
+  const rowsPerPage = 20;
   const pages = Math.ceil(customersData?.length / rowsPerPage);
 
   const customers = useMemo(() => {

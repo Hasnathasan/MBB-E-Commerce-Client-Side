@@ -68,7 +68,7 @@ const ManageArtists = () => {
   };
 
   const [page, setPage] = useState(1);
-  const rowsPerPage = 10;
+  const rowsPerPage = 20;
   const pages = Math.ceil(artistsData?.length / rowsPerPage);
 
   const artists = useMemo(() => {
@@ -147,7 +147,11 @@ const ManageArtists = () => {
       userPhoneNumber,
       billingInfo,
       userRole: "artist",
+      isLoginCreated: false
     };
+    if(email && password && confirmPass && password !== confirmPass){
+      artist.isLoginCreated = true;
+    }
     if (selectedFile) {
       const formData = new FormData();
       formData.append("file", selectedFile);

@@ -28,9 +28,7 @@ const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
   const [selectedTags, setSelectedTags] = useState([]);
   console.log(artistData);
 
-  useEffect(() => {
-    setArtist(artistToAddProduct)
-  },[artistToAddProduct])
+
  
   
   const handleCategoryChange = (selectedOptions) => {
@@ -67,6 +65,9 @@ const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
   const [artistPercent, setArtistPercent] = useState(
     artistPercentRef?.current?.value
   );
+  useEffect(() => {
+    setArtist(artistToAddProduct)
+  },[artistToAddProduct])
   const [websiteProfit, setWebsiteProfit] = useState();
   const [websitePercent, setWebsitePercent] = useState(
     websitePercentRef?.current?.value
@@ -120,7 +121,7 @@ const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
   // Example usage:
   useEffect(() => {
     const selectedArtist =
-      artistData?.filter((eachArtist) => eachArtist.email === artist) || [];
+      artistData?.filter((eachArtist) => eachArtist._id === artist) || [];
     console.log("object", selectedArtist[0]?.billingInfo?.prison?.prison_name);
     setPrison(selectedArtist[0]?.billingInfo?.prison);
     const artistProfit = calculateArtistProfit(
@@ -403,7 +404,7 @@ const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
               >
                 {(artist) => (
                   <SelectItem
-                    key={artist.email}
+                    key={artist._id}
                     variant="bordered"
                     textValue={artist?.userName}
                   >

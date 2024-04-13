@@ -19,7 +19,7 @@ const Artists = () => {
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
         {artistsData?.map((artist) => (
-          <Link to={`/artistDetails/${artist?.email}`} key={artist?._id}>
+          <Link to={`/artistDetails/${artist?._id}`} key={artist?._id}>
             <div className="flex bg-white border-2 transition-all duration-300 items-center p-6 border-gray-300 rounded-lg hover:border-green-500 flex-col gap-2">
               <Avatar
                 src={artist?.userPhoto}

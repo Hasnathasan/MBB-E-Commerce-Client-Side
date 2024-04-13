@@ -2,16 +2,16 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "./useAxiosSecure";
 
 
-const useSalesReportByArtist = ({artistEmail}) => {
+const useSalesReportByArtist = ({artistId}) => {
     const [axiosSecure] = useAxiosSecure();
     const {
       data: salesReport,
       isLoading: isSalesReportLoading,
       refetch,
     } = useQuery({
-      queryKey: ["sales-report", artistEmail],
+      queryKey: ["sales-report", artistId],
       queryFn: async () => {
-        const res = await axiosSecure.get(`/sales-report/${artistEmail ? `?artistEmail=${artistEmail}` : ""}`);
+        const res = await axiosSecure.get(`/sales-report/${artistId ? `?artistId=${artistId}` : ""}`);
         return res.data;
       },
     });

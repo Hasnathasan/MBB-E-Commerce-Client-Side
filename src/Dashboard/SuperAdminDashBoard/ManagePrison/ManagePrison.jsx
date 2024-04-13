@@ -36,7 +36,7 @@ const ManagePrison = () => {
     onOpenChange: onPrisonUpdateChange,
   } = useDisclosure();
   const [page, setPage] = useState(1);
-  const rowsPerPage = 10;
+  const rowsPerPage = 20;
   const pages = Math.ceil(prisonsData?.length / rowsPerPage);
   
   const prisons = useMemo(() => {

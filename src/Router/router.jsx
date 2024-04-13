@@ -120,7 +120,7 @@ const router = createBrowserRouter([
         element: <CheckOutElement></CheckOutElement>
       },
       {
-        path: "/artistDetails/:email",
+        path: "/artistDetails/:id",
         element: <ArtistDetailsPage></ArtistDetailsPage>
       },
       {
@@ -188,7 +188,7 @@ const router = createBrowserRouter([
       element: <ManageArtists></ManageArtists>,
       children: [
         {
-          path: "artistDetails/:email",
+          path: "artistDetails/:id",
           element: <ArtistDetailsPage></ArtistDetailsPage>
         }
       ]
