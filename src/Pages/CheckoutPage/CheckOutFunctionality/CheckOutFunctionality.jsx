@@ -7,6 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useNavigate } from "react-router-dom";
+import Select from 'react-select';
 
 const CheckOutFunctionality = () => {
   const stripe = useStripe();
@@ -16,6 +17,7 @@ const CheckOutFunctionality = () => {
   const navigate = useNavigate();
   const [clientSecret, setClientSecret] = useState("");
   const [selectedShippingMethod, setSelectedShippingMethod] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(null);
   const [shippingMethods, setShippingMethods] = useState();
   const [taxRate, setTaxRate] = useState();
   const [processing, setProcessing] = useState(false);
@@ -29,11 +31,126 @@ const CheckOutFunctionality = () => {
   const [state, setState] = useState();
   const [zipCode, setZipCode] = useState();
 
+  const statesOfUsa = {
+    "Alabama": "AL",
+    "Alaska": "AK",
+    "Arizona": "AZ",
+    "Arkansas": "AR",
+    "California": "CA",
+    "Colorado": "CO",
+    "Connecticut": "CT",
+    "Delaware": "DE",
+    "Florida": "FL",
+    "Georgia": "GA",
+    "Hawaii": "HI",
+    "Idaho": "ID",
+    "Illinois": "IL",
+    "Indiana": "IN",
+    "Iowa": "IA",
+    "Kansas": "KS",
+    "Kentucky": "KY",
+    "Louisiana": "LA",
+    "Maine": "ME",
+    "Maryland": "MD",
+    "Massachusetts": "MA",
+    "Michigan": "MI",
+    "Minnesota": "MN",
+    "Mississippi": "MS",
+    "Missouri": "MO",
+    "Montana": "MT",
+    "Nebraska": "NE",
+    "Nevada": "NV",
+    "New Hampshire": "NH",
+    "New Jersey": "NJ",
+    "New Mexico": "NM",
+    "New York": "NY",
+    "North Carolina": "NC",
+    "North Dakota": "ND",
+    "Ohio": "OH",
+    "Oklahoma": "OK",
+    "Oregon": "OR",
+    "Pennsylvania": "PA",
+    "Rhode Island": "RI",
+    "South Carolina": "SC",
+    "South Dakota": "SD",
+    "Tennessee": "TN",
+    "Texas": "TX",
+    "Utah": "UT",
+    "Vermont": "VT",
+    "Virginia": "VA",
+    "Washington": "WA",
+    "West Virginia": "WV",
+    "Wisconsin": "WI",
+    "Wyoming": "WY"
+  };
+
+  const statesFullNameArray = Object.keys(statesOfUsa);
+  // const options = statesFullNameArray?.map(state => {
+  //   const option = {value: state, label: state};
+  //   return option
+  // })
+
+  const options = [
+    { value: 'AL', label: 'Alabama' },
+    { value: 'AK', label: 'Alaska' },
+    { value: 'AZ', label: 'Arizona' },
+    { value: 'AR', label: 'Arkansas' },
+    { value: 'CA', label: 'California' },
+    { value: 'CO', label: 'Colorado' },
+    { value: 'CT', label: 'Connecticut' },
+    { value: 'DE', label: 'Delaware' },
+    { value: 'FL', label: 'Florida' },
+    { value: 'GA', label: 'Georgia' },
+    { value: 'HI', label: 'Hawaii' },
+    { value: 'ID', label: 'Idaho' },
+    { value: 'IL', label: 'Illinois' },
+    { value: 'IN', label: 'Indiana' },
+    { value: 'IA', label: 'Iowa' },
+    { value: 'KS', label: 'Kansas' },
+    { value: 'KY', label: 'Kentucky' },
+    { value: 'LA', label: 'Louisiana' },
+    { value: 'ME', label: 'Maine' },
+    { value: 'MD', label: 'Maryland' },
+    { value: 'MA', label: 'Massachusetts' },
+    { value: 'MI', label: 'Michigan' },
+    { value: 'MN', label: 'Minnesota' },
+    { value: 'MS', label: 'Mississippi' },
+    { value: 'MO', label: 'Missouri' },
+    { value: 'MT', label: 'Montana' },
+    { value: 'NE', label: 'Nebraska' },
+    { value: 'NV', label: 'Nevada' },
+    { value: 'NH', label: 'New Hampshire' },
+    { value: 'NJ', label: 'New Jersey' },
+    { value: 'NM', label: 'New Mexico' },
+    { value: 'NY', label: 'New York' },
+    { value: 'NC', label: 'North Carolina' },
+    { value: 'ND', label: 'North Dakota' },
+    { value: 'OH', label: 'Ohio' },
+    { value: 'OK', label: 'Oklahoma' },
+    { value: 'OR', label: 'Oregon' },
+    { value: 'PA', label: 'Pennsylvania' },
+    { value: 'RI', label: 'Rhode Island' },
+    { value: 'SC', label: 'South Carolina' },
+    { value: 'SD', label: 'South Dakota' },
+    { value: 'TN', label: 'Tennessee' },
+    { value: 'TX', label: 'Texas' },
+    { value: 'UT', label: 'Utah' },
+    { value: 'VT', label: 'Vermont' },
+    { value: 'VA', label: 'Virginia' },
+    { value: 'WA', label: 'Washington' },
+    { value: 'WV', label: 'West Virginia' },
+    { value: 'WI', label: 'Wisconsin' },
+    { value: 'WY', label: 'Wyoming' }
+];
+  console.log(selectedOption);
+
+  
+
   console.log(state, zipCode);
   useEffect(() => {
     axios
       .get(
-        `https://mbb-e-commerce-server.vercel.app/taxAndShippingDataByStateAndZip?state=${state}&zipCode=${zipCode}`
+        `https://mbb-e-commerce-server.vercel.app/taxAndShippingDataByStateAndZip?state=${selectedOption?.value}&zipCode=${zipCode}`
       )
       .then((res) => {
         console.log(res.data);
@@ -44,7 +161,7 @@ const CheckOutFunctionality = () => {
         console.log(err);
         setShippingMethods(null);
       });
-  }, [state, zipCode]);
+  }, [selectedOption?.value, state, zipCode])
 
   useEffect(() => {
     setState(userData?.billingInfo?.states);
@@ -54,6 +171,10 @@ const CheckOutFunctionality = () => {
     userData?.billingInfo?.zipCode,
     isSelected,
   ]);
+  const handleChange = selectedOption => {
+    setSelectedOption(selectedOption);
+    console.log(`Option selected:`, selectedOption);
+  };
   console.log(shippingMethods);
   useEffect(() => {
     // Try retrieving the cart from localStorage, with a default of an empty array if not found
@@ -110,7 +231,7 @@ const CheckOutFunctionality = () => {
     const userName = form.userName.value;
     const companyName = form.companyName.value;
     const country = form.country.value;
-    const states = form.states.value;
+    const states = selectedOption?.value;
     const address = form.address.value;
     const zipCode = form.zipCode.value;
     const userPhoneNumber = form.phoneNumber.value;
@@ -309,7 +430,7 @@ const CheckOutFunctionality = () => {
                     required
                   />
                 </div>
-                <div>
+                {/* <div>
                   <label htmlFor="states">States</label>
                   <input
                     onChange={(e) => {
@@ -325,6 +446,17 @@ const CheckOutFunctionality = () => {
                     defaultValue={userData?.billingInfo?.states}
                     required
                   />
+                </div> */}
+                <div>
+                <label htmlFor="states">States</label>
+                <Select
+                id="states"
+                name="states"
+      value={selectedOption}
+      onChange={handleChange}
+      options={options}
+      placeholder="Select a fruit"
+    />
                 </div>
                 <div>
                   <label htmlFor="zipCode">Zip Code</label>
