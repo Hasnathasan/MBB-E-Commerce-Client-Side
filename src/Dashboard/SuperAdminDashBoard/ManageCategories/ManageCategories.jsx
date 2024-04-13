@@ -59,72 +59,73 @@ console.log(page, pages);
       })
       .catch((err) => console.log(err));
   };
-  const handleCategoryUpdate = (e) => {
+  const handleCategoryUpdate = (e, onClose) => {
     e.preventDefault();
     const form = e.target;
     const category = form.category.value;
     const imageFile = form.image.files[0];
-    if (imageFile) {
-      const formData = new FormData();
-      formData.append("file", imageFile);
-      axios
-        .post(
-          "https://mbb-e-commerce-server.vercel.app/uploadSingle",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
-        .then((res) => {
-          if (res.data.url) {
-            console.log(res.data.url, "Image");
+
+    const promise = new Promise((resolve, reject) => {
+        if (imageFile) {
+            const formData = new FormData();
+            formData.append("file", imageFile);
+            axios.post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                })
+                .then((res) => {
+                    if (res.data.url) {
+                        console.log(res.data.url, "Image");
+                        const updatedCategoryData = {
+                            category,
+                            image: res.data.url,
+                            id: categoryToUpdate?._id,
+                            previous_category: categoryToUpdate?.category,
+                        };
+                        axios.patch("https://mbb-e-commerce-server.vercel.app/updateCategories", updatedCategoryData)
+                            .then((res) => {
+                                if (res.data.updatedCategory?.modifiedCount > 0) {
+                                    console.log(res.data);
+                                    refetch();
+                                    form.reset;
+                                    onClose()
+                                    resolve("Product Category Updated");
+                                } else {
+                                    reject("Failed to update category");
+                                }
+                            })
+                            .catch((error) => reject(error));
+                    }
+                })
+                .catch((err) => reject(err));
+        } else {
             const updatedCategoryData = {
-              category,
-              image: res.data.url,
-              id: categoryToUpdate?._id,
-              previous_category: categoryToUpdate?.category,
+                category,
+                image: undefined,
+                id: categoryToUpdate?._id,
+                previous_category: categoryToUpdate?.category,
             };
-            axios
-              .patch(
-                "https://mbb-e-commerce-server.vercel.app/updateCategories",
-                updatedCategoryData
-              )
-              .then((res) => {
-                if (res.data.updatedCategory?.modifiedCount > 0) {
-                  console.log(res.data);
-                  refetch();
-                  form.reset;
-                  toast.success("Product Category Updated");
-                }
-              })
-              .catch((error) => console.log(error));
-          }
-        })
-        .catch((err) => console.log(err));
-    } else {
-      const updatedCategoryData = {
-        category,
-        image: undefined,
-        id: categoryToUpdate?._id,
-        previous_category: categoryToUpdate?.category,
-      };
-      axios
-        .patch(
-          "https://mbb-e-commerce-server.vercel.app/updateCategories",
-          updatedCategoryData
-        )
-        .then((res) => {
-          if (res.data.updatedCategory?.modifiedCount > 0) {
-            refetch();
-            form.reset;
-            toast.success("Product Category Updated");
-          }
-        })
-        .catch((error) => console.log(error));
-    }
-  };
+            axios.patch("https://mbb-e-commerce-server.vercel.app/updateCategories", updatedCategoryData)
+                .then((res) => {
+                    if (res.data.updatedCategory?.modifiedCount > 0) {
+                        refetch();
+                        form.reset;
+                        resolve("Product Category Updated");
+                    } else {
+                        reject("Failed to update category");
+                    }
+                })
+                .catch((error) => reject(error));
+        }
+    });
+
+    toast.promise(promise, {
+        loading: 'Updating product category...',
+        success: 'Product Category Updated',
+        error: (error) => error || 'An error occurred while updating product category'
+    });
+};
 
   const handleCategoryAdding = (e, onClose) => {
     e.preventDefault();
@@ -363,7 +364,7 @@ console.log(page, pages);
                 Update Category
               </ModalHeader>
               <ModalBody>
-                <form onSubmit={handleCategoryUpdate} className="p-5">
+                <form onSubmit={(e) => handleCategoryUpdate(e, onClose)} className="p-5">
                   <div>
                     <label htmlFor="image">Category Image</label>
                     <input

@@ -97,7 +97,7 @@ console.log(data);
             }
 
             // Patch system setting
-            return axios.patch(`https://mbb-e-commerce-server.vercel.app/system-setting-update/${systemInfo[0]?._id}`, data);
+            return axios.put(`https://mbb-e-commerce-server.vercel.app/system-setting-update/${systemInfo[0]?._id}`, data);
         })
         .then((res) => {
             console.log(res.data);
