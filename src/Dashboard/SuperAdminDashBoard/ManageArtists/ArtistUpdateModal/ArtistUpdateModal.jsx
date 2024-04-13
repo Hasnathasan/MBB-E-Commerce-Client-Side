@@ -154,9 +154,35 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
     onProductAddingModalOpen();
   };
 
-  const handleCreateLogin = () => {
+  const handleCreateLogin = (e,onClose) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    const confirmPass = form.confirmPass.value;
+    if (password !== confirmPass) {
+        return toast.error("Confirmation password didn't match");
+    }
 
-  }
+    const credentials = { email, password, userName: artist?.userName };
+
+    const promise = axios.patch(`https://mbb-e-commerce-server.vercel.app/createLogin/${artist?._id}`, credentials)
+        .then(res => {
+            console.log(res.data);
+            return res.data;
+        })
+        .catch(err => {
+            throw err;
+        });
+
+    toast.promise(promise, {
+        loading: 'Creating login...',
+        success: 'Login created successfully',
+        error: (error) => {
+            return error?.response?.data?.message || "An error occurred while creating login";
+        }
+    });
+};
 
   if (isPrisonsDataLoading || isArtistsDataLoading) {
     return <Loader></Loader>;
@@ -444,9 +470,10 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Add Category
+                Create Login For This Artist
               </ModalHeader>
               <ModalBody>
+              <form className="space-y-4" onSubmit={(e) => handleCreateLogin(e, onClose)}>
               <div>
                             <label htmlFor="email">Artist Email</label>
                             <input
@@ -455,6 +482,7 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
                               id="email"
                               className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
                               placeholder="Email"
+                              required
                             />
                           </div>
                           <div className="relative">
@@ -464,8 +492,9 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
                               name="password"
                               id="password"
                               placeholder="Password"
+                              defaultValue={artist?.email}
                               className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
-                              
+                              required
                             />
                             <span className="absolute right-4 bottom-3">
                               {passhide ? (
@@ -491,7 +520,7 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
                               id="confirmPass"
                               placeholder="Confirm Password"
                               className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
-                              
+                              required
                             />
                             <span className="absolute right-4 bottom-3">
                               {passhide2 ? (
@@ -507,6 +536,13 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
                               )}
                             </span>
                           </div>
+                          <button
+                            type="submit"
+                            className=" text-white bg-[#00B207] hover:bg-[#00b206f6] focus:outline-none font-medium rounded-3xl text-sm px-7 py-2.5 text-center "
+                          >
+                            Create Login
+                          </button>
+              </form>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
