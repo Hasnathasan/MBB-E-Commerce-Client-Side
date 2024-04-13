@@ -40,43 +40,75 @@ const AccountSettings = () => {
     const updatedName = form.name.value;
     const updatedNum = form.phoneNumber.value;
     console.log(updatedName, updatedNum);
+
+    // Check if selectedFile is not available
     if (!selectedFile) {
-      return toast.error("Please Select an Image");
-    }
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-    axios
-      .post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        console.log(res.data.url);
-        if (res.data.url) {
-          axios
-            .patch(
-              `https://mbb-e-commerce-server.vercel.app/userUpdate/${user?.email}`,
-              {
+        const promise = axios.patch(`https://mbb-e-commerce-server.vercel.app/userUpdate/${user?.email}`, {
                 updatedName,
                 updatedNum,
-                userphoto: res?.data?.url,
-              }
-            )
+            })
             .then((res) => {
-              console.log(res.data);
-              refetch();
-              if (res.data.modifiedCount > 0) {
-                return toast.success("User data updated");
-              }
+                console.log(res.data);
+                refetch();
+                if (res.data.modifiedCount > 0) {
+                    return "User data updated";
+                }
             })
             .catch((error) => {
-              console.log(error);
+                console.log(error);
+                throw error;
             });
-        }
-      })
-      .catch((error) => console.log(error));
-  };
+
+        toast.promise(promise, {
+            loading: 'Updating user data...',
+            success: 'User data updated',
+            error: (error) => error || 'An error occurred while updating user data'
+        });
+
+        return;
+    }
+
+    // If selectedFile is available, upload it first
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    const promise = axios.post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        })
+        .then((res) => {
+            console.log(res.data.url);
+            if (res.data.url) {
+                return axios.patch(`https://mbb-e-commerce-server.vercel.app/userUpdate/${user?.email}`, {
+                        updatedName,
+                        updatedNum,
+                        userphoto: res?.data?.url,
+                    })
+                    .then((res) => {
+                        console.log(res.data);
+                        refetch();
+                        if (res.data.modifiedCount > 0) {
+                            return "User data updated";
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        throw error;
+                    });
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            throw error;
+        });
+
+    toast.promise(promise, {
+        loading: 'Uploading user photo and updating data...',
+        success: 'User data updated',
+        error: (error) => error || 'An error occurred while updating user data'
+    });
+};
 
   const handleBillingUpdate = (e) => {
     e.preventDefault();
