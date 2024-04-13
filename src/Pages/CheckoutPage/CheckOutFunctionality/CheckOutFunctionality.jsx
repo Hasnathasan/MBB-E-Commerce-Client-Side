@@ -15,7 +15,7 @@ const CheckOutFunctionality = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [clientSecret, setClientSecret] = useState("");
-  const [selectedShippingMethod, setSelectedShippingMethod] = useState();
+  const [selectedShippingMethod, setSelectedShippingMethod] = useState(null);
   const [shippingMethods, setShippingMethods] = useState();
   const [taxRate, setTaxRate] = useState();
   const [processing, setProcessing] = useState(false);
@@ -101,7 +101,9 @@ const CheckOutFunctionality = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    if(!selectedShippingMethod){
+      return toast.error("Please select a shipping method")
+    }
     setProcessing(true);
     const form = event.target;
     const email = form.email.value;
@@ -550,7 +552,7 @@ const CheckOutFunctionality = () => {
                 label="Select a Shipping Method"
                 value={selectedShippingMethod}
                 onValueChange={setSelectedShippingMethod}
-                isRequired
+                isRequired={true}
               >
                 {shippingMethods?.standard_shipping ? (
                   <Radio value="standard_shipping">

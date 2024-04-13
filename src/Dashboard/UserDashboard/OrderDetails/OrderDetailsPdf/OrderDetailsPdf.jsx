@@ -13,7 +13,7 @@ const OrderDetailsPdf = ({ order }) => {
   const styles = StyleSheet.create({
     container: {
       margin: 20,
-      padding: 20,
+      padding: 5,
     },
     title: {
       fontSize: 20,
@@ -95,7 +95,8 @@ const OrderDetailsPdf = ({ order }) => {
                 <View>
                   <Text style={styles.subtitle}>Billing Address</Text>
                   <Text style={styles.text}> {userName || "Unknown"}</Text>
-                  <Text style={styles.text}>{address || "Unknown"}, {states}, {zipCode}</Text>
+                  <Text style={styles.text}>{address || "Unknown"}, </Text>
+                  <Text style={styles.text}>{states}, {zipCode} </Text>
                   <Text style={styles.text}> {email || "Unknown"}</Text>
                   <Text style={styles.text}>
                     {userPhoneNumber || "Unknown"}
@@ -107,13 +108,16 @@ const OrderDetailsPdf = ({ order }) => {
                     {order?.shipping_address?.userName || userName || "Unknown"}
                   </Text>
                   <Text style={styles.text}>
-                    {order?.shipping_address?.address || address || "Unknown"}, {order?.shipping_address?.states || states}, {order?.shipping_address?.zipCode || zipCode}
+                    {order?.shipping_address?.address || address || "Unknown"}, 
                   </Text>
                   <Text style={styles.text}>
-                    {order?.shipping_address?.email || email || "Unknown"}
+                  {order?.shipping_address?.states || states}, {order?.shipping_address?.zipCode || zipCode}
                   </Text>
                   <Text style={styles.text}>
-                    {order?.shipping_address?.userPhoneNumber ||
+                  {order?.shipping_address?.email || email || "Unknown"}
+                  </Text>
+                  <Text style={styles.text}>
+                  {order?.shipping_address?.userPhoneNumber ||
                       userPhoneNumber ||
                       "Unknown"}
                   </Text>
