@@ -64,6 +64,10 @@ const ArtistDetailsPage = () => {
               Correctional System:{" "}
               <span className="text-gray-800">Unknown</span>
             </h2>
+            <h2 className="text-lg font-semibold mb-5 text-gray-900">
+              Prison Name:{" "}
+              <span className="text-gray-800">{artistData?.billingInfo?.prison?.prison_name}</span>
+            </h2>
             <h2 className="text-lg font-semibold mb-5 space-x-3 text-gray-900">
               Keywords:{" "}
               {artistData?.keywords?.map((keyword) => (

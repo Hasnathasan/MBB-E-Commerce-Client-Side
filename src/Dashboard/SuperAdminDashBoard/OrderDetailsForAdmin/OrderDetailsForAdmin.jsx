@@ -131,7 +131,7 @@ const OrderDetailsForAdmin = () => {
                   <h2 className="text-xl font-medium">
                     {userName || "Unknown"}
                   </h2>
-                  <h3 className="text-gray-600 text-sm">{address || "Unknown"}</h3>
+                  <h3 className="text-gray-600 text-sm">{address || "Unknown"}, {states}, {zipCode}</h3>
                 </div>
                 <div>
                   <h3 className="text-gray-600 text-sm">Email</h3>
@@ -154,7 +154,7 @@ const OrderDetailsForAdmin = () => {
                   <h2 className="text-xl font-medium">
                     {order?.shipping_address?.userName || userName || "Unknown"}
                   </h2>
-                  <h3 className="text-gray-600 text-sm">{order?.shipping_address?.address ||address || "Unknown"}</h3>
+                  <h3 className="text-gray-600 text-sm">{order?.shipping_address?.address ||address || "Unknown"}, {order?.shipping_address?.states || states}, {order?.shipping_address?.zipCode || zipCode}</h3>
                 </div>
                 <div>
                   <h3 className="text-gray-600 text-sm">Email</h3>

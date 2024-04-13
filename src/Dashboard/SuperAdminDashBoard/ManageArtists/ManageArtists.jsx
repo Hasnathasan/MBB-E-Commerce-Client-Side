@@ -118,7 +118,7 @@ const ManageArtists = () => {
       prison: { prison_name: prison?.prison_name, prison_email: prison?.email },
       zipCode,
     };
-    if (password !== confirmPass) {
+    if ( password && confirmPass && password !== confirmPass) {
       return toast.error("Confirmation password didn't match");
     }
     console.log({
@@ -140,6 +140,7 @@ const ManageArtists = () => {
       password,
       userName,
       art_description,
+      createdAt: new Date(),
       bio,
       bio_video_link,
       keywords,
@@ -173,6 +174,7 @@ const ManageArtists = () => {
                 )
                 .then((res) => {
                   setInstantImg(null);
+                  setSelectedFile(null)
                   console.log(res.data);
                   refetch();
                   form.reset();
@@ -388,7 +390,6 @@ const ManageArtists = () => {
                               id="email"
                               className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
                               placeholder="Email"
-                              required
                             />
                           </div>
                           <div className="relative">
@@ -399,7 +400,7 @@ const ManageArtists = () => {
                               id="password"
                               placeholder="Password"
                               className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
-                              required
+                              
                             />
                             <span className="absolute right-4 bottom-3">
                               {passhide ? (
@@ -425,7 +426,7 @@ const ManageArtists = () => {
                               id="confirmPass"
                               placeholder="Confirm Password"
                               className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
-                              required
+                              
                             />
                             <span className="absolute right-4 bottom-3">
                               {passhide2 ? (

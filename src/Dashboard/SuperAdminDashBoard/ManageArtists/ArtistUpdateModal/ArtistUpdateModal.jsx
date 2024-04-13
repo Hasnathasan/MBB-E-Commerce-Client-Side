@@ -5,18 +5,23 @@ import { useContext, useEffect, useRef, useState } from "react";
 import usePrisons from "../../../../Hooks/usePrisons";
 import useArtists from "../../../../Hooks/useArtists";
 import useUser from "../../../../Hooks/useUser";
-import { Avatar, Button, Select, SelectItem } from "@nextui-org/react";
+import { Avatar, Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, useDisclosure } from "@nextui-org/react";
 import { MultiSelect } from "react-selectize";
 import { AuthContext } from "../../../../Providers/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import { IoEyeOffSharp, IoEyeOutline } from "react-icons/io5";
 
 const ArtistUpdateModal = ({ artist, onClose }) => {
   const { setArtistToAddProduct, onProductAddingModalOpen } =
     useContext(AuthContext);
   const [prisons, isPrisonsDataLoading] = usePrisons();
+  
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [userData] = useUser();
   const navigate = useNavigate();
   const [artistsData, isArtistsDataLoading, refetch] = useArtists();
+  const [passhide, setPasshide] = useState(true);
+  const [passhide2, setPasshide2] = useState(true);
   const [selectedFile, setSelectedFile] = useState(null);
   const [instantImg, setInstantImg] = useState(null);
   const [prison, setPrison] = useState(null);
@@ -149,14 +154,20 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
     onProductAddingModalOpen();
   };
 
+  const handleCreateLogin = () => {
+
+  }
+
   if (isPrisonsDataLoading || isArtistsDataLoading) {
     return <Loader></Loader>;
   }
   return (
+    <>
     <form onSubmit={handleArtistUpdate} className="">
       <div className={`border rounded-lg overflow-auto border-gray-300 mb-6`}>
         <div className="flex justify-between items-center border-b border-gray-300 p-4 ">
           <h4 className="text-lg font-semibold">Artist&apos;s personal Info</h4>
+          <div className="space-x-3">
           <Button
             onClick={handleAddProductForArtist}
             color="success"
@@ -165,6 +176,15 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
           >
             Add Product
           </Button>
+          <Button
+            onPress={onOpen}
+            color="success"
+            size="sm"
+            className="text-white text-sm mb-2 bg-green-500"
+          >
+            Create Login
+          </Button>
+          </div>
         </div>
         <div className="p-5 grid grid-cols-12 gap-5 items-center justify-center">
           <div className="lg:col-span-9 col-span-12">
@@ -413,6 +433,91 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
         </div>
       </div>
     </form>
+    <Modal
+        size="2xl"
+        backdrop="opaque"
+        className="!z-50"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Add Category
+              </ModalHeader>
+              <ModalBody>
+              <div>
+                            <label htmlFor="email">Artist Email</label>
+                            <input
+                              type="email"
+                              name="email"
+                              id="email"
+                              className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
+                              placeholder="Email"
+                            />
+                          </div>
+                          <div className="relative">
+                            <label htmlFor="password">Password</label>
+                            <input
+                              type={passhide ? "password" : "text"}
+                              name="password"
+                              id="password"
+                              placeholder="Password"
+                              className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
+                              
+                            />
+                            <span className="absolute right-4 bottom-3">
+                              {passhide ? (
+                                <IoEyeOutline
+                                  className="cursor-pointer"
+                                  onClick={() => setPasshide(!passhide)}
+                                />
+                              ) : (
+                                <IoEyeOffSharp
+                                  className="cursor-pointer"
+                                  onClick={() => setPasshide(!passhide)}
+                                />
+                              )}
+                            </span>
+                          </div>
+                          <div className="relative">
+                            <label htmlFor="confirmPass">
+                              Confirmation Password
+                            </label>
+                            <input
+                              type={passhide2 ? "password" : "text"}
+                              name="confirmPass"
+                              id="confirmPass"
+                              placeholder="Confirm Password"
+                              className=" border border-gray-300 text-gray-900 mt-1 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
+                              
+                            />
+                            <span className="absolute right-4 bottom-3">
+                              {passhide2 ? (
+                                <IoEyeOutline
+                                  className="cursor-pointer"
+                                  onClick={() => setPasshide2(!passhide2)}
+                                />
+                              ) : (
+                                <IoEyeOffSharp
+                                  className="cursor-pointer"
+                                  onClick={() => setPasshide2(!passhide2)}
+                                />
+                              )}
+                            </span>
+                          </div>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 

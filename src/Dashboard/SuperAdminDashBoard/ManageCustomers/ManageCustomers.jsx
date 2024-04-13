@@ -30,7 +30,7 @@ const ManageCustomers = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
   const pages = Math.ceil(customersData?.length / rowsPerPage);
-  
+
   const customers = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
@@ -90,20 +90,21 @@ const ManageCustomers = () => {
           Total {customers?.length} users
         </span>
       </div>
-      <Table aria-label="Example table with custom cells"
-      bottomContent={
-        <div className="flex w-full justify-center">
-          <Pagination
-            isCompact
-            showControls
-            showShadow
-            color="secondary"
-            page={page}
-            total={pages}
-            onChange={(page) => setPage(page)}
-          />
-        </div>
-      }
+      <Table
+        aria-label="Example table with custom cells"
+        bottomContent={
+          <div className="flex w-full justify-center">
+            <Pagination
+              isCompact
+              showControls
+              showShadow
+              color="secondary"
+              page={page}
+              total={pages}
+              onChange={(page) => setPage(page)}
+            />
+          </div>
+        }
       >
         <TableHeader>
           <TableColumn>Name</TableColumn>

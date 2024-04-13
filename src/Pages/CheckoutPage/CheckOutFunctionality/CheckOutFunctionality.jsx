@@ -136,7 +136,7 @@ const CheckOutFunctionality = () => {
       email: emailForShipping,
       userName: userNameForShipping,
       companyName: companyNameForShipping,
-      countryL: countryForShipping,
+      country: countryForShipping,
       address: addressForShipping,
       states: statesForShipping,
       zipCode: zipCodeForShipping,
@@ -352,7 +352,6 @@ const CheckOutFunctionality = () => {
                     className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
                     placeholder="Email Address"
                     defaultValue={userData?.email}
-                    disabled
                     required
                   />
                 </div>
@@ -372,21 +371,8 @@ const CheckOutFunctionality = () => {
               </div>
             </div>
           </div>
-          <div className="mt-6">
-            <h4 className="mb-4 text-2xl font-semibold">Additional Info</h4>
-            <div>
-              <label htmlFor="additional_info">Order notes (optional)</label>
-              <textarea
-                type="text"
-                name="additional_info"
-                id="additional_info"
-                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                placeholder="Notes about your order, e.g. special notes for delivery"
-                rows={4}
-              />
-            </div>
-          </div>
-          <div className="flex justify-end">
+          
+          <div className="flex mt-5 justify-end">
             <Checkbox isSelected={isSelected} onValueChange={setIsSelected}>
               Add a Different Shipping Address
             </Checkbox>
@@ -501,6 +487,20 @@ const CheckOutFunctionality = () => {
                   />
                 </div>
               </div>
+            </div>
+          </div>
+          <div className="mt-6">
+            <h4 className="mb-4 text-2xl font-semibold">Additional Info</h4>
+            <div>
+              <label htmlFor="additional_info">Order notes (optional)</label>
+              <textarea
+                type="text"
+                name="additional_info"
+                id="additional_info"
+                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
+                placeholder="Notes about your order, e.g. special notes for delivery"
+                rows={4}
+              />
             </div>
           </div>
         </div>

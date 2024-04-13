@@ -18,7 +18,7 @@ import {
 } from "@nextui-org/react";
 import { FaPlus, FaSearch } from "react-icons/fa";
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import usePopularCategories from "../../../Hooks/usePopularCategories";
 import { useMemo, useState } from "react";
 
