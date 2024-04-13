@@ -228,7 +228,7 @@ const SalesReport = () => {
                       <h3>{salesReport?._id}</h3>
                     </div>
                   </TableCell>
-                  <TableCell>{salesReport?.artistEmail}</TableCell>
+                  <TableCell>{salesReport?.artistId}</TableCell>
                   <TableCell>
                     <div className="flex justify-center gap-3 items-center">
                       <div className="p-2 border-r-2">
@@ -279,7 +279,7 @@ const SalesReport = () => {
                       <h3>{report?._id}</h3>
                     </div>
                   </TableCell>
-                  <TableCell>{report?.artistEmail}</TableCell>
+                  <TableCell>{report?.artistId}</TableCell>
                   <TableCell>
                     <div className="flex justify-center gap-3 items-center">
                       <div className="p-2 border-r-2">

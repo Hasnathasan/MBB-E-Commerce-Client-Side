@@ -12,11 +12,17 @@ const AccountSettings = () => {
   const [userData, isUserDataLoading, refetch] = useUser();
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [instantImg, setInstantImg] = useState(null);
   console.log(userData);
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       setSelectedFile(file);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setInstantImg(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -159,8 +165,8 @@ const AccountSettings = () => {
             </form>
           </div>
           <div className="flex justify-center md:col-span-2 col-span-5 order-1 md:order-2 items-center gap-5 flex-col">
-            <Avatar
-              src={userData?.userPhoto}
+          <Avatar
+              src={instantImg || userData?.userPhoto}
               className="w-48 h-48 text-large"
             />
             {/* <img src={`data:image/png;base64,${binaryCode}`} alt="Decoded Image" /> */}
