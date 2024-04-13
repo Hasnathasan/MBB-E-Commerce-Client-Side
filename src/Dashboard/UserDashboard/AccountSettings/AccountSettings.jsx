@@ -110,17 +110,17 @@ const AccountSettings = () => {
     });
 };
 
-  const handleBillingUpdate = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const updatedName = form.name.value;
-    const companyName = form.companyName.value;
-    const country = form.country.value;
-    const states = form.states.value;
-    const updatedAddress = form.address.value;
-    const zipCode = form.zipCode.value;
-    const updatedNum = form.phoneNumber.value;
-    const billingInfo = {
+const handleBillingUpdate = (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const updatedName = form.name.value;
+  const companyName = form.companyName.value;
+  const country = form.country.value;
+  const states = form.states.value;
+  const updatedAddress = form.address.value;
+  const zipCode = form.zipCode.value;
+  const updatedNum = form.phoneNumber.value;
+  const billingInfo = {
       updatedName,
       companyName,
       country,
@@ -128,26 +128,26 @@ const AccountSettings = () => {
       updatedAddress,
       zipCode,
       updatedNum,
-    };
-    axios
-      .patch(
-        `https://mbb-e-commerce-server.vercel.app/userBillingInfoUpdate/${user?.email}`,
-        billingInfo
-      )
+  };
+
+  const promise = axios.patch(`https://mbb-e-commerce-server.vercel.app/userBillingInfoUpdate/${user?.email}`, billingInfo)
       .then((res) => {
-        console.log(res.data);
-        if (res.data.modifiedCount > 0) {
-          Swal.fire(
-            "Congratulation",
-            "Successfully Updated Your Billing Info",
-            "success"
-          );
-        }
+          console.log(res.data);
+          if (res.data.modifiedCount > 0) {
+              return "Successfully Updated Your Billing Info";
+          }
       })
       .catch((error) => {
-        console.log(error);
+          console.log(error);
+          throw error;
       });
-  };
+
+  toast.promise(promise, {
+      loading: 'Updating billing info...',
+      success: 'Successfully Updated Your Billing Info',
+      error: (error) => error || 'An error occurred while updating billing info'
+  });
+};
   return (
     <div>
       {/* Account Information */}
