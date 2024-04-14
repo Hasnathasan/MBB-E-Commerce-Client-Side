@@ -17,7 +17,8 @@ const CheckOutFunctionality = () => {
   const navigate = useNavigate();
   const [clientSecret, setClientSecret] = useState("");
   const [selectedShippingMethod, setSelectedShippingMethod] = useState(null);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedState, SetSelectedState] = useState(null);
+  const [selectedShippingState, setSelectedShippingState] = useState(null);
   const [shippingMethods, setShippingMethods] = useState();
   const [taxRate, setTaxRate] = useState();
   const [processing, setProcessing] = useState(false);
@@ -142,7 +143,7 @@ const CheckOutFunctionality = () => {
     { value: 'WI', label: 'Wisconsin' },
     { value: 'WY', label: 'Wyoming' }
 ];
-  console.log(selectedOption);
+  console.log("selectedShippingState", selectedShippingState);
 
   
 
@@ -150,7 +151,7 @@ const CheckOutFunctionality = () => {
   useEffect(() => {
     axios
       .get(
-        `https://mbb-e-commerce-server.vercel.app/taxAndShippingDataByStateAndZip?state=${selectedOption?.value}&zipCode=${zipCode}`
+        `https://mbb-e-commerce-server.vercel.app/taxAndShippingDataByStateAndZip?state=${isSelected ? selectedShippingState?.value : selectedState?.value}&zipCode=${zipCode}`
       )
       .then((res) => {
         console.log(res.data);
@@ -161,7 +162,7 @@ const CheckOutFunctionality = () => {
         console.log(err);
         setShippingMethods(null);
       });
-  }, [selectedOption?.value, state, zipCode])
+  }, [isSelected, selectedShippingState, selectedState?.value, state, zipCode])
 
   useEffect(() => {
     setState(userData?.billingInfo?.states);
@@ -171,9 +172,13 @@ const CheckOutFunctionality = () => {
     userData?.billingInfo?.zipCode,
     isSelected,
   ]);
-  const handleChange = selectedOption => {
-    setSelectedOption(selectedOption);
-    console.log(`Option selected:`, selectedOption);
+  const handleChange = selectedState => {
+    SetSelectedState(selectedState);
+    console.log(`Option selected:`, selectedState);
+  };
+  const handleShippingStateChange = selectedState => {
+    setSelectedShippingState(selectedState);
+    console.log(`Option selected:`, selectedState);
   };
   console.log(shippingMethods);
   useEffect(() => {
@@ -231,7 +236,7 @@ const CheckOutFunctionality = () => {
     const userName = form.userName.value;
     const companyName = form.companyName.value;
     const country = form.country.value;
-    const states = selectedOption?.value;
+    const states = selectedState?.value;
     const address = form.address.value;
     const zipCode = form.zipCode.value;
     const userPhoneNumber = form.phoneNumber.value;
@@ -450,12 +455,10 @@ const CheckOutFunctionality = () => {
                 <div>
                 <label htmlFor="states">States</label>
                 <Select
-                id="states"
-                name="states"
-      value={selectedOption}
+      value={selectedState}
       onChange={handleChange}
       options={options}
-      placeholder="Select a fruit"
+      placeholder="Select your state"
     />
                 </div>
                 <div>
@@ -572,16 +575,13 @@ const CheckOutFunctionality = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="statesForShipping">States</label>
-                  <input
-                    onChange={(e) => setState(e.target.value)}
-                    type="text"
-                    name="statesForShipping"
-                    id="statesForShipping"
-                    className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                    placeholder="States Name"
-                    required={isSelected}
-                  />
+                <label htmlFor="states">States</label>
+                <Select
+      value={selectedShippingState}
+      onChange={handleShippingStateChange}
+      options={options}
+      placeholder="Select your state"
+    />
                 </div>
                 <div>
                   <label htmlFor="zipCodeForShipping">Zip Code</label>
