@@ -4,10 +4,33 @@ import { IoEyeOffSharp, IoEyeOutline } from "react-icons/io5";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import Swal from "sweetalert2";
+import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
+
+
 import toast, { Toaster } from "react-hot-toast";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
 const SignIn = () => {
   const { loginWithEmail } = useContext(AuthContext);
   const { register, handleSubmit, reset } = useForm();
+  
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [email, setEmail] = useState('');
+  const auth = getAuth(); // Initialize Firebase Auth
+
+  const handleReset = async (e, onClose) => {
+    e.preventDefault();
+
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      toast.success("A password reset link has been sent to your email address.")
+      setEmail(''); // Clear email field after successful request
+      onClose()
+    } catch (error) {
+      console.error('Password reset error:', error);
+      toast.error("An error occurred. Please try again later.")
+    }
+  };
   const [passhide, setPasshide] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
@@ -97,9 +120,9 @@ const SignIn = () => {
                 </label>
               </div>
             </div>
-            <a href="#" className="text-sm text-gray-600 hover:underline ">
+            <h3 onClick={onOpen} className="text-sm cursor-pointer text-gray-600 hover:underline ">
               Forget password?
-            </a>
+            </h3>
           </div>
           <button
             type="submit"
@@ -118,6 +141,40 @@ const SignIn = () => {
           </p>
         </form>
       </div>
+      <Modal
+        size="md"
+        backdrop="opaque"
+        className="!z-50"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Reset Password
+              </ModalHeader>
+              <ModalBody>
+              <div>
+      <form className=" space-y-3" onSubmit={(e) => handleReset(e, onClose)}>
+        <label htmlFor="email">Email Address:</label>
+        <input type="email" id="email"
+            className=" border border-gray-300 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block w-full p-2.5 "
+           value={email} onChange={(e) => setEmail(e.target.value)} required />
+        
+        <Button className="bg-green-500 text-white" color="success" radius="full" type="submit">Reset Password</Button>
+      </form>
+    </div>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
       <Toaster />
     </div>
   );
