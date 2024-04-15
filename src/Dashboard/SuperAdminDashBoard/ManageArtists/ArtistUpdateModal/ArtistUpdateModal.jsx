@@ -466,6 +466,7 @@ const options = [
                 placeholder="Select a Prison"
                 labelPlacement="outside"
                 className="w-full"
+                isRequired
                 onChange={(e) => setPrisonEmail(e.target.value)}
                 defaultSelectedKeys={[
                   artist?.billingInfo?.prison?.prison_email,
