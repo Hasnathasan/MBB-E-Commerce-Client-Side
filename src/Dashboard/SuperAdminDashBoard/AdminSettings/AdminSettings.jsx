@@ -88,10 +88,7 @@ const AdminSettings = () => {
       "WY": "Wyoming"
   };
 
-  // const options = statesFullNameArray?.map(state => {
-  //   const option = {value: state, label: state};
-  //   return option
-  // })
+  
 
   const options = [
     { value: 'AL', label: 'Alabama' },
