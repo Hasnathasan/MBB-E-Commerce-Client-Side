@@ -9,9 +9,9 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  Select,
   SelectItem,
   Table,
+  Select,
   TableBody,
   TableCell,
   TableColumn,
@@ -31,6 +31,7 @@ import { IoEyeOffSharp, IoEyeOutline } from "react-icons/io5";
 import toast, { Toaster } from "react-hot-toast";
 import Loader from "../../../Components/Loader/Loader";
 import ArtistUpdateModal from "./ArtistUpdateModal/ArtistUpdateModal";
+import ReactSelect from "../../../Components/ReactSelect/ReactSelect";
 
 const ManageArtists = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -698,15 +699,11 @@ const options = [
                                 required
                               />
                             </div>
-                            <div className="mb-3">
-                <label htmlFor="states">States</label>
-                <Select
-      value={selectedState}
-      onChange={value => SetSelectedState(value)}
+                <ReactSelect
+      selectedState={selectedState}
+      SetSelectedState={SetSelectedState}
       options={options}
-      placeholder="Select your state"
     />
-                </div>
                           </div>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>

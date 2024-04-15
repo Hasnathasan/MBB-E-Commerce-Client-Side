@@ -4,12 +4,12 @@ import axios from "axios";
 import { useContext, useEffect, useRef, useState } from "react";
 import usePrisons from "../../../../Hooks/usePrisons";
 import useArtists from "../../../../Hooks/useArtists";
-import useUser from "../../../../Hooks/useUser";
-import { Avatar, Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, useDisclosure } from "@nextui-org/react";
+import { Avatar, Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, SelectItem, Select, useDisclosure } from "@nextui-org/react";
 import { MultiSelect } from "react-selectize";
 import { AuthContext } from "../../../../Providers/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { IoEyeOffSharp, IoEyeOutline } from "react-icons/io5";
+import ReactSelect from "../../../../Components/ReactSelect/ReactSelect";
 
 const ArtistUpdateModal = ({ artist, onClose }) => {
   const { setArtistToAddProduct, onProductAddingModalOpen } =
@@ -17,9 +17,9 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
   const [prisons, isPrisonsDataLoading] = usePrisons();
   
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [userData] = useUser();
   const navigate = useNavigate();
   const [artistsData, isArtistsDataLoading, refetch] = useArtists();
+  const [selectedState, SetSelectedState] = useState(null);
   const [passhide, setPasshide] = useState(true);
   const [passhide2, setPasshide2] = useState(true);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -27,8 +27,8 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
   const [prison, setPrison] = useState(null);
   const [prisonEmail, setPrisonEmail] = useState(null);
   const fileInputRef = useRef(null);
-  console.log(userData);
 
+useEffect( () => {
   const statesOfUsa = {
     "AL": "Alabama",
     "AK": "Alaska",
@@ -81,6 +81,8 @@ const ArtistUpdateModal = ({ artist, onClose }) => {
     "WI": "Wisconsin",
     "WY": "Wyoming"
 };
+SetSelectedState({value: artist?.billingInfo?.states, label: statesOfUsa?.[artist?.billingInfo?.states]})
+},[artist?.billingInfo?.states])
 
 
 
@@ -173,7 +175,7 @@ const options = [
     const bio_video_link = form.bio_video.value;
     const keywords = tags?.map((tag) => tag.label);
     const country = form.country.value;
-    const states = form.states.value;
+    const states = selectedState?.value;
     const address = form.address.value;
     const zipCode = form.zipCode.value;
     const userPhoneNumber = form.phoneNumber.value;
@@ -200,7 +202,7 @@ const options = [
       zipCode,
       userPhoneNumber,
     });
-    let artist = {
+    let artistUpdatedData = {
       userName,
       art_description,
       bio,
@@ -213,7 +215,7 @@ const options = [
     const formData = new FormData();
     formData.append("file", selectedFile);
     console.log(selectedFile);
-    console.log(artist);
+    console.log(artistUpdatedData);
     const uploadImageAndInsertArtist = async () => {
       try {
         if (selectedFile) {
@@ -227,11 +229,11 @@ const options = [
             }
           );
           console.log(response.data.url);
-          artist.userPhoto = response.data.url;
+          artistUpdatedData.userPhoto = response.data.url;
         }
         const res = await axios.patch(
-          `https://mbb-e-commerce-server.vercel.app/updateArtist/${email}`,
-          artist
+          `https://mbb-e-commerce-server.vercel.app/updateArtist/${artist?._id}`,
+          artistUpdatedData
         );
         console.log(res.data);
         setInstantImg(null);
@@ -251,6 +253,7 @@ const options = [
       loading: "Please wait! while uploading artist...",
       success: "Artist Data Updated successfully",
       error: (error) => {
+        console.log(error);
         return error?.message || "An error occurred while uploading artist"; // Display server-side error if available
       },
     });
@@ -521,18 +524,11 @@ const options = [
                 required
               />
             </div>
-            <div>
-              <label htmlFor="states">States</label>
-              <input
-                type="text"
-                name="states"
-                id="states"
-                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                placeholder="States Name"
-                defaultValue={artist?.billingInfo?.states}
-                required
-              />
-            </div>
+                <ReactSelect
+      selectedState={selectedState}
+      SetSelectedState={SetSelectedState}
+      options={options}
+    />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>

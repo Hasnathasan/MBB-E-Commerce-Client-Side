@@ -250,7 +250,7 @@ const CheckOutFunctionality = () => {
     const userNameForShipping = form.userNameForShipping.value;
     const companyNameForShipping = form.companyNameForShipping.value;
     const countryForShipping = form.countryForShipping.value;
-    const statesForShipping = form.statesForShipping.value;
+    const statesForShipping = selectedShippingState?.value;
     const addressForShipping = form.addressForShipping.value;
     const zipCodeForShipping = form.zipCodeForShipping.value;
     const userPhoneNumberForShipping = form.phoneNumberForShipping.value;

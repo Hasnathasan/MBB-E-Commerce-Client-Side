@@ -98,7 +98,7 @@ const OrderDetails = () => {
                     {order?.shipping_address?.userName || userName || "Unknown"}
                   </h2>
                   <h3 className="text-gray-600 text-sm">
-                    {order?.shipping_address?.address || address || "Unknown"}, {states}, {zipCode}
+                    {order?.shipping_address?.address || address || "Unknown"}, {order?.shipping_address?.states || states}, {order?.shipping_address?.zipCode || zipCode}
                   </h3>
                 </div>
                 <div>
