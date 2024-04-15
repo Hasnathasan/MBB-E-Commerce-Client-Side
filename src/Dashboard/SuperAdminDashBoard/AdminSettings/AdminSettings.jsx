@@ -2,37 +2,149 @@ import {
   Pagination,
   Button,
   ButtonGroup,
-  Chip,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
   Checkbox,
-  SelectItem,
   Table,
   TableBody,
   TableCell,
   TableColumn,
   TableHeader,
   TableRow,
-  User,
   useDisclosure,
 } from "@nextui-org/react";
+import Select from 'react-select';
 import axios from "axios";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useSystemInfo from "../../../Hooks/useSystemInfo";
 import Loader from "../../../Components/Loader/Loader";
 
 import toast from "react-hot-toast";
 import useTaxAndShippingData from "../../../Hooks/useTaxAndShippingData";
 const AdminSettings = () => {
-  const [dataToUpdate, setDataToUpdate] = useState();
+  const [dataToUpdate, setDataToUpdate] = useState(null);
   const [isStandardShippingSelected, setIsStandardShippingSelected] = useState(false);
   const [isExpressDeliverySelected, setIsExpressDeliverySelected] = useState(false);
   const [isFreeShippingSelected, setIsFreeShippingSelected] = useState(false);
   const [systemInfo, isSystemInfo, refetch] = useSystemInfo();
   const [data, isDataLoading, refetchTaxAndShipping] = useTaxAndShippingData();
+  
+  const [selectedState, SetSelectedState] = useState(null);
+  const [selectedUpdateState, SetSelectedUpdateState] = useState(null);
+ 
+    const statesOfUsa = {
+      "AL": "Alabama",
+      "AK": "Alaska",
+      "AZ": "Arizona",
+      "AR": "Arkansas",
+      "CA": "California",
+      "CO": "Colorado",
+      "CT": "Connecticut",
+      "DE": "Delaware",
+      "FL": "Florida",
+      "GA": "Georgia",
+      "HI": "Hawaii",
+      "ID": "Idaho",
+      "IL": "Illinois",
+      "IN": "Indiana",
+      "IA": "Iowa",
+      "KS": "Kansas",
+      "KY": "Kentucky",
+      "LA": "Louisiana",
+      "ME": "Maine",
+      "MD": "Maryland",
+      "MA": "Massachusetts",
+      "MI": "Michigan",
+      "MN": "Minnesota",
+      "MS": "Mississippi",
+      "MO": "Missouri",
+      "MT": "Montana",
+      "NE": "Nebraska",
+      "NV": "Nevada",
+      "NH": "New Hampshire",
+      "NJ": "New Jersey",
+      "NM": "New Mexico",
+      "NY": "New York",
+      "NC": "North Carolina",
+      "ND": "North Dakota",
+      "OH": "Ohio",
+      "OK": "Oklahoma",
+      "OR": "Oregon",
+      "PA": "Pennsylvania",
+      "RI": "Rhode Island",
+      "SC": "South Carolina",
+      "SD": "South Dakota",
+      "TN": "Tennessee",
+      "TX": "Texas",
+      "UT": "Utah",
+      "VT": "Vermont",
+      "VA": "Virginia",
+      "WA": "Washington",
+      "WV": "West Virginia",
+      "WI": "Wisconsin",
+      "WY": "Wyoming"
+  };
+
+  // const options = statesFullNameArray?.map(state => {
+  //   const option = {value: state, label: state};
+  //   return option
+  // })
+
+  const options = [
+    { value: 'AL', label: 'Alabama' },
+    { value: 'AK', label: 'Alaska' },
+    { value: 'AZ', label: 'Arizona' },
+    { value: 'AR', label: 'Arkansas' },
+    { value: 'CA', label: 'California' },
+    { value: 'CO', label: 'Colorado' },
+    { value: 'CT', label: 'Connecticut' },
+    { value: 'DE', label: 'Delaware' },
+    { value: 'FL', label: 'Florida' },
+    { value: 'GA', label: 'Georgia' },
+    { value: 'HI', label: 'Hawaii' },
+    { value: 'ID', label: 'Idaho' },
+    { value: 'IL', label: 'Illinois' },
+    { value: 'IN', label: 'Indiana' },
+    { value: 'IA', label: 'Iowa' },
+    { value: 'KS', label: 'Kansas' },
+    { value: 'KY', label: 'Kentucky' },
+    { value: 'LA', label: 'Louisiana' },
+    { value: 'ME', label: 'Maine' },
+    { value: 'MD', label: 'Maryland' },
+    { value: 'MA', label: 'Massachusetts' },
+    { value: 'MI', label: 'Michigan' },
+    { value: 'MN', label: 'Minnesota' },
+    { value: 'MS', label: 'Mississippi' },
+    { value: 'MO', label: 'Missouri' },
+    { value: 'MT', label: 'Montana' },
+    { value: 'NE', label: 'Nebraska' },
+    { value: 'NV', label: 'Nevada' },
+    { value: 'NH', label: 'New Hampshire' },
+    { value: 'NJ', label: 'New Jersey' },
+    { value: 'NM', label: 'New Mexico' },
+    { value: 'NY', label: 'New York' },
+    { value: 'NC', label: 'North Carolina' },
+    { value: 'ND', label: 'North Dakota' },
+    { value: 'OH', label: 'Ohio' },
+    { value: 'OK', label: 'Oklahoma' },
+    { value: 'OR', label: 'Oregon' },
+    { value: 'PA', label: 'Pennsylvania' },
+    { value: 'RI', label: 'Rhode Island' },
+    { value: 'SC', label: 'South Carolina' },
+    { value: 'SD', label: 'South Dakota' },
+    { value: 'TN', label: 'Tennessee' },
+    { value: 'TX', label: 'Texas' },
+    { value: 'UT', label: 'Utah' },
+    { value: 'VT', label: 'Vermont' },
+    { value: 'VA', label: 'Virginia' },
+    { value: 'WA', label: 'Washington' },
+    { value: 'WV', label: 'West Virginia' },
+    { value: 'WI', label: 'Wisconsin' },
+    { value: 'WY', label: 'Wyoming' }
+];
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const {
     isOpen: isUpdateOpen,
@@ -126,7 +238,7 @@ const handleSystemSettingClick = () => {
 const handleTaxShippingMethodAdding = (e, onClose) => {
   e.preventDefault();
   const form = e.target;
-  const states = form.states.value;
+  const states = selectedState?.value;
   const zipCode = form.zipCode.value;
   const tax_rate = form.tax_rate.value;
   let shipping_methods = {};
@@ -199,6 +311,9 @@ const handleTaxShippingMethodAdding = (e, onClose) => {
   };
 
   const handleUpdateModal = (data) => {
+    console.log(data);
+    setDataToUpdate(data);
+    SetSelectedUpdateState({value: data?.states, label: statesOfUsa?.[data?.states]})
     if(data.shipping_methods?.standard_shipping){
       setIsStandardShippingSelected(true)
     }
@@ -208,14 +323,14 @@ const handleTaxShippingMethodAdding = (e, onClose) => {
     if(data.shipping_methods?.free_shipping == 0){
       setIsFreeShippingSelected(true)
     }
-    setDataToUpdate(data);
+    
     onUpdateOpen();
   };
 
   const handleTaxShippingMethodUpdating = (e, onClose) => {
     e.preventDefault();
   const form = e.target;
-  const states = form.states.value;
+  const states = selectedUpdateState?.value;
   const zipCode = form.zipCode.value;
   const tax_rate = form.tax_rate.value;
   let shipping_methods = {};
@@ -384,7 +499,13 @@ const handleTaxShippingMethodAdding = (e, onClose) => {
         backdrop="opaque"
         className="!z-50"
         isOpen={isOpen}
-        onOpenChange={onOpenChange}
+        onOpenChange={() => {
+          SetSelectedState(null)
+          setIsExpressDeliverySelected(false)
+          setIsStandardShippingSelected(false)
+          setIsFreeShippingSelected(false)
+          onOpenChange()
+        }}
       >
         <ModalContent>
           {(onClose) => (
@@ -394,17 +515,15 @@ const handleTaxShippingMethodAdding = (e, onClose) => {
               </ModalHeader>
               <ModalBody>
                 <form onSubmit={(e) => handleTaxShippingMethodAdding(e, onClose)} className="p-5">
-                <div>
-              <label htmlFor="states">States</label>
-              <input
-                type="text"
-                name="states"
-                id="states"
-                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                placeholder="States Name"
-                required
-              />
-            </div>
+                <div className="mb-3">
+                <label htmlFor="states">States</label>
+                <Select
+      value={selectedState}
+      onChange={value => SetSelectedState(value)}
+      options={options}
+      placeholder="Select your state"
+    />
+                </div>
                   <div>
               <label htmlFor="zipCode">Zip Code</label>
               <input
@@ -483,7 +602,6 @@ const handleTaxShippingMethodAdding = (e, onClose) => {
           setIsExpressDeliverySelected(false)
           setIsStandardShippingSelected(false)
           setIsFreeShippingSelected(false)
-          setDataToUpdate(null)
           onUpdateOpenChange()
         }}
       >
@@ -495,18 +613,15 @@ const handleTaxShippingMethodAdding = (e, onClose) => {
               </ModalHeader>
               <ModalBody>
                 <form onSubmit={(e) => handleTaxShippingMethodUpdating(e, onClose)} className="p-5">
-                <div>
-              <label htmlFor="states">States</label>
-              <input
-                type="text"
-                name="states"
-                id="states"
-                className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                placeholder="States Name"
-                defaultValue={dataToUpdate?.states}
-                required
-              />
-            </div>
+                <div className="mb-3">
+                <label htmlFor="states">States</label>
+                <Select
+      value={selectedUpdateState}
+      onChange={value => SetSelectedUpdateState(value)}
+      options={options}
+      placeholder="Select your state"
+    />
+                </div>
                   <div>
               <label htmlFor="zipCode">Zip Code</label>
               <input
