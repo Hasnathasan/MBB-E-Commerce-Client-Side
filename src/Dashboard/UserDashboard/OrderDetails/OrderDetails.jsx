@@ -127,6 +127,9 @@ const OrderDetails = () => {
               <h3 className=" text-gray-500 text-sm font-medium">
                 Payment Method: <span className="text-gray-800">STRIPE</span>
               </h3>
+              <h3 className=" text-gray-500 text-sm font-medium">
+                Order Status: <span className="text-green-600 capitalize">{order?.status}</span>
+              </h3>
             </div>
 
             <div className="p-5">
@@ -143,12 +146,12 @@ const OrderDetails = () => {
                 <h5 className="text-sm font-medium">${order?.tax}</h5>
               </div>
               <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
-                <h3 className=" text-gray-500 text-sm font-medium">
-                  Shipping Method:
-                </h3>
-                {order?.shippingMethod?.standard_shipping ? <h5  className="text-sm font-medium">Standard Shipping: ${order?.shippingMethod?.standard_shipping}</h5> : ""}
-                {order?.shippingMethod?.express_shipping ? <h5  className="text-sm font-medium">Express Shipping: ${order?.shippingMethod?.express_shipping}</h5> : ""}
-                {order?.shippingMethod?.free_shipping ? <h5  className="text-sm font-medium">Free Shipping</h5> : ""}
+                {order?.shippingMethod?.standard_shipping ? <h5  className="text-sm font-medium">Standard Shipping:</h5> : ""}
+                {order?.shippingMethod?.express_shipping ? <h5  className="text-sm font-medium">Express Shipping:</h5> : ""}
+                {order?.shippingMethod?.free_shipping == 0 ? <h5  className="text-sm font-medium">Free Shipping:</h5> : ""}
+                {order?.shippingMethod?.standard_shipping ? <h5  className="text-sm font-medium">${order?.shippingMethod?.standard_shipping}</h5> : ""}
+                {order?.shippingMethod?.express_shipping ? <h5  className="text-sm font-medium">${order?.shippingMethod?.express_shipping}</h5> : ""}
+                {order?.shippingMethod?.free_shipping == 0 ? <h5  className="text-sm font-medium">{order?.shippingMethod?.free_shipping}</h5> : ""}
               </div>
               <div className="flex justify-between pt-2 pb-3 items-center">
                 <h3 className=" font-medium">Total</h3>
