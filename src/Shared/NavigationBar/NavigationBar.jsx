@@ -14,7 +14,17 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import useSystemInfo from "../../Hooks/useSystemInfo";
 // import useUser from "../../Hooks/useUser";
 const NavigationBar = () => {
-  const {setSearchQuery, setCategoryFilter, setPriceSlider, setMinRating, user, isProductAdded, setIsProductAdded, openCart, setOpenCart} = useContext(AuthContext);
+  const {
+    setSearchQuery,
+    setCategoryFilter,
+    setPriceSlider,
+    setMinRating,
+    user,
+    isProductAdded,
+    setIsProductAdded,
+    openCart,
+    setOpenCart,
+  } = useContext(AuthContext);
   const [isFixed, setIsFixed] = useState(false);
   const [open, setOpen] = useState(false);
   const openDrawer = () => setOpen(true);
@@ -22,32 +32,38 @@ const NavigationBar = () => {
   const openCartDrawer = () => setOpenCart(true);
   const closeCartDrawer = () => setOpenCart(false);
   const [userCart, setUserCart] = useState([]);
-const [systemInfo, isSystemInfo, refetch] = useSystemInfo();
-useEffect(() => {
-  // Try retrieving the cart from localStorage, with a default of an empty array if not found
-  const cart = localStorage.getItem("cart") || '[]';
+  const [systemInfo, isSystemInfo, refetch] = useSystemInfo();
+  useEffect(() => {
+    // Try retrieving the cart from localStorage, with a default of an empty array if not found
+    const cart = localStorage.getItem("cart") || "[]";
 
-  // Parse the retrieved data (either an empty string or valid JSON string)
-  try {
-    setUserCart(JSON.parse(cart));
-  } catch (error) {
-    // Handle parsing error gracefully (e.g., log the error)
-    console.error("Error parsing local storage cart:", error);
-    // Set userCart to an empty array in case of parsing error
-    setUserCart([]);
-  }
-}, [isProductAdded]);
-const subTotal = userCart?.reduce((accumulator, product) => {
-  const price = product?.price;
-  return accumulator + (price.sale_price* product?.quantity || price.regular_price* product?.quantity); // Use nullish coalescing for price2
-}, 0);
+    // Parse the retrieved data (either an empty string or valid JSON string)
+    try {
+      setUserCart(JSON.parse(cart));
+    } catch (error) {
+      // Handle parsing error gracefully (e.g., log the error)
+      console.error("Error parsing local storage cart:", error);
+      // Set userCart to an empty array in case of parsing error
+      setUserCart([]);
+    }
+  }, [isProductAdded]);
+  const subTotal = userCart?.reduce((accumulator, product) => {
+    const price = product?.price;
+    return (
+      accumulator +
+      (price.sale_price * product?.quantity ||
+        price.regular_price * product?.quantity)
+    ); // Use nullish coalescing for price2
+  }, 0);
   // const [userData, isUserDataLoading] = useUser();
   const navigate = useNavigate();
   const handleDeleteFromCart = (id) => {
-    setUserCart(prevCart => {
-      const updatedCart = prevCart.filter(product => product.product_id !== id);
+    setUserCart((prevCart) => {
+      const updatedCart = prevCart.filter(
+        (product) => product.product_id !== id
+      );
       localStorage.setItem("cart", JSON.stringify(updatedCart));
-      setIsProductAdded(prevCount => prevCount + 1);
+      setIsProductAdded((prevCount) => prevCount + 1);
       return updatedCart;
     });
   };
@@ -68,16 +84,16 @@ const subTotal = userCart?.reduce((accumulator, product) => {
   //   // const siteAdminData = {email, userName, userPhoneNumber, userPhoto, }
   // }
 
-  const handleSearch = e => {
+  const handleSearch = (e) => {
     e.preventDefault();
     const searchQuery = e.target.searchQuery.value;
-    setCategoryFilter(null)
-    setMinRating(null)
-    setPriceSlider([0,1000])
-    setSearchQuery(searchQuery)
+    setCategoryFilter(null);
+    setMinRating(null);
+    setPriceSlider([0, 1000]);
+    setSearchQuery(searchQuery);
 
-    navigate("/shop/filter")
-  }
+    navigate("/shop/filter");
+  };
   return (
     <div className="w-full relative z-[50] mx-auto">
       {/* Top Info - Company name + sign In / sign up button */}
@@ -92,17 +108,19 @@ const subTotal = userCart?.reduce((accumulator, product) => {
             <h3>USD</h3>
           </div>
           <span>|</span> */}
-          {
-            !user ? <div className="flex justify-center gap-2 items-center">
-            <Link to={"/signin"} className="cursor-pointer">
-              Sign In
-            </Link>{" "}
-            <span>/</span>{" "}
-            <Link to={"signup"} className="cursor-pointer">
-              Sign Up
-            </Link>
-          </div> : <Link to={"/userDashboard/profile"}>Dashboard</Link>
-          }
+          {!user ? (
+            <div className="flex justify-center gap-2 items-center">
+              <Link to={"/signin"} className="cursor-pointer">
+                Sign In
+              </Link>{" "}
+              <span>/</span>{" "}
+              <Link to={"signup"} className="cursor-pointer">
+                Sign Up
+              </Link>
+            </div>
+          ) : (
+            <Link to={"/userDashboard/profile"}>Dashboard</Link>
+          )}
         </div>
       </div>
       {/* isFixed ? "fixed1 transition-all duration-500" : "" */}
@@ -118,11 +136,14 @@ const subTotal = userCart?.reduce((accumulator, product) => {
           </Link>
 
           <div className="">
-            <form onSubmit={handleSearch} className="h-10 w-full relative flex justify-center items-center">
+            <form
+              onSubmit={handleSearch}
+              className="h-10 w-full relative flex justify-center items-center"
+            >
               <CiSearch className="absolute w-5 h-5 top-2.5 left-2.5"></CiSearch>
               <input
-              name="searchQuery"
-              id="searchQuery"
+                name="searchQuery"
+                id="searchQuery"
                 className="h-full md:w-[240px] lg:w-[350px] ps-10 border border-gray-200 text-sm rounded-l outline-none"
                 type="text"
                 placeholder="Search"
@@ -133,7 +154,9 @@ const subTotal = userCart?.reduce((accumulator, product) => {
             </form>
           </div>
           <div className="flex justify-center items-center gap-4">
-            <Link to={"/userDashboard/wishList"}><GoHeart className="w-8 h-8" /></Link>
+            <Link to={"/userDashboard/wishList"}>
+              <GoHeart className="w-8 h-8" />
+            </Link>
             <span>|</span>
             <div
               onClick={openCartDrawer}
@@ -158,22 +181,15 @@ const subTotal = userCart?.reduce((accumulator, product) => {
             <NavLink to={"/about-us"}>About Us</NavLink>
             <NavLink to={"/contact-us"}>Contact Us</NavLink>
           </div>
-          {/* <div className="flex justify-center items-center gap-8"> */}
-          {/* <Button
-          onClick={handleSiteAdminRequest}
-              className="h-full py-2 text-white hover:!text-white"
-              size="sm"
-              color="success"
-              radius="none"
-              variant="solid"
-            >
-              Request to be a Site Admin
-            </Button> */}
           <div>
-            
-            <a className="flex justify-center items-center gap-2" href={`tel:${systemInfo?.[0]?.phone_number}`}><FiPhoneCall className="w-6 h-6"></FiPhoneCall> {systemInfo?.[0]?.phone_number}</a>
+            <a
+              className="flex justify-center items-center gap-2"
+              href={`tel:${systemInfo?.[0]?.phone_number}`}
+            >
+              <FiPhoneCall className="w-6 h-6"></FiPhoneCall>{" "}
+              {systemInfo?.[0]?.phone_number}
+            </a>
           </div>
-          {/* </div> */}
         </div>
       </div>
 
@@ -185,21 +201,29 @@ const subTotal = userCart?.reduce((accumulator, product) => {
           src={hamburger}
           alt=""
         />
-        <form onSubmit={handleSearch} className="h-8 relative flex justify-center  items-center">
+        <form
+          onSubmit={handleSearch}
+          className="h-8 relative flex justify-center  items-center"
+        >
           <CiSearch className="absolute w-4 h-4 top-2 left-1"></CiSearch>
           <input
-          id="searchQuery"
-          name="searchQuery"
+            id="searchQuery"
+            name="searchQuery"
             className="h-full w-[150px] sm:w-[250px] ps-7 border border-gray-200 text-sm rounded-l outline-none"
             type="text"
             placeholder="Search"
           />
-          <button type="submit" className="bg-green-500 border text-white border-green-500 rounded-r text-xs px-3 h-full">
+          <button
+            type="submit"
+            className="bg-green-500 border text-white border-green-500 rounded-r text-xs px-3 h-full"
+          >
             Search
           </button>
         </form>
         <div className="flex justify-center items-center gap-3">
-          <Link to={"/userDashboard/wishList"}><GoHeart  className="w-5 h-5"></GoHeart></Link>
+          <Link to={"/userDashboard/wishList"}>
+            <GoHeart className="w-5 h-5"></GoHeart>
+          </Link>
           <span>|</span>
           <HiOutlineShoppingBag
             onClick={openCartDrawer}
@@ -211,423 +235,26 @@ const subTotal = userCart?.reduce((accumulator, product) => {
       {/* Side Navigation bar for Small Devices */}
 
       <Drawer open={open} onClose={closeDrawer} className="p-0 overflow-y-auto">
-        {/* <Card className="h-screen w-full max-w-[20rem] rounded-none p-0 shadow-xl shadow-blue-gray-900/5">
-          <div className="mb-2 bg-[#0397d3] text-white py-[10px] px-3 flex items-center justify-between gap-1">
-            <div className="flex items-center gap-1">
-              <FaHome className="w-5 h-4"></FaHome>
-              <p className="text-xl">Home</p>
-            </div>
-            <RxCross2 onClick={closeDrawer} className="w-6 h-6"></RxCross2>
-          </div>
-          <List className="overflow-y-auto">
-            <Accordion
-              open={openAccordian === 3}
-              icon={
-                <FaAngleDown
-                  className={`mx-auto h-4 w-4 transition-transform ${
-                    openAccordian === 3 ? "rotate-180" : ""
-                  }`}
-                />
-              }
-            >
-              <ListItem
-                ripple={false}
-                className="p-0"
-                selected={openAccordian === 3}
-              >
-                <AccordionHeader
-                  onClick={() => handleOpen(3)}
-                  className="border-b-0 p-3"
-                >
-                  <ListItemPrefix>
-                    <FaCalculator></FaCalculator>
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className="mr-auto font-normal">
-                    Electronics
-                  </Typography>
-                </AccordionHeader>
-              </ListItem>
-              <AccordionBody className="py-1">
-                <List className="p-0">
-                  <ListItem ripple={false}>
-                    <Link
-                      to={"/products/electronics"}
-                      className=" flex items-center gap-1 w-full h-full"
-                    >
-                      <ListItemPrefix>
-                        <img className="w-5 h-5" src={category10} alt="" />
-                      </ListItemPrefix>
-                      All Electronics Products
-                    </Link>
-                  </ListItem>
-                  <ListItem ripple={false}>
-                    <Link
-                      to={"/products/refrigerators"}
-                      className=" flex items-center gap-1 w-full h-full"
-                    >
-                      <ListItemPrefix>
-                        <img className="w-5 h-5" src={refrigerator} alt="" />
-                      </ListItemPrefix>
-                      Refrigerators
-                    </Link>
-                  </ListItem>
-                  <ListItem ripple={false}>
-                    <Link
-                      to={"/products/televisions"}
-                      className=" flex items-center gap-1 w-full h-full"
-                    >
-                      <ListItemPrefix>
-                        <img className="w-5 h-5" src={category9} alt="" />
-                      </ListItemPrefix>
-                      Televisions
-                    </Link>
-                  </ListItem>
-                  <ListItem ripple={false}>
-                    <Link
-                      to={"/products/irons"}
-                      className=" flex items-center gap-1 w-full h-full"
-                    >
-                      <ListItemPrefix>
-                        <img className="w-5 h-5" src={iron} alt="" />
-                      </ListItemPrefix>
-                      Iron Machines
-                    </Link>
-                  </ListItem>
-                  <ListItem ripple={false}>
-                    <Link
-                      to={"/products/kettles"}
-                      className=" flex items-center gap-1 w-full h-full"
-                    >
-                      <ListItemPrefix>
-                        <img className="w-5 h-5" src={kettle} alt="" />
-                      </ListItemPrefix>
-                      Kettles
-                    </Link>
-                  </ListItem>
-                  <ListItem ripple={false}>
-                    <Link
-                      to={"/products/airCollers"}
-                      className=" flex items-center gap-1 w-full h-full"
-                    >
-                      <ListItemPrefix>
-                        <img className="w-5 h-5" src={AC} alt="" />
-                      </ListItemPrefix>
-                      Air Collers
-                    </Link>
-                  </ListItem>
-                </List>
-              </AccordionBody>
-            </Accordion>
-            <Accordion
-              open={openAccordian === 4}
-              icon={
-                <FaCalculator
-                  className={`mx-auto h-4 w-4 transition-transform ${
-                    openAccordian === 4 ? "rotate-180" : ""
-                  }`}
-                />
-              }
-            >
-              <ListItem
-                ripple={false}
-                className="p-0"
-                selected={openAccordian === 4}
-              >
-                <AccordionHeader
-                  onClick={() => handleOpen(4)}
-                  className="border-b-0 p-3"
-                >
-                  <ListItemPrefix>
-                    <FaCalculator></FaCalculator>
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className="mr-auto font-normal">
-                    Kids zone
-                  </Typography>
-                </AccordionHeader>
-              </ListItem>
-              <AccordionBody className="py-1">
-                <List className="p-0">
-                  <ListItem ripple={false}>
-                    <ListItemPrefix>
-                      <FaCalculator></FaCalculator>
-                    </ListItemPrefix>
-                    Orders
-                  </ListItem>
-                  <ListItem ripple={false}>
-                    <ListItemPrefix>
-                      <FaCalculator></FaCalculator>
-                    </ListItemPrefix>
-                    Products
-                  </ListItem>
-                </List>
-              </AccordionBody>
-            </Accordion>
-            <Accordion
-              open={openAccordian === 5}
-              icon={
-                <FaCalculator
-                  className={`mx-auto h-4 w-4 transition-transform ${
-                    openAccordian === 5 ? "rotate-180" : ""
-                  }`}
-                />
-              }
-            >
-              <ListItem
-                ripple={false}
-                className="p-0"
-                selected={openAccordian === 5}
-              >
-                <AccordionHeader
-                  onClick={() => handleOpen(5)}
-                  className="border-b-0 p-3"
-                >
-                  <ListItemPrefix>
-                    <FaCalculator></FaCalculator>
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className="mr-auto font-normal">
-                    কিডস জোন
-                  </Typography>
-                </AccordionHeader>
-              </ListItem>
-              <AccordionBody className="py-1">
-                <List className="p-0">
-                  <ListItem ripple={false}>
-                    <ListItemPrefix>
-                      <FaCalculator></FaCalculator>
-                    </ListItemPrefix>
-                    Orders
-                  </ListItem>
-                  <ListItem ripple={false}>
-                    <ListItemPrefix>
-                      <FaCalculator></FaCalculator>
-                    </ListItemPrefix>
-                    Products
-                  </ListItem>
-                </List>
-              </AccordionBody>
-            </Accordion>
-            <Accordion
-              open={openAccordian === 6}
-              icon={
-                <FaCalculator
-                  className={`mx-auto h-4 w-4 transition-transform ${
-                    openAccordian === 6 ? "rotate-180" : ""
-                  }`}
-                />
-              }
-            >
-              <ListItem
-                ripple={false}
-                className="p-0"
-                selected={openAccordian === 6}
-              >
-                <AccordionHeader
-                  onClick={() => handleOpen(6)}
-                  className="border-b-0 p-3"
-                >
-                  <ListItemPrefix>
-                    <FaCalculator></FaCalculator>
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className="mr-auto font-normal">
-                    প্রাতিষ্ঠানিক অর্ডার
-                  </Typography>
-                </AccordionHeader>
-              </ListItem>
-              <AccordionBody className="py-1">
-                <List className="p-0">
-                  <ListItem ripple={false}>
-                    <ListItemPrefix>
-                      <FaCalculator></FaCalculator>
-                    </ListItemPrefix>
-                    Orders
-                  </ListItem>
-                  <ListItem ripple={false}>
-                    <ListItemPrefix>
-                      <FaCalculator></FaCalculator>
-                    </ListItemPrefix>
-                    Products
-                  </ListItem>
-                </List>
-              </AccordionBody>
-            </Accordion>
-            <Accordion
-              open={openAccordian === 6}
-              icon={
-                <FaCalculator
-                  className={`mx-auto h-4 w-4 transition-transform ${
-                    openAccordian === 6 ? "rotate-180" : ""
-                  }`}
-                />
-              }
-            >
-              <ListItem
-                ripple={false}
-                className="p-0"
-                selected={openAccordian === 6}
-              >
-                <AccordionHeader
-                  onClick={() => handleOpen(6)}
-                  className="border-b-0 p-3"
-                >
-                  <ListItemPrefix>
-                    <FaCalculator></FaCalculator>
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className="mr-auto font-normal">
-                    অফার সমূহ
-                  </Typography>
-                </AccordionHeader>
-              </ListItem>
-              <AccordionBody className="py-1">
-                <List className="p-0">
-                  <ListItem ripple={false}>
-                    <ListItemPrefix>
-                      <FaCalculator></FaCalculator>
-                    </ListItemPrefix>
-                    Orders
-                  </ListItem>
-                  <ListItem ripple={false}>
-                    <ListItemPrefix>
-                      <FaCalculator></FaCalculator>
-                    </ListItemPrefix>
-                    Products
-                  </ListItem>
-                </List>
-              </AccordionBody>
-            </Accordion>
-            <Accordion
-              open={openAccordian === 6}
-              icon={
-                <FaCalculator
-                  className={`mx-auto h-4 w-4 transition-transform ${
-                    openAccordian === 6 ? "rotate-180" : ""
-                  }`}
-                />
-              }
-            >
-              <ListItem
-                ripple={false}
-                className="p-0"
-                selected={openAccordian === 6}
-              >
-                <AccordionHeader
-                  onClick={() => handleOpen(6)}
-                  className="border-b-0 p-3"
-                >
-                  <ListItemPrefix>
-                    <FaCalculator></FaCalculator>
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className="mr-auto font-normal">
-                    কুইজ
-                  </Typography>
-                </AccordionHeader>
-              </ListItem>
-              <AccordionBody className="py-1">
-                <List className="p-0">
-                  <ListItem ripple={false}>
-                    <ListItemPrefix>
-                      <FaCalculator></FaCalculator>
-                    </ListItemPrefix>
-                    Orders
-                  </ListItem>
-                  <ListItem ripple={false}>
-                    <ListItemPrefix>
-                      <FaCalculator></FaCalculator>
-                    </ListItemPrefix>
-                    Products
-                  </ListItem>
-                </List>
-              </AccordionBody>
-            </Accordion>
-            <Accordion
-              open={openAccordian === 6}
-              icon={
-                <FaCalculator
-                  className={`mx-auto h-4 w-4 transition-transform ${
-                    openAccordian === 6 ? "rotate-180" : ""
-                  }`}
-                />
-              }
-            >
-              <ListItem
-                ripple={false}
-                className="p-0"
-                selected={openAccordian === 6}
-              >
-                <AccordionHeader
-                  onClick={() => handleOpen(6)}
-                  className="border-b-0 p-3"
-                >
-                  <ListItemPrefix>
-                    <FaCalculator></FaCalculator>
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className="mr-auto font-normal">
-                    ব্লগ
-                  </Typography>
-                </AccordionHeader>
-              </ListItem>
-              <AccordionBody className="py-1">
-                <List className="p-0">
-                  <ListItem ripple={false}>
-                    <ListItemPrefix>
-                      <FaCalculator></FaCalculator>
-                    </ListItemPrefix>
-                    Orders
-                  </ListItem>
-                  <ListItem ripple={false}>
-                    <ListItemPrefix>
-                      <FaCalculator></FaCalculator>
-                    </ListItemPrefix>
-                    Products
-                  </ListItem>
-                </List>
-              </AccordionBody>
-            </Accordion>
-            <Accordion
-              open={openAccordian === 6}
-              icon={
-                <FaCalculator
-                  className={`mx-auto h-4 w-4 transition-transform ${
-                    openAccordian === 6 ? "rotate-180" : ""
-                  }`}
-                />
-              }
-            >
-              <ListItem
-                ripple={false}
-                className="p-0"
-                selected={openAccordian === 6}
-              >
-                <AccordionHeader
-                  onClick={() => handleOpen(6)}
-                  className="border-b-0 p-3"
-                >
-                  <ListItemPrefix>
-                    <FaCalculator></FaCalculator>
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className="mr-auto font-normal">
-                    গিফট ফাইন্ডার
-                  </Typography>
-                </AccordionHeader>
-              </ListItem>
-              <AccordionBody className="py-1">
-                <List className="p-0">
-                  <ListItem ripple={false}>
-                    <ListItemPrefix>
-                      <FaCalculator></FaCalculator>
-                    </ListItemPrefix>
-                    Orders
-                  </ListItem>
-                  <ListItem ripple={false}>
-                    <ListItemPrefix>
-                      <FaCalculator></FaCalculator>
-                    </ListItemPrefix>
-                    Products
-                  </ListItem>
-                </List>
-              </AccordionBody>
-            </Accordion>
-          </List>
-        </Card> */}
+        <div className="flex justify-center flex-col text-xl items-center gap-8 mt-8  font-semibold">
+          <NavLink onClick={closeDrawer} to={"/"}>
+            Home
+          </NavLink>
+          <NavLink onClick={closeDrawer} to={"/artists"}>
+            Artists
+          </NavLink>
+          <NavLink onClick={closeDrawer} to={"/categories"}>
+            Categories
+          </NavLink>
+          <NavLink onClick={closeDrawer} to={"/shop/filter"}>
+            Products
+          </NavLink>
+          <NavLink onClick={closeDrawer} to={"/about-us"}>
+            About Us
+          </NavLink>
+          <NavLink onClick={closeDrawer} to={"/contact-us"}>
+            Contact Us
+          </NavLink>
+        </div>
       </Drawer>
 
       {/* Side bar for Cart */}
@@ -640,7 +267,9 @@ const subTotal = userCart?.reduce((accumulator, product) => {
         className="px-8 py-10 h-full flex flex-col shadow-large overflow-y-auto"
       >
         <div className="flex justify-between items-center mb-5">
-          <h2 className="text-xl font-semibold">Shoping Cart ({userCart?.length})</h2>
+          <h2 className="text-xl font-semibold">
+            Shoping Cart ({userCart?.length})
+          </h2>
           <Button
             onClick={closeCartDrawer}
             size="sm"
@@ -652,35 +281,44 @@ const subTotal = userCart?.reduce((accumulator, product) => {
           </Button>
         </div>
         <div className="flex flex-1 flex-col overflow-y-auto my-4 gap-4">
-          {
-            userCart?.map(product => <div key={product?.product_id}>
+          {userCart?.map((product) => (
+            <div key={product?.product_id}>
               <div className="flex items-center gap-2">
-            <img className="w-20 h-20" src={product?.featured_photo} alt="" />
-            <div className="flex flex-1 items-center justify-between">
-              <div>
-                <h5 className="text-sm font-medium">{product?.product_name}</h5>
-                <h6 className="text-sm text-gray-600">(1 * {product?.quantity}) products</h6>
+                <img
+                  className="w-20 h-20"
+                  src={product?.featured_photo}
+                  alt=""
+                />
+                <div className="flex flex-1 items-center justify-between">
+                  <div>
+                    <h5 className="text-sm font-medium">
+                      {product?.product_name}
+                    </h5>
+                    <h6 className="text-sm text-gray-600">
+                      (1 * {product?.quantity}) products
+                    </h6>
+                  </div>
+                  <Button
+                    onClick={() => handleDeleteFromCart(product?.product_id)}
+                    size="sm"
+                    className="p-0"
+                    radius="full"
+                    variant="bordered"
+                    isIconOnly
+                  >
+                    <RxCross2></RxCross2>
+                  </Button>{" "}
+                </div>
               </div>
-              <Button
-              onClick={() => handleDeleteFromCart(product?.product_id)}
-                size="sm"
-                className="p-0"
-                radius="full"
-                variant="bordered"
-                isIconOnly
-              >
-                <RxCross2></RxCross2>
-              </Button>{" "}
+              <span className=" border-t-2 border-gray-500"></span>
             </div>
-          </div>
-          <span className=" border-t-2 border-gray-500"></span>
-            </div>)
-          }
-          
+          ))}
         </div>
         <div className="mt-auto">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-medium">{userCart?.length} Product</span>
+            <span className="text-sm font-medium">
+              {userCart?.length} Product
+            </span>
             <span className="text-sm font-semibold">${subTotal}</span>
           </div>
           <div className="space-y-2">

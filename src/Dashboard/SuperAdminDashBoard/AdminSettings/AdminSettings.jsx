@@ -206,14 +206,14 @@ console.log(data);
             }
 
             // Patch system setting
-            return axios.put(`https://mbb-e-commerce-server.vercel.app/system-setting-update/${systemInfo[0]?._id}`, data);
+            return axios.patch(`https://mbb-e-commerce-server.vercel.app/system-setting-update/${systemInfo[0]?._id}`, data);
         })
         .then((res) => {
             console.log(res.data);
             if (res.data.modifiedCount > 0) {
                 return res.data; // Return data to handle success message
             } else {
-                throw new Error("System Info not updated");
+                throw new Error("Everything is up to date");
             }
         })
         .catch((err) => {
@@ -228,7 +228,7 @@ const handleSystemSettingClick = () => {
     toast.promise(promise, {
         loading: 'Updating system settings...',
         success: 'System Info Updated',
-        error: 'An error occurred while updating system settings'
+        error: (err) => err?.message ||  'An error occurred while updating system settings'
     });
 };
 
