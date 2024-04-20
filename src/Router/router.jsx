@@ -43,7 +43,6 @@ import TermsAndCondition from "../Components/TermsAndCondition/TermsAndCondition
 import RefundPolicy from "../Components/RefundPolicy/RefundPolicy";
 import AdminOnlyRoute from "../Components/AdminOnlyRoute/AdminOnlyRoute";
 
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -51,11 +50,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home></Home>
+        element: <Home></Home>,
       },
       {
         path: "*",
-        element: <Error></Error>
+        element: <Error></Error>,
       },
       {
         path: "/shop",
@@ -63,168 +62,176 @@ const router = createBrowserRouter([
         children: [
           {
             path: "filter",
-            element: <ProductCardsForProductPage></ProductCardsForProductPage>
-          }
-        ]
+            element: <ProductCardsForProductPage></ProductCardsForProductPage>,
+          },
+        ],
       },
       {
         path: "/details/:id",
-        element: <Details></Details>
+        element: <Details></Details>,
       },
       {
         path: "/privacy-policy",
-        element: <PrivacyPolicy></PrivacyPolicy>
+        element: <PrivacyPolicy></PrivacyPolicy>,
       },
       {
         path: "/terms&condition",
-        element: <TermsAndCondition></TermsAndCondition>
+        element: <TermsAndCondition></TermsAndCondition>,
       },
       {
         path: "/refundPolicy",
-        element: <RefundPolicy></RefundPolicy>
+        element: <RefundPolicy></RefundPolicy>,
       },
       {
         path: "/signin",
-        element: <SignIn></SignIn>
+        element: <SignIn></SignIn>,
       },
       {
         path: "/about-us",
-        element: <AboutUs></AboutUs>
+        element: <AboutUs></AboutUs>,
       },
       {
         path: "/thanks-for-purchasing/:id",
-        element: <PaymentSuccessFullPage></PaymentSuccessFullPage>
+        element: <PaymentSuccessFullPage></PaymentSuccessFullPage>,
       },
       {
         path: "/artists",
-        element: <Artists></Artists>
+        element: <Artists></Artists>,
       },
       {
         path: "/categories",
-        element: <Categories></Categories>
+        element: <Categories></Categories>,
       },
       {
         path: "/signup",
-        element: <SignUp></SignUp>
+        element: <SignUp></SignUp>,
       },
       {
         path: "/contact-us",
-        element: <ContactUsPage></ContactUsPage>
+        element: <ContactUsPage></ContactUsPage>,
       },
       {
         path: "/mycart",
-        element: <Cart></Cart>
+        element: <Cart></Cart>,
       },
       {
         path: "/checkout",
-        element: <CheckOutElement></CheckOutElement>
+        element: <CheckOutElement></CheckOutElement>,
       },
       {
         path: "/artistDetails/:id",
-        element: <ArtistDetailsPage></ArtistDetailsPage>
+        element: <ArtistDetailsPage></ArtistDetailsPage>,
       },
       {
         path: "/userdashboard",
-        element: <PrivateRoute><UserDashboard></UserDashboard></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <UserDashboard></UserDashboard>
+          </PrivateRoute>
+        ),
         children: [
           {
             path: "profile",
-            element: <Profile></Profile>
+            element: <Profile></Profile>,
           },
           {
             path: "orderhistory",
             element: <OrderHistory></OrderHistory>,
             children: [
-          {
-            path: "orderdetails/:id",
-            element: <OrderDetails></OrderDetails>
-          },
-            ]
+              {
+                path: "orderdetails/:id",
+                element: <OrderDetails></OrderDetails>,
+              },
+            ],
           },
           {
             path: "wishlist",
-            element: <WishList></WishList>
+            element: <WishList></WishList>,
           },
           {
             path: "settings",
-            element: <AccountSettings></AccountSettings>
+            element: <AccountSettings></AccountSettings>,
           },
           {
             path: "addnewproduct",
-            element: <AddNewProduct></AddNewProduct>
+            element: <AddNewProduct></AddNewProduct>,
           },
           {
             path: "artistProfile",
-            element: <ArtistProfile></ArtistProfile>
+            element: <ArtistProfile></ArtistProfile>,
           },
-        ]
-      }
+        ],
+      },
     ],
   },
   {
     path: "/adminDashboard",
-    element: <PrivateRoute><SuperAdminMainDashBoard></SuperAdminMainDashBoard></PrivateRoute>,
+    element: (
+      <PrivateRoute>
+        <SuperAdminMainDashBoard></SuperAdminMainDashBoard>
+      </PrivateRoute>
+    ),
     children: [
-    {
-      path: "overview",
-      element: <OverView></OverView>
-    },
-    {
-      path: "products",
-      element: <ManageProducts></ManageProducts>,
-      children: [
-        {
-          path: "productDetails/:id",
-          element: <Details></Details>
-        },
-      ]
-    },
-    {
-      path: "categories",
-      element: <ManageCategories></ManageCategories>
-    },
-    {
-      path: "artists",
-      element: <ManageArtists></ManageArtists>,
-      children: [
-        {
-          path: "artistDetails/:id",
-          element: <ArtistDetailsPage></ArtistDetailsPage>
-        }
-      ]
-    },
-    {
-      path: "customers",
-      element: <ManageCustomers></ManageCustomers>
-    },
-    {
-      path: "orders",
-      element: <ManageOrders></ManageOrders>,
-      children: [
-        {
-          path: "orderDetails/:id",
-          element: <OrderDetailsForAdmin></OrderDetailsForAdmin>
-        }
-      ]
-    },
-    {
-      path: "sales-report",
-      element: <SalesReport></SalesReport>
-    },
-    {
-      path: "banners",
-      element: <ManageBanners></ManageBanners>
-    },
-    {
-      path: "settings",
-      element: <AdminSettings></AdminSettings>
-    },
-    {
-      path: "managePrison",
-      element: <ManagePrison></ManagePrison>
-    }
-    ]
-  }
+      {
+        path: "overview",
+        element: <OverView></OverView>,
+      },
+      {
+        path: "products",
+        element: <ManageProducts></ManageProducts>,
+        children: [
+          {
+            path: "productDetails/:id",
+            element: <Details></Details>,
+          },
+        ],
+      },
+      {
+        path: "categories",
+        element: <ManageCategories></ManageCategories>,
+      },
+      {
+        path: "artists",
+        element: <ManageArtists></ManageArtists>,
+        children: [
+          {
+            path: "artistDetails/:id",
+            element: <ArtistDetailsPage></ArtistDetailsPage>,
+          },
+        ],
+      },
+      {
+        path: "customers",
+        element: <ManageCustomers></ManageCustomers>,
+      },
+      {
+        path: "orders",
+        element: <ManageOrders></ManageOrders>,
+        children: [
+          {
+            path: "orderDetails/:id",
+            element: <OrderDetailsForAdmin></OrderDetailsForAdmin>,
+          },
+        ],
+      },
+      {
+        path: "sales-report",
+        element: <SalesReport></SalesReport>,
+      },
+      {
+        path: "banners",
+        element: <ManageBanners></ManageBanners>,
+      },
+      {
+        path: "settings",
+        element: <AdminSettings></AdminSettings>,
+      },
+      {
+        path: "managePrison",
+        element: <ManagePrison></ManagePrison>,
+      },
+    ],
+  },
 ]);
 
 export default router;
