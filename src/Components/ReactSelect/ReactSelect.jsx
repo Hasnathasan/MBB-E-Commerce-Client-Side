@@ -1,18 +1,17 @@
+import Select from "react-select";
 
-import Select from 'react-select';
-
-const ReactSelect = ({selectedState, SetSelectedState, options}) => {
-    return (
-        <div className="mb-3">
-                <label htmlFor="states">States</label>
-                <Select
-      value={selectedState}
-      onChange={value => SetSelectedState(value)}
-      options={options}
-      placeholder="Select your state"
-    />
-                </div>
-    );
+const ReactSelect = ({ selectedState, SetSelectedState, options }) => {
+  return (
+    <div className="mb-3">
+      <label htmlFor="states">States</label>
+      <Select
+        value={selectedState}
+        onChange={(value) => SetSelectedState(value)}
+        options={options}
+        placeholder="Select your state"
+      />
+    </div>
+  );
 };
 
 export default ReactSelect;
