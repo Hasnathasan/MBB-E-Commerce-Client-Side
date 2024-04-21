@@ -8,8 +8,8 @@ import Loader from "../../../Components/Loader/Loader";
 const PopularCategories = () => {
   const [hovered, setHovered] = useState(false);
   const [categories, isCategoriesLoading] = usePopularCategories();
-  if(isCategoriesLoading){
-    return <Loader></Loader>
+  if (isCategoriesLoading) {
+    return <Loader></Loader>;
   }
   console.log(categories);
   return (
@@ -34,7 +34,10 @@ const PopularCategories = () => {
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 md:gap-5 justify-center items-center">
         {categories?.map((category) => (
-          <CategoryCard key={category.category} category={category}></CategoryCard>
+          <CategoryCard
+            key={category.category}
+            category={category}
+          ></CategoryCard>
         ))}
       </div>
     </div>
