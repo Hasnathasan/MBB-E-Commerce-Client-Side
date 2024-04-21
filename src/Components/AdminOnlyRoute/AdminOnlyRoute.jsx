@@ -5,9 +5,9 @@ import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 import Loader from "../Loader/Loader";
 
-const AdminOnlyRoute = ({children}) => {
-    const [user, isUserDataLoading] = useUser();
-    const { loading } = useContext(AuthContext);
+const AdminOnlyRoute = ({ children }) => {
+  const [user, isUserDataLoading] = useUser();
+  const { loading } = useContext(AuthContext);
   const location = useLocation();
   console.log(user, loading);
   if (loading || isUserDataLoading) {

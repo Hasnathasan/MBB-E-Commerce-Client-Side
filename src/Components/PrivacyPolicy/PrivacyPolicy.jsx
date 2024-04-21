@@ -101,7 +101,8 @@ const PrivacyPolicy = () => {
         </li>
         <li>
           <p>
-            <strong>Website</strong> refers to {systemInfo?.[0]?.system_name}, accessible from{" "}
+            <strong>Website</strong> refers to {systemInfo?.[0]?.system_name},
+            accessible from{" "}
             <a
               href="https://mbb-e-commerce.web.app/"
               target="_blank"
