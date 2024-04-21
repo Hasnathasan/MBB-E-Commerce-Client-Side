@@ -4,7 +4,7 @@ import { MultiSelect } from "react-selectize";
 import "../../../../node_modules/react-selectize/themes/index.css";
 import useSystemInfo from "../../../Hooks/useSystemInfo";
 const AddNewProduct = () => {
-  const [systemInfo ] = useSystemInfo();
+  const [systemInfo] = useSystemInfo();
   const [tags, setTags] = useState(
     [].map((str) => ({ label: str, value: str }))
   );
