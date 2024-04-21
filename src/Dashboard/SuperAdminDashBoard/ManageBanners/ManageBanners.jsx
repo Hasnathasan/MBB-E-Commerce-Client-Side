@@ -41,7 +41,7 @@ const ManageBanners = () => {
   };
 
   const handleButtonClick = () => {
-    onUpdateOpen()
+    onUpdateOpen();
     // fileInputRef.current.click();
   };
 
@@ -52,55 +52,66 @@ const ManageBanners = () => {
     const imageFile = form.image.files[0];
     console.log(imageFile);
     if (imageFile) {
-        const formData = new FormData();
-        formData.append("file", imageFile);
+      const formData = new FormData();
+      formData.append("file", imageFile);
 
-        const uploadAndAddBanner = () => {
-            return axios.post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                })
+      const uploadAndAddBanner = () => {
+        return axios
+          .post(
+            "https://mbb-e-commerce-server.vercel.app/uploadSingle",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          )
+          .then((res) => {
+            if (res.data.url) {
+              console.log(res.data.url);
+              const banner = {
+                img: res.data.url,
+                link,
+              };
+              return axios
+                .post(
+                  "https://mbb-e-commerce-server.vercel.app/bannerImages",
+                  banner
+                )
                 .then((res) => {
-                    if (res.data.url) {
-                        console.log(res.data.url);
-                        const banner = {
-                            img: res.data.url,
-                            link
-                        };
-                        return axios.post("https://mbb-e-commerce-server.vercel.app/bannerImages", banner)
-                            .then(res => {
-                                if (res.data.insertedId) {
-                                  refetch()
-                                    onClose();
-                                    return res.data;
-                                }
-                            })
-                            .catch(err => {
-                                throw err;
-                            })
-                    }
+                  if (res.data.insertedId) {
+                    refetch();
+                    onClose();
+                    return res.data;
+                  }
                 })
-                .catch(err => {
-                    throw err;
+                .catch((err) => {
+                  throw err;
                 });
-        };
+            }
+          })
+          .catch((err) => {
+            throw err;
+          });
+      };
 
-        const bannerPromise = uploadAndAddBanner();
+      const bannerPromise = uploadAndAddBanner();
 
-        toast.promise(bannerPromise, {
-            loading: 'Uploading banner, please wait...',
-            success: 'Banner uploaded successfully',
-            error: (error) => {
-                return error?.response?.data?.message || "An Unknown Error Occurred";
-            },
-        });
+      toast.promise(bannerPromise, {
+        loading: "Uploading banner, please wait...",
+        success: "Banner uploaded successfully",
+        error: (error) => {
+          return error?.response?.data?.message || "An Unknown Error Occurred";
+        },
+      });
     }
-};
+  };
 
   const deleteFunc = (id) => {
     axios
-      .delete(`https://mbb-e-commerce-server.vercel.app/banner-image-delete/${id}`)
+      .delete(
+        `https://mbb-e-commerce-server.vercel.app/banner-image-delete/${id}`
+      )
       .then((res) => {
         console.log(res.data);
         if (res.data.deletedCount > 0) {
@@ -142,7 +153,6 @@ const ManageBanners = () => {
     return <Loader></Loader>;
   }
 
- 
   return (
     <div className="overflow-x-auto w-full md:w-[95%]">
       <div className="flex flex-col  gap-4">
@@ -182,15 +192,17 @@ const ManageBanners = () => {
               <TableCell>
                 <img className="w-40 h-20" src={banner?.img} alt="" />
               </TableCell>
-              <TableCell><Typography
-                      as="a"
-                      href={banner?.link}
-                      target="_blank"
-                      color="gray"
-                      className="py-1.5 font-normal transition-colors text-blue-gray-500 hover:text-blue-gray-900"
-                    >
-                      {banner?.link?.slice(0,35)}...
-                    </Typography></TableCell>
+              <TableCell>
+                <Typography
+                  as="a"
+                  href={banner?.link}
+                  target="_blank"
+                  color="gray"
+                  className="py-1.5 font-normal transition-colors text-blue-gray-500 hover:text-blue-gray-900"
+                >
+                  {banner?.link?.slice(0, 35)}...
+                </Typography>
+              </TableCell>
               <TableCell>
                 <ButtonGroup size="sm">
                   <Button
@@ -231,7 +243,10 @@ const ManageBanners = () => {
                 Add New Banner
               </ModalHeader>
               <ModalBody>
-                <form onSubmit={(e) => handleBannerUpload(e, onClose)} className="p-5">
+                <form
+                  onSubmit={(e) => handleBannerUpload(e, onClose)}
+                  className="p-5"
+                >
                   <div>
                     <label htmlFor="image">Banner Image</label>
                     <input
