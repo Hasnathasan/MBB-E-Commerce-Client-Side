@@ -5,32 +5,29 @@ import useArtists from "../../../Hooks/useArtists";
 import axios from "axios";
 import toast from "react-hot-toast";
 import usePopularCategories from "../../../Hooks/usePopularCategories";
-import CreatableSelect from 'react-select/creatable';
+import CreatableSelect from "react-select/creatable";
 import usePopularTags from "../../../Hooks/usePopularTags";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import useSystemInfo from "../../../Hooks/useSystemInfo";
 const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
   const [systemInfo, isSystemInfo] = useSystemInfo();
   const [artistData, isArtistsDataLoading] = useArtists();
-  const {artistToAddProduct} = useContext(AuthContext);
+  const { artistToAddProduct } = useContext(AuthContext);
   const [allCategories, isCategoriesLoading, refetch] = usePopularCategories();
   const [tags, isTagsLoading] = usePopularTags();
-  const existingCategories = allCategories?.map(category => {
-    const option = {value: category?.category, label: category.category};
-    return option
+  const existingCategories = allCategories?.map((category) => {
+    const option = { value: category?.category, label: category.category };
+    return option;
   });
-  const existingTags = tags?.map(tag => {
-    const option = {value: tag, label: tag};
-    return option
+  const existingTags = tags?.map((tag) => {
+    const option = { value: tag, label: tag };
+    return option;
   });
-  
+
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   console.log(artistData);
 
-
- 
-  
   const handleCategoryChange = (selectedOptions) => {
     setSelectedCategories(selectedOptions);
   };
@@ -66,8 +63,8 @@ const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
     artistPercentRef?.current?.value
   );
   useEffect(() => {
-    setArtist(artistToAddProduct)
-  },[artistToAddProduct])
+    setArtist(artistToAddProduct);
+  }, [artistToAddProduct]);
   const [websiteProfit, setWebsiteProfit] = useState();
   const [websitePercent, setWebsitePercent] = useState(
     websitePercentRef?.current?.value
@@ -176,7 +173,9 @@ const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
     const prison_of_artist = prison?.prison_email;
     const product_tags = selectedTags.map((option) => option.value);
 
-    const product_categories = selectedCategories?.map(option => option.value);
+    const product_categories = selectedCategories?.map(
+      (option) => option.value
+    );
 
     const firstFormData = new FormData();
     firstFormData.append("file", featured_photo_file);
@@ -325,25 +324,25 @@ const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
               <div>
                 <label htmlFor="product_categories">Product Categories</label>
-              <CreatableSelect
-      value={selectedCategories}
-      onChange={handleCategoryChange}
-      options={existingCategories}
-      isMulti
-      isClearable
-      onCreateOption={handleCreateOption} // Handle creation of new options
-    />
+                <CreatableSelect
+                  value={selectedCategories}
+                  onChange={handleCategoryChange}
+                  options={existingCategories}
+                  isMulti
+                  isClearable
+                  onCreateOption={handleCreateOption} // Handle creation of new options
+                />
               </div>
               <div>
                 <label htmlFor="product_tags">Product Tags</label>
-              <CreatableSelect
-      value={selectedTags}
-      onChange={handleTagsChange}
-      options={existingTags}
-      isMulti
-      isClearable
-      onCreateOption={handleCreateOptionForTags} // Handle creation of new options
-    />
+                <CreatableSelect
+                  value={selectedTags}
+                  onChange={handleTagsChange}
+                  options={existingTags}
+                  isMulti
+                  isClearable
+                  onCreateOption={handleCreateOptionForTags} // Handle creation of new options
+                />
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -409,12 +408,19 @@ const AddNewProductForAdmin = ({ refetchProducts, onClose }) => {
                     textValue={artist?.userName}
                   >
                     <div className="flex gap-2 items-center">
-            <Avatar alt={artist.userName} className="flex-shrink-0" size="sm" src={artist.userPhoto} />
-            <div className="flex flex-col">
-              <span className="text-small">{artist.userName}</span>
-              <span className="text-tiny text-default-400">{artist.email}</span>
-            </div>
-          </div>
+                      <Avatar
+                        alt={artist.userName}
+                        className="flex-shrink-0"
+                        size="sm"
+                        src={artist.userPhoto}
+                      />
+                      <div className="flex flex-col">
+                        <span className="text-small">{artist.userName}</span>
+                        <span className="text-tiny text-default-400">
+                          {artist.email}
+                        </span>
+                      </div>
+                    </div>
                   </SelectItem>
                 )}
               </Select>
