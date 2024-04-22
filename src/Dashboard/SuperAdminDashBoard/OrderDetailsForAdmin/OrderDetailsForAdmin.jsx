@@ -2,7 +2,17 @@ import "./OrderDetailsForAdmin.css";
 import { useParams } from "react-router-dom";
 import useSingleOrderById from "../../../Hooks/useSingleOrderById";
 import Loader from "../../../Components/Loader/Loader";
-import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, useDisclosure } from "@nextui-org/react";
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Select,
+  SelectItem,
+  useDisclosure,
+} from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -37,26 +47,26 @@ const OrderDetailsForAdmin = () => {
   const handleStatusUpdate = () => {
     console.log(value);
     const promise = axios
-        .patch(
-            `https://mbb-e-commerce-server.vercel.app/orderStatusUpdate/${
-                order?._id
-            }?status=${value.toLowerCase()}`
-        )
-        .then((res) => {
-            if (res.status === 200) {
-                return res.data;
-            }
-        })
-        .catch((err) => {
-            throw err;
-        });
+      .patch(
+        `https://mbb-e-commerce-server.vercel.app/orderStatusUpdate/${
+          order?._id
+        }?status=${value.toLowerCase()}`
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          return res.data;
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
 
     toast.promise(promise, {
-        loading: 'Updating order status...',
-        success: 'Order Status Updated',
-        error: 'An unknown error occurred while updating order status'
+      loading: "Updating order status...",
+      success: "Order Status Updated",
+      error: "An unknown error occurred while updating order status",
     });
-};
+  };
   return (
     <div className="border border-gray-300 rounded-lg">
       <div className="flex justify-between flex-col md:flex-row items-center border-b border-gray-300 p-2 gap-4 md:p-5">
@@ -73,48 +83,48 @@ const OrderDetailsForAdmin = () => {
         </div>
 
         <div className="min-w-[500px] flex flex-col md:flex-row justify-end items-center gap-5 md:gap-3">
-        <Button
-          color="success"
-          size="sm"
-          onPress={onOpen}
-          className="bg-green-500 text-white"
-        >
-          Download Invoice
-        </Button>
-          <div className="flex justify-between items-center gap-3">
-          <Select
-            placeholder="Change Status"
-            labelPlacement="outside-left"
-            className="min-w-[200px] text-nowrap"
-            disableSelectorIconRotation
-            size="sm"
-            selectedKeys={[value]}
-            onChange={handleSelectionChange}
-          >
-            <SelectItem key={"pending"} value={"pending"}>
-              Pending
-            </SelectItem>
-            <SelectItem key={"processing"} value={"processing"}>
-              Processing
-            </SelectItem>
-            <SelectItem key={"shipped"} value={"shipped"}>
-              Shipped
-            </SelectItem>
-            <SelectItem key={"delivered"} value={"delivered"}>
-              Delivered
-            </SelectItem>
-            <SelectItem key={"canceled"} value={"canceled"}>
-              Canceled
-            </SelectItem>
-          </Select>
           <Button
-            onClick={handleStatusUpdate}
             color="success"
             size="sm"
-            className="text-white"
+            onPress={onOpen}
+            className="bg-green-500 text-white"
           >
-            Update
+            Download Invoice
           </Button>
+          <div className="flex justify-between items-center gap-3">
+            <Select
+              placeholder="Change Status"
+              labelPlacement="outside-left"
+              className="min-w-[200px] text-nowrap"
+              disableSelectorIconRotation
+              size="sm"
+              selectedKeys={[value]}
+              onChange={handleSelectionChange}
+            >
+              <SelectItem key={"pending"} value={"pending"}>
+                Pending
+              </SelectItem>
+              <SelectItem key={"processing"} value={"processing"}>
+                Processing
+              </SelectItem>
+              <SelectItem key={"shipped"} value={"shipped"}>
+                Shipped
+              </SelectItem>
+              <SelectItem key={"delivered"} value={"delivered"}>
+                Delivered
+              </SelectItem>
+              <SelectItem key={"canceled"} value={"canceled"}>
+                Canceled
+              </SelectItem>
+            </Select>
+            <Button
+              onClick={handleStatusUpdate}
+              color="success"
+              size="sm"
+              className="text-white"
+            >
+              Update
+            </Button>
           </div>
         </div>
       </div>
@@ -131,11 +141,15 @@ const OrderDetailsForAdmin = () => {
                   <h2 className="text-xl font-medium">
                     {userName || "Unknown"}
                   </h2>
-                  <h3 className="text-gray-600 text-sm">{address || "Unknown"}, {states}, {zipCode}</h3>
+                  <h3 className="text-gray-600 text-sm">
+                    {address || "Unknown"}, {states}, {zipCode}
+                  </h3>
                 </div>
                 <div>
                   <h3 className="text-gray-600 text-sm">Email</h3>
-                  <h3 className="text-gray-900 mb-2 font-medium">{email || "Unknown"}</h3>
+                  <h3 className="text-gray-900 mb-2 font-medium">
+                    {email || "Unknown"}
+                  </h3>
                   <h3 className="text-gray-600 text-sm">Phone</h3>
                   <h3 className="text-gray-900 font-medium">
                     {userPhoneNumber || "Unknown"}
@@ -154,14 +168,22 @@ const OrderDetailsForAdmin = () => {
                   <h2 className="text-xl font-medium">
                     {order?.shipping_address?.userName || userName || "Unknown"}
                   </h2>
-                  <h3 className="text-gray-600 text-sm">{order?.shipping_address?.address ||address || "Unknown"}, {order?.shipping_address?.states || states}, {order?.shipping_address?.zipCode || zipCode}</h3>
+                  <h3 className="text-gray-600 text-sm">
+                    {order?.shipping_address?.address || address || "Unknown"},{" "}
+                    {order?.shipping_address?.states || states},{" "}
+                    {order?.shipping_address?.zipCode || zipCode}
+                  </h3>
                 </div>
                 <div>
                   <h3 className="text-gray-600 text-sm">Email</h3>
-                  <h3 className="text-gray-900 mb-2 font-medium">{order?.shipping_address?.email ||email || "Unknown"}</h3>
+                  <h3 className="text-gray-900 mb-2 font-medium">
+                    {order?.shipping_address?.email || email || "Unknown"}
+                  </h3>
                   <h3 className="text-gray-600 text-sm">Phone</h3>
                   <h3 className="text-gray-900 font-medium">
-                    {order?.shipping_address?.userPhoneNumber ||userPhoneNumber || "Unknown"}
+                    {order?.shipping_address?.userPhoneNumber ||
+                      userPhoneNumber ||
+                      "Unknown"}
                   </h3>
                 </div>
               </div>
@@ -188,20 +210,48 @@ const OrderDetailsForAdmin = () => {
                 <h5 className="text-sm font-medium">${order?.subTotal}</h5>
               </div>
               <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
-                <h3 className=" text-gray-500 text-sm font-medium">
-                  Tax:
-                </h3>
+                <h3 className=" text-gray-500 text-sm font-medium">Tax:</h3>
                 <h5 className="text-sm font-medium">${order?.tax}</h5>
               </div>
               <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
                 <h3 className=" text-gray-500 text-sm font-medium">
-                {order?.shippingMethod?.standard_shipping ? <h5  className="text-sm font-medium">Standard Shipping:</h5> : ""}
-                {order?.shippingMethod?.express_shipping ? <h5  className="text-sm font-medium">Express Shipping:</h5> : ""}
-                {order?.shippingMethod?.free_shipping == 0 ? <h5  className="text-sm font-medium">Free Shipping:</h5> : ""}
+                  {order?.shippingMethod?.standard_shipping ? (
+                    <h5 className="text-sm font-medium">Standard Shipping:</h5>
+                  ) : (
+                    ""
+                  )}
+                  {order?.shippingMethod?.express_shipping ? (
+                    <h5 className="text-sm font-medium">Express Shipping:</h5>
+                  ) : (
+                    ""
+                  )}
+                  {order?.shippingMethod?.free_shipping == 0 ? (
+                    <h5 className="text-sm font-medium">Free Shipping:</h5>
+                  ) : (
+                    ""
+                  )}
                 </h3>
-                {order?.shippingMethod?.standard_shipping ? <h5  className="text-sm font-medium">${order?.shippingMethod?.standard_shipping}</h5> : ""}
-                {order?.shippingMethod?.express_shipping ? <h5  className="text-sm font-medium">${order?.shippingMethod?.express_shipping}</h5> : ""}
-                {order?.shippingMethod?.free_shipping == 0 ? <h5  className="text-sm font-medium">${order?.shippingMethod?.free_shipping}</h5> : ""}
+                {order?.shippingMethod?.standard_shipping ? (
+                  <h5 className="text-sm font-medium">
+                    ${order?.shippingMethod?.standard_shipping}
+                  </h5>
+                ) : (
+                  ""
+                )}
+                {order?.shippingMethod?.express_shipping ? (
+                  <h5 className="text-sm font-medium">
+                    ${order?.shippingMethod?.express_shipping}
+                  </h5>
+                ) : (
+                  ""
+                )}
+                {order?.shippingMethod?.free_shipping == 0 ? (
+                  <h5 className="text-sm font-medium">
+                    ${order?.shippingMethod?.free_shipping}
+                  </h5>
+                ) : (
+                  ""
+                )}
               </div>
               <div className="flex justify-between pt-2 pb-3 items-center">
                 <h3 className=" font-medium">Total</h3>
@@ -215,31 +265,33 @@ const OrderDetailsForAdmin = () => {
       </div>
 
       <div className="overflow-x-auto mt-5 md:mt-1">
-      <table className=" w-full">
-        <tr>
-          <th>PRODUCT</th>
-          <th>PRICE</th>
-          <th>QUANTITY</th>
-          <th>SUBTOTAL</th>
-        </tr>
-        {order?.products?.map((product) => (
-          <tr key={product?.product_id}>
-            <td className="flex items-center gap-2 w-56">
-              <img className="w-16" src={product?.featured_photo} alt="" />
-              <h3 className="font-semibold text-nowrap">{product?.product_name}</h3>
-            </td>
-            <td>
-              ${product?.price?.sale_price || product?.price?.regular_price}
-            </td>
-            <td>x{product?.quantity}</td>
-            <td>
-              $
-              {product?.price?.sale_price * product?.quantity ||
-                product?.price?.regular_price * product?.quantity}
-            </td>
+        <table className=" w-full">
+          <tr>
+            <th>PRODUCT</th>
+            <th>PRICE</th>
+            <th>QUANTITY</th>
+            <th>SUBTOTAL</th>
           </tr>
-        ))}
-      </table>
+          {order?.products?.map((product) => (
+            <tr key={product?.product_id}>
+              <td className="flex items-center gap-2 w-56">
+                <img className="w-16" src={product?.featured_photo} alt="" />
+                <h3 className="font-semibold text-nowrap">
+                  {product?.product_name}
+                </h3>
+              </td>
+              <td>
+                ${product?.price?.sale_price || product?.price?.regular_price}
+              </td>
+              <td>x{product?.quantity}</td>
+              <td>
+                $
+                {product?.price?.sale_price * product?.quantity ||
+                  product?.price?.regular_price * product?.quantity}
+              </td>
+            </tr>
+          ))}
+        </table>
       </div>
       <Modal
         scrollBehavior="outside"
