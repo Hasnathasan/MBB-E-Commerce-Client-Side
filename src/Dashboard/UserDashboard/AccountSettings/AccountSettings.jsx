@@ -5,7 +5,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import toast, { Toaster } from "react-hot-toast";
 import Loader from "../../../Components/Loader/Loader";
-import Select from 'react-select';
+import Select from "react-select";
 
 const AccountSettings = () => {
   const { user } = useContext(AuthContext);
@@ -15,62 +15,65 @@ const AccountSettings = () => {
   const [instantImg, setInstantImg] = useState(null);
   const [selectedState, SetSelectedState] = useState(null);
   console.log(userData);
-  
+
   useEffect(() => {
     const statesOfUsa = {
-      "AL": "Alabama",
-      "AK": "Alaska",
-      "AZ": "Arizona",
-      "AR": "Arkansas",
-      "CA": "California",
-      "CO": "Colorado",
-      "CT": "Connecticut",
-      "DE": "Delaware",
-      "FL": "Florida",
-      "GA": "Georgia",
-      "HI": "Hawaii",
-      "ID": "Idaho",
-      "IL": "Illinois",
-      "IN": "Indiana",
-      "IA": "Iowa",
-      "KS": "Kansas",
-      "KY": "Kentucky",
-      "LA": "Louisiana",
-      "ME": "Maine",
-      "MD": "Maryland",
-      "MA": "Massachusetts",
-      "MI": "Michigan",
-      "MN": "Minnesota",
-      "MS": "Mississippi",
-      "MO": "Missouri",
-      "MT": "Montana",
-      "NE": "Nebraska",
-      "NV": "Nevada",
-      "NH": "New Hampshire",
-      "NJ": "New Jersey",
-      "NM": "New Mexico",
-      "NY": "New York",
-      "NC": "North Carolina",
-      "ND": "North Dakota",
-      "OH": "Ohio",
-      "OK": "Oklahoma",
-      "OR": "Oregon",
-      "PA": "Pennsylvania",
-      "RI": "Rhode Island",
-      "SC": "South Carolina",
-      "SD": "South Dakota",
-      "TN": "Tennessee",
-      "TX": "Texas",
-      "UT": "Utah",
-      "VT": "Vermont",
-      "VA": "Virginia",
-      "WA": "Washington",
-      "WV": "West Virginia",
-      "WI": "Wisconsin",
-      "WY": "Wyoming"
-  };
-    SetSelectedState({value: userData?.billingInfo?.states, label: statesOfUsa?.[userData?.billingInfo?.states]})
-  },[userData?.billingInfo?.states])
+      AL: "Alabama",
+      AK: "Alaska",
+      AZ: "Arizona",
+      AR: "Arkansas",
+      CA: "California",
+      CO: "Colorado",
+      CT: "Connecticut",
+      DE: "Delaware",
+      FL: "Florida",
+      GA: "Georgia",
+      HI: "Hawaii",
+      ID: "Idaho",
+      IL: "Illinois",
+      IN: "Indiana",
+      IA: "Iowa",
+      KS: "Kansas",
+      KY: "Kentucky",
+      LA: "Louisiana",
+      ME: "Maine",
+      MD: "Maryland",
+      MA: "Massachusetts",
+      MI: "Michigan",
+      MN: "Minnesota",
+      MS: "Mississippi",
+      MO: "Missouri",
+      MT: "Montana",
+      NE: "Nebraska",
+      NV: "Nevada",
+      NH: "New Hampshire",
+      NJ: "New Jersey",
+      NM: "New Mexico",
+      NY: "New York",
+      NC: "North Carolina",
+      ND: "North Dakota",
+      OH: "Ohio",
+      OK: "Oklahoma",
+      OR: "Oregon",
+      PA: "Pennsylvania",
+      RI: "Rhode Island",
+      SC: "South Carolina",
+      SD: "South Dakota",
+      TN: "Tennessee",
+      TX: "Texas",
+      UT: "Utah",
+      VT: "Vermont",
+      VA: "Virginia",
+      WA: "Washington",
+      WV: "West Virginia",
+      WI: "Wisconsin",
+      WY: "Wyoming",
+    };
+    SetSelectedState({
+      value: userData?.billingInfo?.states,
+      label: statesOfUsa?.[userData?.billingInfo?.states],
+    });
+  }, [userData?.billingInfo?.states]);
 
   // const options = statesFullNameArray?.map(state => {
   //   const option = {value: state, label: state};
@@ -78,57 +81,57 @@ const AccountSettings = () => {
   // })
 
   const options = [
-    { value: 'AL', label: 'Alabama' },
-    { value: 'AK', label: 'Alaska' },
-    { value: 'AZ', label: 'Arizona' },
-    { value: 'AR', label: 'Arkansas' },
-    { value: 'CA', label: 'California' },
-    { value: 'CO', label: 'Colorado' },
-    { value: 'CT', label: 'Connecticut' },
-    { value: 'DE', label: 'Delaware' },
-    { value: 'FL', label: 'Florida' },
-    { value: 'GA', label: 'Georgia' },
-    { value: 'HI', label: 'Hawaii' },
-    { value: 'ID', label: 'Idaho' },
-    { value: 'IL', label: 'Illinois' },
-    { value: 'IN', label: 'Indiana' },
-    { value: 'IA', label: 'Iowa' },
-    { value: 'KS', label: 'Kansas' },
-    { value: 'KY', label: 'Kentucky' },
-    { value: 'LA', label: 'Louisiana' },
-    { value: 'ME', label: 'Maine' },
-    { value: 'MD', label: 'Maryland' },
-    { value: 'MA', label: 'Massachusetts' },
-    { value: 'MI', label: 'Michigan' },
-    { value: 'MN', label: 'Minnesota' },
-    { value: 'MS', label: 'Mississippi' },
-    { value: 'MO', label: 'Missouri' },
-    { value: 'MT', label: 'Montana' },
-    { value: 'NE', label: 'Nebraska' },
-    { value: 'NV', label: 'Nevada' },
-    { value: 'NH', label: 'New Hampshire' },
-    { value: 'NJ', label: 'New Jersey' },
-    { value: 'NM', label: 'New Mexico' },
-    { value: 'NY', label: 'New York' },
-    { value: 'NC', label: 'North Carolina' },
-    { value: 'ND', label: 'North Dakota' },
-    { value: 'OH', label: 'Ohio' },
-    { value: 'OK', label: 'Oklahoma' },
-    { value: 'OR', label: 'Oregon' },
-    { value: 'PA', label: 'Pennsylvania' },
-    { value: 'RI', label: 'Rhode Island' },
-    { value: 'SC', label: 'South Carolina' },
-    { value: 'SD', label: 'South Dakota' },
-    { value: 'TN', label: 'Tennessee' },
-    { value: 'TX', label: 'Texas' },
-    { value: 'UT', label: 'Utah' },
-    { value: 'VT', label: 'Vermont' },
-    { value: 'VA', label: 'Virginia' },
-    { value: 'WA', label: 'Washington' },
-    { value: 'WV', label: 'West Virginia' },
-    { value: 'WI', label: 'Wisconsin' },
-    { value: 'WY', label: 'Wyoming' }
-];
+    { value: "AL", label: "Alabama" },
+    { value: "AK", label: "Alaska" },
+    { value: "AZ", label: "Arizona" },
+    { value: "AR", label: "Arkansas" },
+    { value: "CA", label: "California" },
+    { value: "CO", label: "Colorado" },
+    { value: "CT", label: "Connecticut" },
+    { value: "DE", label: "Delaware" },
+    { value: "FL", label: "Florida" },
+    { value: "GA", label: "Georgia" },
+    { value: "HI", label: "Hawaii" },
+    { value: "ID", label: "Idaho" },
+    { value: "IL", label: "Illinois" },
+    { value: "IN", label: "Indiana" },
+    { value: "IA", label: "Iowa" },
+    { value: "KS", label: "Kansas" },
+    { value: "KY", label: "Kentucky" },
+    { value: "LA", label: "Louisiana" },
+    { value: "ME", label: "Maine" },
+    { value: "MD", label: "Maryland" },
+    { value: "MA", label: "Massachusetts" },
+    { value: "MI", label: "Michigan" },
+    { value: "MN", label: "Minnesota" },
+    { value: "MS", label: "Mississippi" },
+    { value: "MO", label: "Missouri" },
+    { value: "MT", label: "Montana" },
+    { value: "NE", label: "Nebraska" },
+    { value: "NV", label: "Nevada" },
+    { value: "NH", label: "New Hampshire" },
+    { value: "NJ", label: "New Jersey" },
+    { value: "NM", label: "New Mexico" },
+    { value: "NY", label: "New York" },
+    { value: "NC", label: "North Carolina" },
+    { value: "ND", label: "North Dakota" },
+    { value: "OH", label: "Ohio" },
+    { value: "OK", label: "Oklahoma" },
+    { value: "OR", label: "Oregon" },
+    { value: "PA", label: "Pennsylvania" },
+    { value: "RI", label: "Rhode Island" },
+    { value: "SC", label: "South Carolina" },
+    { value: "SD", label: "South Dakota" },
+    { value: "TN", label: "Tennessee" },
+    { value: "TX", label: "Texas" },
+    { value: "UT", label: "Utah" },
+    { value: "VT", label: "Vermont" },
+    { value: "VA", label: "Virginia" },
+    { value: "WA", label: "Washington" },
+    { value: "WV", label: "West Virginia" },
+    { value: "WI", label: "Wisconsin" },
+    { value: "WY", label: "Wyoming" },
+  ];
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -158,84 +161,93 @@ const AccountSettings = () => {
 
     // Check if selectedFile is not available
     if (!selectedFile) {
-        const promise = axios.patch(`https://mbb-e-commerce-server.vercel.app/userUpdate/${user?.email}`, {
-                updatedName,
-                updatedNum,
-            })
-            .then((res) => {
-                console.log(res.data);
-                refetch();
-                if (res.data.modifiedCount > 0) {
-                    return "User data updated";
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-                throw error;
-            });
-
-        toast.promise(promise, {
-            loading: 'Updating user data...',
-            success: 'User data updated',
-            error: (error) => error || 'An error occurred while updating user data'
+      const promise = axios
+        .patch(
+          `https://mbb-e-commerce-server.vercel.app/userUpdate/${user?.email}`,
+          {
+            updatedName,
+            updatedNum,
+          }
+        )
+        .then((res) => {
+          console.log(res.data);
+          refetch();
+          if (res.data.modifiedCount > 0) {
+            return "User data updated";
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          throw error;
         });
 
-        return;
+      toast.promise(promise, {
+        loading: "Updating user data...",
+        success: "User data updated",
+        error: (error) => error || "An error occurred while updating user data",
+      });
+
+      return;
     }
 
     // If selectedFile is available, upload it first
     const formData = new FormData();
     formData.append("file", selectedFile);
 
-    const promise = axios.post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        })
-        .then((res) => {
-            console.log(res.data.url);
-            if (res.data.url) {
-                return axios.patch(`https://mbb-e-commerce-server.vercel.app/userUpdate/${user?.email}`, {
-                        updatedName,
-                        updatedNum,
-                        userphoto: res?.data?.url,
-                    })
-                    .then((res) => {
-                        console.log(res.data);
-                        refetch();
-                        if (res.data.modifiedCount > 0) {
-                            return "User data updated";
-                        }
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        throw error;
-                    });
-            }
-        })
-        .catch((error) => {
-            console.log(error);
-            throw error;
-        });
+    const promise = axios
+      .post("https://mbb-e-commerce-server.vercel.app/uploadSingle", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res.data.url);
+        if (res.data.url) {
+          return axios
+            .patch(
+              `https://mbb-e-commerce-server.vercel.app/userUpdate/${user?.email}`,
+              {
+                updatedName,
+                updatedNum,
+                userphoto: res?.data?.url,
+              }
+            )
+            .then((res) => {
+              console.log(res.data);
+              refetch();
+              if (res.data.modifiedCount > 0) {
+                return "User data updated";
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+              throw error;
+            });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
+      });
 
     toast.promise(promise, {
-        loading: 'Uploading user photo and updating data...',
-        success: 'User data updated',
-        error: (error) => error || 'An error occurred while updating user data'
+      loading: "Uploading user photo and updating data...",
+      success: "User data updated",
+      error: (error) => error || "An error occurred while updating user data",
     });
-};
+  };
 
-const handleBillingUpdate = (e) => {
-  e.preventDefault();
-  const form = e.target;
-  const updatedName = form.name.value;
-  const companyName = form.companyName.value;
-  const country = form.country.value;
-  const states = selectedState?.value;
-  const updatedAddress = form.address.value;
-  const zipCode = form.zipCode.value;
-  const updatedNum = form.phoneNumber.value;
-  const billingInfo = {
+  const handleBillingUpdate = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const updatedName = form.name.value;
+    const companyName = form.companyName.value;
+    const country = form.country.value;
+    const states = selectedState?.value;
+    const updatedAddress = form.address.value;
+    const zipCode = form.zipCode.value;
+    const updatedNum = form.phoneNumber.value;
+    const billingInfo = {
       updatedName,
       companyName,
       country,
@@ -243,26 +255,31 @@ const handleBillingUpdate = (e) => {
       updatedAddress,
       zipCode,
       updatedNum,
-  };
+    };
 
-  const promise = axios.patch(`https://mbb-e-commerce-server.vercel.app/userBillingInfoUpdate/${user?.email}`, billingInfo)
+    const promise = axios
+      .patch(
+        `https://mbb-e-commerce-server.vercel.app/userBillingInfoUpdate/${user?.email}`,
+        billingInfo
+      )
       .then((res) => {
-          console.log(res.data);
-          if (res.data.modifiedCount > 0) {
-              return "Successfully Updated Your Billing Info";
-          }
+        console.log(res.data);
+        if (res.data.modifiedCount > 0) {
+          return "Successfully Updated Your Billing Info";
+        }
       })
       .catch((error) => {
-          console.log(error);
-          throw error;
+        console.log(error);
+        throw error;
       });
 
-  toast.promise(promise, {
-      loading: 'Updating billing info...',
-      success: 'Successfully Updated Your Billing Info',
-      error: (error) => error || 'An error occurred while updating billing info'
-  });
-};
+    toast.promise(promise, {
+      loading: "Updating billing info...",
+      success: "Successfully Updated Your Billing Info",
+      error: (error) =>
+        error || "An error occurred while updating billing info",
+    });
+  };
   return (
     <div>
       {/* Account Information */}
@@ -312,7 +329,7 @@ const handleBillingUpdate = (e) => {
             </form>
           </div>
           <div className="flex justify-center md:col-span-2 col-span-5 order-1 md:order-2 items-center gap-5 flex-col">
-          <Avatar
+            <Avatar
               src={instantImg || userData?.userPhoto}
               className="w-48 h-48 text-large"
             />
@@ -391,14 +408,14 @@ const handleBillingUpdate = (e) => {
               />
             </div>
             <div>
-                <label htmlFor="states">States</label>
-                <Select
-      value={selectedState}
-      onChange={value => SetSelectedState(value)}
-      options={options}
-      placeholder="Select your state"
-    />
-                </div>
+              <label htmlFor="states">States</label>
+              <Select
+                value={selectedState}
+                onChange={(value) => SetSelectedState(value)}
+                options={options}
+                placeholder="Select your state"
+              />
+            </div>
             <div>
               <label htmlFor="zipCode">Zip Code</label>
               <input

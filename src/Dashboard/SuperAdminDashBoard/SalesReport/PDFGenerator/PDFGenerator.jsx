@@ -187,7 +187,9 @@ const PDFGenerator = ({ salesReport }) => {
                   <Text style={[styles.tableCell, { flex: 2 }]}>Item</Text>
                   <Text style={styles.tableCell}>Cost</Text>
                   <Text style={styles.tableCell}>Artist</Text>
-                  <Text style={styles.tableCell}>{systemInfo?.[0]?.system_name}</Text>
+                  <Text style={styles.tableCell}>
+                    {systemInfo?.[0]?.system_name}
+                  </Text>
                   <Text style={styles.tableCell}>Prison</Text>
                 </View>
                 {/* Table Body */}
@@ -226,7 +228,9 @@ const PDFGenerator = ({ salesReport }) => {
               </View>
               <View style={styles.optionsContainer}>
                 <View style={styles.optionColumn}>
-                  <Text style={styles.optionHeaderText}>{systemInfo?.[0]?.system_name}</Text>
+                  <Text style={styles.optionHeaderText}>
+                    {systemInfo?.[0]?.system_name}
+                  </Text>
                   <Text style={styles.optionText}>
                     Balance: ${totalWebsiteProfit}
                   </Text>
