@@ -38,7 +38,7 @@ const ManagePrison = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 20;
   const pages = Math.ceil(prisonsData?.length / rowsPerPage);
-  
+
   const prisons = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
@@ -61,38 +61,38 @@ const ManagePrison = () => {
     const email = form.email.value;
     const number = form.phoneNumber.value;
     const prison = {
-        prison_name,
-        country,
-        states,
-        address,
-        zipCode,
-        email,
-        number,
+      prison_name,
+      country,
+      states,
+      address,
+      zipCode,
+      email,
+      number,
     };
     console.log(prison);
 
     const promise = axios
-        .post(`https://mbb-e-commerce-server.vercel.app/prisons`, prison)
-        .then((res) => {
-            console.log(res.data);
-            if (res.data.insertedId) {
-                refetch();
-                onClose();
-                return res.data;
-            } else {
-                throw new Error("Failed to add Prison");
-            }
-        })
-        .catch((error) => {
-            throw error;
-        });
+      .post(`https://mbb-e-commerce-server.vercel.app/prisons`, prison)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.insertedId) {
+          refetch();
+          onClose();
+          return res.data;
+        } else {
+          throw new Error("Failed to add Prison");
+        }
+      })
+      .catch((error) => {
+        throw error;
+      });
 
     toast.promise(promise, {
-        loading: 'Adding prison...',
-        success: 'Successfully added Prison',
-        error: 'An Unknown Error Occurred'
+      loading: "Adding prison...",
+      success: "Successfully added Prison",
+      error: "An Unknown Error Occurred",
     });
-};
+  };
   const deleteFunc = (id) => {
     axios
       .delete(`https://mbb-e-commerce-server.vercel.app/prisonDelete/${id}`)
@@ -135,33 +135,33 @@ const ManagePrison = () => {
     <div className="overflow-x-auto w-full md:w-[95%]">
       <div className="flex flex-col  gap-4">
         <div className="flex w-full justify-end p-5 bg-white rounded-xl gap-3 items-end">
-            <Button
-              onPress={onOpen}
-              color="primary"
-              endContent={<FaPlus></FaPlus>}
-            >
-              Add New
-            </Button>
+          <Button
+            onPress={onOpen}
+            color="primary"
+            endContent={<FaPlus></FaPlus>}
+          >
+            Add New
+          </Button>
         </div>
         <span className="text-gray-600 mb-2">
           Total {prisons?.length} users
         </span>
       </div>
-      <Table 
-      aria-label="Example table with custom cells"
-      bottomContent={
-        <div className="flex w-full justify-center">
-          <Pagination
-            isCompact
-            showControls
-            showShadow
-            color="secondary"
-            page={page}
-            total={pages}
-            onChange={(page) => setPage(page)}
-          />
-        </div>
-      }
+      <Table
+        aria-label="Example table with custom cells"
+        bottomContent={
+          <div className="flex w-full justify-center">
+            <Pagination
+              isCompact
+              showControls
+              showShadow
+              color="secondary"
+              page={page}
+              total={pages}
+              onChange={(page) => setPage(page)}
+            />
+          </div>
+        }
       >
         <TableHeader>
           <TableColumn>Prison Name</TableColumn>
@@ -224,7 +224,10 @@ const ManagePrison = () => {
                 Add Prison
               </ModalHeader>
               <ModalBody>
-                <form onSubmit={ (e) => handlePrisonAdding(e,onClose)} className="md:p-5 p-3">
+                <form
+                  onSubmit={(e) => handlePrisonAdding(e, onClose)}
+                  className="md:p-5 p-3"
+                >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-5">
                     <div>
                       <label htmlFor="prison_name">Prison Name</label>
