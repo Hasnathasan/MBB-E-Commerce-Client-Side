@@ -98,7 +98,9 @@ const OrderDetails = () => {
                     {order?.shipping_address?.userName || userName || "Unknown"}
                   </h2>
                   <h3 className="text-gray-600 text-sm">
-                    {order?.shipping_address?.address || address || "Unknown"}, {order?.shipping_address?.states || states}, {order?.shipping_address?.zipCode || zipCode}
+                    {order?.shipping_address?.address || address || "Unknown"},{" "}
+                    {order?.shipping_address?.states || states},{" "}
+                    {order?.shipping_address?.zipCode || zipCode}
                   </h3>
                 </div>
                 <div>
@@ -128,7 +130,10 @@ const OrderDetails = () => {
                 Payment Method: <span className="text-gray-800">STRIPE</span>
               </h3>
               <h3 className=" text-gray-500 text-sm font-medium">
-                Order Status: <span className="text-green-600 capitalize">{order?.status}</span>
+                Order Status:{" "}
+                <span className="text-green-600 capitalize">
+                  {order?.status}
+                </span>
               </h3>
             </div>
 
@@ -140,18 +145,46 @@ const OrderDetails = () => {
                 <h5 className="text-sm font-medium">${order?.subTotal}</h5>
               </div>
               <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
-                <h3 className=" text-gray-500 text-sm font-medium">
-                  Tax:
-                </h3>
+                <h3 className=" text-gray-500 text-sm font-medium">Tax:</h3>
                 <h5 className="text-sm font-medium">${order?.tax}</h5>
               </div>
               <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
-                {order?.shippingMethod?.standard_shipping ? <h5  className="text-sm font-medium">Standard Shipping:</h5> : ""}
-                {order?.shippingMethod?.express_shipping ? <h5  className="text-sm font-medium">Express Shipping:</h5> : ""}
-                {order?.shippingMethod?.free_shipping == 0 ? <h5  className="text-sm font-medium">Free Shipping:</h5> : ""}
-                {order?.shippingMethod?.standard_shipping ? <h5  className="text-sm font-medium">${order?.shippingMethod?.standard_shipping}</h5> : ""}
-                {order?.shippingMethod?.express_shipping ? <h5  className="text-sm font-medium">${order?.shippingMethod?.express_shipping}</h5> : ""}
-                {order?.shippingMethod?.free_shipping == 0 ? <h5  className="text-sm font-medium">{order?.shippingMethod?.free_shipping}</h5> : ""}
+                {order?.shippingMethod?.standard_shipping ? (
+                  <h5 className="text-sm font-medium">Standard Shipping:</h5>
+                ) : (
+                  ""
+                )}
+                {order?.shippingMethod?.express_shipping ? (
+                  <h5 className="text-sm font-medium">Express Shipping:</h5>
+                ) : (
+                  ""
+                )}
+                {order?.shippingMethod?.free_shipping == 0 ? (
+                  <h5 className="text-sm font-medium">Free Shipping:</h5>
+                ) : (
+                  ""
+                )}
+                {order?.shippingMethod?.standard_shipping ? (
+                  <h5 className="text-sm font-medium">
+                    ${order?.shippingMethod?.standard_shipping}
+                  </h5>
+                ) : (
+                  ""
+                )}
+                {order?.shippingMethod?.express_shipping ? (
+                  <h5 className="text-sm font-medium">
+                    ${order?.shippingMethod?.express_shipping}
+                  </h5>
+                ) : (
+                  ""
+                )}
+                {order?.shippingMethod?.free_shipping == 0 ? (
+                  <h5 className="text-sm font-medium">
+                    {order?.shippingMethod?.free_shipping}
+                  </h5>
+                ) : (
+                  ""
+                )}
               </div>
               <div className="flex justify-between pt-2 pb-3 items-center">
                 <h3 className=" font-medium">Total</h3>
