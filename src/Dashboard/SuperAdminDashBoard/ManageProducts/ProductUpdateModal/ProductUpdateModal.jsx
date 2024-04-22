@@ -5,7 +5,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import usePopularCategories from "../../../../Hooks/usePopularCategories";
 import useArtists from "../../../../Hooks/useArtists";
-import CreatableSelect from 'react-select/creatable';
+import CreatableSelect from "react-select/creatable";
 import usePopularTags from "../../../../Hooks/usePopularTags";
 import useSystemInfo from "../../../../Hooks/useSystemInfo";
 const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
@@ -14,31 +14,31 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
   const [artistData, isArtistsDataLoading] = useArtists();
   const [allCategories, isCategoriesLoading, refetch] = usePopularCategories();
   const [tags, isTagsLoading] = usePopularTags();
-  const existingCategories = allCategories?.map(category => {
-    const option = {value: category?.category, label: category.category};
-    return option
+  const existingCategories = allCategories?.map((category) => {
+    const option = { value: category?.category, label: category.category };
+    return option;
   });
-  const existingTags = tags?.map(tag => {
-    const option = {value: tag, label: tag};
-    return option
+  const existingTags = tags?.map((tag) => {
+    const option = { value: tag, label: tag };
+    return option;
   });
-  
+
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   console.log(selectedCategories);
- 
+
   useEffect(() => {
-    const productCategories = product?.product_categories?.map(category => {
-      const option = {value: category, label: category};
-      return option
+    const productCategories = product?.product_categories?.map((category) => {
+      const option = { value: category, label: category };
+      return option;
     });
-    const productTags = product?.product_tags?.map(tag => {
-      const option = {value: tag, label: tag};
-      return option
+    const productTags = product?.product_tags?.map((tag) => {
+      const option = { value: tag, label: tag };
+      return option;
     });
-    setSelectedCategories(productCategories)
-    setSelectedTags(productTags)
-  },[product?.product_categories, product?.product_tags])
+    setSelectedCategories(productCategories);
+    setSelectedTags(productTags);
+  }, [product?.product_categories, product?.product_tags]);
   const handleCategoryChange = (selectedOptions) => {
     setSelectedCategories(selectedOptions);
   };
@@ -182,7 +182,9 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
     const prison_of_artist = prison?.prison_email;
     const product_tags = selectedTags.map((option) => option.value);
 
-    const product_categories = selectedCategories?.map(option => option.value);
+    const product_categories = selectedCategories?.map(
+      (option) => option.value
+    );
 
     const firstFormData = new FormData();
     firstFormData.append("file", featured_photo_file);
@@ -312,25 +314,25 @@ const ProductUpdateModal = ({ product, refetchProducts, onClose }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
               <div>
                 <label htmlFor="product_categories">Product Categories</label>
-              <CreatableSelect
-      value={selectedCategories}
-      onChange={handleCategoryChange}
-      options={existingCategories}
-      isMulti
-      isClearable
-      onCreateOption={handleCreateOption} // Handle creation of new options
-    />
+                <CreatableSelect
+                  value={selectedCategories}
+                  onChange={handleCategoryChange}
+                  options={existingCategories}
+                  isMulti
+                  isClearable
+                  onCreateOption={handleCreateOption} // Handle creation of new options
+                />
               </div>
               <div>
                 <label htmlFor="product_tags">Product Tags</label>
-              <CreatableSelect
-      value={selectedTags}
-      onChange={handleTagsChange}
-      options={existingTags}
-      isMulti
-      isClearable
-      onCreateOption={handleCreateOptionForTags} // Handle creation of new options
-    />
+                <CreatableSelect
+                  value={selectedTags}
+                  onChange={handleTagsChange}
+                  options={existingTags}
+                  isMulti
+                  isClearable
+                  onCreateOption={handleCreateOptionForTags} // Handle creation of new options
+                />
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
