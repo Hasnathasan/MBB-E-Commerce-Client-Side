@@ -24,10 +24,10 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const ManageOrders = () => {
-  
-  
   const [value, setValue] = useState();
-  const [ordersData, isOrdersLoading, refetch] = useAllOrders({ status: value });
+  const [ordersData, isOrdersLoading, refetch] = useAllOrders({
+    status: value,
+  });
   const handleSelectionChange = (e) => {
     setValue(e.target.value);
   };
@@ -127,22 +127,22 @@ const ManageOrders = () => {
             Total {orders?.length} Orders
           </span>
         </div>
-        <Table 
-        aria-label="Example table with custom cells"
-        bottomContent={
-          <div className="flex w-full justify-center">
-            <Pagination
-            loop 
-              isCompact
-              showControls
-              showShadow
-              color="success"
-              page={page}
-              total={pages}
-              onChange={(page) => setPage(page)}
-            />
-          </div>
-        }
+        <Table
+          aria-label="Example table with custom cells"
+          bottomContent={
+            <div className="flex w-full justify-center">
+              <Pagination
+                loop
+                isCompact
+                showControls
+                showShadow
+                color="success"
+                page={page}
+                total={pages}
+                onChange={(page) => setPage(page)}
+              />
+            </div>
+          }
         >
           <TableHeader>
             <TableColumn>Customer</TableColumn>
