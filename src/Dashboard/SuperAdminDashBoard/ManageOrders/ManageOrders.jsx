@@ -25,14 +25,14 @@ import toast from "react-hot-toast";
 
 const ManageOrders = () => {
   const [value, setValue] = useState();
-  const [ordersData, isOrdersLoading, refetch] = useAllOrders({
+  const [ordersData, refetch] = useAllOrders({
     status: value,
   });
   const handleSelectionChange = (e) => {
     setValue(e.target.value);
   };
   const [page, setPage] = useState(1);
-  const rowsPerPage = 20;
+  const rowsPerPage = 2;
   const pages = Math.ceil(ordersData?.length / rowsPerPage);
   const orders = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
@@ -132,13 +132,13 @@ const ManageOrders = () => {
           bottomContent={
             <div className="flex w-full justify-center">
               <Pagination
-                loop
                 isCompact
                 showControls
                 showShadow
                 color="success"
                 page={page}
                 total={pages}
+                siblings={10}
                 onChange={(page) => setPage(page)}
               />
             </div>

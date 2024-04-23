@@ -439,15 +439,16 @@ const AdminSettings = () => {
           </Button>
         </form>
       </div>
-      <div className="col-span-3 border border-gray-300 p-5">
-        <div className="flex justify-end mb-5">
+      <div className="col-span-3 border border-gray-300 mt-8 p-5">
+        <div className="flex justify-between mb-4">
+          <h3 className="text-lg font-semibold">Shipping and tax settings</h3>
           <Button
             onPress={onOpen}
             className=" text-white px-5"
             size="sm"
             color="primary"
           >
-            Add New
+            Add shipping and tax
           </Button>
         </div>
         <Table
@@ -603,7 +604,7 @@ const AdminSettings = () => {
                         placeholder="Enter Amount"
                       />
                     </div>
-                    <div>
+                    {/* <div>
                       <Checkbox
                         isSelected={isExpressDeliverySelected}
                         onValueChange={setIsExpressDeliverySelected}
@@ -620,7 +621,7 @@ const AdminSettings = () => {
                         } p-2.5 `}
                         placeholder="Enter Amount"
                       />
-                    </div>
+                    </div> */}
                     <div>
                       <Checkbox
                         isSelected={isFreeShippingSelected}
@@ -733,7 +734,7 @@ const AdminSettings = () => {
                         }
                       />
                     </div>
-                    <div>
+                    {/* <div>
                       <Checkbox
                         isSelected={isExpressDeliverySelected}
                         onValueChange={setIsExpressDeliverySelected}
@@ -753,7 +754,7 @@ const AdminSettings = () => {
                           dataToUpdate?.shipping_methods?.express_shipping
                         }
                       />
-                    </div>
+                    </div> */}
                     <div>
                       <Checkbox
                         isSelected={isFreeShippingSelected}
