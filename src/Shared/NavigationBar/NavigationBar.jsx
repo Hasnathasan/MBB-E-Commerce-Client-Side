@@ -235,7 +235,10 @@ const NavigationBar = () => {
       {/* Side Navigation bar for Small Devices */}
 
       <Drawer open={open} onClose={closeDrawer} className="p-0 overflow-y-auto">
-        <div className="flex justify-center flex-col text-xl items-center gap-8 mt-8  font-semibold">
+        <div className="flex justify-center items-center mt-8">
+          <img className=" w-60" src={systemInfo?.[0]?.logo} alt="" />
+        </div>
+        <div className="flex justify-center flex-col text-lg items-center gap-8 mt-8  font-semibold">
           <NavLink onClick={closeDrawer} to={"/"}>
             Home
           </NavLink>

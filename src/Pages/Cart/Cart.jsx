@@ -182,17 +182,13 @@ const Cart = () => {
             <h3 className=" text-gray-500 text-sm font-medium">Subtotal:</h3>
             <h5 className="text-sm font-medium">${subTotal || 0.0}</h5>
           </div>
-          <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
-            <h3 className=" text-gray-500 text-sm font-medium">Discount:</h3>
-            <h5 className="text-sm font-medium">$00</h5>
-          </div>
-          <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
-            <h3 className=" text-gray-500 text-sm font-medium">Shipping:</h3>
-            <h5 className="text-sm font-medium">Free</h5>
-          </div>
+          
           <div className="flex justify-between pt-2 pb-3 items-center">
             <h3 className=" font-medium">Total</h3>
             <h5 className="text-green-800 font-bold">${subTotal || 0.0}</h5>
+          </div>
+          <div className="mb-4">
+            <h4 className="text-xs ">Shipping and taxes will be calculated during checkout</h4>
           </div>
           <Link to={"/checkout"}>
             <Button
