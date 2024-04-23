@@ -331,8 +331,8 @@ const CheckOutFunctionality = () => {
               payment_method: {
                 card: card,
                 billing_details: {
-                  email: user?.email || "unknown ",
-                  name: user?.displayName || "anonymous",
+                  email: email || "unknown ",
+                  name: userName || "anonymous",
                 },
               },
             });
@@ -430,13 +430,13 @@ const CheckOutFunctionality = () => {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 <div>
-                  <label htmlFor="country">Country / Region</label>
+                  <label htmlFor="country">City</label>
                   <input
                     type="text"
                     name="country"
                     id="country"
                     className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                    placeholder="Country"
+                    placeholder="City"
                     defaultValue={userData?.billingInfo?.country}
                     required
                   />
@@ -459,7 +459,7 @@ const CheckOutFunctionality = () => {
                   />
                 </div> */}
                 <div>
-                <label htmlFor="states">States</label>
+                <label htmlFor="states">State</label>
                 <Select
       value={selectedState}
       onChange={handleChange}
@@ -570,18 +570,18 @@ const CheckOutFunctionality = () => {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 <div>
-                  <label htmlFor="countryForShipping">Country / Region</label>
+                  <label htmlFor="countryForShipping">City</label>
                   <input
                     type="text"
                     name="countryForShipping"
                     id="countryForShipping"
                     className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                    placeholder="Country"
+                    placeholder="City"
                     required={isSelected}
                   />
                 </div>
                 <div>
-                <label htmlFor="states">States</label>
+                <label htmlFor="states">State</label>
                 <Select
       value={selectedShippingState}
       onChange={handleShippingStateChange}
@@ -683,7 +683,7 @@ const CheckOutFunctionality = () => {
               <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
                 <h3 className=" text-gray-700 text-sm font-medium">Tax:</h3>
                 <h5 className="text-sm font-semibold">
-                  ${(subTotal * (taxRate / 100)).toFixed(2)}
+                  ${ taxRate ? (subTotal * (taxRate / 100)).toFixed(2) : 0}
                 </h5>
               </div>
               <RadioGroup
@@ -763,8 +763,7 @@ const CheckOutFunctionality = () => {
                       !stripe ||
                       !clientSecret ||
                       processing ||
-                      userCart.length === 0 ||
-                      !user
+                      userCart.length === 0
                     }
                   >
                     {processing ? "Processing" : "Place Order"}

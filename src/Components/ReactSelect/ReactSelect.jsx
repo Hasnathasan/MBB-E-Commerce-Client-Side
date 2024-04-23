@@ -3,7 +3,7 @@ import Select from "react-select";
 const ReactSelect = ({ selectedState, SetSelectedState, options }) => {
   return (
     <div className="mb-3">
-      <label htmlFor="states">States</label>
+      <label htmlFor="states">State</label>
       <Select
         value={selectedState}
         onChange={(value) => SetSelectedState(value)}

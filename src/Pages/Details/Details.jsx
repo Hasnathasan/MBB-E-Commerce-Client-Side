@@ -67,7 +67,7 @@ const Details = () => {
     {
       initial: 0,
       slides: {
-        perView: 5,
+        perView: product?.gallery_photos + 1 || 5,
         spacing: 10,
       },
     },
@@ -107,6 +107,7 @@ const Details = () => {
     addedBy,
     prison_of_artist,
   } = product;
+  
   const { regular_price, sale_price } = price;
   const success = () => toast.success("Product Successfully added to cart");
 
@@ -135,6 +136,18 @@ const Details = () => {
     setOpenCart(true);
     success();
   };
+  const handleWishList = () => {
+    const wishItem = { addedBy: user?.email, product };
+    axios
+      .post(`https://mbb-e-commerce-server.vercel.app/wish-list`, wishItem)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.insertedId) {
+          toast.success("Product added to wishlist");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   console.log(localStorage.getItem("cart"));
   return (
     <div className={`md:mx-8 py-14`}>
@@ -144,19 +157,19 @@ const Details = () => {
             {[featured_photo, ...gallery_photos]?.map((img, index) => (
               <div
                 key={index}
-                className={`keen-slider__slide w-full h-[360px]`}
+                className={`keen-slider__slide w-full h-[350px]`}
               >
-                <img className=" w-[90%] mx-auto h-full" src={img} alt="" />
+                <img className="  mx-auto h-full" src={img} alt="" />
               </div>
             ))}
           </div>
 
           <div ref={thumbnailRef} className="keen-slider !w-[90%] thumbnail">
             {[featured_photo, ...gallery_photos]?.map((img, index) => (
-              <div key={index} className={`keen-slider__slide w-20 h-20`}>
+              <div key={index} className={`keen-slider__slide flex justify-center items-center border border-dashed border-gray-600  h-20`}>
                 <img
                   src={img}
-                  className="cursor-pointer w-full h-full"
+                  className="cursor-pointer h-full"
                   alt=""
                 />
               </div>
@@ -257,12 +270,15 @@ const Details = () => {
               <HiOutlineShoppingBag className="w-6 h-6"></HiOutlineShoppingBag>
             </Button>
             <Button
+            onClick={handleWishList}
+            className={`${!user ? "cursor-not-allowed": " cursor-not-allowed"}`}
               isIconOnly
               color="success"
               radius="full"
               size="lg"
               variant="flat"
               aria-label="Like"
+              isDisabled={!user}
             >
               <GoHeart className="w-6 h-6"></GoHeart>
             </Button>

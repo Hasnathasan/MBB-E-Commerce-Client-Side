@@ -393,25 +393,25 @@ const ArtistProfile = () => {
           </div>
           <div className="grid grid-cols-3 gap-5">
             <div>
-              <label htmlFor="country">Country / Region</label>
+              <label htmlFor="country">City</label>
               <input
                 type="text"
                 name="country"
                 id="country"
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                placeholder="Country"
+                placeholder="City"
                 defaultValue={userData?.billingInfo?.country}
                 required
               />
             </div>
             <div>
-              <label htmlFor="states">States</label>
+              <label htmlFor="states">State</label>
               <input
                 type="text"
                 name="states"
                 id="states"
                 className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-                placeholder="States Name"
+                placeholder="State Name"
                 defaultValue={userData?.billingInfo?.states}
                 required
               />

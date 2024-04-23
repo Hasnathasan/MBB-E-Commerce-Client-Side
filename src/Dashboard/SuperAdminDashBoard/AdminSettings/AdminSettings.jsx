@@ -551,7 +551,7 @@ const AdminSettings = () => {
                   className="p-5"
                 >
                   <div className="mb-3">
-                    <label htmlFor="states">States</label>
+                    <label htmlFor="states">State</label>
                     <Select
                       value={selectedState}
                       onChange={(value) => SetSelectedState(value)}
@@ -676,7 +676,7 @@ const AdminSettings = () => {
                   className="p-5"
                 >
                   <div className="mb-3">
-                    <label htmlFor="states">States</label>
+                    <label htmlFor="states">State</label>
                     <Select
                       value={selectedUpdateState}
                       onChange={(value) => SetSelectedUpdateState(value)}

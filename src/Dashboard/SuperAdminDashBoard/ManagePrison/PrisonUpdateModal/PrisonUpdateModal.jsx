@@ -83,13 +83,13 @@ const PrisonUpdateModal = ({ prison, refetch, onClose }) => {
           />
         </div>
         <div>
-          <label htmlFor="states">States</label>
+          <label htmlFor="states">State</label>
           <input
             type="text"
             name="states"
             id="states"
             className=" border w-full border-gray-300 mb-6 mt-1 text-gray-900 sm:text-sm rounded-md focus:outline-green-500 block p-2.5 "
-            placeholder="States Name"
+            placeholder="State Name"
             defaultValue={prison?.states}
             required
           />
