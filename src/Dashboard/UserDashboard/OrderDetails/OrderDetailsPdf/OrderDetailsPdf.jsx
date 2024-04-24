@@ -97,7 +97,7 @@ const OrderDetailsPdf = ({ order }) => {
                   <Text style={styles.text}> {userName || "Unknown"}</Text>
                   <Text style={styles.text}>{address || "Unknown"}, </Text>
                   <Text style={styles.text}>
-                    {states}, {zipCode}{" "}
+                    {country}, {states}, {zipCode}{" "}
                   </Text>
                   <Text style={styles.text}> {email || "Unknown"}</Text>
                   <Text style={styles.text}>
@@ -113,6 +113,7 @@ const OrderDetailsPdf = ({ order }) => {
                     {order?.shipping_address?.address || address || "Unknown"},
                   </Text>
                   <Text style={styles.text}>
+                  {order?.shipping_address?.country || country},{" "}
                     {order?.shipping_address?.states || states},{" "}
                     {order?.shipping_address?.zipCode || zipCode}
                   </Text>
