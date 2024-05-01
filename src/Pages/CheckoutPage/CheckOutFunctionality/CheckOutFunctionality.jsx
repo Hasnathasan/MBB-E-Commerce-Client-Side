@@ -7,7 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useNavigate } from "react-router-dom";
-import Select from 'react-select';
+import Select from "react-select";
 
 const CheckOutFunctionality = () => {
   const stripe = useStripe();
@@ -32,65 +32,64 @@ const CheckOutFunctionality = () => {
   const [state, setState] = useState();
   const [zipCode, setZipCode] = useState();
 
-  
-
-  
-
   useEffect(() => {
     const statesOfUsa = {
-      "AL": "Alabama",
-      "AK": "Alaska",
-      "AZ": "Arizona",
-      "AR": "Arkansas",
-      "CA": "California",
-      "CO": "Colorado",
-      "CT": "Connecticut",
-      "DE": "Delaware",
-      "FL": "Florida",
-      "GA": "Georgia",
-      "HI": "Hawaii",
-      "ID": "Idaho",
-      "IL": "Illinois",
-      "IN": "Indiana",
-      "IA": "Iowa",
-      "KS": "Kansas",
-      "KY": "Kentucky",
-      "LA": "Louisiana",
-      "ME": "Maine",
-      "MD": "Maryland",
-      "MA": "Massachusetts",
-      "MI": "Michigan",
-      "MN": "Minnesota",
-      "MS": "Mississippi",
-      "MO": "Missouri",
-      "MT": "Montana",
-      "NE": "Nebraska",
-      "NV": "Nevada",
-      "NH": "New Hampshire",
-      "NJ": "New Jersey",
-      "NM": "New Mexico",
-      "NY": "New York",
-      "NC": "North Carolina",
-      "ND": "North Dakota",
-      "OH": "Ohio",
-      "OK": "Oklahoma",
-      "OR": "Oregon",
-      "PA": "Pennsylvania",
-      "RI": "Rhode Island",
-      "SC": "South Carolina",
-      "SD": "South Dakota",
-      "TN": "Tennessee",
-      "TX": "Texas",
-      "UT": "Utah",
-      "VT": "Vermont",
-      "VA": "Virginia",
-      "WA": "Washington",
-      "WV": "West Virginia",
-      "WI": "Wisconsin",
-      "WY": "Wyoming"
-  };
-    SetSelectedState({value: userData?.billingInfo?.states, label: statesOfUsa?.[userData?.billingInfo?.states]})
-  },[userData?.billingInfo?.states])
+      AL: "Alabama",
+      AK: "Alaska",
+      AZ: "Arizona",
+      AR: "Arkansas",
+      CA: "California",
+      CO: "Colorado",
+      CT: "Connecticut",
+      DE: "Delaware",
+      FL: "Florida",
+      GA: "Georgia",
+      HI: "Hawaii",
+      ID: "Idaho",
+      IL: "Illinois",
+      IN: "Indiana",
+      IA: "Iowa",
+      KS: "Kansas",
+      KY: "Kentucky",
+      LA: "Louisiana",
+      ME: "Maine",
+      MD: "Maryland",
+      MA: "Massachusetts",
+      MI: "Michigan",
+      MN: "Minnesota",
+      MS: "Mississippi",
+      MO: "Missouri",
+      MT: "Montana",
+      NE: "Nebraska",
+      NV: "Nevada",
+      NH: "New Hampshire",
+      NJ: "New Jersey",
+      NM: "New Mexico",
+      NY: "New York",
+      NC: "North Carolina",
+      ND: "North Dakota",
+      OH: "Ohio",
+      OK: "Oklahoma",
+      OR: "Oregon",
+      PA: "Pennsylvania",
+      RI: "Rhode Island",
+      SC: "South Carolina",
+      SD: "South Dakota",
+      TN: "Tennessee",
+      TX: "Texas",
+      UT: "Utah",
+      VT: "Vermont",
+      VA: "Virginia",
+      WA: "Washington",
+      WV: "West Virginia",
+      WI: "Wisconsin",
+      WY: "Wyoming",
+    };
+    SetSelectedState({
+      value: userData?.billingInfo?.states,
+      label: statesOfUsa?.[userData?.billingInfo?.states],
+    });
+  }, [userData?.billingInfo?.states]);
 
   // const options = statesFullNameArray?.map(state => {
   //   const option = {value: state, label: state};
@@ -98,66 +97,66 @@ const CheckOutFunctionality = () => {
   // })
 
   const options = [
-    { value: 'AL', label: 'Alabama' },
-    { value: 'AK', label: 'Alaska' },
-    { value: 'AZ', label: 'Arizona' },
-    { value: 'AR', label: 'Arkansas' },
-    { value: 'CA', label: 'California' },
-    { value: 'CO', label: 'Colorado' },
-    { value: 'CT', label: 'Connecticut' },
-    { value: 'DE', label: 'Delaware' },
-    { value: 'FL', label: 'Florida' },
-    { value: 'GA', label: 'Georgia' },
-    { value: 'HI', label: 'Hawaii' },
-    { value: 'ID', label: 'Idaho' },
-    { value: 'IL', label: 'Illinois' },
-    { value: 'IN', label: 'Indiana' },
-    { value: 'IA', label: 'Iowa' },
-    { value: 'KS', label: 'Kansas' },
-    { value: 'KY', label: 'Kentucky' },
-    { value: 'LA', label: 'Louisiana' },
-    { value: 'ME', label: 'Maine' },
-    { value: 'MD', label: 'Maryland' },
-    { value: 'MA', label: 'Massachusetts' },
-    { value: 'MI', label: 'Michigan' },
-    { value: 'MN', label: 'Minnesota' },
-    { value: 'MS', label: 'Mississippi' },
-    { value: 'MO', label: 'Missouri' },
-    { value: 'MT', label: 'Montana' },
-    { value: 'NE', label: 'Nebraska' },
-    { value: 'NV', label: 'Nevada' },
-    { value: 'NH', label: 'New Hampshire' },
-    { value: 'NJ', label: 'New Jersey' },
-    { value: 'NM', label: 'New Mexico' },
-    { value: 'NY', label: 'New York' },
-    { value: 'NC', label: 'North Carolina' },
-    { value: 'ND', label: 'North Dakota' },
-    { value: 'OH', label: 'Ohio' },
-    { value: 'OK', label: 'Oklahoma' },
-    { value: 'OR', label: 'Oregon' },
-    { value: 'PA', label: 'Pennsylvania' },
-    { value: 'RI', label: 'Rhode Island' },
-    { value: 'SC', label: 'South Carolina' },
-    { value: 'SD', label: 'South Dakota' },
-    { value: 'TN', label: 'Tennessee' },
-    { value: 'TX', label: 'Texas' },
-    { value: 'UT', label: 'Utah' },
-    { value: 'VT', label: 'Vermont' },
-    { value: 'VA', label: 'Virginia' },
-    { value: 'WA', label: 'Washington' },
-    { value: 'WV', label: 'West Virginia' },
-    { value: 'WI', label: 'Wisconsin' },
-    { value: 'WY', label: 'Wyoming' }
-];
+    { value: "AL", label: "Alabama" },
+    { value: "AK", label: "Alaska" },
+    { value: "AZ", label: "Arizona" },
+    { value: "AR", label: "Arkansas" },
+    { value: "CA", label: "California" },
+    { value: "CO", label: "Colorado" },
+    { value: "CT", label: "Connecticut" },
+    { value: "DE", label: "Delaware" },
+    { value: "FL", label: "Florida" },
+    { value: "GA", label: "Georgia" },
+    { value: "HI", label: "Hawaii" },
+    { value: "ID", label: "Idaho" },
+    { value: "IL", label: "Illinois" },
+    { value: "IN", label: "Indiana" },
+    { value: "IA", label: "Iowa" },
+    { value: "KS", label: "Kansas" },
+    { value: "KY", label: "Kentucky" },
+    { value: "LA", label: "Louisiana" },
+    { value: "ME", label: "Maine" },
+    { value: "MD", label: "Maryland" },
+    { value: "MA", label: "Massachusetts" },
+    { value: "MI", label: "Michigan" },
+    { value: "MN", label: "Minnesota" },
+    { value: "MS", label: "Mississippi" },
+    { value: "MO", label: "Missouri" },
+    { value: "MT", label: "Montana" },
+    { value: "NE", label: "Nebraska" },
+    { value: "NV", label: "Nevada" },
+    { value: "NH", label: "New Hampshire" },
+    { value: "NJ", label: "New Jersey" },
+    { value: "NM", label: "New Mexico" },
+    { value: "NY", label: "New York" },
+    { value: "NC", label: "North Carolina" },
+    { value: "ND", label: "North Dakota" },
+    { value: "OH", label: "Ohio" },
+    { value: "OK", label: "Oklahoma" },
+    { value: "OR", label: "Oregon" },
+    { value: "PA", label: "Pennsylvania" },
+    { value: "RI", label: "Rhode Island" },
+    { value: "SC", label: "South Carolina" },
+    { value: "SD", label: "South Dakota" },
+    { value: "TN", label: "Tennessee" },
+    { value: "TX", label: "Texas" },
+    { value: "UT", label: "Utah" },
+    { value: "VT", label: "Vermont" },
+    { value: "VA", label: "Virginia" },
+    { value: "WA", label: "Washington" },
+    { value: "WV", label: "West Virginia" },
+    { value: "WI", label: "Wisconsin" },
+    { value: "WY", label: "Wyoming" },
+  ];
   console.log("selectedShippingState", selectedShippingState);
-
-  
 
   console.log(state, zipCode);
   useEffect(() => {
     axios
       .get(
-        `https://mbb-e-commerce-server.vercel.app/taxAndShippingDataByStateAndZip?state=${isSelected ? selectedShippingState?.value : selectedState?.value}&zipCode=${zipCode}`
+        `https://mbb-e-commerce-server.vercel.app/taxAndShippingDataByStateAndZip?state=${
+          isSelected ? selectedShippingState?.value : selectedState?.value
+        }&zipCode=${zipCode}`
       )
       .then((res) => {
         console.log(res.data);
@@ -168,7 +167,7 @@ const CheckOutFunctionality = () => {
         console.log(err);
         setShippingMethods(null);
       });
-  }, [isSelected, selectedShippingState, selectedState?.value, state, zipCode])
+  }, [isSelected, selectedShippingState, selectedState?.value, state, zipCode]);
 
   useEffect(() => {
     setState(userData?.billingInfo?.states);
@@ -178,11 +177,11 @@ const CheckOutFunctionality = () => {
     userData?.billingInfo?.zipCode,
     isSelected,
   ]);
-  const handleChange = selectedState => {
+  const handleChange = (selectedState) => {
     SetSelectedState(selectedState);
     console.log(`Option selected:`, selectedState);
   };
-  const handleShippingStateChange = selectedState => {
+  const handleShippingStateChange = (selectedState) => {
     setSelectedShippingState(selectedState);
     console.log(`Option selected:`, selectedState);
   };
@@ -233,8 +232,8 @@ const CheckOutFunctionality = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if(!selectedShippingMethod){
-      return toast.error("Please select a shipping method")
+    if (!selectedShippingMethod) {
+      return toast.error("Please select a shipping method");
     }
     setProcessing(true);
     const form = event.target;
@@ -459,13 +458,13 @@ const CheckOutFunctionality = () => {
                   />
                 </div> */}
                 <div>
-                <label htmlFor="states">State</label>
-                <Select
-      value={selectedState}
-      onChange={handleChange}
-      options={options}
-      placeholder="Select your state"
-    />
+                  <label htmlFor="states">State</label>
+                  <Select
+                    value={selectedState}
+                    onChange={handleChange}
+                    options={options}
+                    placeholder="Select your state"
+                  />
                 </div>
                 <div>
                   <label htmlFor="zipCode">Zip Code</label>
@@ -514,7 +513,7 @@ const CheckOutFunctionality = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="flex mt-5 justify-end">
             <Checkbox isSelected={isSelected} onValueChange={setIsSelected}>
               Add a Different Shipping Address
@@ -581,13 +580,13 @@ const CheckOutFunctionality = () => {
                   />
                 </div>
                 <div>
-                <label htmlFor="states">State</label>
-                <Select
-      value={selectedShippingState}
-      onChange={handleShippingStateChange}
-      options={options}
-      placeholder="Select your state"
-    />
+                  <label htmlFor="states">State</label>
+                  <Select
+                    value={selectedShippingState}
+                    onChange={handleShippingStateChange}
+                    options={options}
+                    placeholder="Select your state"
+                  />
                 </div>
                 <div>
                   <label htmlFor="zipCodeForShipping">Zip Code</label>
@@ -683,7 +682,7 @@ const CheckOutFunctionality = () => {
               <div className="flex justify-between border-b border-gray-300 pt-2 pb-3 items-center">
                 <h3 className=" text-gray-700 text-sm font-medium">Tax:</h3>
                 <h5 className="text-sm font-semibold">
-                  ${ taxRate ? (subTotal * (taxRate / 100)).toFixed(2) : 0}
+                  ${taxRate ? (subTotal * (taxRate / 100)).toFixed(2) : 0}
                 </h5>
               </div>
               <RadioGroup
