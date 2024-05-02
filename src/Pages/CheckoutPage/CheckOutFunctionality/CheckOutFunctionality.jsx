@@ -350,7 +350,7 @@ const CheckOutFunctionality = () => {
             const transactionId = paymentIntent.id;
             axios
               .post(
-                `https://mbb-e-commerce-server.vercel.app/ordersUpdate/${result?.data?.insertedId}?transactionId=${transactionId}`,
+                `http://localhost:8000/ordersUpdate/${result?.data?.insertedId}?transactionId=${transactionId}`,
                 orderProductsId
               )
               .then((result) => {
