@@ -71,7 +71,7 @@ const OrderDetails = () => {
                     {userName || "Unknown"}
                   </h2>
                   <h3 className="text-gray-600 text-sm">
-                    {address || "Unknown"}, {country}, {states}, {zipCode}
+                    {address || "Unknown"}, {country}, {states}-{zipCode}
                   </h3>
                 </div>
                 <div>
@@ -100,8 +100,7 @@ const OrderDetails = () => {
                   <h3 className="text-gray-600 text-sm">
                     {order?.shipping_address?.address || address || "Unknown"},{" "}
                     {order?.shipping_address?.country || country},{" "}
-                    {order?.shipping_address?.states || states},{" "}
-                    {order?.shipping_address?.zipCode || zipCode}
+                    {order?.shipping_address?.states || states}-{order?.shipping_address?.zipCode || zipCode}
                   </h3>
                 </div>
                 <div>

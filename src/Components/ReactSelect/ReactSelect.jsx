@@ -8,7 +8,7 @@ const ReactSelect = ({ selectedState, SetSelectedState, options }) => {
         value={selectedState}
         onChange={(value) => SetSelectedState(value)}
         options={options}
-        placeholder="Select your state"
+        placeholder="Select a state"
       />
     </div>
   );

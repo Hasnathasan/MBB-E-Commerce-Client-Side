@@ -557,7 +557,7 @@ const AdminSettings = () => {
                       value={selectedState}
                       onChange={(value) => SetSelectedState(value)}
                       options={options}
-                      placeholder="Select your state"
+                      placeholder="Select a state"
                     />
                   </div>
                   <div>
@@ -682,7 +682,7 @@ const AdminSettings = () => {
                       value={selectedUpdateState}
                       onChange={(value) => SetSelectedUpdateState(value)}
                       options={options}
-                      placeholder="Select your state"
+                      placeholder="Select a state"
                     />
                   </div>
                   <div>

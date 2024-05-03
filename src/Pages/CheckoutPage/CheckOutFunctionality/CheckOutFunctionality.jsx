@@ -6,8 +6,10 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { renderToBuffer } from '@react-pdf/renderer';
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
+import OrderDetailsPdf from "../../../Dashboard/UserDashboard/OrderDetails/OrderDetailsPdf/OrderDetailsPdf";
 
 const CheckOutFunctionality = () => {
   const stripe = useStripe();
@@ -320,6 +322,9 @@ const CheckOutFunctionality = () => {
       return { product_id: product?.product_id, quantity: product?.quantity };
     });
     console.log(orderProductsId);
+    const pdfContent = <OrderDetailsPdf order={order} />;
+    // const base64PDF = btoa(pdfContent);
+    
     axios
       .post("https://mbb-e-commerce-server.vercel.app/orders", order)
       .then(async (result) => {
@@ -347,11 +352,12 @@ const CheckOutFunctionality = () => {
           }
 
           if (paymentIntent.status === "succeeded") {
+            
             const transactionId = paymentIntent.id;
             axios
               .post(
                 `http://localhost:8000/ordersUpdate/${result?.data?.insertedId}?transactionId=${transactionId}`,
-                orderProductsId
+                {orderProductsId, pdfContent}
               )
               .then((result) => {
                 console.log(result);
@@ -463,7 +469,7 @@ const CheckOutFunctionality = () => {
                     value={selectedState}
                     onChange={handleChange}
                     options={options}
-                    placeholder="Select your state"
+                    placeholder="Select a state"
                   />
                 </div>
                 <div>
@@ -585,7 +591,7 @@ const CheckOutFunctionality = () => {
                     value={selectedShippingState}
                     onChange={handleShippingStateChange}
                     options={options}
-                    placeholder="Select your state"
+                    placeholder="Select a state"
                   />
                 </div>
                 <div>

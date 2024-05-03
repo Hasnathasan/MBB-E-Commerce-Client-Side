@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-import { GoHeart } from "react-icons/go";
+import { useContext, useEffect, useState } from "react";
+import { GoHeart, GoHeartFill } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { IoStarOutline, IoStarSharp } from "react-icons/io5";
 import Rating from "react-rating";
@@ -11,7 +11,17 @@ import axios from "axios";
 
 const PopularProductsCard = ({ product, isRounded }) => {
   const [hovered, setHovered] = useState(false);
-
+  const [isWishListedId, setIsWishListedId] = useState(null)
+  useEffect(() => {
+    axios.get(`http://localhost:8000/isWishListed/${product?._id}`)
+    .then(res => {
+      if(res.data){
+        setIsWishListedId(res.data?._id)
+    }
+    else(setIsWishListedId(null))
+  })
+    .catch(err => console.log(err))
+  },[product?._id])
   const { user, setIsProductAdded, setOpenCart } = useContext(AuthContext);
   const {
     _id,
@@ -32,15 +42,30 @@ const PopularProductsCard = ({ product, isRounded }) => {
   const handleWishList = (e) => {
     e.preventDefault();
     const wishItem = { addedBy: user?.email, product };
-    axios
+    if(!isWishListedId){
+      axios
       .post(`https://mbb-e-commerce-server.vercel.app/wish-list`, wishItem)
       .then((res) => {
         console.log(res.data);
         if (res.data.insertedId) {
+          setIsWishListedId(res.data.insertedId)
           toast.success("Product added to wishlist");
         }
       })
       .catch((err) => console.log(err));
+    }
+    else{
+      axios
+      .delete(`https://mbb-e-commerce-server.vercel.app/wish-list/${isWishListedId}`)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.deletedCount > 0) {
+          setIsWishListedId(null)
+          toast.success("Product removed from wishlist");
+        }
+      })
+      .catch((err) => console.log(err));
+    }
   };
   const success = () => toast.success("Product Successfully added to cart");
 
@@ -128,7 +153,11 @@ const PopularProductsCard = ({ product, isRounded }) => {
             onClick={handleWishList}
             className="bg-[#ffffff] border border-gray-100 shadow rounded-full cursor-pointer flex justify-center items-center w-10 h-10"
           >
-            <GoHeart className="w-5 h-5" />
+            {
+              isWishListedId ? <GoHeartFill className="w-5 h-5 text-red-500" /> :  <GoHeart className="w-5 h-5" />
+            }
+           
+            
           </div>
         </div>
       </Link>
