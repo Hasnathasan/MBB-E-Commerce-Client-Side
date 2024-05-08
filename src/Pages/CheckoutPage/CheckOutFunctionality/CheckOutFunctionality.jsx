@@ -19,6 +19,7 @@ const CheckOutFunctionality = () => {
   const navigate = useNavigate();
   const [clientSecret, setClientSecret] = useState("");
   const [selectedShippingMethod, setSelectedShippingMethod] = useState(null);
+  const [orderId, setOrderId] = useState(null)
   const [selectedState, SetSelectedState] = useState(null);
   const [selectedShippingState, setSelectedShippingState] = useState(null);
   const [shippingMethods, setShippingMethods] = useState();
@@ -322,8 +323,6 @@ const CheckOutFunctionality = () => {
       return { product_id: product?.product_id, quantity: product?.quantity };
     });
     console.log(orderProductsId);
-    const pdfContent = <OrderDetailsPdf order={order} />;
-    // const base64PDF = btoa(pdfContent);
     
     axios
       .post("https://mbb-e-commerce-server.vercel.app/orders", order)
@@ -357,7 +356,7 @@ const CheckOutFunctionality = () => {
             axios
               .post(
                 `http://localhost:8000/ordersUpdate/${result?.data?.insertedId}?transactionId=${transactionId}`,
-                {orderProductsId, pdfContent}
+                orderProductsId
               )
               .then((result) => {
                 console.log(result);
@@ -368,7 +367,18 @@ const CheckOutFunctionality = () => {
                 navigate(`/thanks-for-purchasing/${transactionId}`);
               })
               .catch((error) => {
+
+                axios
+                .delete(
+                  `https://mbb-e-commerce-server.vercel.app/orders/${result?.data?.insertedId}`
+                )
+                .then((result) => console.log(result))
+                .catch((error) => console.log(error));
+              console.log(error.message);
+              setError(error.message);
+              setProcessing(false);
                 return toast.error(error.message);
+                
               });
             console.log(order);
           }
@@ -376,6 +386,7 @@ const CheckOutFunctionality = () => {
       })
       .catch((error) => {
         setProcessing(false);
+       
         return toast.error(error?.response?.data?.message);
       });
   };

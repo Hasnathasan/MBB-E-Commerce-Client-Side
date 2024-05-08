@@ -194,6 +194,10 @@ const OrderDetailsForAdmin = () => {
           <div className="md:col-span-2 col-span-6 border border-gray-300 rounded-lg">
             <div className=" border-b border-gray-300 items-center gap-7 p-4">
               <h3 className=" text-gray-500 mb-3 text-sm font-medium">
+                Order ID:{" "}
+                <span className="text-green-600">#{order?._id?.slice(-4)}</span>
+              </h3>
+              <h3 className=" text-gray-500 mb-3 text-sm font-medium">
                 Transaction ID:{" "}
                 <span className="text-green-600">{order?.transactionId}</span>
               </h3>

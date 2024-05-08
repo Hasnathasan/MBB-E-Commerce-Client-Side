@@ -12,6 +12,7 @@ import { Button } from "@nextui-org/react";
 import { RxCross2 } from "react-icons/rx";
 import { AuthContext } from "../../Providers/AuthProvider";
 import useSystemInfo from "../../Hooks/useSystemInfo";
+import useWishListByUser from "../../Hooks/useWishListByUser";
 // import useUser from "../../Hooks/useUser";
 const NavigationBar = () => {
   const {
@@ -33,6 +34,7 @@ const NavigationBar = () => {
   const closeCartDrawer = () => setOpenCart(false);
   const [userCart, setUserCart] = useState([]);
   const [systemInfo, isSystemInfo, refetch] = useSystemInfo();
+  const [userWishList, isUserWishLishLoading] = useWishListByUser();
   useEffect(() => {
     // Try retrieving the cart from localStorage, with a default of an empty array if not found
     const cart = localStorage.getItem("cart") || "[]";
@@ -154,8 +156,9 @@ const NavigationBar = () => {
             </form>
           </div>
           <div className="flex justify-center items-center gap-4">
-            <Link to={"/userDashboard/wishList"}>
+            <Link className="relative" to={"/userDashboard/wishList"}>
               <GoHeart className="w-8 h-8" />
+              <span className="text-xs absolute -top-2 -right-2 bg-green-500 text-white rounded-full w-4 h-4 flex justify-center items-center">{userWishList?.length}</span>
             </Link>
             <span>|</span>
             <div

@@ -32,7 +32,7 @@ const ManageOrders = () => {
     setValue(e.target.value);
   };
   const [page, setPage] = useState(1);
-  const rowsPerPage = 2;
+  const rowsPerPage = 20;
   const pages = Math.ceil(ordersData?.length / rowsPerPage);
   const orders = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
@@ -146,7 +146,7 @@ const ManageOrders = () => {
         >
           <TableHeader>
             <TableColumn>Customer</TableColumn>
-            <TableColumn>Transaction Id</TableColumn>
+            <TableColumn>Order Id</TableColumn>
             <TableColumn>Date</TableColumn>
             <TableColumn>Price</TableColumn>
             <TableColumn>Status</TableColumn>
@@ -171,7 +171,7 @@ const ManageOrders = () => {
                         name={order?.userDetails?.userName || "Unknown"}
                       ></User>
                     </TableCell>
-                    <TableCell>{order?.transactionId}</TableCell>
+                    <TableCell>#{order?._id?.slice(-4)}</TableCell>
                     <TableCell>{order?.createdAt.slice(0, 10)}</TableCell>
                     <TableCell>
                       {order?.total_price} ({order?.products.length} products)

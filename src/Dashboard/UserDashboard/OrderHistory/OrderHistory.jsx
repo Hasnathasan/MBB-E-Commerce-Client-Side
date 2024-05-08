@@ -25,7 +25,7 @@ const OrderHistory = () => {
         <h4 className="p-4 text-lg font-semibold">Order History</h4>
         <table className="overflow-auto w-full">
           <tr>
-            <th>Transaction Id</th>
+            <th>Order Id</th>
             <th>Date</th>
             <th>Total</th>
             <th>Status</th>
@@ -33,7 +33,7 @@ const OrderHistory = () => {
           </tr>
           {orders.length !== 0 ? orders?.map((order) => (
             <tr key={order?._id}>
-              <td>{order?.transactionId}</td>
+              <td>#{order?._id?.slice(-4)}</td>
               <td>{order?.createdAt?.slice(0, 10)}</td>
               <td>
                 ${order?.total_price} ({order?.products?.length} Products)

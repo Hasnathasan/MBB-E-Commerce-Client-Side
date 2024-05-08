@@ -1,8 +1,25 @@
 import { Button } from "@nextui-org/react";
 import useSystemInfo from "../../Hooks/useSystemInfo";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 const ContactUsPage = () => {
   const [systemInfo, isSystemInfo, refetch] = useSystemInfo();
+  const handleContact = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const name = form.name.value;
+    const message = form.message.value;
+    axios.post(`http://localhost:8000/contactWithUser`, {email, name, message})
+    .then(res => {
+      console.log(res);
+      if(res?.status === 200){
+        toast.success("Your message has been sent")
+      }
+    })
+    .catch(err => toast.error(err?.message))
+  }
   return (
     <div className="grid grid-cols-1 py-9 mx-8 md:grid-cols-2 gap-10">
       <div>
@@ -20,7 +37,7 @@ const ContactUsPage = () => {
         </div>
       </div>
       <div className="mx-5 md:mx-10">
-        <form className="flex flex-col mx-auto  border p-7">
+        <form onSubmit={handleContact} className="flex flex-col mx-auto  border p-7">
           <label className="text-lg font-medium" htmlFor="name">
             Name
           </label>
@@ -61,6 +78,7 @@ const ContactUsPage = () => {
           </Button>
         </form>
       </div>
+      <Toaster></Toaster>
     </div>
   );
 };

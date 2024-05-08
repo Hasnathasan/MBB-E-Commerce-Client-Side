@@ -130,6 +130,12 @@ const OrderDetailsPdf = ({ order }) => {
                 <View>
                   <Text style={styles.subtitle}>Transaction Details</Text>
                   <Text style={styles.text}>
+                    Order ID:{" "}
+                    <Text style={{ color: "green" }}>
+                      #{order?._id?.slice(-4)}
+                    </Text>
+                  </Text>
+                  <Text style={styles.text}>
                     Transaction ID:{" "}
                     <Text style={{ color: "green" }}>
                       {order?.transactionId}

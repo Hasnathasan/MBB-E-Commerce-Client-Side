@@ -8,10 +8,12 @@ import { AuthContext } from "../../../Providers/AuthProvider";
 import toast, { Toaster } from "react-hot-toast";
 import { Button } from "@nextui-org/react";
 import axios from "axios";
+import useWishListByUser from "../../../Hooks/useWishListByUser";
 
 const PopularProductsCard = ({ product, isRounded }) => {
   const [hovered, setHovered] = useState(false);
-  const [isWishListedId, setIsWishListedId] = useState(null)
+  const [isWishListedId, setIsWishListedId] = useState(null);
+  const [, , refetch] = useWishListByUser();
   useEffect(() => {
     axios.get(`http://localhost:8000/isWishListed/${product?._id}`)
     .then(res => {
@@ -49,6 +51,7 @@ const PopularProductsCard = ({ product, isRounded }) => {
         console.log(res.data);
         if (res.data.insertedId) {
           setIsWishListedId(res.data.insertedId)
+          refetch()
           toast.success("Product added to wishlist");
         }
       })
@@ -61,6 +64,7 @@ const PopularProductsCard = ({ product, isRounded }) => {
         console.log(res.data);
         if (res.data.deletedCount > 0) {
           setIsWishListedId(null)
+          refetch()
           toast.success("Product removed from wishlist");
         }
       })

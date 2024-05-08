@@ -5,7 +5,7 @@ import { Button, Chip, Tab, Tabs } from "@nextui-org/react";
 import Rating from "react-rating";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import { FiMinus, FiPlus } from "react-icons/fi";
-import { GoHeart } from "react-icons/go";
+import { GoHeart, GoHeartFill } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import PopularProductsCard from "../Home/PopularProducts/PopularProductsCard";
 import { useLocation, useParams } from "react-router-dom";
@@ -17,6 +17,7 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import Reviews from "./Reviews/Reviews";
 import useSingleProduct from "../../Hooks/useSingleProduct";
 import Loader from "../../Components/Loader/Loader";
+import useWishListByUser from "../../Hooks/useWishListByUser";
 
 function ThumbnailPlugin(mainRef) {
   return (slider) => {
@@ -58,6 +59,7 @@ const Details = () => {
   const { user, setIsProductAdded, setOpenCart } = useContext(AuthContext);
   const [userData, isUserDataLoading] = useUser();
   const [product, isProductLoading, refetch] = useSingleProduct({ id });
+  const [, , refetchWishList] = useWishListByUser();
   const [relatedProducts, setRelatedProducts] = useState();
   const [quantity, setQuantity] = useState(1);
   const [isWishListedId, setIsWishListedId] = useState(null)
@@ -158,6 +160,7 @@ const Details = () => {
         console.log(res.data);
         if (res.data.insertedId) {
           setIsWishListedId(res.data.insertedId)
+          refetchWishList()
           toast.success("Product added to wishlist");
         }
       })
@@ -170,6 +173,7 @@ const Details = () => {
         console.log(res.data);
         if (res.data.deletedCount > 0) {
           setIsWishListedId(null)
+          refetchWishList()
           toast.success("Product removed from wishlist");
         }
       })
@@ -299,7 +303,7 @@ const Details = () => {
             </Button>
             <Button
             onClick={handleWishList}
-            className={`${!user ? "cursor-not-allowed": " cursor-not-allowed"}`}
+            className={`${!user ? "cursor-not-allowed": "pointer"}`}
               isIconOnly
               color="success"
               radius="full"
@@ -308,7 +312,9 @@ const Details = () => {
               aria-label="Like"
               isDisabled={!user}
             >
-              <GoHeart className="w-6 h-6"></GoHeart>
+              {
+              isWishListedId ? <GoHeartFill className="w-6 h-6 text-red-500" /> :  <GoHeart className="w-6 h-6" />
+            }
             </Button>
           </div>
           <div>
