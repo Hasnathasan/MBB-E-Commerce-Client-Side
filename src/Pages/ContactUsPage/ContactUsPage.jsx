@@ -2,23 +2,44 @@ import { Button } from "@nextui-org/react";
 import useSystemInfo from "../../Hooks/useSystemInfo";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-
+import emailjs from '@emailjs/browser';
 const ContactUsPage = () => {
   const [systemInfo, isSystemInfo, refetch] = useSystemInfo();
-  const handleContact = (e) => {
+  const handleContact = async(e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const name = form.name.value;
     const message = form.message.value;
-    axios.post(`http://localhost:8000/contactWithUser`, {email, name, message})
-    .then(res => {
-      console.log(res);
-      if(res?.status === 200){
-        toast.success("Your message has been sent")
-      }
-    })
-    .catch(err => toast.error(err?.message))
+    // axios.post(`http://localhost:8000/contactWithUser`, {email, name, message})
+    // .then(res => {
+    //   console.log(res);
+    //   if(res?.status === 200){
+    //     toast.success("Your message has been sent")
+    //   }
+    // })
+    // .catch(err => toast.error(err?.message))
+    try {
+      const response = await emailjs.send(
+          'service_o25dc6c',
+          'template_b2kt3rt',
+          {
+              from_name: name,
+              from_email: email,
+              subject: "Email js test",
+              message_html: message
+          },
+          'T03y9DpJrXKna_8ff'
+      );
+
+      console.log('Email sent:', response);
+      toast.success('Your message has been sent successfully!');
+      // Clear form fields
+     
+  } catch (error) {
+      console.error('Error sending email:', error);
+      toast.error('Failed to send your message. Please try again later.');
+  }
   }
   return (
     <div className="grid grid-cols-1 py-9 mx-8 md:grid-cols-2 gap-10">
