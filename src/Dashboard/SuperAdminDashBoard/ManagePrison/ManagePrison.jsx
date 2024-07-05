@@ -26,9 +26,10 @@ import usePrisons from "../../../Hooks/usePrisons";
 import toast, { Toaster } from "react-hot-toast";
 import { useMemo, useState } from "react";
 import PrisonUpdateModal from "./PrisonUpdateModal/PrisonUpdateModal";
+import Loader from "../../../Components/Loader/Loader";
 
 const ManagePrison = () => {
-  const [prisonsData, , refetch] = usePrisons();
+  const [prisonsData, isPrisonsDataLoading, refetch] = usePrisons();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const {
     isOpen: isPrisonUpdateOpen,
@@ -105,6 +106,10 @@ const ManagePrison = () => {
       })
       .catch((err) => console.log(err));
   };
+
+  if(isPrisonsDataLoading){
+    return <Loader></Loader>
+  }
   const handlePrisonDelete = (id) => {
     toast((t) => (
       <span>
@@ -171,9 +176,8 @@ const ManagePrison = () => {
           <TableColumn>Zip code</TableColumn>
           <TableColumn>Details</TableColumn>
         </TableHeader>
-        <TableBody emptyContent={"No Prison Available"}>
-          {prisons?.length > 0
-            ? prisons?.map((prison) => (
+        <TableBody items={prisons} emptyContent={"No Prison Available"}>
+          {(prison) => (
                 <TableRow key={prison?._id}>
                   <TableCell>
                     <User
@@ -205,8 +209,7 @@ const ManagePrison = () => {
                     </ButtonGroup>
                   </TableCell>
                 </TableRow>
-              ))
-            : []}
+              )}
         </TableBody>
       </Table>
       <Modal

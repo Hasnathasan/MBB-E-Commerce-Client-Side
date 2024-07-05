@@ -48,7 +48,7 @@ const OrderDetailsForAdmin = () => {
     console.log(value);
     const promise = axios
       .patch(
-        `http://localhost:8000/orderStatusUpdate/${
+        `https://mbb-e-commerce-server.vercel.app/orderStatusUpdate/${
           order?._id
         }?status=${value.toLowerCase()}`
       )

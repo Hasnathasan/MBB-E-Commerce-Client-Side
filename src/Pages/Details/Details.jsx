@@ -79,7 +79,7 @@ const Details = () => {
   );
   console.log(user);
   useEffect(() => {
-    axios.get(`http://localhost:8000/isWishListed/${product?._id}`)
+    axios.get(`https://mbb-e-commerce-server.vercel.app/isWishListed/${product?._id}`)
     .then(res => {
       if(res.data){
         setIsWishListedId(res.data?._id)

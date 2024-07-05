@@ -108,6 +108,9 @@ const ManageProducts = () => {
       </span>
     ));
   };
+  if(isProductsLoading){
+    return <Loader></Loader>
+  }
   return (
     <>
       {
@@ -164,10 +167,9 @@ const ManageProducts = () => {
               <TableColumn>Rating</TableColumn>
               <TableColumn>Action</TableColumn>
             </TableHeader>
-            <TableBody emptyContent={"No Product Available"}>
-              {products?.length > 0
-                ? products?.map((product) => (
-                    <TableRow key={product.name}>
+            <TableBody items={products} emptyContent={"No Product Available"}>
+              {(product) => (
+                    <TableRow key={product._id}>
                       <TableCell>
                         <div className="flex justify-start items-center gap-3">
                           <img
@@ -204,8 +206,7 @@ const ManageProducts = () => {
                         </ButtonGroup>
                       </TableCell>
                     </TableRow>
-                  ))
-                : []}
+                  )}
             </TableBody>
           </Table>
 

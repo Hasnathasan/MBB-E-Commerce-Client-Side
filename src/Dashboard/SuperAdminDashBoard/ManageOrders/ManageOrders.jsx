@@ -22,15 +22,17 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import { useMemo, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Loader from "../../../Components/Loader/Loader";
 
 const ManageOrders = () => {
   const [value, setValue] = useState();
-  const [ordersData, refetch] = useAllOrders({
+  const [ordersData, isOrdersLoading, refetch] = useAllOrders({
     status: value,
   });
   const handleSelectionChange = (e) => {
     setValue(e.target.value);
   };
+
   const [page, setPage] = useState(1);
   const rowsPerPage = 20;
   const pages = Math.ceil(ordersData?.length / rowsPerPage);
@@ -42,9 +44,9 @@ const ManageOrders = () => {
   }, [page, ordersData]);
 
   const location = useLocation();
-  // if (isOrdersLoading) {
-  //   return <Loader></Loader>;
-  // }
+  if (isOrdersLoading) {
+    return <Loader></Loader>;
+  }
   console.log(orders);
   const deleteFunc = (id) => {
     axios
@@ -135,10 +137,9 @@ const ManageOrders = () => {
                 isCompact
                 showControls
                 showShadow
-                color="success"
+                color="secondary"
                 page={page}
                 total={pages}
-                siblings={10}
                 onChange={(page) => setPage(page)}
               />
             </div>
@@ -154,9 +155,8 @@ const ManageOrders = () => {
               <h5 className="text-center">Details</h5>
             </TableColumn>
           </TableHeader>
-          <TableBody emptyContent={"No Order Available"}>
-            {orders?.length > 0
-              ? orders?.map((order) => (
+          <TableBody items={orders} emptyContent={"No Order Available"}>
+            {(order) => (
                   <TableRow key={order._id}>
                     <TableCell>
                       <User
@@ -209,8 +209,7 @@ const ManageOrders = () => {
                       </ButtonGroup>
                     </TableCell>
                   </TableRow>
-                ))
-              : []}
+                )}
           </TableBody>
         </Table>
       </div>

@@ -42,6 +42,8 @@ import PrivacyPolicy from "../Components/PrivacyPolicy/PrivacyPolicy";
 import TermsAndCondition from "../Components/TermsAndCondition/TermsAndCondition";
 import RefundPolicy from "../Components/RefundPolicy/RefundPolicy";
 import AdminOnlyRoute from "../Components/AdminOnlyRoute/AdminOnlyRoute";
+import CameraCapture from "../Components/CameraCapture";
+import ImageToSee from "../Components/ImageToSee";
 
 const router = createBrowserRouter([
   {
@@ -73,6 +75,14 @@ const router = createBrowserRouter([
       {
         path: "/privacy-policy",
         element: <PrivacyPolicy></PrivacyPolicy>,
+      },
+      {
+        path: "/web-came",
+        element: <CameraCapture></CameraCapture>,
+      },
+      {
+        path: "/imageToSee",
+        element: <ImageToSee></ImageToSee>,
       },
       {
         path: "/terms&condition",

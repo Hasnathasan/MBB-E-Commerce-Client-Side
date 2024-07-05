@@ -356,9 +356,8 @@ const ManageArtists = () => {
                 <h5 className="text-center">Details</h5>
               </TableColumn>
             </TableHeader>
-            <TableBody emptyContent={"No Artist Available"}>
-              {artists?.length > 0
-                ? artists?.map((user) => (
+            <TableBody items={artists} emptyContent={"No Artist Available"}>
+              {(user) => (
                     <TableRow key={user._id}>
                       <TableCell>
                         <User
@@ -399,8 +398,7 @@ const ManageArtists = () => {
                         </ButtonGroup>
                       </TableCell>
                     </TableRow>
-                  ))
-                : []}
+                  )}
             </TableBody>
           </Table>
 

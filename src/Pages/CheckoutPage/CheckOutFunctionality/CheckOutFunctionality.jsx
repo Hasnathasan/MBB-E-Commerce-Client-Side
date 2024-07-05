@@ -6,7 +6,8 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-import { renderToBuffer } from '@react-pdf/renderer';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import OrderDetailsPdf from "../../../Dashboard/UserDashboard/OrderDetails/OrderDetailsPdf/OrderDetailsPdf";
@@ -351,11 +352,13 @@ const CheckOutFunctionality = () => {
           }
 
           if (paymentIntent.status === "succeeded") {
+           
+            
             
             const transactionId = paymentIntent.id;
             axios
-              .post(
-                `http://localhost:8000/ordersUpdate/${result?.data?.insertedId}?transactionId=${transactionId}`,
+              .patch(
+                `https://mbb-e-commerce-server.vercel.app/ordersUpdate/${result?.data?.insertedId}?transactionId=${transactionId}`,
                 orderProductsId
               )
               .then((result) => {

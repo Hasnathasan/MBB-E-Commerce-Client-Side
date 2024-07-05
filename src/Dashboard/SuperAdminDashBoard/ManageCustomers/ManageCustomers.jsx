@@ -22,6 +22,7 @@ import { useMemo, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import CustomerUpdateModal from "./CustomerUpdateModal/CustomerUpdateModal";
+import Loader from "../../../Components/Loader/Loader";
 
 const ManageCustomers = () => {
   const [customersData, isCustomerDataLoading, refetch] = useCustomers();
@@ -83,6 +84,10 @@ const ManageCustomers = () => {
       </span>
     ));
   };
+
+  if(isCustomerDataLoading){
+    return <Loader></Loader>
+  }
   return (
     <div className="overflow-x-auto w-[95%] mx-auto">
       <div className="flex flex-col  gap-4">
@@ -95,14 +100,14 @@ const ManageCustomers = () => {
         bottomContent={
           <div className="flex w-full justify-center">
             <Pagination
-              isCompact
-              showControls
-              showShadow
-              color="secondary"
-              page={page}
-              total={pages}
-              onChange={(page) => setPage(page)}
-            />
+        isCompact
+        showControls
+        showShadow
+        color="secondary"
+        page={page}
+        total={pages}
+        onChange={(page) => setPage(page)}
+      />
           </div>
         }
       >
@@ -114,9 +119,8 @@ const ManageCustomers = () => {
             <h5 className="text-center">Details</h5>
           </TableColumn>
         </TableHeader>
-        <TableBody emptyContent={"No Customer Available"}>
-          {customers?.length > 0
-            ? customers?.map((user) => (
+        <TableBody items={customers} emptyContent={"No Customer Available"}>
+          {(user) => (
                 <TableRow key={user._id}>
                   <TableCell>
                     <User
@@ -155,8 +159,7 @@ const ManageCustomers = () => {
                     </ButtonGroup>
                   </TableCell>
                 </TableRow>
-              ))
-            : []}
+              )}
         </TableBody>
       </Table>
       <Modal
